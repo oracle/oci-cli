@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -54,7 +53,7 @@ lifecycle_environment_root_group.add_command(lifecycle_environment_group)
 @cli_util.wrap_exceptions
 def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_stage_id, managed_instance_details, if_match):
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -112,7 +111,7 @@ def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def change_lifecycle_environment_compartment(ctx, from_json, lifecycle_environment_id, compartment_id, if_match):
 
-    if isinstance(lifecycle_environment_id, six.string_types) and len(lifecycle_environment_id.strip()) == 0:
+    if isinstance(lifecycle_environment_id, str) and len(lifecycle_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -223,7 +222,7 @@ def create_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_environment_id, if_match):
 
-    if isinstance(lifecycle_environment_id, six.string_types) and len(lifecycle_environment_id.strip()) == 0:
+    if isinstance(lifecycle_environment_id, str) and len(lifecycle_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -287,7 +286,7 @@ def delete_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def detach_managed_instances_from_lifecycle_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_stage_id, managed_instance_details, if_match):
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -343,7 +342,7 @@ def detach_managed_instances_from_lifecycle_stage(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def get_lifecycle_environment(ctx, from_json, lifecycle_environment_id):
 
-    if isinstance(lifecycle_environment_id, six.string_types) and len(lifecycle_environment_id.strip()) == 0:
+    if isinstance(lifecycle_environment_id, str) and len(lifecycle_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -365,7 +364,7 @@ def get_lifecycle_environment(ctx, from_json, lifecycle_environment_id):
 @cli_util.wrap_exceptions
 def get_lifecycle_stage(ctx, from_json, lifecycle_stage_id):
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -485,7 +484,7 @@ def list_lifecycle_stage_installed_packages(ctx, from_json, all_pages, page_size
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -631,7 +630,7 @@ def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.wrap_exceptions
 def promote_software_source_to_lifecycle_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_stage_id, work_request_details, software_source_id, if_match):
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -697,7 +696,7 @@ def promote_software_source_to_lifecycle_stage(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def reboot_lifecycle_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_stage_id, reboot_timeout_in_mins, work_request_details, if_match):
 
-    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+    if isinstance(lifecycle_stage_id, str) and len(lifecycle_stage_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -770,7 +769,7 @@ This option is a JSON list with items of type UpdateLifecycleStageDetails.  For 
 @cli_util.wrap_exceptions
 def update_lifecycle_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_environment_id, display_name, description, stages, freeform_tags, defined_tags, if_match):
 
-    if isinstance(lifecycle_environment_id, six.string_types) and len(lifecycle_environment_id.strip()) == 0:
+    if isinstance(lifecycle_environment_id, str) and len(lifecycle_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --lifecycle-environment-id cannot be whitespace or empty string')
     if not force:
         if stages or freeform_tags or defined_tags:

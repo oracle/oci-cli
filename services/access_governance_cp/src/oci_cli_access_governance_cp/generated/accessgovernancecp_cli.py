@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -56,7 +55,7 @@ access_governance_cp_root_group.add_command(governance_instance_group)
 @cli_util.wrap_exceptions
 def change_governance_instance_compartment(ctx, from_json, governance_instance_id, compartment_id, if_match):
 
-    if isinstance(governance_instance_id, six.string_types) and len(governance_instance_id.strip()) == 0:
+    if isinstance(governance_instance_id, str) and len(governance_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -163,7 +162,7 @@ def create_governance_instance(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_governance_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_instance_id, if_match):
 
-    if isinstance(governance_instance_id, six.string_types) and len(governance_instance_id.strip()) == 0:
+    if isinstance(governance_instance_id, str) and len(governance_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -222,7 +221,7 @@ def delete_governance_instance(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def get_governance_instance(ctx, from_json, governance_instance_id):
 
-    if isinstance(governance_instance_id, six.string_types) and len(governance_instance_id.strip()) == 0:
+    if isinstance(governance_instance_id, str) and len(governance_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -336,7 +335,7 @@ def list_governance_instances(ctx, from_json, all_pages, page_size, compartment_
 @cli_util.wrap_exceptions
 def update_governance_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_instance_id, display_name, description, license_type, defined_tags, freeform_tags, if_match):
 
-    if isinstance(governance_instance_id, six.string_types) and len(governance_instance_id.strip()) == 0:
+    if isinstance(governance_instance_id, str) and len(governance_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:

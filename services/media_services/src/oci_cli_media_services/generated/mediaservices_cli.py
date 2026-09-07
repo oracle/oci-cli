@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -135,7 +134,7 @@ media_services_service_cli.media_services_service_group.add_command(media_workfl
 @cli_util.wrap_exceptions
 def add_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_asset_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -206,7 +205,7 @@ def add_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def add_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_configuration_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -277,7 +276,7 @@ def add_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def add_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_job_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -348,7 +347,7 @@ def add_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def add_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -419,7 +418,7 @@ def add_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def add_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_cdn_config_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -490,7 +489,7 @@ def add_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def add_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_distribution_channel_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -561,7 +560,7 @@ def add_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def add_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_packaging_config_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+    if isinstance(stream_packaging_config_id, str) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -626,7 +625,7 @@ def add_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_id, is_lock_override, if_match):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -660,7 +659,7 @@ def change_media_asset_compartment(ctx, from_json, media_asset_id, compartment_i
 @cli_util.wrap_exceptions
 def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compartment_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -694,7 +693,7 @@ def change_media_workflow_compartment(ctx, from_json, media_workflow_id, compart
 @cli_util.wrap_exceptions
 def change_media_workflow_configuration_compartment(ctx, from_json, media_workflow_configuration_id, compartment_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -728,7 +727,7 @@ def change_media_workflow_configuration_compartment(ctx, from_json, media_workfl
 @cli_util.wrap_exceptions
 def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id, compartment_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -762,7 +761,7 @@ def change_media_workflow_job_compartment(ctx, from_json, media_workflow_job_id,
 @cli_util.wrap_exceptions
 def change_stream_distribution_channel_compartment(ctx, from_json, stream_distribution_channel_id, compartment_id, is_lock_override, if_match):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1855,7 +1854,7 @@ def create_stream_packaging_config_stream_packaging_config_encryption_none(ctx, 
 @cli_util.wrap_exceptions
 def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, is_lock_override, if_match, delete_mode):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1923,10 +1922,10 @@ def delete_media_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_asset_id, distribution_channel_id, is_lock_override, if_match, version_parameterconflict):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
-    if isinstance(distribution_channel_id, six.string_types) and len(distribution_channel_id.strip()) == 0:
+    if isinstance(distribution_channel_id, str) and len(distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1961,7 +1960,7 @@ def delete_media_asset_distribution_channel_attachment(ctx, from_json, media_ass
 @cli_util.wrap_exceptions
 def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2028,7 +2027,7 @@ def delete_media_workflow(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2095,7 +2094,7 @@ def delete_media_workflow_configuration(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, is_lock_override, if_match):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2162,7 +2161,7 @@ def delete_media_workflow_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, is_lock_override, if_match):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2229,7 +2228,7 @@ def delete_stream_cdn_config(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, is_lock_override, if_match):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2296,7 +2295,7 @@ def delete_stream_distribution_channel(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, is_lock_override, if_match):
 
-    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+    if isinstance(stream_packaging_config_id, str) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2357,7 +2356,7 @@ def delete_stream_packaging_config(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_media_asset(ctx, from_json, media_asset_id):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2381,10 +2380,10 @@ def get_media_asset(ctx, from_json, media_asset_id):
 @cli_util.wrap_exceptions
 def get_media_asset_distribution_channel_attachment(ctx, from_json, media_asset_id, distribution_channel_id, version_parameterconflict):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
-    if isinstance(distribution_channel_id, six.string_types) and len(distribution_channel_id.strip()) == 0:
+    if isinstance(distribution_channel_id, str) and len(distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2409,7 +2408,7 @@ def get_media_asset_distribution_channel_attachment(ctx, from_json, media_asset_
 @cli_util.wrap_exceptions
 def get_media_workflow(ctx, from_json, media_workflow_id):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2431,7 +2430,7 @@ def get_media_workflow(ctx, from_json, media_workflow_id):
 @cli_util.wrap_exceptions
 def get_media_workflow_configuration(ctx, from_json, media_workflow_configuration_id):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2453,7 +2452,7 @@ def get_media_workflow_configuration(ctx, from_json, media_workflow_configuratio
 @cli_util.wrap_exceptions
 def get_media_workflow_job(ctx, from_json, media_workflow_job_id):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2475,7 +2474,7 @@ def get_media_workflow_job(ctx, from_json, media_workflow_job_id):
 @cli_util.wrap_exceptions
 def get_stream_cdn_config(ctx, from_json, stream_cdn_config_id):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2497,7 +2496,7 @@ def get_stream_cdn_config(ctx, from_json, stream_cdn_config_id):
 @cli_util.wrap_exceptions
 def get_stream_distribution_channel(ctx, from_json, stream_distribution_channel_id):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2519,7 +2518,7 @@ def get_stream_distribution_channel(ctx, from_json, stream_distribution_channel_
 @cli_util.wrap_exceptions
 def get_stream_packaging_config(ctx, from_json, stream_packaging_config_id):
 
-    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+    if isinstance(stream_packaging_config_id, str) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2542,7 +2541,7 @@ def get_stream_packaging_config(ctx, from_json, stream_packaging_config_id):
 @cli_util.wrap_exceptions
 def ingest_stream_distribution_channel(ctx, from_json, stream_distribution_channel_id, ingest_payload_type):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2571,7 +2570,7 @@ def ingest_stream_distribution_channel(ctx, from_json, stream_distribution_chann
 @cli_util.wrap_exceptions
 def ingest_stream_distribution_channel_asset_metadata_entry_details(ctx, from_json, stream_distribution_channel_id, media_asset_id, compartment_id):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2614,7 +2613,7 @@ def list_media_asset_distribution_channel_attachments(ctx, from_json, all_pages,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3253,7 +3252,7 @@ def list_system_media_workflows(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.wrap_exceptions
 def remove_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_asset_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3324,7 +3323,7 @@ def remove_media_asset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_configuration_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3395,7 +3394,7 @@ def remove_media_workflow_configuration_lock(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def remove_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_job_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3466,7 +3465,7 @@ def remove_media_workflow_job_lock(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def remove_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, media_workflow_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3537,7 +3536,7 @@ def remove_media_workflow_lock(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def remove_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_cdn_config_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3608,7 +3607,7 @@ def remove_stream_cdn_config_lock(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def remove_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_distribution_channel_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3679,7 +3678,7 @@ def remove_stream_distribution_channel_lock(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def remove_stream_packaging_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, stream_packaging_config_id, related_resource_id, message, time_created, if_match):
 
-    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+    if isinstance(stream_packaging_config_id, str) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3759,7 +3758,7 @@ This option is a JSON list with items of type MediaAssetTag.  For documentation 
 @cli_util.wrap_exceptions
 def update_media_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_asset_id, display_name, type, parent_media_asset_id, master_media_asset_id, metadata, media_asset_tags, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(media_asset_id, six.string_types) and len(media_asset_id.strip()) == 0:
+    if isinstance(media_asset_id, str) and len(media_asset_id.strip()) == 0:
         raise click.UsageError('Parameter --media-asset-id cannot be whitespace or empty string')
     if not force:
         if metadata or media_asset_tags or freeform_tags or defined_tags:
@@ -3854,7 +3853,7 @@ This option is a JSON list with items of type MediaWorkflowTask.  For documentat
 @cli_util.wrap_exceptions
 def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_id, display_name, tasks, media_workflow_configuration_ids, parameters, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(media_workflow_id, six.string_types) and len(media_workflow_id.strip()) == 0:
+    if isinstance(media_workflow_id, str) and len(media_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-id cannot be whitespace or empty string')
     if not force:
         if tasks or media_workflow_configuration_ids or parameters or freeform_tags or defined_tags:
@@ -3939,7 +3938,7 @@ def update_media_workflow(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_configuration_id, display_name, parameters, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(media_workflow_configuration_id, six.string_types) and len(media_workflow_configuration_id.strip()) == 0:
+    if isinstance(media_workflow_configuration_id, str) and len(media_workflow_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-configuration-id cannot be whitespace or empty string')
     if not force:
         if parameters or freeform_tags or defined_tags:
@@ -4017,7 +4016,7 @@ def update_media_workflow_configuration(ctx, from_json, force, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, media_workflow_job_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(media_workflow_job_id, six.string_types) and len(media_workflow_job_id.strip()) == 0:
+    if isinstance(media_workflow_job_id, str) and len(media_workflow_job_id.strip()) == 0:
         raise click.UsageError('Parameter --media-workflow-job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4094,7 +4093,7 @@ def update_media_workflow_job(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, config, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
     if not force:
         if config or freeform_tags or defined_tags:
@@ -4187,7 +4186,7 @@ def update_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, is_lock_override, if_match, config_origin_auth_sign_type, config_origin_auth_sign_encryption, config_origin_auth_secret_key_a, config_origin_auth_secret_key_nonce_a, config_origin_auth_secret_key_b, config_origin_auth_secret_key_nonce_b, config_edge_hostname, config_edge_path_prefix, config_is_edge_token_auth, config_edge_token_key, config_edge_token_salt):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4302,7 +4301,7 @@ def update_stream_cdn_config_akamai_manual_stream_cdn_config(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_cdn_config_id, display_name, is_enabled, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(stream_cdn_config_id, six.string_types) and len(stream_cdn_config_id.strip()) == 0:
+    if isinstance(stream_cdn_config_id, str) and len(stream_cdn_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-cdn-config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4383,7 +4382,7 @@ def update_stream_cdn_config_edge_stream_cdn_config(ctx, from_json, force, wait_
 @cli_util.wrap_exceptions
 def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_distribution_channel_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(stream_distribution_channel_id, six.string_types) and len(stream_distribution_channel_id.strip()) == 0:
+    if isinstance(stream_distribution_channel_id, str) and len(stream_distribution_channel_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-distribution-channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4458,7 +4457,7 @@ def update_stream_distribution_channel(ctx, from_json, force, wait_for_state, ma
 @cli_util.wrap_exceptions
 def update_stream_packaging_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_packaging_config_id, display_name, freeform_tags, defined_tags, is_lock_override, if_match):
 
-    if isinstance(stream_packaging_config_id, six.string_types) and len(stream_packaging_config_id.strip()) == 0:
+    if isinstance(stream_packaging_config_id, str) and len(stream_packaging_config_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-packaging-config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

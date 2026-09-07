@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -44,7 +43,7 @@ dynamic_set_root_group.add_command(dynamic_set_group)
 @cli_util.wrap_exceptions
 def change_dynamic_set_compartment(ctx, from_json, compartment_id, dynamic_set_id, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -149,7 +148,7 @@ def create_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -208,7 +207,7 @@ def delete_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_dynamic_set(ctx, from_json, dynamic_set_id):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -237,7 +236,7 @@ def get_dynamic_set(ctx, from_json, dynamic_set_id):
 @cli_util.wrap_exceptions
 def install_packages_on_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, package_names, managed_instances, work_request_details, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -382,7 +381,7 @@ def list_managed_instances_in_dynamic_set(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -511,7 +510,7 @@ def preview_managed_instances(ctx, from_json, target_compartments, match_type, m
 @cli_util.wrap_exceptions
 def reboot_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, reboot_timeout_in_mins, managed_instances, work_request_details, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -582,7 +581,7 @@ def reboot_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def remove_packages_from_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, package_names, managed_instances, work_request_details, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -658,7 +657,7 @@ This option is a JSON list with items of type TargetCompartmentDetails.  For doc
 @cli_util.wrap_exceptions
 def update_dynamic_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, display_name, description, target_compartments, match_type, matching_rule, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
     if not force:
         if target_compartments or matching_rule or freeform_tags or defined_tags:
@@ -741,7 +740,7 @@ def update_dynamic_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_packages_on_dynamic_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dynamic_set_id, update_types, managed_instances, work_request_details, if_match):
 
-    if isinstance(dynamic_set_id, six.string_types) and len(dynamic_set_id.strip()) == 0:
+    if isinstance(dynamic_set_id, str) and len(dynamic_set_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-set-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -507,7 +506,7 @@ def create_record_text_metadata(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_annotation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, annotation_id, if_match):
 
-    if isinstance(annotation_id, six.string_types) and len(annotation_id.strip()) == 0:
+    if isinstance(annotation_id, str) and len(annotation_id.strip()) == 0:
         raise click.UsageError('Parameter --annotation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -571,7 +570,7 @@ def delete_annotation(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, record_id, if_match):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -630,7 +629,7 @@ def delete_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_annotation(ctx, from_json, annotation_id):
 
-    if isinstance(annotation_id, six.string_types) and len(annotation_id.strip()) == 0:
+    if isinstance(annotation_id, str) and len(annotation_id.strip()) == 0:
         raise click.UsageError('Parameter --annotation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -652,7 +651,7 @@ def get_annotation(ctx, from_json, annotation_id):
 @cli_util.wrap_exceptions
 def get_dataset(ctx, from_json, dataset_id):
 
-    if isinstance(dataset_id, six.string_types) and len(dataset_id.strip()) == 0:
+    if isinstance(dataset_id, str) and len(dataset_id.strip()) == 0:
         raise click.UsageError('Parameter --dataset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -674,7 +673,7 @@ def get_dataset(ctx, from_json, dataset_id):
 @cli_util.wrap_exceptions
 def get_record(ctx, from_json, record_id):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -698,7 +697,7 @@ def get_record(ctx, from_json, record_id):
 @cli_util.wrap_exceptions
 def get_record_content(ctx, from_json, file, record_id, if_none_match):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -746,7 +745,7 @@ def get_record_content(ctx, from_json, file, record_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_record_preview_content(ctx, from_json, file, record_id, if_none_match):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1032,7 +1031,7 @@ This option is a JSON list with items of type Entity.  For documentation on Enti
 @cli_util.wrap_exceptions
 def update_annotation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, annotation_id, entities, freeform_tags, defined_tags, if_match):
 
-    if isinstance(annotation_id, six.string_types) and len(annotation_id.strip()) == 0:
+    if isinstance(annotation_id, str) and len(annotation_id.strip()) == 0:
         raise click.UsageError('Parameter --annotation-id cannot be whitespace or empty string')
     if not force:
         if entities or freeform_tags or defined_tags:
@@ -1104,7 +1103,7 @@ def update_annotation(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, record_id, freeform_tags, defined_tags, record_metadata, if_match):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or record_metadata:
@@ -1176,7 +1175,7 @@ def update_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def update_record_document_metadata(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, record_id, freeform_tags, defined_tags, if_match, record_metadata_job_id):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1253,7 +1252,7 @@ def update_record_document_metadata(ctx, from_json, force, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def update_record_image_metadata(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, record_id, freeform_tags, defined_tags, if_match, record_metadata_height, record_metadata_width, record_metadata_depth):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1333,7 +1332,7 @@ def update_record_image_metadata(ctx, from_json, force, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_record_text_metadata(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, record_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(record_id, six.string_types) and len(record_id.strip()) == 0:
+    if isinstance(record_id, str) and len(record_id.strip()) == 0:
         raise click.UsageError('Parameter --record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

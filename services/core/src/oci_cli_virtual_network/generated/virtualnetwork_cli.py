@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -652,7 +651,7 @@ virtual_network_root_group.add_command(internal_public_ip_group)
 @cli_util.wrap_exceptions
 def add_drg_route_distribution_statements(ctx, from_json, drg_route_distribution_id, statements):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -681,7 +680,7 @@ This option is a JSON list with items of type AddDrgRouteRuleDetails.  For docum
 @cli_util.wrap_exceptions
 def add_drg_route_rules(ctx, from_json, drg_route_table_id, route_rules):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -718,7 +717,7 @@ Example: `10.0.1.0/24`""")
 @cli_util.wrap_exceptions
 def add_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -789,7 +788,7 @@ Example: `2001:0db8:0123::/64`""")
 @cli_util.wrap_exceptions
 def add_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv6_cidr_block, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -862,7 +861,7 @@ Example: `2001:0db8:0123::/48` or `fd00:1000:0:1::/64`""")
 @cli_util.wrap_exceptions
 def add_ipv6_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, if_match, ipv6_private_cidr_block, is_oracle_gua_allocation_enabled, byoipv6_cidr_detail):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -937,7 +936,7 @@ This option is a JSON list with items of type AddSecurityRuleDetails.  For docum
 @cli_util.wrap_exceptions
 def add_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rules):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -972,7 +971,7 @@ The CIDR block (or subrange) must not overlap with any other CIDR block already 
 @cli_util.wrap_exceptions
 def add_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_pool_id, byoip_range_id, cidr_block):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1032,7 +1031,7 @@ def add_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def add_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, cidr_block, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1096,7 +1095,7 @@ def add_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def advertise_byoip_range(ctx, from_json, byoip_range_id):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1125,7 +1124,7 @@ def advertise_byoip_range(ctx, from_json, byoip_range_id):
 @cli_util.wrap_exceptions
 def attach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, service_id, if_match):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1177,7 +1176,7 @@ def attach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, public_prefixes):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1488,7 +1487,7 @@ def bulk_delete_private_ips(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id, public_prefixes):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1776,7 +1775,7 @@ def bulk_update_private_ips(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def change_byoasn_compartment(ctx, from_json, byoasn_id, compartment_id, if_match):
 
-    if isinstance(byoasn_id, six.string_types) and len(byoasn_id.strip()) == 0:
+    if isinstance(byoasn_id, str) and len(byoasn_id.strip()) == 0:
         raise click.UsageError('Parameter --byoasn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1806,7 +1805,7 @@ def change_byoasn_compartment(ctx, from_json, byoasn_id, compartment_id, if_matc
 @cli_util.wrap_exceptions
 def change_byoip_range_compartment(ctx, from_json, byoip_range_id, compartment_id):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1838,7 +1837,7 @@ def change_byoip_range_compartment(ctx, from_json, byoip_range_id, compartment_i
 @cli_util.wrap_exceptions
 def change_capture_filter_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capture_filter_id, compartment_id, if_match):
 
-    if isinstance(capture_filter_id, six.string_types) and len(capture_filter_id.strip()) == 0:
+    if isinstance(capture_filter_id, str) and len(capture_filter_id.strip()) == 0:
         raise click.UsageError('Parameter --capture-filter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1903,7 +1902,7 @@ def change_capture_filter_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_cpe_compartment(ctx, from_json, cpe_id, compartment_id):
 
-    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+    if isinstance(cpe_id, str) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1931,7 +1930,7 @@ def change_cpe_compartment(ctx, from_json, cpe_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_cross_connect_compartment(ctx, from_json, cross_connect_id, compartment_id):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1959,7 +1958,7 @@ def change_cross_connect_compartment(ctx, from_json, cross_connect_id, compartme
 @cli_util.wrap_exceptions
 def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_id, compartment_id):
 
-    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+    if isinstance(cross_connect_group_id, str) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1987,7 +1986,7 @@ def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_i
 @cli_util.wrap_exceptions
 def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
 
-    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+    if isinstance(dhcp_id, str) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2018,7 +2017,7 @@ def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_drg_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, compartment_id):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2081,7 +2080,7 @@ def change_drg_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def change_internet_gateway_compartment(ctx, from_json, ig_id, compartment_id):
 
-    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+    if isinstance(ig_id, str) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2109,7 +2108,7 @@ def change_internet_gateway_compartment(ctx, from_json, ig_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2137,7 +2136,7 @@ def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id
 @cli_util.wrap_exceptions
 def change_local_peering_gateway_compartment(ctx, from_json, local_peering_gateway_id, compartment_id):
 
-    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+    if isinstance(local_peering_gateway_id, str) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2165,7 +2164,7 @@ def change_local_peering_gateway_compartment(ctx, from_json, local_peering_gatew
 @cli_util.wrap_exceptions
 def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_id):
 
-    if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
+    if isinstance(nat_gateway_id, str) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2193,7 +2192,7 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
 @cli_util.wrap_exceptions
 def change_network_security_group_compartment(ctx, from_json, network_security_group_id, compartment_id):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2223,7 +2222,7 @@ This operation applies only to reserved public IPs. Ephemeral public IPs always 
 @cli_util.wrap_exceptions
 def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
 
-    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+    if isinstance(public_ip_id, str) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2251,7 +2250,7 @@ def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_public_ip_pool_compartment(ctx, from_json, public_ip_pool_id, compartment_id):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2279,7 +2278,7 @@ def change_public_ip_pool_compartment(ctx, from_json, public_ip_pool_id, compart
 @cli_util.wrap_exceptions
 def change_remote_peering_connection_compartment(ctx, from_json, remote_peering_connection_id, compartment_id):
 
-    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+    if isinstance(remote_peering_connection_id, str) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2307,7 +2306,7 @@ def change_remote_peering_connection_compartment(ctx, from_json, remote_peering_
 @cli_util.wrap_exceptions
 def change_route_table_compartment(ctx, from_json, rt_id, compartment_id):
 
-    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+    if isinstance(rt_id, str) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2335,7 +2334,7 @@ def change_route_table_compartment(ctx, from_json, rt_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_security_list_compartment(ctx, from_json, security_list_id, compartment_id):
 
-    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+    if isinstance(security_list_id, str) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2363,7 +2362,7 @@ def change_security_list_compartment(ctx, from_json, security_list_id, compartme
 @cli_util.wrap_exceptions
 def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compartment_id):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2394,7 +2393,7 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
 @cli_util.wrap_exceptions
 def change_subnet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, compartment_id):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2460,7 +2459,7 @@ def change_subnet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def change_vcn_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, compartment_id):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2523,7 +2522,7 @@ def change_vcn_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compartment_id):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2555,7 +2554,7 @@ def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compa
 @cli_util.wrap_exceptions
 def change_vlan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, compartment_id, if_match):
 
-    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+    if isinstance(vlan_id, str) and len(vlan_id.strip()) == 0:
         raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2624,7 +2623,7 @@ def change_vlan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def change_vtap_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vtap_id, compartment_id, if_match):
 
-    if isinstance(vtap_id, six.string_types) and len(vtap_id.strip()) == 0:
+    if isinstance(vtap_id, str) and len(vtap_id.strip()) == 0:
         raise click.UsageError('Parameter --vtap-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2691,7 +2690,7 @@ This operation must be called by the VCN administrator who is designated as the 
 @cli_util.wrap_exceptions
 def connect_local_peering_gateways(ctx, from_json, local_peering_gateway_id, peer_id):
 
-    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+    if isinstance(local_peering_gateway_id, str) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2723,7 +2722,7 @@ Example: `us-ashburn-1`""")
 @cli_util.wrap_exceptions
 def connect_remote_peering_connections(ctx, from_json, remote_peering_connection_id, peer_id, peer_region_name):
 
-    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+    if isinstance(remote_peering_connection_id, str) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5431,7 +5430,7 @@ def create_vtap(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoasn_id, if_match):
 
-    if isinstance(byoasn_id, six.string_types) and len(byoasn_id.strip()) == 0:
+    if isinstance(byoasn_id, str) and len(byoasn_id.strip()) == 0:
         raise click.UsageError('Parameter --byoasn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5495,7 +5494,7 @@ def delete_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, if_match):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5552,7 +5551,7 @@ def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_capture_filter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capture_filter_id, if_match):
 
-    if isinstance(capture_filter_id, six.string_types) and len(capture_filter_id.strip()) == 0:
+    if isinstance(capture_filter_id, str) and len(capture_filter_id.strip()) == 0:
         raise click.UsageError('Parameter --capture-filter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5613,7 +5612,7 @@ def delete_capture_filter(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_cpe(ctx, from_json, cpe_id, if_match):
 
-    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+    if isinstance(cpe_id, str) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5641,7 +5640,7 @@ def delete_cpe(ctx, from_json, cpe_id, if_match):
 @cli_util.wrap_exceptions
 def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, if_match):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5704,7 +5703,7 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, if_match):
 
-    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+    if isinstance(cross_connect_group_id, str) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5769,7 +5768,7 @@ This is an asynchronous operation. The state of the set of options will switch t
 @cli_util.wrap_exceptions
 def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dhcp_id, if_match):
 
-    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+    if isinstance(dhcp_id, str) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5832,7 +5831,7 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, if_match):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5895,7 +5894,7 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, if_match):
 
-    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+    if isinstance(drg_attachment_id, str) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5960,7 +5959,7 @@ Remove the DRG route distribution from a DRG attachment or DRG route table by us
 @cli_util.wrap_exceptions
 def delete_drg_route_distribution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_route_distribution_id, if_match):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6023,7 +6022,7 @@ def delete_drg_route_distribution(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_drg_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_route_table_id, if_match):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6088,7 +6087,7 @@ This is an asynchronous operation. The gateway's `lifecycleState` will change to
 @cli_util.wrap_exceptions
 def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ig_id, if_match):
 
-    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+    if isinstance(ig_id, str) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6153,7 +6152,7 @@ This is an asynchronous operation. The connection's `lifecycleState` will change
 @cli_util.wrap_exceptions
 def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, if_match):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6216,7 +6215,7 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, if_match):
 
-    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+    if isinstance(ipv6_id, str) and len(ipv6_id.strip()) == 0:
         raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6282,7 +6281,7 @@ This is an asynchronous operation; the local peering gateway's `lifecycleState` 
 @cli_util.wrap_exceptions
 def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, if_match):
 
-    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+    if isinstance(local_peering_gateway_id, str) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6347,7 +6346,7 @@ This is an asynchronous operation. The NAT gateway's `lifecycleState` will chang
 @cli_util.wrap_exceptions
 def delete_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, nat_gateway_id, if_match):
 
-    if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
+    if isinstance(nat_gateway_id, str) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6412,7 +6411,7 @@ To get a list of the VNICs in a network security group, use [ListNetworkSecurity
 @cli_util.wrap_exceptions
 def delete_network_security_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_security_group_id, if_match):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6476,7 +6475,7 @@ This operation cannot be used with primary private IPs, which are automatically 
 @cli_util.wrap_exceptions
 def delete_private_ip(ctx, from_json, private_ip_id, if_match):
 
-    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+    if isinstance(private_ip_id, str) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6510,7 +6509,7 @@ If you want to simply unassign a reserved public IP and return it to your pool o
 @cli_util.wrap_exceptions
 def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_id, if_match):
 
-    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+    if isinstance(public_ip_id, str) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6573,7 +6572,7 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_public_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_pool_id, if_match):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6639,7 +6638,7 @@ This is an asynchronous operation; the RPC's `lifecycleState` changes to TERMINA
 @cli_util.wrap_exceptions
 def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, if_match):
 
-    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+    if isinstance(remote_peering_connection_id, str) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6704,7 +6703,7 @@ This is an asynchronous operation. The route table's `lifecycleState` will chang
 @cli_util.wrap_exceptions
 def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, rt_id, if_match):
 
-    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+    if isinstance(rt_id, str) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6769,7 +6768,7 @@ This is an asynchronous operation. The security list's `lifecycleState` will cha
 @cli_util.wrap_exceptions
 def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_list_id, if_match):
 
-    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+    if isinstance(security_list_id, str) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6832,7 +6831,7 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, if_match):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6895,7 +6894,7 @@ def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6960,7 +6959,7 @@ A deleted VCN's `lifecycleState` changes to TERMINATING and then TERMINATED temp
 @cli_util.wrap_exceptions
 def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7025,7 +7024,7 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, if_match):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7088,7 +7087,7 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, if_match):
 
-    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+    if isinstance(vlan_id, str) and len(vlan_id.strip()) == 0:
         raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7152,7 +7151,7 @@ def delete_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_vtap(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vtap_id, if_match):
 
-    if isinstance(vtap_id, six.string_types) and len(vtap_id.strip()) == 0:
+    if isinstance(vtap_id, str) and len(vtap_id.strip()) == 0:
         raise click.UsageError('Parameter --vtap-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7211,7 +7210,7 @@ def delete_vtap(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def detach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, service_id, if_match):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7268,7 +7267,7 @@ Example: `50`""")
 @cli_util.wrap_exceptions
 def get_all_drg_attachments(ctx, from_json, drg_id, limit, page, attachment_type, is_cross_tenancy):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7315,7 +7314,7 @@ def get_allowed_ike_ip_sec_parameters(ctx, from_json, ):
 @cli_util.wrap_exceptions
 def get_byoasn(ctx, from_json, byoasn_id):
 
-    if isinstance(byoasn_id, six.string_types) and len(byoasn_id.strip()) == 0:
+    if isinstance(byoasn_id, str) and len(byoasn_id.strip()) == 0:
         raise click.UsageError('Parameter --byoasn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7337,7 +7336,7 @@ def get_byoasn(ctx, from_json, byoasn_id):
 @cli_util.wrap_exceptions
 def get_byoip_range(ctx, from_json, byoip_range_id):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7359,7 +7358,7 @@ def get_byoip_range(ctx, from_json, byoip_range_id):
 @cli_util.wrap_exceptions
 def get_capture_filter(ctx, from_json, capture_filter_id):
 
-    if isinstance(capture_filter_id, six.string_types) and len(capture_filter_id.strip()) == 0:
+    if isinstance(capture_filter_id, str) and len(capture_filter_id.strip()) == 0:
         raise click.UsageError('Parameter --capture-filter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7381,7 +7380,7 @@ def get_capture_filter(ctx, from_json, capture_filter_id):
 @cli_util.wrap_exceptions
 def get_cpe(ctx, from_json, cpe_id):
 
-    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+    if isinstance(cpe_id, str) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7409,7 +7408,7 @@ The operation returns configuration information for *all* of the [IPSecConnectio
 @cli_util.wrap_exceptions
 def get_cpe_device_config_content(ctx, from_json, file, cpe_id):
 
-    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+    if isinstance(cpe_id, str) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7455,7 +7454,7 @@ def get_cpe_device_config_content(ctx, from_json, file, cpe_id):
 @cli_util.wrap_exceptions
 def get_cpe_device_shape(ctx, from_json, cpe_device_shape_id):
 
-    if isinstance(cpe_device_shape_id, six.string_types) and len(cpe_device_shape_id.strip()) == 0:
+    if isinstance(cpe_device_shape_id, str) and len(cpe_device_shape_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-device-shape-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7477,7 +7476,7 @@ def get_cpe_device_shape(ctx, from_json, cpe_device_shape_id):
 @cli_util.wrap_exceptions
 def get_cross_connect(ctx, from_json, cross_connect_id):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7498,7 +7497,7 @@ def get_cross_connect(ctx, from_json, cross_connect_id):
 @cli_util.wrap_exceptions
 def get_cross_connect_group(ctx, from_json, cross_connect_group_id):
 
-    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+    if isinstance(cross_connect_group_id, str) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7519,7 +7518,7 @@ def get_cross_connect_group(ctx, from_json, cross_connect_group_id):
 @cli_util.wrap_exceptions
 def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7541,7 +7540,7 @@ def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
 @cli_util.wrap_exceptions
 def get_cross_connect_status(ctx, from_json, cross_connect_id):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7562,7 +7561,7 @@ def get_cross_connect_status(ctx, from_json, cross_connect_id):
 @cli_util.wrap_exceptions
 def get_dhcp_options(ctx, from_json, dhcp_id):
 
-    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+    if isinstance(dhcp_id, str) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7583,7 +7582,7 @@ def get_dhcp_options(ctx, from_json, dhcp_id):
 @cli_util.wrap_exceptions
 def get_drg(ctx, from_json, drg_id):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7604,7 +7603,7 @@ def get_drg(ctx, from_json, drg_id):
 @cli_util.wrap_exceptions
 def get_drg_attachment(ctx, from_json, drg_attachment_id):
 
-    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+    if isinstance(drg_attachment_id, str) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7625,7 +7624,7 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
 @cli_util.wrap_exceptions
 def get_drg_redundancy_status(ctx, from_json, drg_id):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7647,7 +7646,7 @@ def get_drg_redundancy_status(ctx, from_json, drg_id):
 @cli_util.wrap_exceptions
 def get_drg_route_distribution(ctx, from_json, drg_route_distribution_id):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7668,7 +7667,7 @@ def get_drg_route_distribution(ctx, from_json, drg_route_distribution_id):
 @cli_util.wrap_exceptions
 def get_drg_route_table(ctx, from_json, drg_route_table_id):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7689,7 +7688,7 @@ def get_drg_route_table(ctx, from_json, drg_route_table_id):
 @cli_util.wrap_exceptions
 def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
 
-    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+    if isinstance(provider_service_id, str) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7711,10 +7710,10 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
 @cli_util.wrap_exceptions
 def get_fast_connect_provider_service_key(ctx, from_json, provider_service_id, provider_service_key_name):
 
-    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+    if isinstance(provider_service_id, str) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
 
-    if isinstance(provider_service_key_name, six.string_types) and len(provider_service_key_name.strip()) == 0:
+    if isinstance(provider_service_key_name, str) and len(provider_service_key_name.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7736,7 +7735,7 @@ def get_fast_connect_provider_service_key(ctx, from_json, provider_service_id, p
 @cli_util.wrap_exceptions
 def get_internet_gateway(ctx, from_json, ig_id):
 
-    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+    if isinstance(ig_id, str) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7757,7 +7756,7 @@ def get_internet_gateway(ctx, from_json, ig_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection(ctx, from_json, ipsc_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7780,7 +7779,7 @@ def get_ip_sec_connection(ctx, from_json, ipsc_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7801,7 +7800,7 @@ def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7823,10 +7822,10 @@ def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7849,10 +7848,10 @@ def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection_tunnel_error(ctx, from_json, ipsc_id, tunnel_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7875,10 +7874,10 @@ def get_ip_sec_connection_tunnel_error(ctx, from_json, ipsc_id, tunnel_id):
 @cli_util.wrap_exceptions
 def get_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7907,7 +7906,7 @@ The operation returns configuration information for all tunnels in the single sp
 @cli_util.wrap_exceptions
 def get_ipsec_cpe_device_config_content(ctx, from_json, file, ipsc_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7951,7 +7950,7 @@ def get_ipsec_cpe_device_config_content(ctx, from_json, file, ipsc_id):
 @cli_util.wrap_exceptions
 def get_ipv6(ctx, from_json, ipv6_id):
 
-    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+    if isinstance(ipv6_id, str) and len(ipv6_id.strip()) == 0:
         raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7973,7 +7972,7 @@ def get_ipv6(ctx, from_json, ipv6_id):
 @cli_util.wrap_exceptions
 def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
 
-    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+    if isinstance(local_peering_gateway_id, str) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7994,7 +7993,7 @@ def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
 @cli_util.wrap_exceptions
 def get_nat_gateway(ctx, from_json, nat_gateway_id):
 
-    if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
+    if isinstance(nat_gateway_id, str) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8019,7 +8018,7 @@ To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules
 @cli_util.wrap_exceptions
 def get_network_security_group(ctx, from_json, network_security_group_id):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8073,7 +8072,7 @@ def get_networking_topology(ctx, from_json, compartment_id, access_level, query_
 @cli_util.wrap_exceptions
 def get_private_ip(ctx, from_json, private_ip_id):
 
-    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+    if isinstance(private_ip_id, str) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8100,7 +8099,7 @@ Or you can use [GetPublicIpByPrivateIpId] with the [OCID] of the private IP that
 @cli_util.wrap_exceptions
 def get_public_ip(ctx, from_json, public_ip_id):
 
-    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+    if isinstance(public_ip_id, str) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8169,7 +8168,7 @@ def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
 @cli_util.wrap_exceptions
 def get_public_ip_pool(ctx, from_json, public_ip_pool_id):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8191,7 +8190,7 @@ def get_public_ip_pool(ctx, from_json, public_ip_pool_id):
 @cli_util.wrap_exceptions
 def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
 
-    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+    if isinstance(remote_peering_connection_id, str) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8212,7 +8211,7 @@ def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
 @cli_util.wrap_exceptions
 def get_resource_ip_inventory(ctx, from_json, data_request_id):
 
-    if isinstance(data_request_id, six.string_types) and len(data_request_id.strip()) == 0:
+    if isinstance(data_request_id, str) and len(data_request_id.strip()) == 0:
         raise click.UsageError('Parameter --data-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8234,7 +8233,7 @@ def get_resource_ip_inventory(ctx, from_json, data_request_id):
 @cli_util.wrap_exceptions
 def get_route_table(ctx, from_json, rt_id):
 
-    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+    if isinstance(rt_id, str) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8255,7 +8254,7 @@ def get_route_table(ctx, from_json, rt_id):
 @cli_util.wrap_exceptions
 def get_security_list(ctx, from_json, security_list_id):
 
-    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+    if isinstance(security_list_id, str) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8276,7 +8275,7 @@ def get_security_list(ctx, from_json, security_list_id):
 @cli_util.wrap_exceptions
 def get_service(ctx, from_json, service_id):
 
-    if isinstance(service_id, six.string_types) and len(service_id.strip()) == 0:
+    if isinstance(service_id, str) and len(service_id.strip()) == 0:
         raise click.UsageError('Parameter --service-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8297,7 +8296,7 @@ def get_service(ctx, from_json, service_id):
 @cli_util.wrap_exceptions
 def get_service_gateway(ctx, from_json, service_gateway_id):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8318,7 +8317,7 @@ def get_service_gateway(ctx, from_json, service_gateway_id):
 @cli_util.wrap_exceptions
 def get_subnet(ctx, from_json, subnet_id):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8339,7 +8338,7 @@ def get_subnet(ctx, from_json, subnet_id):
 @cli_util.wrap_exceptions
 def get_subnet_cidr_utilization(ctx, from_json, subnet_id):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8361,7 +8360,7 @@ def get_subnet_cidr_utilization(ctx, from_json, subnet_id):
 @cli_util.wrap_exceptions
 def get_subnet_ip_inventory(ctx, from_json, subnet_id):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8419,10 +8418,10 @@ def get_subnet_topology(ctx, from_json, compartment_id, subnet_id, access_level,
 @cli_util.wrap_exceptions
 def get_tunnel_cpe_device_config(ctx, from_json, ipsc_id, tunnel_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8453,10 +8452,10 @@ The operation returns configuration information for only the specified IPSec tun
 @cli_util.wrap_exceptions
 def get_tunnel_cpe_device_config_content(ctx, from_json, file, ipsc_id, tunnel_id):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8501,7 +8500,7 @@ def get_tunnel_cpe_device_config_content(ctx, from_json, file, ipsc_id, tunnel_i
 @cli_util.wrap_exceptions
 def get_upgrade_status(ctx, from_json, drg_id):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8523,7 +8522,7 @@ def get_upgrade_status(ctx, from_json, drg_id):
 @cli_util.wrap_exceptions
 def get_vcn(ctx, from_json, vcn_id):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8544,7 +8543,7 @@ def get_vcn(ctx, from_json, vcn_id):
 @cli_util.wrap_exceptions
 def get_vcn_dns_resolver_association(ctx, from_json, vcn_id):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8568,7 +8567,7 @@ def get_vcn_dns_resolver_association(ctx, from_json, vcn_id):
 @cli_util.wrap_exceptions
 def get_vcn_overlap(ctx, from_json, vcn_id, region_list, compartment_list):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8631,7 +8630,7 @@ def get_vcn_topology(ctx, from_json, compartment_id, vcn_id, access_level, query
 @cli_util.wrap_exceptions
 def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8652,7 +8651,7 @@ def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
 @cli_util.wrap_exceptions
 def get_vlan(ctx, from_json, vlan_id):
 
-    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+    if isinstance(vlan_id, str) and len(vlan_id.strip()) == 0:
         raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8674,7 +8673,7 @@ def get_vlan(ctx, from_json, vlan_id):
 @cli_util.wrap_exceptions
 def get_vnic(ctx, from_json, vnic_id):
 
-    if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
+    if isinstance(vnic_id, str) and len(vnic_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8695,7 +8694,7 @@ def get_vnic(ctx, from_json, vnic_id):
 @cli_util.wrap_exceptions
 def get_vtap(ctx, from_json, vtap_id):
 
-    if isinstance(vtap_id, six.string_types) and len(vtap_id.strip()) == 0:
+    if isinstance(vtap_id, str) and len(vtap_id.strip()) == 0:
         raise click.UsageError('Parameter --vtap-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8721,7 +8720,7 @@ def get_vtap(ctx, from_json, vtap_id):
 @cli_util.wrap_exceptions
 def ipv6_vnic_detach(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, if_match):
 
-    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+    if isinstance(ipv6_id, str) and len(ipv6_id.strip()) == 0:
         raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8856,7 +8855,7 @@ def list_byoip_allocated_ranges(ctx, from_json, all_pages, page_size, byoip_rang
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9245,7 +9244,7 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
 @cli_util.wrap_exceptions
 def list_cross_connect_mappings(ctx, from_json, all_pages, virtual_circuit_id):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9539,7 +9538,7 @@ def list_drg_route_distribution_statements(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9661,7 +9660,7 @@ def list_drg_route_rules(ctx, from_json, all_pages, page_size, drg_route_table_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9887,7 +9886,7 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+    if isinstance(provider_service_id, str) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10077,10 +10076,10 @@ def list_ip_sec_connection_tunnel_routes(ctx, from_json, all_pages, page_size, i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10138,10 +10137,10 @@ def list_ip_sec_connection_tunnel_security_associations(ctx, from_json, all_page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10196,7 +10195,7 @@ def list_ip_sec_connection_tunnels(ctx, from_json, all_pages, page_size, ipsc_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10487,7 +10486,7 @@ def list_network_security_group_security_rules(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10547,7 +10546,7 @@ def list_network_security_group_vnics(ctx, from_json, all_pages, page_size, netw
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10740,7 +10739,7 @@ def list_provider_remote_regions(ctx, from_json, all_pages, page_size, provider_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(provider_service_id, six.string_types) and len(provider_service_id.strip()) == 0:
+    if isinstance(provider_service_id, str) and len(provider_service_id.strip()) == 0:
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11354,7 +11353,7 @@ def list_virtual_circuit_associated_tunnels(ctx, from_json, all_pages, page_size
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11450,7 +11449,7 @@ The state value is case-insensitive.""")
 @cli_util.wrap_exceptions
 def list_virtual_circuit_public_prefixes(ctx, from_json, all_pages, virtual_circuit_id, verification_state):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11692,7 +11691,7 @@ def list_vtaps(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, sou
 @cli_util.wrap_exceptions
 def modify_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, updated_ipv4_cidr_block, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11767,7 +11766,7 @@ def modify_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def modify_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, original_cidr_block, new_cidr_block, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11837,7 +11836,7 @@ def modify_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def patch_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, patch_subnet_instructions, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11906,7 +11905,7 @@ def patch_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def patch_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, patch_vcn_instructions, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11971,7 +11970,7 @@ def patch_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @cli_util.wrap_exceptions
 def private_ip_vnic_detach(ctx, from_json, private_ip_id, if_match):
 
-    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+    if isinstance(private_ip_id, str) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11996,7 +11995,7 @@ def private_ip_vnic_detach(ctx, from_json, private_ip_id, if_match):
 @cli_util.wrap_exceptions
 def remove_drg_route_distribution_statements(ctx, from_json, drg_route_distribution_id, statement_ids):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12025,7 +12024,7 @@ def remove_drg_route_distribution_statements(ctx, from_json, drg_route_distribut
 @cli_util.wrap_exceptions
 def remove_drg_route_rules(ctx, from_json, drg_route_table_id, route_rule_ids):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12057,7 +12056,7 @@ def remove_drg_route_rules(ctx, from_json, drg_route_table_id, route_rule_ids):
 @cli_util.wrap_exceptions
 def remove_export_drg_route_distribution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, if_match):
 
-    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+    if isinstance(drg_attachment_id, str) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12108,7 +12107,7 @@ def remove_export_drg_route_distribution(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def remove_import_drg_route_distribution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_route_table_id, if_match):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12164,7 +12163,7 @@ Example: `10.0.1.0/24`""")
 @cli_util.wrap_exceptions
 def remove_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12235,7 +12234,7 @@ Example: `2001:0db8:0123::/64`""")
 @cli_util.wrap_exceptions
 def remove_ipv6_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv6_cidr_block, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12306,7 +12305,7 @@ Example: `2001:0db8:0123::/56`""")
 @cli_util.wrap_exceptions
 def remove_ipv6_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, if_match, ipv6_cidr_block):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12373,7 +12372,7 @@ def remove_ipv6_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def remove_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rule_ids):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12405,7 +12404,7 @@ def remove_network_security_group_security_rules(ctx, from_json, network_securit
 @cli_util.wrap_exceptions
 def remove_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_pool_id, cidr_block):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12462,7 +12461,7 @@ def remove_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def remove_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, cidr_block, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12532,7 +12531,7 @@ def remove_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def set_origin_asn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, byoasn_id, as_path_prepend_length, if_match):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12600,7 +12599,7 @@ def set_origin_asn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def set_origin_asn_to_oracle(ctx, from_json, byoip_range_id, if_match):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12636,7 +12635,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_byoasn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoasn_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(byoasn_id, six.string_types) and len(byoasn_id.strip()) == 0:
+    if isinstance(byoasn_id, str) and len(byoasn_id.strip()) == 0:
         raise click.UsageError('Parameter --byoasn-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -12712,7 +12711,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -12794,7 +12793,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_capture_filter(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, capture_filter_id, defined_tags, display_name, vtap_capture_filter_rules, flow_log_capture_filter_rules, freeform_tags, if_match):
 
-    if isinstance(capture_filter_id, six.string_types) and len(capture_filter_id.strip()) == 0:
+    if isinstance(capture_filter_id, str) and len(capture_filter_id.strip()) == 0:
         raise click.UsageError('Parameter --capture-filter-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or vtap_capture_filter_rules or flow_log_capture_filter_rules or freeform_tags:
@@ -12878,7 +12877,7 @@ For more information about generating CPE device configuration content, see:
 @cli_util.wrap_exceptions
 def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freeform_tags, cpe_device_shape_id, if_match):
 
-    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+    if isinstance(cpe_id, str) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -12940,7 +12939,7 @@ Example: `true`""")
 @cli_util.wrap_exceptions
 def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, defined_tags, display_name, freeform_tags, is_active, customer_reference_name, macsec_properties, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, if_match):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or macsec_properties:
@@ -13035,7 +13034,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, defined_tags, display_name, customer_reference_name, freeform_tags, macsec_properties, minimum_links, is_interface_hold_timer_enabled, interface_down_timer_value_in_milliseconds, if_match):
 
-    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+    if isinstance(cross_connect_group_id, str) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or macsec_properties:
@@ -13117,7 +13116,7 @@ def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id, should_extend, should_remove_authorized_agent, authorized_agent, if_match):
 
-    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+    if isinstance(cross_connect_id, str) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13172,7 +13171,7 @@ This option is a JSON list with items of type DhcpOption.  For documentation on 
 @cli_util.wrap_exceptions
 def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dhcp_id, defined_tags, display_name, freeform_tags, options, domain_name_type, if_match):
 
-    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+    if isinstance(dhcp_id, str) and len(dhcp_id.strip()) == 0:
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or options:
@@ -13254,7 +13253,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, defined_tags, default_drg_route_tables, display_name, freeform_tags, if_match):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or default_drg_route_tables or freeform_tags:
@@ -13344,7 +13343,7 @@ For information about why you would associate a route table with a DRG attachmen
 @cli_util.wrap_exceptions
 def update_drg_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, network_details, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match):
 
-    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+    if isinstance(drg_attachment_id, str) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
     if not force:
         if network_details or defined_tags or freeform_tags:
@@ -13448,7 +13447,7 @@ For information about why you would associate a route table with a DRG attachmen
 @cli_util.wrap_exceptions
 def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match, network_details_route_table_id, network_details_vcn_route_type):
 
-    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+    if isinstance(drg_attachment_id, str) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13541,7 +13540,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_drg_route_distribution(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_route_distribution_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13605,7 +13604,7 @@ def update_drg_route_distribution(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_drg_route_distribution_statements(ctx, from_json, drg_route_distribution_id, statements):
 
-    if isinstance(drg_route_distribution_id, six.string_types) and len(drg_route_distribution_id.strip()) == 0:
+    if isinstance(drg_route_distribution_id, str) and len(drg_route_distribution_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-distribution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13634,7 +13633,7 @@ This option is a JSON list with items of type UpdateDrgRouteRuleDetails.  For do
 @cli_util.wrap_exceptions
 def update_drg_route_rules(ctx, from_json, drg_route_table_id, route_rules):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13676,7 +13675,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_drg_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_route_table_id, defined_tags, display_name, freeform_tags, import_drg_route_distribution_id, is_ecmp_enabled, if_match):
 
-    if isinstance(drg_route_table_id, six.string_types) and len(drg_route_table_id.strip()) == 0:
+    if isinstance(drg_route_table_id, str) and len(drg_route_table_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-route-table-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13761,7 +13760,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ig_id, defined_tags, display_name, freeform_tags, is_enabled, route_table_id, if_match):
 
-    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+    if isinstance(ig_id, str) and len(ig_id.strip()) == 0:
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13857,7 +13856,7 @@ Example: `2001:db8::/32`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.wrap_exceptions
 def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type, static_routes, if_match):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or static_routes:
@@ -13955,10 +13954,10 @@ The `DISABLED` option directs IKE to completely refuse to negotiate NAT-T even i
 @cli_util.wrap_exceptions
 def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, ike_version, bgp_session_config, oracle_initiation, nat_translation_enabled, phase_one_config, phase_two_config, dpd_config, encryption_domain_config, if_match):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
     if not force:
         if bgp_session_config or phase_one_config or phase_two_config or dpd_config or encryption_domain_config:
@@ -14049,10 +14048,10 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def update_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_id, shared_secret, if_match):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14101,7 +14100,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, defined_tags, display_name, freeform_tags, vnic_id, hostname, route_table_id, lifetime, if_match):
 
-    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+    if isinstance(ipv6_id, str) and len(ipv6_id.strip()) == 0:
         raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14195,7 +14194,7 @@ For information about why you would associate a route table with an LPG, see [Tr
 @cli_util.wrap_exceptions
 def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, defined_tags, display_name, freeform_tags, security_attributes, route_table_id, if_match):
 
-    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+    if isinstance(local_peering_gateway_id, str) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or security_attributes:
@@ -14282,7 +14281,7 @@ If you don't specify a route table here, the NAT gateway is created without an a
 @cli_util.wrap_exceptions
 def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, nat_gateway_id, defined_tags, display_name, freeform_tags, block_traffic, route_table_id, if_match):
 
-    if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
+    if isinstance(nat_gateway_id, str) and len(nat_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14371,7 +14370,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_network_security_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_security_group_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14437,7 +14436,7 @@ This option is a JSON list with items of type UpdateSecurityRuleDetails.  For do
 @cli_util.wrap_exceptions
 def update_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rules):
 
-    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+    if isinstance(network_security_group_id, str) and len(network_security_group_id.strip()) == 0:
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14486,7 +14485,7 @@ Example: `bminstance1`""")
 @cli_util.wrap_exceptions
 def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, display_name, freeform_tags, hostname_label, vnic_id, lifetime, route_table_id, if_match):
 
-    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+    if isinstance(private_ip_id, str) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14565,7 +14564,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_id, defined_tags, display_name, freeform_tags, private_ip_id, if_match):
 
-    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+    if isinstance(public_ip_id, str) and len(public_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14643,7 +14642,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_public_ip_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, public_ip_pool_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(public_ip_pool_id, six.string_types) and len(public_ip_pool_id.strip()) == 0:
+    if isinstance(public_ip_pool_id, str) and len(public_ip_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --public-ip-pool-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14719,7 +14718,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_remote_peering_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+    if isinstance(remote_peering_connection_id, str) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -14799,7 +14798,7 @@ This option is a JSON list with items of type RouteRule.  For documentation on R
 @cli_util.wrap_exceptions
 def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rt_id, defined_tags, display_name, freeform_tags, route_rules, if_match):
 
-    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+    if isinstance(rt_id, str) and len(rt_id.strip()) == 0:
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or route_rules:
@@ -14885,7 +14884,7 @@ This option is a JSON list with items of type IngressSecurityRule.  For document
 @cli_util.wrap_exceptions
 def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_list_id, defined_tags, display_name, egress_security_rules, freeform_tags, ingress_security_rules, if_match):
 
-    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+    if isinstance(security_list_id, str) and len(security_list_id.strip()) == 0:
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or egress_security_rules or freeform_tags or ingress_security_rules:
@@ -14977,7 +14976,7 @@ This option is a JSON list with items of type ServiceIdRequestDetails.  For docu
 @cli_util.wrap_exceptions
 def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, block_traffic, defined_tags, display_name, freeform_tags, route_table_id, services, if_match):
 
-    if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
+    if isinstance(service_gateway_id, str) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or services:
@@ -15077,7 +15076,7 @@ Example: `2001:0db8:0123:1111::/64`""")
 @cli_util.wrap_exceptions
 def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, defined_tags, dhcp_options_id, display_name, freeform_tags, route_table_id, security_list_ids, cidr_block, ipv6_cidr_block, ipv6_cidr_blocks, if_match):
 
-    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+    if isinstance(subnet_id, str) and len(subnet_id.strip()) == 0:
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or security_list_ids or ipv6_cidr_blocks:
@@ -15164,10 +15163,10 @@ This option is a JSON list with items of type CpeDeviceConfigAnswer.  For docume
 @cli_util.wrap_exceptions
 def update_tunnel_cpe_device_config(ctx, from_json, force, ipsc_id, tunnel_id, tunnel_cpe_device_config, if_match):
 
-    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+    if isinstance(ipsc_id, str) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+    if isinstance(tunnel_id, str) and len(tunnel_id.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
     if not force:
         if tunnel_cpe_device_config:
@@ -15219,7 +15218,7 @@ Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\
 @cli_util.wrap_exceptions
 def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, security_attributes, is_zpr_only, if_match):
 
-    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+    if isinstance(vcn_id, str) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or security_attributes:
@@ -15334,7 +15333,7 @@ To be updated only by the provider.""")
 @cli_util.wrap_exceptions
 def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, routing_policy, bgp_admin_state, is_bfd_enabled, is_transport_mode, customer_bgp_asn, customer_asn, defined_tags, display_name, freeform_tags, traffic_mode, gateway_id, provider_state, provider_service_key_name, reference_comment, ip_mtu, if_match):
 
-    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+    if isinstance(virtual_circuit_id, str) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
     if not force:
         if cross_connect_mappings or routing_policy or defined_tags or freeform_tags:
@@ -15458,7 +15457,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_vlan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, defined_tags, display_name, freeform_tags, nsg_ids, route_table_id, cidr_block, if_match):
 
-    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+    if isinstance(vlan_id, str) and len(vlan_id.strip()) == 0:
         raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or nsg_ids:
@@ -15560,7 +15559,7 @@ Example: `true`""")
 @cli_util.wrap_exceptions
 def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, security_attributes, hostname_label, nsg_ids, skip_source_dest_check, route_table_id, if_match):
 
-    if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
+    if isinstance(vnic_id, str) and len(vnic_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or security_attributes or nsg_ids:
@@ -15665,7 +15664,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_vtap(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vtap_id, defined_tags, display_name, freeform_tags, source_id, target_id, target_ip, capture_filter_id, encapsulation_protocol, vxlan_network_identifier, is_vtap_enabled, traffic_mode, max_packet_size, source_private_endpoint_ip, source_private_endpoint_subnet_id, target_type, source_type, if_match):
 
-    if isinstance(vtap_id, six.string_types) and len(vtap_id.strip()) == 0:
+    if isinstance(vtap_id, str) and len(vtap_id.strip()) == 0:
         raise click.UsageError('Parameter --vtap-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -15771,7 +15770,7 @@ def update_vtap(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def upgrade_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id):
 
-    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+    if isinstance(drg_id, str) and len(drg_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15832,7 +15831,7 @@ def upgrade_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def validate_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoasn_id, if_match):
 
-    if isinstance(byoasn_id, six.string_types) and len(byoasn_id.strip()) == 0:
+    if isinstance(byoasn_id, str) and len(byoasn_id.strip()) == 0:
         raise click.UsageError('Parameter --byoasn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15894,7 +15893,7 @@ def validate_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def validate_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15951,7 +15950,7 @@ def validate_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def withdraw_byoip_range(ctx, from_json, byoip_range_id):
 
-    if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
+    if isinstance(byoip_range_id, str) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
 
     kwargs = {}

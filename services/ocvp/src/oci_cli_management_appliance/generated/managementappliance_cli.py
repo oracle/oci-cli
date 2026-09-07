@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -122,7 +121,7 @@ def create_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_appliance_id, if_match):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
+    if isinstance(management_appliance_id, str) and len(management_appliance_id.strip()) == 0:
         raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -173,7 +172,7 @@ def delete_management_appliance(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_management_appliance(ctx, from_json, management_appliance_id):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
+    if isinstance(management_appliance_id, str) and len(management_appliance_id.strip()) == 0:
         raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -279,7 +278,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_management_appliance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_appliance_id, display_name, configuration, connections, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_appliance_id, six.string_types) and len(management_appliance_id.strip()) == 0:
+    if isinstance(management_appliance_id, str) and len(management_appliance_id.strip()) == 0:
         raise click.UsageError('Parameter --management-appliance-id cannot be whitespace or empty string')
     if not force:
         if configuration or connections or freeform_tags or defined_tags:

@@ -21,7 +21,6 @@ import arrow
 import click
 import dateutil.parser
 import pytz
-import six  # noqa: F401
 from oci import exceptions
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci.object_storage.transfer import constants
@@ -61,7 +60,7 @@ def validate_namespace_name(value):
     if value is None:
         return value
 
-    if isinstance(value, six.string_types):
+    if isinstance(value, str):
         if not value or value != value.strip() or not NAMESPACE_HOST_LABEL_PATTERN.match(value):
             raise click.BadParameter(NAMESPACE_VALIDATION_ERROR)
 
@@ -331,10 +330,10 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
     elif not all_pages and limit is None:
         limit = 100
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+    if isinstance(bucket_name, str) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2695,13 +2694,13 @@ def update_retention_rule(ctx, **kwargs):
     bucket_name = kwargs['bucket_name']
     retention_rule_id = kwargs['retention_rule_id']
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+    if isinstance(bucket_name, str) and len(bucket_name.strip()) == 0:
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
 
-    if isinstance(retention_rule_id, six.string_types) and len(retention_rule_id.strip()) == 0:
+    if isinstance(retention_rule_id, str) and len(retention_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --retention-rule-id cannot be whitespace or empty string')
 
     # Gather the values to be sent to the API as the body (UpdateRetentionRuleDetails)

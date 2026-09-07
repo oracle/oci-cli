@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -54,7 +53,7 @@ omhub_network_anchor_root_group.add_command(network_anchor_collection_group)
 @cli_util.wrap_exceptions
 def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_name, subscription_id, external_location, should_fetch_vcn_name):
 
-    if isinstance(network_anchor_id, six.string_types) and len(network_anchor_id.strip()) == 0:
+    if isinstance(network_anchor_id, str) and len(network_anchor_id.strip()) == 0:
         raise click.UsageError('Parameter --network-anchor-id cannot be whitespace or empty string')
 
     kwargs = {}

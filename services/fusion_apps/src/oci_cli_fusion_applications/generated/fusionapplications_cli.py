@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -171,7 +170,7 @@ fusion_apps_root_group.add_command(scheduled_activity_group)
 @cli_util.wrap_exceptions
 def change_fusion_environment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, compartment_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -232,7 +231,7 @@ def change_fusion_environment_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_fusion_environment_family_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_family_id, compartment_id, if_match):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -292,7 +291,7 @@ def change_fusion_environment_family_compartment(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def create_data_masking_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, is_resume_data_masking):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -357,10 +356,10 @@ def create_data_masking_activity(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def create_email_subdomain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, name, dns_management, certificate_management, freeform_tags, defined_tags):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, username, email_address, first_name, last_name, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -659,7 +658,7 @@ def create_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def create_marketing_brand(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, name, freeform_tags, defined_tags):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -724,10 +723,10 @@ def create_marketing_brand(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def create_microsite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, name, dns_management, certificate_management, freeform_tags, defined_tags):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -792,7 +791,7 @@ def create_microsite(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, source_fusion_environment_id, is_data_masking_opted, time_scheduled_start):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -857,7 +856,7 @@ def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def create_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_instance_type, service_instance_id, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -922,7 +921,7 @@ def create_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def create_vanity_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, origin_cert_request_type, cdn_cert_request_type, vanity_domain, dns_managed_by, prefix, certificate_info, change_management_link):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1002,7 +1001,7 @@ def create_vanity_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def create_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vanity_domain_id, time_scheduled, operation_type, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1065,13 +1064,13 @@ def create_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_email_subdomain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, email_subdomain_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1129,7 +1128,7 @@ def delete_email_subdomain(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1186,10 +1185,10 @@ def delete_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, admin_username, fusion_environment_id, if_match):
 
-    if isinstance(admin_username, six.string_types) and len(admin_username.strip()) == 0:
+    if isinstance(admin_username, str) and len(admin_username.strip()) == 0:
         raise click.UsageError('Parameter --admin-username cannot be whitespace or empty string')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1246,7 +1245,7 @@ def delete_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_family_id, if_match):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1303,10 +1302,10 @@ def delete_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_marketing_brand(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1365,13 +1364,13 @@ def delete_marketing_brand(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_microsite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, microsite_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(microsite_id, six.string_types) and len(microsite_id.strip()) == 0:
+    if isinstance(microsite_id, str) and len(microsite_id.strip()) == 0:
         raise click.UsageError('Parameter --microsite-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1430,10 +1429,10 @@ def delete_microsite(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, refresh_activity_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(refresh_activity_id, six.string_types) and len(refresh_activity_id.strip()) == 0:
+    if isinstance(refresh_activity_id, str) and len(refresh_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --refresh-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1491,10 +1490,10 @@ def delete_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, service_attachment_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(service_attachment_id, six.string_types) and len(service_attachment_id.strip()) == 0:
+    if isinstance(service_attachment_id, str) and len(service_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --service-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1552,10 +1551,10 @@ def delete_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, vanity_domain_activity_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_domain_activity_id, six.string_types) and len(vanity_domain_activity_id.strip()) == 0:
+    if isinstance(vanity_domain_activity_id, str) and len(vanity_domain_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1607,7 +1606,7 @@ def delete_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def generate_extract_details(ctx, from_json, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1630,10 +1629,10 @@ def generate_extract_details(ctx, from_json, fusion_environment_id):
 @cli_util.wrap_exceptions
 def get_data_masking_activity(ctx, from_json, fusion_environment_id, data_masking_activity_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(data_masking_activity_id, six.string_types) and len(data_masking_activity_id.strip()) == 0:
+    if isinstance(data_masking_activity_id, str) and len(data_masking_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --data-masking-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1658,13 +1657,13 @@ def get_data_masking_activity(ctx, from_json, fusion_environment_id, data_maskin
 @cli_util.wrap_exceptions
 def get_email_subdomain(ctx, from_json, fusion_environment_id, marketing_brand_id, email_subdomain_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1690,13 +1689,13 @@ def get_email_subdomain(ctx, from_json, fusion_environment_id, marketing_brand_i
 @cli_util.wrap_exceptions
 def get_email_subdomain_csr(ctx, from_json, fusion_environment_id, marketing_brand_id, email_subdomain_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1722,13 +1721,13 @@ def get_email_subdomain_csr(ctx, from_json, fusion_environment_id, marketing_bra
 @cli_util.wrap_exceptions
 def get_email_subdomain_dns_config(ctx, from_json, fusion_environment_id, marketing_brand_id, email_subdomain_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1752,7 +1751,7 @@ def get_email_subdomain_dns_config(ctx, from_json, fusion_environment_id, market
 @cli_util.wrap_exceptions
 def get_fusion_environment(ctx, from_json, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1774,7 +1773,7 @@ def get_fusion_environment(ctx, from_json, fusion_environment_id):
 @cli_util.wrap_exceptions
 def get_fusion_environment_family(ctx, from_json, fusion_environment_family_id):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1796,7 +1795,7 @@ def get_fusion_environment_family(ctx, from_json, fusion_environment_family_id):
 @cli_util.wrap_exceptions
 def get_fusion_environment_family_limits_and_usage(ctx, from_json, fusion_environment_family_id):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1818,7 +1817,7 @@ def get_fusion_environment_family_limits_and_usage(ctx, from_json, fusion_enviro
 @cli_util.wrap_exceptions
 def get_fusion_environment_family_subscription_detail(ctx, from_json, fusion_environment_family_id):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1840,7 +1839,7 @@ def get_fusion_environment_family_subscription_detail(ctx, from_json, fusion_env
 @cli_util.wrap_exceptions
 def get_fusion_environment_status(ctx, from_json, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1863,10 +1862,10 @@ def get_fusion_environment_status(ctx, from_json, fusion_environment_id):
 @cli_util.wrap_exceptions
 def get_marketing_brand(ctx, from_json, fusion_environment_id, marketing_brand_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1891,13 +1890,13 @@ def get_marketing_brand(ctx, from_json, fusion_environment_id, marketing_brand_i
 @cli_util.wrap_exceptions
 def get_microsite(ctx, from_json, fusion_environment_id, marketing_brand_id, microsite_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(microsite_id, six.string_types) and len(microsite_id.strip()) == 0:
+    if isinstance(microsite_id, str) and len(microsite_id.strip()) == 0:
         raise click.UsageError('Parameter --microsite-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1923,13 +1922,13 @@ def get_microsite(ctx, from_json, fusion_environment_id, marketing_brand_id, mic
 @cli_util.wrap_exceptions
 def get_microsite_dns_config(ctx, from_json, fusion_environment_id, marketing_brand_id, microsite_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(microsite_id, six.string_types) and len(microsite_id.strip()) == 0:
+    if isinstance(microsite_id, str) and len(microsite_id.strip()) == 0:
         raise click.UsageError('Parameter --microsite-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1954,10 +1953,10 @@ def get_microsite_dns_config(ctx, from_json, fusion_environment_id, marketing_br
 @cli_util.wrap_exceptions
 def get_refresh_activity(ctx, from_json, fusion_environment_id, refresh_activity_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(refresh_activity_id, six.string_types) and len(refresh_activity_id.strip()) == 0:
+    if isinstance(refresh_activity_id, str) and len(refresh_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --refresh-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1981,10 +1980,10 @@ def get_refresh_activity(ctx, from_json, fusion_environment_id, refresh_activity
 @cli_util.wrap_exceptions
 def get_scheduled_activity(ctx, from_json, fusion_environment_id, scheduled_activity_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(scheduled_activity_id, six.string_types) and len(scheduled_activity_id.strip()) == 0:
+    if isinstance(scheduled_activity_id, str) and len(scheduled_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2008,10 +2007,10 @@ def get_scheduled_activity(ctx, from_json, fusion_environment_id, scheduled_acti
 @cli_util.wrap_exceptions
 def get_service_attachment(ctx, from_json, fusion_environment_id, service_attachment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(service_attachment_id, six.string_types) and len(service_attachment_id.strip()) == 0:
+    if isinstance(service_attachment_id, str) and len(service_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --service-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2037,10 +2036,10 @@ def get_service_attachment(ctx, from_json, fusion_environment_id, service_attach
 @cli_util.wrap_exceptions
 def get_vanity_domain(ctx, from_json, fusion_environment_id, vanity_domain_id, does_download_origin_csr, does_download_akamai_csr):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_domain_id, six.string_types) and len(vanity_domain_id.strip()) == 0:
+    if isinstance(vanity_domain_id, str) and len(vanity_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2068,10 +2067,10 @@ def get_vanity_domain(ctx, from_json, fusion_environment_id, vanity_domain_id, d
 @cli_util.wrap_exceptions
 def get_vanity_domain_activity(ctx, from_json, fusion_environment_id, vanity_domain_activity_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_domain_activity_id, six.string_types) and len(vanity_domain_activity_id.strip()) == 0:
+    if isinstance(vanity_domain_activity_id, str) and len(vanity_domain_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2094,7 +2093,7 @@ def get_vanity_domain_activity(ctx, from_json, fusion_environment_id, vanity_dom
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2119,7 +2118,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def initiate_extract(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2169,7 +2168,7 @@ def initiate_extract(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def list_admin_users(ctx, from_json, all_pages, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2201,7 +2200,7 @@ def list_data_masking_activities(ctx, from_json, all_pages, page_size, fusion_en
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2264,10 +2263,10 @@ def list_email_subdomains(ctx, from_json, all_pages, page_size, fusion_environme
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2462,7 +2461,7 @@ def list_marketing_brands(ctx, from_json, all_pages, page_size, fusion_environme
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2529,10 +2528,10 @@ def list_microsites(ctx, from_json, all_pages, page_size, fusion_environment_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2602,7 +2601,7 @@ def list_refresh_activities(ctx, from_json, all_pages, page_size, fusion_environ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2674,7 +2673,7 @@ def list_scheduled_activities(ctx, from_json, all_pages, page_size, fusion_envir
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2748,7 +2747,7 @@ def list_service_attachments(ctx, from_json, all_pages, page_size, fusion_enviro
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2811,7 +2810,7 @@ def list_time_available_for_refreshes(ctx, from_json, all_pages, page_size, fusi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2870,7 +2869,7 @@ def list_vanity_domains(ctx, from_json, all_pages, page_size, fusion_environment
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2933,7 +2932,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2990,7 +2989,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3109,13 +3108,13 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, sta
 @cli_util.wrap_exceptions
 def request_email_subdomain_csr(ctx, from_json, fusion_environment_id, marketing_brand_id, email_subdomain_id, common_name, organization_name, organization_unit, locality, state, country, email_address, sans, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3161,10 +3160,10 @@ def request_email_subdomain_csr(ctx, from_json, fusion_environment_id, marketing
 @cli_util.wrap_exceptions
 def reset_fusion_environment_password(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, password, fusion_environment_id, admin_username, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(admin_username, six.string_types) and len(admin_username.strip()) == 0:
+    if isinstance(admin_username, str) and len(admin_username.strip()) == 0:
         raise click.UsageError('Parameter --admin-username cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3226,10 +3225,10 @@ def reset_fusion_environment_password(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def submit_vanity_domain_validation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vanity_domain_id, fusion_environment_id, if_match):
 
-    if isinstance(vanity_domain_id, six.string_types) and len(vanity_domain_id.strip()) == 0:
+    if isinstance(vanity_domain_id, str) and len(vanity_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-id cannot be whitespace or empty string')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3290,13 +3289,13 @@ def submit_vanity_domain_validation(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_email_subdomain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, email_subdomain_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3377,7 +3376,7 @@ This option is a JSON list with items of type AdditionalEgressRule.  For documen
 @cli_util.wrap_exceptions
 def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, display_name, kms_key_id, maintenance_policy, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, additional_egress_rules, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
     if not force:
         if maintenance_policy or additional_language_packs or rules or additional_egress_rules or freeform_tags or defined_tags:
@@ -3473,7 +3472,7 @@ def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_fusion_environment_family(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_family_id, display_name, family_maintenance_policy, subscription_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fusion_environment_family_id, six.string_types) and len(fusion_environment_family_id.strip()) == 0:
+    if isinstance(fusion_environment_family_id, str) and len(fusion_environment_family_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-family-id cannot be whitespace or empty string')
     if not force:
         if family_maintenance_policy or subscription_ids or freeform_tags or defined_tags:
@@ -3555,10 +3554,10 @@ def update_fusion_environment_family(ctx, from_json, force, wait_for_state, max_
 @cli_util.wrap_exceptions
 def update_marketing_brand(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3629,13 +3628,13 @@ def update_marketing_brand(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_microsite(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, microsite_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(microsite_id, six.string_types) and len(microsite_id.strip()) == 0:
+    if isinstance(microsite_id, str) and len(microsite_id.strip()) == 0:
         raise click.UsageError('Parameter --microsite-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3704,10 +3703,10 @@ def update_microsite(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, refresh_activity_id, time_scheduled_start, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(refresh_activity_id, six.string_types) and len(refresh_activity_id.strip()) == 0:
+    if isinstance(refresh_activity_id, str) and len(refresh_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --refresh-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3769,10 +3768,10 @@ def update_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_vanity_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, vanity_domain_id, certificate_info, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_domain_id, six.string_types) and len(vanity_domain_id.strip()) == 0:
+    if isinstance(vanity_domain_id, str) and len(vanity_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-id cannot be whitespace or empty string')
     if not force:
         if certificate_info:
@@ -3841,10 +3840,10 @@ def update_vanity_domain(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, vanity_domain_activity_id, time_scheduled, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(vanity_domain_activity_id, six.string_types) and len(vanity_domain_activity_id.strip()) == 0:
+    if isinstance(vanity_domain_activity_id, str) and len(vanity_domain_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3909,13 +3908,13 @@ def update_vanity_domain_activity(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def upload_email_subdomain_certificate(ctx, from_json, fusion_environment_id, marketing_brand_id, email_subdomain_id, common_name, certificate_pem, certificate_chain_pem, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3959,10 +3958,10 @@ def upload_email_subdomain_certificate(ctx, from_json, fusion_environment_id, ma
 @cli_util.wrap_exceptions
 def upload_vanity_domain_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, is_akamai, common_name, certificate_pem, vanity_domain_id, fusion_environment_id, certificate_chain_pem, if_match):
 
-    if isinstance(vanity_domain_id, six.string_types) and len(vanity_domain_id.strip()) == 0:
+    if isinstance(vanity_domain_id, str) and len(vanity_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --vanity-domain-id cannot be whitespace or empty string')
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4030,13 +4029,13 @@ def upload_vanity_domain_certificate(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def validate_and_configure_email_subdomain_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, email_subdomain_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4095,13 +4094,13 @@ def validate_and_configure_email_subdomain_certificate(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def validate_and_configure_email_subdomain_dns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, email_subdomain_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(email_subdomain_id, six.string_types) and len(email_subdomain_id.strip()) == 0:
+    if isinstance(email_subdomain_id, str) and len(email_subdomain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-subdomain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4160,13 +4159,13 @@ def validate_and_configure_email_subdomain_dns(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def validate_and_configure_microsite_dns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, marketing_brand_id, microsite_id, if_match):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
-    if isinstance(marketing_brand_id, six.string_types) and len(marketing_brand_id.strip()) == 0:
+    if isinstance(marketing_brand_id, str) and len(marketing_brand_id.strip()) == 0:
         raise click.UsageError('Parameter --marketing-brand-id cannot be whitespace or empty string')
 
-    if isinstance(microsite_id, six.string_types) and len(microsite_id.strip()) == 0:
+    if isinstance(microsite_id, str) and len(microsite_id.strip()) == 0:
         raise click.UsageError('Parameter --microsite-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4221,7 +4220,7 @@ def validate_and_configure_microsite_dns(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def verify_service_attachment(ctx, from_json, service_instance_type, service_instance_id, fusion_environment_id):
 
-    if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
+    if isinstance(fusion_environment_id, str) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
 
     kwargs = {}

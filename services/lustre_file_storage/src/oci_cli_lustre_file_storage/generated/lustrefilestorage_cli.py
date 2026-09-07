@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -102,7 +101,7 @@ lfs_root_group.add_command(object_storage_link_collection_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -131,7 +130,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_lustre_file_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, compartment_id, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -192,7 +191,7 @@ def change_lustre_file_system_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_object_storage_link_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, compartment_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -437,7 +436,7 @@ def create_object_storage_link(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -493,7 +492,7 @@ def delete_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_object_storage_link(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -544,7 +543,7 @@ def delete_object_storage_link(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def get_lustre_file_system(ctx, from_json, lustre_file_system_id):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -566,7 +565,7 @@ def get_lustre_file_system(ctx, from_json, lustre_file_system_id):
 @cli_util.wrap_exceptions
 def get_object_storage_link(ctx, from_json, object_storage_link_id):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -590,10 +589,10 @@ def get_object_storage_link(ctx, from_json, object_storage_link_id):
 @cli_util.wrap_exceptions
 def get_sync_job(ctx, from_json, object_storage_link_id, sync_job_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
-    if isinstance(sync_job_id, six.string_types) and len(sync_job_id.strip()) == 0:
+    if isinstance(sync_job_id, str) and len(sync_job_id.strip()) == 0:
         raise click.UsageError('Parameter --sync-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -618,7 +617,7 @@ def get_sync_job(ctx, from_json, object_storage_link_id, sync_job_id, if_match):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -915,7 +914,7 @@ def list_sync_jobs(ctx, from_json, all_pages, page_size, object_storage_link_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -976,7 +975,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1033,7 +1032,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1148,7 +1147,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def override_maintenance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, date_time_details, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1207,7 +1206,7 @@ def override_maintenance(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def start_export_to_object(ctx, from_json, object_storage_link_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1232,7 +1231,7 @@ def start_export_to_object(ctx, from_json, object_storage_link_id, if_match):
 @cli_util.wrap_exceptions
 def start_import_from_object(ctx, from_json, object_storage_link_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1257,7 +1256,7 @@ def start_import_from_object(ctx, from_json, object_storage_link_id, if_match):
 @cli_util.wrap_exceptions
 def stop_export_to_object(ctx, from_json, object_storage_link_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1282,7 +1281,7 @@ def stop_export_to_object(ctx, from_json, object_storage_link_id, if_match):
 @cli_util.wrap_exceptions
 def stop_import_from_object(ctx, from_json, object_storage_link_id, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1326,7 +1325,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, maintenance_window, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or root_squash_configuration or maintenance_window:
@@ -1427,7 +1426,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_object_storage_link(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, display_name, is_overwrite, freeform_tags, defined_tags, if_match):
 
-    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+    if isinstance(object_storage_link_id, str) and len(object_storage_link_id.strip()) == 0:
         raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

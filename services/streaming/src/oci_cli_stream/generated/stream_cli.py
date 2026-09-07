@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -58,7 +57,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def consumer_commit(ctx, from_json, stream_id, cursor):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -84,7 +83,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def consumer_heartbeat(ctx, from_json, stream_id, cursor):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -115,7 +114,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def create_cursor(ctx, from_json, stream_id, partition, type, offset, time):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -157,7 +156,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def create_group_cursor(ctx, from_json, stream_id, type, group_name, time, instance_name, timeout_in_ms, commit_on_get):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -200,10 +199,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_group(ctx, from_json, stream_id, group_name):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
-    if isinstance(group_name, six.string_types) and len(group_name.strip()) == 0:
+    if isinstance(group_name, str) and len(group_name.strip()) == 0:
         raise click.UsageError('Parameter --group-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -230,7 +229,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_messages(ctx, from_json, stream_id, cursor, limit):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -258,7 +257,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def put_messages(ctx, from_json, stream_id, messages):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -290,10 +289,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def update_group(ctx, from_json, stream_id, group_name, type, time):
 
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+    if isinstance(stream_id, str) and len(stream_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
 
-    if isinstance(group_name, six.string_types) and len(group_name.strip()) == 0:
+    if isinstance(group_name, str) and len(group_name.strip()) == 0:
         raise click.UsageError('Parameter --group-name cannot be whitespace or empty string')
 
     kwargs = {}

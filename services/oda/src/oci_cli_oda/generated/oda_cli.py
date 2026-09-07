@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -89,7 +88,7 @@ oda_service_cli.oda_service_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_oda_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, compartment_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -240,7 +239,7 @@ To monitor the status of the job, take the `opc-work-request-id` response header
 @cli_util.wrap_exceptions
 def create_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attach_to_id, attachment_type, owner, attachment_metadata, restricted_operations, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def create_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, retention_time, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -373,10 +372,10 @@ def delete_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attachment_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -428,7 +427,7 @@ def delete_oda_instance_attachment(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_oda_instance(ctx, from_json, oda_instance_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -452,10 +451,10 @@ def get_oda_instance(ctx, from_json, oda_instance_id):
 @cli_util.wrap_exceptions
 def get_oda_instance_attachment(ctx, from_json, oda_instance_id, attachment_id, include_owner_metadata):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -482,7 +481,7 @@ You can use this operation to monitor the status of jobs that you requested to c
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -519,7 +518,7 @@ def list_oda_instance_attachments(ctx, from_json, all_pages, page_size, oda_inst
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -658,7 +657,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -723,7 +722,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -843,7 +842,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, oda
 @cli_util.wrap_exceptions
 def start_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -898,7 +897,7 @@ def start_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -958,7 +957,7 @@ def stop_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_oda_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1036,10 +1035,10 @@ def update_oda_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_oda_instance_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, attachment_id, attachment_metadata, restricted_operations, owner, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
     if not force:
         if restricted_operations or owner or freeform_tags or defined_tags:

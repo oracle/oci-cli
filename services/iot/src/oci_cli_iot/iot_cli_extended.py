@@ -5,7 +5,6 @@
 import click  # noqa: F401
 import json  # noqa: F401
 import oci
-import six
 import sys
 from services.iot.src.oci_cli_iot.generated import iot_cli
 from oci_cli import cli_util  # noqa: F401
@@ -92,7 +91,7 @@ class NullableAuthId(click.types.StringParamType):
 
     def convert(self, value, param, ctx):
         value = super(NullableAuthId, self).convert(value, param, ctx)
-        if isinstance(value, six.string_types) and value.lower() == 'null':
+        if isinstance(value, str) and value.lower() == 'null':
             return None
         return value
 
@@ -116,7 +115,7 @@ class NullableAuthId(click.types.StringParamType):
 @cli_util.wrap_exceptions
 def update_digital_twin_instance_extended(ctx, **kwargs):
     digital_twin_instance_id = kwargs['digital_twin_instance_id']
-    if isinstance(digital_twin_instance_id, six.string_types) and not digital_twin_instance_id.strip():
+    if isinstance(digital_twin_instance_id, str) and not digital_twin_instance_id.strip():
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     if not kwargs['force'] and any(

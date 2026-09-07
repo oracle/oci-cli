@@ -4,8 +4,6 @@
 
 from .. import cli_util
 
-import six
-
 
 class BulkObjectStorageOperationOutput(object):
     def __init__(self):
@@ -64,12 +62,12 @@ class BulkPutOperationOutput(BulkObjectStorageOperationOutput):
         elif output_format == 'table':
             consolidated_result = []
 
-            for uploaded_object, result in six.iteritems(self._uploaded):
+            for uploaded_object, result in self._uploaded.items():
                 output_result = {'action': 'Uploaded', 'name': uploaded_object, 'type': 'file'}
                 output_result.update(result)
                 consolidated_result.append(output_result)
 
-            for uploaded_object, failure in six.iteritems(self._failures):
+            for uploaded_object, failure in self._failures.items():
                 consolidated_result.append({
                     'action': 'Failed',
                     'name': uploaded_object,
@@ -114,7 +112,7 @@ class BulkGetOperationOutput(BulkObjectStorageOperationOutput):
                     'type': 'object'
                 })
 
-            for downloaded_obj, failure in six.iteritems(self._failures):
+            for downloaded_obj, failure in self._failures.items():
                 consolidated_result.append({
                     'action': 'Failed',
                     'name': downloaded_obj,
@@ -151,7 +149,7 @@ class BulkDeleteOperationOutput(BulkObjectStorageOperationOutput):
         elif output_format == 'table':
             consolidated_result = []
 
-            for deleted_obj, failure in six.iteritems(self._failures):
+            for deleted_obj, failure in self._failures.items():
                 consolidated_result.append({
                     'action': 'Failed',
                     self._type: deleted_obj,

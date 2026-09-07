@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -61,7 +60,7 @@ distributed_autonomous_db_service_root_group.add_command(distributed_database_gr
 @cli_util.wrap_exceptions
 def add_distributed_autonomous_database_gds_control_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, public_ssh_key, subnet_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -125,7 +124,7 @@ def add_distributed_autonomous_database_gds_control_node(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def change_distributed_autonomous_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -186,7 +185,7 @@ def change_distributed_autonomous_database_compartment(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def change_distributed_autonomous_db_backup_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, db_backup_config, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -251,7 +250,7 @@ def change_distributed_autonomous_db_backup_config(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def configure_distributed_autonomous_database_auto_resource_management(ctx, from_json, distributed_autonomous_database_id, is_enabled, cool_off_period_in_minutes, max_move_ru_attempts, max_move_ru_unit, mode, action_type, notification_topic_ids, stream_ids, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -307,7 +306,7 @@ def configure_distributed_autonomous_database_auto_resource_management(ctx, from
 @cli_util.wrap_exceptions
 def configure_distributed_autonomous_database_gsm_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, ca_bundle_id, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -370,7 +369,7 @@ def configure_distributed_autonomous_database_gsm_wallet(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def configure_distributed_autonomous_database_gsms(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, old_gsm_names, is_latest_gsm_image, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -434,7 +433,7 @@ def configure_distributed_autonomous_database_gsms(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def configure_distributed_autonomous_database_sharding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, is_rebalance_required, certificate_id, ca_bundle_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -633,7 +632,7 @@ def create_distributed_autonomous_database(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -687,7 +686,7 @@ def delete_distributed_autonomous_database(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def generate_distributed_autonomous_database_wallet(ctx, from_json, file, distributed_autonomous_database_id, password, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -740,7 +739,7 @@ def generate_distributed_autonomous_database_wallet(ctx, from_json, file, distri
 @cli_util.wrap_exceptions
 def get_distributed_autonomous_database(ctx, from_json, distributed_autonomous_database_id, metadata, if_none_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -766,7 +765,7 @@ def get_distributed_autonomous_database(ctx, from_json, distributed_autonomous_d
 @cli_util.wrap_exceptions
 def get_distributed_autonomous_database_raft_metric(ctx, from_json, distributed_autonomous_database_id):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -789,7 +788,7 @@ def get_distributed_autonomous_database_raft_metric(ctx, from_json, distributed_
 @cli_util.wrap_exceptions
 def get_distributed_autonomous_database_ru_change_log(ctx, from_json, distributed_autonomous_database_id, source_shard_name):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -895,7 +894,7 @@ def list_distributed_autonomous_databases(ctx, from_json, all_pages, page_size, 
 @cli_util.wrap_exceptions
 def move_distributed_autonomous_database_replication_unit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, source_shard_name, destination_shard_name, replication_units, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, items, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1027,7 +1026,7 @@ def patch_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def recreate_failed_distributed_autonomous_database_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, resource_name, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1084,7 +1083,7 @@ def recreate_failed_distributed_autonomous_database_resource(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def rotate_distributed_autonomous_database_passwords(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, database_details, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1144,7 +1143,7 @@ def rotate_distributed_autonomous_database_passwords(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def scale_distributed_autonomous_database_gsms(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1203,7 +1202,7 @@ def scale_distributed_autonomous_database_gsms(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def start_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1258,7 +1257,7 @@ def start_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def stop_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1318,7 +1317,7 @@ def stop_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_distributed_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, display_name, notification_topic_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
     if not force:
         if notification_topic_ids or freeform_tags or defined_tags:
@@ -1389,7 +1388,7 @@ def update_distributed_autonomous_database(ctx, from_json, force, wait_for_state
 @cli_util.wrap_exceptions
 def validate_distributed_autonomous_database_ca_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1445,7 +1444,7 @@ def validate_distributed_autonomous_database_ca_bundle(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def validate_distributed_autonomous_database_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, is_surrogate, if_match):
 
-    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+    if isinstance(distributed_autonomous_database_id, str) and len(distributed_autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}

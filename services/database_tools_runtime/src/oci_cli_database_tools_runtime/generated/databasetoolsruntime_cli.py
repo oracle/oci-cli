@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -175,7 +174,7 @@ dbtools_runtime_root_group.add_command(database_tools_database_api_gateway_confi
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -202,7 +201,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def create_credential(ctx, from_json, connection_id, type, credential_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -236,7 +235,7 @@ def create_credential(ctx, from_json, connection_id, type, credential_key, if_ma
 @cli_util.wrap_exceptions
 def create_credential_create_credential_basic_details(ctx, from_json, connection_id, credential_key, user_name, password, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -272,10 +271,10 @@ def create_credential_create_credential_basic_details(ctx, from_json, connection
 @cli_util.wrap_exceptions
 def create_credential_execute_grantee(ctx, from_json, connection_id, credential_key, execute_grantee_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -308,10 +307,10 @@ def create_credential_execute_grantee(ctx, from_json, connection_id, credential_
 @cli_util.wrap_exceptions
 def create_credential_public_synonym(ctx, from_json, connection_id, credential_key, public_synonym_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -355,7 +354,7 @@ def create_credential_public_synonym(ctx, from_json, connection_id, credential_k
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool(ctx, from_json, database_api_gateway_config_id, type, display_name, pool_route_value, database_tools_connection_id, max_pool_size, min_pool_size, initial_pool_size, jwt_profile_jwk_url, jwt_profile_issuer, jwt_profile_audience, jwt_profile_role_claim_name, database_actions_status, rest_enabled_sql_status, advanced_properties):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -428,7 +427,7 @@ def create_database_tools_database_api_gateway_config_pool(ctx, from_json, datab
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool_create_database_tools_database_api_gateway_config_pool_default_details(ctx, from_json, database_api_gateway_config_id, display_name, pool_route_value, database_tools_connection_id, max_pool_size, min_pool_size, initial_pool_size, jwt_profile_jwk_url, jwt_profile_issuer, jwt_profile_audience, jwt_profile_role_claim_name, database_actions_status, rest_enabled_sql_status, advanced_properties):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -493,10 +492,10 @@ def create_database_tools_database_api_gateway_config_pool_create_database_tools
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, type, display_name, content):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -529,10 +528,10 @@ def create_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_js
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool_api_spec_create_database_tools_database_api_gateway_config_pool_api_spec_default_details(ctx, from_json, database_api_gateway_config_id, pool_key, display_name, content):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -574,10 +573,10 @@ def create_database_tools_database_api_gateway_config_pool_api_spec_create_datab
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, type, display_name, database_object_name, database_object_type, description, alias, operations, security_schemes, scope, roles):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -636,10 +635,10 @@ def create_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, fr
 @cli_util.wrap_exceptions
 def create_database_tools_database_api_gateway_config_pool_auto_api_spec_create_database_tools_database_api_gateway_config_pool_auto_api_spec_default_details(ctx, from_json, database_api_gateway_config_id, pool_key, display_name, database_object_name, database_object_type, description, alias, operations, security_schemes, scope, roles):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -692,10 +691,10 @@ def create_database_tools_database_api_gateway_config_pool_auto_api_spec_create_
 @cli_util.wrap_exceptions
 def delete_credential(ctx, from_json, connection_id, credential_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -724,13 +723,13 @@ def delete_credential(ctx, from_json, connection_id, credential_key, if_match):
 @cli_util.wrap_exceptions
 def delete_credential_execute_grantee(ctx, from_json, connection_id, credential_key, execute_grantee_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
-    if isinstance(execute_grantee_key, six.string_types) and len(execute_grantee_key.strip()) == 0:
+    if isinstance(execute_grantee_key, str) and len(execute_grantee_key.strip()) == 0:
         raise click.UsageError('Parameter --execute-grantee-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -760,13 +759,13 @@ def delete_credential_execute_grantee(ctx, from_json, connection_id, credential_
 @cli_util.wrap_exceptions
 def delete_credential_public_synonym(ctx, from_json, connection_id, credential_key, public_synonym_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
-    if isinstance(public_synonym_key, six.string_types) and len(public_synonym_key.strip()) == 0:
+    if isinstance(public_synonym_key, str) and len(public_synonym_key.strip()) == 0:
         raise click.UsageError('Parameter --public-synonym-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -795,10 +794,10 @@ def delete_credential_public_synonym(ctx, from_json, connection_id, credential_k
 @cli_util.wrap_exceptions
 def delete_database_tools_database_api_gateway_config_pool(ctx, from_json, database_api_gateway_config_id, pool_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -827,13 +826,13 @@ def delete_database_tools_database_api_gateway_config_pool(ctx, from_json, datab
 @cli_util.wrap_exceptions
 def delete_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, api_spec_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(api_spec_key, six.string_types) and len(api_spec_key.strip()) == 0:
+    if isinstance(api_spec_key, str) and len(api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -863,13 +862,13 @@ def delete_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_js
 @cli_util.wrap_exceptions
 def delete_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, auto_api_spec_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(auto_api_spec_key, six.string_types) and len(auto_api_spec_key.strip()) == 0:
+    if isinstance(auto_api_spec_key, str) and len(auto_api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --auto-api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -901,7 +900,7 @@ def delete_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, fr
 @cli_util.wrap_exceptions
 def execute_sql_database_tools_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, output_parameterconflict, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -967,7 +966,7 @@ def execute_sql_database_tools_connection(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def execute_sql_database_tools_connection_execute_sql_database_tools_connection_asynchronous_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, input, output_parameterconflict, timeout_in_seconds, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1037,7 +1036,7 @@ def execute_sql_database_tools_connection_execute_sql_database_tools_connection_
 @cli_util.wrap_exceptions
 def execute_sql_database_tools_connection_execute_sql_database_tools_connection_synchronous_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, input, output_parameterconflict, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1107,7 +1106,7 @@ This option is a JSON list with items of type ExecuteSqlOutputResultDispositionT
 @cli_util.wrap_exceptions
 def execute_sql_database_tools_connection_execute_sql_output_object_storage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, output_object, if_match, output_result_disposition_templates, output_time_of_deletion):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1174,10 +1173,10 @@ def execute_sql_database_tools_connection_execute_sql_output_object_storage_deta
 @cli_util.wrap_exceptions
 def get_credential(ctx, from_json, connection_id, credential_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1205,13 +1204,13 @@ def get_credential(ctx, from_json, connection_id, credential_key, if_match):
 @cli_util.wrap_exceptions
 def get_credential_execute_grantee(ctx, from_json, connection_id, credential_key, execute_grantee_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
-    if isinstance(execute_grantee_key, six.string_types) and len(execute_grantee_key.strip()) == 0:
+    if isinstance(execute_grantee_key, str) and len(execute_grantee_key.strip()) == 0:
         raise click.UsageError('Parameter --execute-grantee-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1240,13 +1239,13 @@ def get_credential_execute_grantee(ctx, from_json, connection_id, credential_key
 @cli_util.wrap_exceptions
 def get_credential_public_synonym(ctx, from_json, connection_id, credential_key, public_synonym_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
-    if isinstance(public_synonym_key, six.string_types) and len(public_synonym_key.strip()) == 0:
+    if isinstance(public_synonym_key, str) and len(public_synonym_key.strip()) == 0:
         raise click.UsageError('Parameter --public-synonym-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1275,7 +1274,7 @@ def get_credential_public_synonym(ctx, from_json, connection_id, credential_key,
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config_content(ctx, from_json, file, database_api_gateway_config_id, if_match, if_none_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1325,10 +1324,10 @@ def get_database_tools_database_api_gateway_config_content(ctx, from_json, file,
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config_global(ctx, from_json, database_api_gateway_config_id, global_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(global_key, six.string_types) and len(global_key.strip()) == 0:
+    if isinstance(global_key, str) and len(global_key.strip()) == 0:
         raise click.UsageError('Parameter --global-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1355,10 +1354,10 @@ def get_database_tools_database_api_gateway_config_global(ctx, from_json, databa
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config_pool(ctx, from_json, database_api_gateway_config_id, pool_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1386,13 +1385,13 @@ def get_database_tools_database_api_gateway_config_pool(ctx, from_json, database
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, api_spec_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(api_spec_key, six.string_types) and len(api_spec_key.strip()) == 0:
+    if isinstance(api_spec_key, str) and len(api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1421,13 +1420,13 @@ def get_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_json,
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, auto_api_spec_key, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(auto_api_spec_key, six.string_types) and len(auto_api_spec_key.strip()) == 0:
+    if isinstance(auto_api_spec_key, str) and len(auto_api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --auto-api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1455,10 +1454,10 @@ def get_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, from_
 @cli_util.wrap_exceptions
 def get_property_set(ctx, from_json, connection_id, property_set_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(property_set_key, six.string_types) and len(property_set_key.strip()) == 0:
+    if isinstance(property_set_key, str) and len(property_set_key.strip()) == 0:
         raise click.UsageError('Parameter --property-set-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1486,13 +1485,13 @@ def get_property_set(ctx, from_json, connection_id, property_set_key, if_match):
 @cli_util.wrap_exceptions
 def get_user_credential(ctx, from_json, connection_id, user_key, credential_key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(user_key, six.string_types) and len(user_key.strip()) == 0:
+    if isinstance(user_key, str) and len(user_key.strip()) == 0:
         raise click.UsageError('Parameter --user-key cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1518,7 +1517,7 @@ def get_user_credential(ctx, from_json, connection_id, user_key, credential_key,
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1550,10 +1549,10 @@ def list_credential_execute_grantees(ctx, from_json, all_pages, page_size, conne
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1614,10 +1613,10 @@ def list_credential_public_synonyms(ctx, from_json, all_pages, page_size, connec
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1677,7 +1676,7 @@ def list_credentials(ctx, from_json, all_pages, page_size, connection_id, if_mat
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1754,10 +1753,10 @@ def list_database_tools_database_api_gateway_config_pool_api_specs(ctx, from_jso
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1821,10 +1820,10 @@ def list_database_tools_database_api_gateway_config_pool_auto_api_specs(ctx, fro
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1887,7 +1886,7 @@ def list_database_tools_database_api_gateway_config_pools(ctx, from_json, all_pa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1947,10 +1946,10 @@ def list_user_credentials(ctx, from_json, all_pages, page_size, connection_id, u
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(user_key, six.string_types) and len(user_key.strip()) == 0:
+    if isinstance(user_key, str) and len(user_key.strip()) == 0:
         raise click.UsageError('Parameter --user-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2010,7 +2009,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2067,7 +2066,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2184,10 +2183,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def update_credential(ctx, from_json, connection_id, credential_key, type, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2221,10 +2220,10 @@ def update_credential(ctx, from_json, connection_id, credential_key, type, if_ma
 @cli_util.wrap_exceptions
 def update_credential_update_credential_basic_details(ctx, from_json, connection_id, credential_key, user_name, password, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(credential_key, six.string_types) and len(credential_key.strip()) == 0:
+    if isinstance(credential_key, str) and len(credential_key.strip()) == 0:
         raise click.UsageError('Parameter --credential-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2273,10 +2272,10 @@ def update_credential_update_credential_basic_details(ctx, from_json, connection
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_global(ctx, from_json, force, database_api_gateway_config_id, global_key, type, pool_route, pool_routing_header, database_api_status, http_port, https_port, certificate_bundle, document_root, advanced_properties, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(global_key, six.string_types) and len(global_key.strip()) == 0:
+    if isinstance(global_key, str) and len(global_key.strip()) == 0:
         raise click.UsageError('Parameter --global-key cannot be whitespace or empty string')
     if not force:
         if certificate_bundle or advanced_properties:
@@ -2345,10 +2344,10 @@ def update_database_tools_database_api_gateway_config_global(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_global_update_database_tools_database_api_gateway_config_global_default_details(ctx, from_json, force, database_api_gateway_config_id, global_key, pool_route, pool_routing_header, database_api_status, http_port, https_port, certificate_bundle, document_root, advanced_properties, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(global_key, six.string_types) and len(global_key.strip()) == 0:
+    if isinstance(global_key, str) and len(global_key.strip()) == 0:
         raise click.UsageError('Parameter --global-key cannot be whitespace or empty string')
     if not force:
         if certificate_bundle or advanced_properties:
@@ -2419,10 +2418,10 @@ def update_database_tools_database_api_gateway_config_global_update_database_too
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_global_database_api_gateway_config_certificate_bundle_file_name(ctx, from_json, force, database_api_gateway_config_id, global_key, pool_route, pool_routing_header, database_api_status, http_port, https_port, document_root, advanced_properties, if_match, certificate_bundle_certificate_public, certificate_bundle_certificate_private_key):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(global_key, six.string_types) and len(global_key.strip()) == 0:
+    if isinstance(global_key, str) and len(global_key.strip()) == 0:
         raise click.UsageError('Parameter --global-key cannot be whitespace or empty string')
     if not force:
         if advanced_properties:
@@ -2495,10 +2494,10 @@ def update_database_tools_database_api_gateway_config_global_database_api_gatewa
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_global_database_api_gateway_config_certificate_bundle_self_signed(ctx, from_json, force, database_api_gateway_config_id, global_key, pool_route, pool_routing_header, database_api_status, http_port, https_port, document_root, advanced_properties, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(global_key, six.string_types) and len(global_key.strip()) == 0:
+    if isinstance(global_key, str) and len(global_key.strip()) == 0:
         raise click.UsageError('Parameter --global-key cannot be whitespace or empty string')
     if not force:
         if advanced_properties:
@@ -2572,10 +2571,10 @@ def update_database_tools_database_api_gateway_config_global_database_api_gatewa
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool(ctx, from_json, force, database_api_gateway_config_id, pool_key, type, display_name, pool_route_value, database_tools_connection_id, max_pool_size, min_pool_size, initial_pool_size, jwt_profile_jwk_url, jwt_profile_issuer, jwt_profile_audience, jwt_profile_role_claim_name, database_actions_status, rest_enabled_sql_status, advanced_properties, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
     if not force:
         if advanced_properties:
@@ -2664,10 +2663,10 @@ def update_database_tools_database_api_gateway_config_pool(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool_update_database_tools_database_api_gateway_config_pool_default_details(ctx, from_json, force, database_api_gateway_config_id, pool_key, display_name, pool_route_value, database_tools_connection_id, max_pool_size, min_pool_size, initial_pool_size, jwt_profile_jwk_url, jwt_profile_issuer, jwt_profile_audience, jwt_profile_role_claim_name, database_actions_status, rest_enabled_sql_status, advanced_properties, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
     if not force:
         if advanced_properties:
@@ -2747,13 +2746,13 @@ def update_database_tools_database_api_gateway_config_pool_update_database_tools
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_json, database_api_gateway_config_id, pool_key, api_spec_key, type, display_name, content, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(api_spec_key, six.string_types) and len(api_spec_key.strip()) == 0:
+    if isinstance(api_spec_key, str) and len(api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2795,13 +2794,13 @@ def update_database_tools_database_api_gateway_config_pool_api_spec(ctx, from_js
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool_api_spec_update_database_tools_database_api_gateway_config_pool_api_spec_default_details(ctx, from_json, database_api_gateway_config_id, pool_key, api_spec_key, display_name, content, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(api_spec_key, six.string_types) and len(api_spec_key.strip()) == 0:
+    if isinstance(api_spec_key, str) and len(api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --api-spec-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2853,13 +2852,13 @@ def update_database_tools_database_api_gateway_config_pool_api_spec_update_datab
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, from_json, force, database_api_gateway_config_id, pool_key, auto_api_spec_key, type, display_name, database_object_name, database_object_type, description, alias, operations, security_schemes, scope, roles, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(auto_api_spec_key, six.string_types) and len(auto_api_spec_key.strip()) == 0:
+    if isinstance(auto_api_spec_key, str) and len(auto_api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --auto-api-spec-key cannot be whitespace or empty string')
     if not force:
         if operations or security_schemes or roles:
@@ -2934,13 +2933,13 @@ def update_database_tools_database_api_gateway_config_pool_auto_api_spec(ctx, fr
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_pool_auto_api_spec_update_database_tools_database_api_gateway_config_pool_auto_api_spec_default_details(ctx, from_json, force, database_api_gateway_config_id, pool_key, auto_api_spec_key, display_name, database_object_name, database_object_type, description, alias, operations, security_schemes, scope, roles, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
-    if isinstance(pool_key, six.string_types) and len(pool_key.strip()) == 0:
+    if isinstance(pool_key, str) and len(pool_key.strip()) == 0:
         raise click.UsageError('Parameter --pool-key cannot be whitespace or empty string')
 
-    if isinstance(auto_api_spec_key, six.string_types) and len(auto_api_spec_key.strip()) == 0:
+    if isinstance(auto_api_spec_key, str) and len(auto_api_spec_key.strip()) == 0:
         raise click.UsageError('Parameter --auto-api-spec-key cannot be whitespace or empty string')
     if not force:
         if operations or security_schemes or roles:
@@ -3006,10 +3005,10 @@ def update_database_tools_database_api_gateway_config_pool_auto_api_spec_update_
 @cli_util.wrap_exceptions
 def update_property_set(ctx, from_json, connection_id, property_set_key, key, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(property_set_key, six.string_types) and len(property_set_key.strip()) == 0:
+    if isinstance(property_set_key, str) and len(property_set_key.strip()) == 0:
         raise click.UsageError('Parameter --property-set-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3049,10 +3048,10 @@ def update_property_set(ctx, from_json, connection_id, property_set_key, key, if
 @cli_util.wrap_exceptions
 def update_property_set_update_property_set_apex_document_generator_details(ctx, from_json, connection_id, property_set_key, print_server_type, credential_key, autonomous_database_resource_principal_status, object_storage_namespace, object_storage_bucket_compartment_id, object_storage_endpoint, function_id, invoke_endpoint, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(property_set_key, six.string_types) and len(property_set_key.strip()) == 0:
+    if isinstance(property_set_key, str) and len(property_set_key.strip()) == 0:
         raise click.UsageError('Parameter --property-set-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3111,10 +3110,10 @@ def update_property_set_update_property_set_apex_document_generator_details(ctx,
 @cli_util.wrap_exceptions
 def update_property_set_update_property_set_oracle_database_external_authentication_details(ctx, from_json, force, connection_id, property_set_key, identity_provider, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(property_set_key, six.string_types) and len(property_set_key.strip()) == 0:
+    if isinstance(property_set_key, str) and len(property_set_key.strip()) == 0:
         raise click.UsageError('Parameter --property-set-key cannot be whitespace or empty string')
     if not force:
         if identity_provider:
@@ -3155,10 +3154,10 @@ def update_property_set_update_property_set_oracle_database_external_authenticat
 @cli_util.wrap_exceptions
 def update_property_set_update_property_set_apex_fa_integration_details(ctx, from_json, force, connection_id, property_set_key, authentication_substitutions, instance_dbms_credential_enabled, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
-    if isinstance(property_set_key, six.string_types) and len(property_set_key.strip()) == 0:
+    if isinstance(property_set_key, str) and len(property_set_key.strip()) == 0:
         raise click.UsageError('Parameter --property-set-key cannot be whitespace or empty string')
     if not force:
         if authentication_substitutions:
@@ -3201,7 +3200,7 @@ def update_property_set_update_property_set_apex_fa_integration_details(ctx, fro
 @cli_util.wrap_exceptions
 def validate_database_tools_connection(ctx, from_json, connection_id, type, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3231,7 +3230,7 @@ def validate_database_tools_connection(ctx, from_json, connection_id, type, if_m
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_postgresql_details(ctx, from_json, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3262,7 +3261,7 @@ def validate_database_tools_connection_validate_database_tools_connection_postgr
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_my_sql_details(ctx, from_json, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3293,7 +3292,7 @@ def validate_database_tools_connection_validate_database_tools_connection_my_sql
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_oracle_database_details(ctx, from_json, connection_id, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3325,7 +3324,7 @@ def validate_database_tools_connection_validate_database_tools_connection_oracle
 @cli_util.wrap_exceptions
 def validate_database_tools_identity_credential(ctx, from_json, identity_id, type, if_match):
 
-    if isinstance(identity_id, six.string_types) and len(identity_id.strip()) == 0:
+    if isinstance(identity_id, str) and len(identity_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3355,7 +3354,7 @@ def validate_database_tools_identity_credential(ctx, from_json, identity_id, typ
 @cli_util.wrap_exceptions
 def validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details(ctx, from_json, identity_id, if_match):
 
-    if isinstance(identity_id, six.string_types) and len(identity_id.strip()) == 0:
+    if isinstance(identity_id, str) and len(identity_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -520,7 +519,7 @@ def create_occ_metric_alarm_compute_resource_configuration(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def delete_occ_metric_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_metric_alarm_id, if_match):
 
-    if isinstance(occ_metric_alarm_id, six.string_types) and len(occ_metric_alarm_id.strip()) == 0:
+    if isinstance(occ_metric_alarm_id, str) and len(occ_metric_alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-metric-alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -579,7 +578,7 @@ def delete_occ_metric_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def get_occ_metric_alarm(ctx, from_json, occ_metric_alarm_id):
 
-    if isinstance(occ_metric_alarm_id, six.string_types) and len(occ_metric_alarm_id.strip()) == 0:
+    if isinstance(occ_metric_alarm_id, str) and len(occ_metric_alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-metric-alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -679,7 +678,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_occ_metric_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_metric_alarm_id, display_name, description, lifecycle_state, is_active, subscribers, frequency, threshold, threshold_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(occ_metric_alarm_id, six.string_types) and len(occ_metric_alarm_id.strip()) == 0:
+    if isinstance(occ_metric_alarm_id, str) and len(occ_metric_alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-metric-alarm-id cannot be whitespace or empty string')
     if not force:
         if subscribers or freeform_tags or defined_tags:

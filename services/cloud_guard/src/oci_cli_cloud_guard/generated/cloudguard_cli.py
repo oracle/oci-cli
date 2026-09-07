@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -502,7 +501,7 @@ cloud_guard_root_group.add_command(risk_score_aggregation_group)
 @cli_util.wrap_exceptions
 def add_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, compartment_id, if_match):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -556,7 +555,7 @@ def add_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -585,7 +584,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_data_source_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, compartment_id, if_match):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -643,7 +642,7 @@ def change_data_source_compartment(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def change_detector_recipe_compartment(ctx, from_json, detector_recipe_id, compartment_id, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -674,7 +673,7 @@ def change_detector_recipe_compartment(ctx, from_json, detector_recipe_id, compa
 @cli_util.wrap_exceptions
 def change_managed_list_compartment(ctx, from_json, managed_list_id, compartment_id, if_match):
 
-    if isinstance(managed_list_id, six.string_types) and len(managed_list_id.strip()) == 0:
+    if isinstance(managed_list_id, str) and len(managed_list_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -705,7 +704,7 @@ def change_managed_list_compartment(ctx, from_json, managed_list_id, compartment
 @cli_util.wrap_exceptions
 def change_responder_recipe_compartment(ctx, from_json, responder_recipe_id, compartment_id, if_match):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -736,7 +735,7 @@ def change_responder_recipe_compartment(ctx, from_json, responder_recipe_id, com
 @cli_util.wrap_exceptions
 def change_saved_query_compartment(ctx, from_json, saved_query_id, compartment_id, if_match):
 
-    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+    if isinstance(saved_query_id, str) and len(saved_query_id.strip()) == 0:
         raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -767,7 +766,7 @@ def change_saved_query_compartment(ctx, from_json, saved_query_id, compartment_i
 @cli_util.wrap_exceptions
 def change_security_recipe_compartment(ctx, from_json, security_recipe_id, compartment_id, if_match):
 
-    if isinstance(security_recipe_id, six.string_types) and len(security_recipe_id.strip()) == 0:
+    if isinstance(security_recipe_id, str) and len(security_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --security-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -798,7 +797,7 @@ def change_security_recipe_compartment(ctx, from_json, security_recipe_id, compa
 @cli_util.wrap_exceptions
 def change_security_zone_compartment(ctx, from_json, security_zone_id, compartment_id, if_match):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1587,7 +1586,7 @@ def create_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def create_detector_recipe_detector_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, detector_recipe_id, details):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2101,7 +2100,7 @@ def create_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def create_target_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, detector_recipe_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2152,7 +2151,7 @@ def create_target_detector_recipe(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def create_target_responder_recipe(ctx, from_json, target_id, responder_recipe_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2223,7 +2222,7 @@ def create_wlp_agent(ctx, from_json, compartment_id, agent_version, certificate_
 @cli_util.wrap_exceptions
 def delete_adhoc_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, adhoc_query_id, if_match):
 
-    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+    if isinstance(adhoc_query_id, str) and len(adhoc_query_id.strip()) == 0:
         raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2287,7 +2286,7 @@ def delete_adhoc_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, if_match):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2351,7 +2350,7 @@ def delete_data_mask_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, if_match):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2407,7 +2406,7 @@ def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, detector_recipe_id, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2469,10 +2468,10 @@ def delete_detector_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, detector_rule_id, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2501,13 +2500,13 @@ def delete_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, det
 @cli_util.wrap_exceptions
 def delete_detector_recipe_detector_rule_data_source(ctx, from_json, detector_recipe_id, detector_rule_id, data_source_id, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2538,7 +2537,7 @@ def delete_detector_recipe_detector_rule_data_source(ctx, from_json, detector_re
 @cli_util.wrap_exceptions
 def delete_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_list_id, if_match):
 
-    if isinstance(managed_list_id, six.string_types) and len(managed_list_id.strip()) == 0:
+    if isinstance(managed_list_id, str) and len(managed_list_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2602,7 +2601,7 @@ def delete_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_responder_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, responder_recipe_id, if_match):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2666,7 +2665,7 @@ def delete_responder_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_saved_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, saved_query_id, if_match):
 
-    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+    if isinstance(saved_query_id, str) and len(saved_query_id.strip()) == 0:
         raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2730,7 +2729,7 @@ def delete_saved_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_recipe_id, if_match):
 
-    if isinstance(security_recipe_id, six.string_types) and len(security_recipe_id.strip()) == 0:
+    if isinstance(security_recipe_id, str) and len(security_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --security-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2794,7 +2793,7 @@ def delete_security_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, if_match):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2858,7 +2857,7 @@ def delete_security_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2920,10 +2919,10 @@ def delete_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_target_detector_recipe(ctx, from_json, target_id, target_detector_recipe_id, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2951,10 +2950,10 @@ def delete_target_detector_recipe(ctx, from_json, target_id, target_detector_rec
 @cli_util.wrap_exceptions
 def delete_target_responder_recipe(ctx, from_json, target_id, target_responder_recipe_id, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2981,7 +2980,7 @@ def delete_target_responder_recipe(ctx, from_json, target_id, target_responder_r
 @cli_util.wrap_exceptions
 def delete_wlp_agent(ctx, from_json, wlp_agent_id, if_match):
 
-    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+    if isinstance(wlp_agent_id, str) and len(wlp_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3010,7 +3009,7 @@ This option is a JSON list with items of type ResponderConfiguration.  For docum
 @cli_util.wrap_exceptions
 def execute_responder_execution(ctx, from_json, responder_execution_id, compartment_id, if_match, configurations):
 
-    if isinstance(responder_execution_id, six.string_types) and len(responder_execution_id.strip()) == 0:
+    if isinstance(responder_execution_id, str) and len(responder_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3042,7 +3041,7 @@ def execute_responder_execution(ctx, from_json, responder_execution_id, compartm
 @cli_util.wrap_exceptions
 def get_adhoc_query(ctx, from_json, adhoc_query_id):
 
-    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+    if isinstance(adhoc_query_id, str) and len(adhoc_query_id.strip()) == 0:
         raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3065,7 +3064,7 @@ def get_adhoc_query(ctx, from_json, adhoc_query_id):
 @cli_util.wrap_exceptions
 def get_adhoc_query_result_content(ctx, from_json, file, adhoc_query_id):
 
-    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+    if isinstance(adhoc_query_id, str) and len(adhoc_query_id.strip()) == 0:
         raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3111,7 +3110,7 @@ def get_adhoc_query_result_content(ctx, from_json, file, adhoc_query_id):
 @cli_util.wrap_exceptions
 def get_condition_metadata_type(ctx, from_json, condition_metadata_type_id, service_type, resource_type):
 
-    if isinstance(condition_metadata_type_id, six.string_types) and len(condition_metadata_type_id.strip()) == 0:
+    if isinstance(condition_metadata_type_id, str) and len(condition_metadata_type_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-metadata-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3156,7 +3155,7 @@ def get_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_data_mask_rule(ctx, from_json, data_mask_rule_id):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3178,7 +3177,7 @@ def get_data_mask_rule(ctx, from_json, data_mask_rule_id):
 @cli_util.wrap_exceptions
 def get_data_source(ctx, from_json, data_source_id):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3200,7 +3199,7 @@ def get_data_source(ctx, from_json, data_source_id):
 @cli_util.wrap_exceptions
 def get_detector(ctx, from_json, detector_id):
 
-    if isinstance(detector_id, six.string_types) and len(detector_id.strip()) == 0:
+    if isinstance(detector_id, str) and len(detector_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3222,7 +3221,7 @@ def get_detector(ctx, from_json, detector_id):
 @cli_util.wrap_exceptions
 def get_detector_recipe(ctx, from_json, detector_recipe_id):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3245,10 +3244,10 @@ def get_detector_recipe(ctx, from_json, detector_recipe_id):
 @cli_util.wrap_exceptions
 def get_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, detector_rule_id):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3272,10 +3271,10 @@ def get_detector_recipe_detector_rule(ctx, from_json, detector_recipe_id, detect
 @cli_util.wrap_exceptions
 def get_detector_rule(ctx, from_json, detector_id, detector_rule_id):
 
-    if isinstance(detector_id, six.string_types) and len(detector_id.strip()) == 0:
+    if isinstance(detector_id, str) and len(detector_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3298,7 +3297,7 @@ def get_detector_rule(ctx, from_json, detector_id, detector_rule_id):
 @cli_util.wrap_exceptions
 def get_managed_list(ctx, from_json, managed_list_id):
 
-    if isinstance(managed_list_id, six.string_types) and len(managed_list_id.strip()) == 0:
+    if isinstance(managed_list_id, str) and len(managed_list_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3320,7 +3319,7 @@ def get_managed_list(ctx, from_json, managed_list_id):
 @cli_util.wrap_exceptions
 def get_problem(ctx, from_json, problem_id):
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3342,7 +3341,7 @@ def get_problem(ctx, from_json, problem_id):
 @cli_util.wrap_exceptions
 def get_resource(ctx, from_json, resource_id):
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3364,7 +3363,7 @@ def get_resource(ctx, from_json, resource_id):
 @cli_util.wrap_exceptions
 def get_resource_profile(ctx, from_json, resource_profile_id):
 
-    if isinstance(resource_profile_id, six.string_types) and len(resource_profile_id.strip()) == 0:
+    if isinstance(resource_profile_id, str) and len(resource_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3387,10 +3386,10 @@ def get_resource_profile(ctx, from_json, resource_profile_id):
 @cli_util.wrap_exceptions
 def get_resource_vulnerability(ctx, from_json, resource_id, vulnerability_key):
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
-    if isinstance(vulnerability_key, six.string_types) and len(vulnerability_key.strip()) == 0:
+    if isinstance(vulnerability_key, str) and len(vulnerability_key.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3413,7 +3412,7 @@ def get_resource_vulnerability(ctx, from_json, resource_id, vulnerability_key):
 @cli_util.wrap_exceptions
 def get_responder_execution(ctx, from_json, responder_execution_id):
 
-    if isinstance(responder_execution_id, six.string_types) and len(responder_execution_id.strip()) == 0:
+    if isinstance(responder_execution_id, str) and len(responder_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3435,7 +3434,7 @@ def get_responder_execution(ctx, from_json, responder_execution_id):
 @cli_util.wrap_exceptions
 def get_responder_recipe(ctx, from_json, responder_recipe_id):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3458,10 +3457,10 @@ def get_responder_recipe(ctx, from_json, responder_recipe_id):
 @cli_util.wrap_exceptions
 def get_responder_recipe_responder_rule(ctx, from_json, responder_recipe_id, responder_rule_id):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(responder_rule_id, six.string_types) and len(responder_rule_id.strip()) == 0:
+    if isinstance(responder_rule_id, str) and len(responder_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3484,7 +3483,7 @@ def get_responder_recipe_responder_rule(ctx, from_json, responder_recipe_id, res
 @cli_util.wrap_exceptions
 def get_responder_rule(ctx, from_json, responder_rule_id):
 
-    if isinstance(responder_rule_id, six.string_types) and len(responder_rule_id.strip()) == 0:
+    if isinstance(responder_rule_id, str) and len(responder_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3506,7 +3505,7 @@ def get_responder_rule(ctx, from_json, responder_rule_id):
 @cli_util.wrap_exceptions
 def get_saved_query(ctx, from_json, saved_query_id):
 
-    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+    if isinstance(saved_query_id, str) and len(saved_query_id.strip()) == 0:
         raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3528,7 +3527,7 @@ def get_saved_query(ctx, from_json, saved_query_id):
 @cli_util.wrap_exceptions
 def get_security_policy(ctx, from_json, security_policy_id):
 
-    if isinstance(security_policy_id, six.string_types) and len(security_policy_id.strip()) == 0:
+    if isinstance(security_policy_id, str) and len(security_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3550,7 +3549,7 @@ def get_security_policy(ctx, from_json, security_policy_id):
 @cli_util.wrap_exceptions
 def get_security_recipe(ctx, from_json, security_recipe_id):
 
-    if isinstance(security_recipe_id, six.string_types) and len(security_recipe_id.strip()) == 0:
+    if isinstance(security_recipe_id, str) and len(security_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --security-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3572,7 +3571,7 @@ def get_security_recipe(ctx, from_json, security_recipe_id):
 @cli_util.wrap_exceptions
 def get_security_zone(ctx, from_json, security_zone_id):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3594,7 +3593,7 @@ def get_security_zone(ctx, from_json, security_zone_id):
 @cli_util.wrap_exceptions
 def get_sighting(ctx, from_json, sighting_id):
 
-    if isinstance(sighting_id, six.string_types) and len(sighting_id.strip()) == 0:
+    if isinstance(sighting_id, str) and len(sighting_id.strip()) == 0:
         raise click.UsageError('Parameter --sighting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3616,7 +3615,7 @@ def get_sighting(ctx, from_json, sighting_id):
 @cli_util.wrap_exceptions
 def get_target(ctx, from_json, target_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3639,10 +3638,10 @@ def get_target(ctx, from_json, target_id):
 @cli_util.wrap_exceptions
 def get_target_detector_recipe(ctx, from_json, target_id, target_detector_recipe_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3667,13 +3666,13 @@ def get_target_detector_recipe(ctx, from_json, target_id, target_detector_recipe
 @cli_util.wrap_exceptions
 def get_target_detector_recipe_detector_rule(ctx, from_json, target_id, target_detector_recipe_id, detector_rule_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3698,10 +3697,10 @@ def get_target_detector_recipe_detector_rule(ctx, from_json, target_id, target_d
 @cli_util.wrap_exceptions
 def get_target_responder_recipe(ctx, from_json, target_id, target_responder_recipe_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3726,13 +3725,13 @@ def get_target_responder_recipe(ctx, from_json, target_id, target_responder_reci
 @cli_util.wrap_exceptions
 def get_target_responder_recipe_responder_rule(ctx, from_json, target_id, target_responder_recipe_id, responder_rule_id):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(responder_rule_id, six.string_types) and len(responder_rule_id.strip()) == 0:
+    if isinstance(responder_rule_id, str) and len(responder_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3756,7 +3755,7 @@ def get_target_responder_recipe_responder_rule(ctx, from_json, target_id, target
 @cli_util.wrap_exceptions
 def get_wlp_agent(ctx, from_json, wlp_agent_id):
 
-    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+    if isinstance(wlp_agent_id, str) and len(wlp_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3778,7 +3777,7 @@ def get_wlp_agent(ctx, from_json, wlp_agent_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3885,7 +3884,7 @@ def list_adhoc_query_results(ctx, from_json, all_pages, page_size, adhoc_query_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(adhoc_query_id, six.string_types) and len(adhoc_query_id.strip()) == 0:
+    if isinstance(adhoc_query_id, str) and len(adhoc_query_id.strip()) == 0:
         raise click.UsageError('Parameter --adhoc-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4078,7 +4077,7 @@ def list_data_source_events(ctx, from_json, all_pages, page_size, data_source_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4218,7 +4217,7 @@ def list_detector_recipe_detector_rules(ctx, from_json, all_pages, page_size, de
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4360,7 +4359,7 @@ def list_detector_rules(ctx, from_json, all_pages, page_size, detector_id, compa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(detector_id, six.string_types) and len(detector_id.strip()) == 0:
+    if isinstance(detector_id, str) and len(detector_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4481,7 +4480,7 @@ def list_impacted_resources(ctx, from_json, all_pages, page_size, problem_id, li
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4725,7 +4724,7 @@ def list_problem_endpoints(ctx, from_json, all_pages, page_size, problem_id, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4782,7 +4781,7 @@ def list_problem_entities(ctx, from_json, all_pages, page_size, problem_id, page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4840,7 +4839,7 @@ def list_problem_histories(ctx, from_json, all_pages, page_size, compartment_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5090,7 +5089,7 @@ def list_resource_ports(ctx, from_json, all_pages, page_size, resource_id, open_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5149,7 +5148,7 @@ def list_resource_profile_endpoints(ctx, from_json, all_pages, page_size, resour
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(resource_profile_id, six.string_types) and len(resource_profile_id.strip()) == 0:
+    if isinstance(resource_profile_id, str) and len(resource_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5206,7 +5205,7 @@ def list_resource_profile_impacted_resources(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(resource_profile_id, six.string_types) and len(resource_profile_id.strip()) == 0:
+    if isinstance(resource_profile_id, str) and len(resource_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5416,7 +5415,7 @@ def list_resource_vulnerabilities(ctx, from_json, all_pages, page_size, resource
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5576,7 +5575,7 @@ def list_responder_activities(ctx, from_json, all_pages, page_size, problem_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5726,7 +5725,7 @@ def list_responder_recipe_responder_rules(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6181,7 +6180,7 @@ def list_sighting_endpoints(ctx, from_json, all_pages, page_size, sighting_id, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sighting_id, six.string_types) and len(sighting_id.strip()) == 0:
+    if isinstance(sighting_id, str) and len(sighting_id.strip()) == 0:
         raise click.UsageError('Parameter --sighting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6238,7 +6237,7 @@ def list_sighting_impacted_resources(ctx, from_json, all_pages, page_size, sight
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sighting_id, six.string_types) and len(sighting_id.strip()) == 0:
+    if isinstance(sighting_id, str) and len(sighting_id.strip()) == 0:
         raise click.UsageError('Parameter --sighting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6432,10 +6431,10 @@ def list_target_detector_recipe_detector_rules(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6505,7 +6504,7 @@ def list_target_detector_recipes(ctx, from_json, all_pages, page_size, target_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6573,10 +6572,10 @@ def list_target_responder_recipe_responder_rules(ctx, from_json, all_pages, page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6646,7 +6645,7 @@ def list_target_responder_recipes(ctx, from_json, all_pages, page_size, target_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6897,7 +6896,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6954,7 +6953,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7067,7 +7066,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, sta
 @cli_util.wrap_exceptions
 def remove_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, compartment_id, if_match):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7596,7 +7595,7 @@ def skip_bulk_responder_execution(ctx, from_json, responder_execution_ids):
 @cli_util.wrap_exceptions
 def skip_responder_execution(ctx, from_json, responder_execution_id, compartment_id, if_match):
 
-    if isinstance(responder_execution_id, six.string_types) and len(responder_execution_id.strip()) == 0:
+    if isinstance(responder_execution_id, str) and len(responder_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7626,7 +7625,7 @@ This option is a JSON list with items of type ResponderConfiguration.  For docum
 @cli_util.wrap_exceptions
 def trigger_responder(ctx, from_json, problem_id, responder_rule_id, configurations, if_match):
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7749,7 +7748,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if target_selected or data_mask_categories or freeform_tags or defined_tags:
@@ -7844,7 +7843,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_mask_rule_all_targets_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:
@@ -7940,7 +7939,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_resource_types_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:
@@ -8039,7 +8038,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_ids_selected(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:
@@ -8133,7 +8132,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, status, data_source_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
     if not force:
         if data_source_details or freeform_tags or defined_tags:
@@ -8224,7 +8223,7 @@ This option is a JSON list with items of type ScheduledQueryScopeDetail.  For do
 @cli_util.wrap_exceptions
 def update_data_source_scheduled_query_data_source_obj_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, status, freeform_tags, defined_tags, if_match, data_source_details_query, data_source_details_description, data_source_details_interval_in_seconds, data_source_details_scheduled_query_scope_details):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8330,7 +8329,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_source_logging_query_data_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, status, freeform_tags, defined_tags, if_match, data_source_details_regions, data_source_details_query, data_source_details_interval_in_minutes, data_source_details_threshold, data_source_details_query_start_time, data_source_details_operator, data_source_details_logging_query_type, data_source_details_additional_entities_count, data_source_details_logging_query_details):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8449,7 +8448,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_detector_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, detector_recipe_id, display_name, description, detector_rules, freeform_tags, defined_tags, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
     if not force:
         if detector_rules or freeform_tags or defined_tags:
@@ -8526,10 +8525,10 @@ def update_detector_recipe(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_detector_recipe_detector_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, detector_recipe_id, detector_rule_id, details, if_match):
 
-    if isinstance(detector_recipe_id, six.string_types) and len(detector_recipe_id.strip()) == 0:
+    if isinstance(detector_recipe_id, str) and len(detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
     if not force:
         if details:
@@ -8603,7 +8602,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_list_id, display_name, description, list_items, group, freeform_tags, defined_tags, if_match):
 
-    if isinstance(managed_list_id, six.string_types) and len(managed_list_id.strip()) == 0:
+    if isinstance(managed_list_id, str) and len(managed_list_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-list-id cannot be whitespace or empty string')
     if not force:
         if list_items or freeform_tags or defined_tags:
@@ -8682,7 +8681,7 @@ def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_problem_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, problem_id, status, comment, if_match):
 
-    if isinstance(problem_id, six.string_types) and len(problem_id.strip()) == 0:
+    if isinstance(problem_id, str) and len(problem_id.strip()) == 0:
         raise click.UsageError('Parameter --problem-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8755,7 +8754,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_responder_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, responder_recipe_id, display_name, description, responder_rules, freeform_tags, defined_tags, if_match):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
     if not force:
         if responder_rules or freeform_tags or defined_tags:
@@ -8830,10 +8829,10 @@ def update_responder_recipe(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_responder_recipe_responder_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, responder_recipe_id, responder_rule_id, details, if_match):
 
-    if isinstance(responder_recipe_id, six.string_types) and len(responder_recipe_id.strip()) == 0:
+    if isinstance(responder_recipe_id, str) and len(responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(responder_rule_id, six.string_types) and len(responder_rule_id.strip()) == 0:
+    if isinstance(responder_rule_id, str) and len(responder_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-rule-id cannot be whitespace or empty string')
     if not force:
         if details:
@@ -8902,7 +8901,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_saved_query(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, saved_query_id, display_name, description, query_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(saved_query_id, six.string_types) and len(saved_query_id.strip()) == 0:
+    if isinstance(saved_query_id, str) and len(saved_query_id.strip()) == 0:
         raise click.UsageError('Parameter --saved-query-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8984,7 +8983,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_recipe_id, display_name, description, security_policies, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_recipe_id, six.string_types) and len(security_recipe_id.strip()) == 0:
+    if isinstance(security_recipe_id, str) and len(security_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --security-recipe-id cannot be whitespace or empty string')
     if not force:
         if security_policies or freeform_tags or defined_tags:
@@ -9065,7 +9064,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_zone_id, display_name, description, security_zone_recipe_id, is_inheritance_after_delete_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_zone_id, six.string_types) and len(security_zone_id.strip()) == 0:
+    if isinstance(security_zone_id, str) and len(security_zone_id.strip()) == 0:
         raise click.UsageError('Parameter --security-zone-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -9155,7 +9154,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, display_name, lifecycle_state, target_detector_recipes, target_responder_recipes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
     if not force:
         if target_detector_recipes or target_responder_recipes or freeform_tags or defined_tags:
@@ -9239,10 +9238,10 @@ This option is a JSON list with items of type UpdateTargetRecipeDetectorRuleDeta
 @cli_util.wrap_exceptions
 def update_target_detector_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, target_detector_recipe_id, detector_recipe_id, is_validation_only_query, detector_rules, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
     if not force:
         if detector_rules:
@@ -9315,13 +9314,13 @@ def update_target_detector_recipe(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_target_detector_recipe_detector_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, target_detector_recipe_id, detector_rule_id, details, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_detector_recipe_id, six.string_types) and len(target_detector_recipe_id.strip()) == 0:
+    if isinstance(target_detector_recipe_id, str) and len(target_detector_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-detector-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(detector_rule_id, six.string_types) and len(detector_rule_id.strip()) == 0:
+    if isinstance(detector_rule_id, str) and len(detector_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --detector-rule-id cannot be whitespace or empty string')
     if not force:
         if details:
@@ -9383,10 +9382,10 @@ def update_target_detector_recipe_detector_rule(ctx, from_json, force, wait_for_
 @cli_util.wrap_exceptions
 def update_target_responder_recipe(ctx, from_json, force, target_id, target_responder_recipe_id, responder_rules, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
     if not force:
         if responder_rules:
@@ -9428,13 +9427,13 @@ def update_target_responder_recipe(ctx, from_json, force, target_id, target_resp
 @cli_util.wrap_exceptions
 def update_target_responder_recipe_responder_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_id, target_responder_recipe_id, responder_rule_id, details, if_match):
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
-    if isinstance(target_responder_recipe_id, six.string_types) and len(target_responder_recipe_id.strip()) == 0:
+    if isinstance(target_responder_recipe_id, str) and len(target_responder_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --target-responder-recipe-id cannot be whitespace or empty string')
 
-    if isinstance(responder_rule_id, six.string_types) and len(responder_rule_id.strip()) == 0:
+    if isinstance(responder_rule_id, str) and len(responder_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --responder-rule-id cannot be whitespace or empty string')
     if not force:
         if details:
@@ -9499,7 +9498,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_wlp_agent(ctx, from_json, force, wlp_agent_id, certificate_signed_request, freeform_tags, defined_tags, if_match):
 
-    if isinstance(wlp_agent_id, six.string_types) and len(wlp_agent_id.strip()) == 0:
+    if isinstance(wlp_agent_id, str) and len(wlp_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --wlp-agent-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

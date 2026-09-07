@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -102,7 +101,7 @@ kafka_root_group.add_command(kafka_cluster_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -131,7 +130,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_kafka_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, compartment_id, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -189,7 +188,7 @@ def change_kafka_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_kafka_cluster_config_compartment(ctx, from_json, kafka_cluster_config_id, compartment_id, if_match):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -377,7 +376,7 @@ def create_kafka_cluster_config(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_kafka_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -433,7 +432,7 @@ def delete_kafka_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_kafka_cluster_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_config_id, if_match):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -495,10 +494,10 @@ def delete_kafka_cluster_config(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_kafka_cluster_config_version(ctx, from_json, kafka_cluster_config_id, version_number, if_match):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
-    if isinstance(version_number, six.string_types) and len(version_number.strip()) == 0:
+    if isinstance(version_number, str) and len(version_number.strip()) == 0:
         raise click.UsageError('Parameter --version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ def delete_kafka_cluster_config_version(ctx, from_json, kafka_cluster_config_id,
 @cli_util.wrap_exceptions
 def disable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -584,7 +583,7 @@ def disable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def enable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, compartment_id, secret_id, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -642,10 +641,10 @@ def enable_superuser(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_addon(ctx, from_json, kafka_cluster_id, addon_name):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -668,7 +667,7 @@ def get_addon(ctx, from_json, kafka_cluster_id, addon_name):
 @cli_util.wrap_exceptions
 def get_kafka_cluster(ctx, from_json, kafka_cluster_id):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -690,7 +689,7 @@ def get_kafka_cluster(ctx, from_json, kafka_cluster_id):
 @cli_util.wrap_exceptions
 def get_kafka_cluster_config(ctx, from_json, kafka_cluster_config_id):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -713,10 +712,10 @@ def get_kafka_cluster_config(ctx, from_json, kafka_cluster_config_id):
 @cli_util.wrap_exceptions
 def get_kafka_cluster_config_version(ctx, from_json, kafka_cluster_config_id, version_number):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
-    if isinstance(version_number, six.string_types) and len(version_number.strip()) == 0:
+    if isinstance(version_number, str) and len(version_number.strip()) == 0:
         raise click.UsageError('Parameter --version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -739,7 +738,7 @@ def get_kafka_cluster_config_version(ctx, from_json, kafka_cluster_config_id, ve
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -768,7 +767,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, addon_type, kafka_cluster_id, description, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -836,7 +835,7 @@ def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def install_addon_install_public_connectivity_addon_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, authentication_mechanism, network_cidrs, kafka_cluster_id, description, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -966,7 +965,7 @@ def list_addons(ctx, from_json, all_pages, page_size, kafka_cluster_id, lifecycl
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1027,7 +1026,7 @@ def list_kafka_cluster_config_versions(ctx, from_json, all_pages, page_size, kaf
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1264,7 +1263,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1321,7 +1320,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1434,10 +1433,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def uninstall_addon(ctx, from_json, kafka_cluster_id, addon_name, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1469,10 +1468,10 @@ def uninstall_addon(ctx, from_json, kafka_cluster_id, addon_name, if_match):
 @cli_util.wrap_exceptions
 def update_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, addon_name, addon_type, description, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1542,10 +1541,10 @@ def update_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def update_addon_update_public_connectivity_addon_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_cidrs, kafka_cluster_id, addon_name, description, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
     if not force:
         if network_cidrs:
@@ -1631,7 +1630,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_kafka_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_id, display_name, client_certificate_bundle, broker_shape, cluster_config_id, cluster_config_version, access_subnets, coordination_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(kafka_cluster_id, six.string_types) and len(kafka_cluster_id.strip()) == 0:
+    if isinstance(kafka_cluster_id, str) and len(kafka_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-id cannot be whitespace or empty string')
     if not force:
         if broker_shape or access_subnets or freeform_tags or defined_tags:
@@ -1730,7 +1729,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_kafka_cluster_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, kafka_cluster_config_id, display_name, latest_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(kafka_cluster_config_id, six.string_types) and len(kafka_cluster_config_id.strip()) == 0:
+    if isinstance(kafka_cluster_config_id, str) and len(kafka_cluster_config_id.strip()) == 0:
         raise click.UsageError('Parameter --kafka-cluster-config-id cannot be whitespace or empty string')
     if not force:
         if latest_config or freeform_tags or defined_tags:

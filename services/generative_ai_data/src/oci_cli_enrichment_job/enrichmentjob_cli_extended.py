@@ -4,7 +4,6 @@
 from __future__ import print_function
 import click
 import oci
-import six
 import sys
 from oci_cli import cli_util
 from oci_cli import custom_types
@@ -52,10 +51,10 @@ def cancel_enrichment_job_extended(ctx, **kwargs):
     wait_interval_seconds = kwargs.pop('wait_interval_seconds', None)
     kwargs.pop('from_json', None)
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
-    if isinstance(enrichment_job_id, six.string_types) and len(enrichment_job_id.strip()) == 0:
+    if isinstance(enrichment_job_id, str) and len(enrichment_job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     operation_kwargs = {}

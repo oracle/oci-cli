@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -87,7 +86,7 @@ db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_key_group)
 @cli_util.wrap_exceptions
 def change_oracle_db_aws_identity_connector_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, compartment_id, if_match):
 
-    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+    if isinstance(oracle_db_aws_identity_connector_id, str) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -150,7 +149,7 @@ def change_oracle_db_aws_identity_connector_compartment(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def change_oracle_db_aws_key_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, compartment_id, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -394,7 +393,7 @@ def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, if_match):
 
-    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+    if isinstance(oracle_db_aws_identity_connector_id, str) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -450,7 +449,7 @@ def delete_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def delete_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -501,7 +500,7 @@ def delete_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_oracle_db_aws_identity_connector(ctx, from_json, oracle_db_aws_identity_connector_id):
 
-    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+    if isinstance(oracle_db_aws_identity_connector_id, str) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -526,7 +525,7 @@ def get_oracle_db_aws_identity_connector(ctx, from_json, oracle_db_aws_identity_
 @cli_util.wrap_exceptions
 def get_oracle_db_aws_key(ctx, from_json, oracle_db_aws_key_id, limit, page, sort_order):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -687,7 +686,7 @@ def list_oracle_db_aws_keys(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.wrap_exceptions
 def refresh_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, if_match):
 
-    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+    if isinstance(oracle_db_aws_identity_connector_id, str) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -743,7 +742,7 @@ def refresh_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def refresh_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, oracle_db_aws_connector_id, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -807,7 +806,7 @@ def refresh_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def replicate_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, target_region, action, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -885,7 +884,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_oracle_db_aws_identity_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_identity_connector_id, display_name, resource_id, oidc_scope, issuer_url, service_role_details, aws_location, aws_sts_private_endpoint, aws_account_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_aws_identity_connector_id, six.string_types) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
+    if isinstance(oracle_db_aws_identity_connector_id, str) and len(oracle_db_aws_identity_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-identity-connector-id cannot be whitespace or empty string')
     if not force:
         if service_role_details or freeform_tags or defined_tags:
@@ -986,7 +985,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+    if isinstance(oracle_db_aws_key_id, str) and len(oracle_db_aws_key_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

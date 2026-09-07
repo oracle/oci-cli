@@ -7,7 +7,6 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
 from services.data_science.src.oci_cli_data_science.generated import datascience_cli
-import six
 
 
 @cli_util.copy_params_from_generated_command(datascience_cli.list_work_request_logs, params_to_exclude=[])
@@ -85,7 +84,7 @@ cli_util.rename_command(datascience_cli, datascience_cli.model_group,
 @cli_util.wrap_exceptions
 def head_model_artifact(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -110,7 +109,7 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
     model_artifact_file = kwargs['model_artifact_file']
     del kwargs['model_artifact_file']
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     with open(model_artifact_file, 'rb') as file:
@@ -127,7 +126,7 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
 @cli_util.wrap_exceptions
 def head_job_artifact(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -153,7 +152,7 @@ def create_job_artifact_extended(ctx, job_id, from_json, **kwargs):
     job_artifact_file = kwargs['job_artifact_file']
     del kwargs['job_artifact_file']
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     with open(job_artifact_file, 'rb') as file:
@@ -234,10 +233,10 @@ def update_job_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def head_step_artifact(ctx, from_json, pipeline_id, step_name):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
-    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+    if isinstance(step_name, str) and len(step_name.strip()) == 0:
         raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -264,10 +263,10 @@ def create_step_artifact_extended(ctx, pipeline_id, step_name, from_json, **kwar
     step_artifact = kwargs['step_artifact']
     del kwargs['step_artifact']
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
-    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+    if isinstance(step_name, str) and len(step_name.strip()) == 0:
         raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
 
     with open(step_artifact, 'rb') as file:
@@ -708,7 +707,7 @@ def put_ml_application_package_extended(ctx, ml_app_implementation_id, from_json
     template_file = kwargs['ml_app_package_file']
     del kwargs['ml_app_package_file']
 
-    if isinstance(ml_app_implementation_id, six.string_types) and len(
+    if isinstance(ml_app_implementation_id, str) and len(
             ml_app_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml_app_implementation_id cannot be whitespace or empty string')
 
@@ -729,7 +728,7 @@ datascience_cli.ml_application_implementation_group.commands.pop(datascience_cli
 @click.pass_context
 def change_ml_application_compartment(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -747,7 +746,7 @@ def change_ml_application_compartment(ctx, **kwargs):
 @click.pass_context
 def change_ml_application_implementation_compartment(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_id'], str) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_id' in kwargs:
@@ -765,7 +764,7 @@ def change_ml_application_implementation_compartment(ctx, **kwargs):
 @click.pass_context
 def change_ml_application_instance_compartment(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_id'], str) and len(kwargs['ml_app_instance_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_id' in kwargs:
@@ -783,7 +782,7 @@ def change_ml_application_instance_compartment(ctx, **kwargs):
 @click.pass_context
 def change_ml_application_instance_view_compartment(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -801,7 +800,7 @@ def change_ml_application_instance_view_compartment(ctx, **kwargs):
 @click.pass_context
 def create_ml_application_implementation(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -820,7 +819,7 @@ def create_ml_application_implementation(ctx, **kwargs):
 @click.pass_context
 def create_ml_application_instance(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -832,7 +831,6 @@ def create_ml_application_instance(ctx, **kwargs):
 
     ctx.invoke(datascience_cli.create_ml_application_instance, **kwargs)
 
-
 # Rename oci data-science ml-app-instance create_ml_application_instance_create_iam_auth_configuration_create_details --ml-application-id --ml-application-implementation-id
 #   to oci data-science ml-app-instance create_ml_application_instance_create_iam_auth_configuration_create_details --ml-app-id --ml-app-implementation-id
 @cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
@@ -842,7 +840,7 @@ def create_ml_application_instance(ctx, **kwargs):
 @click.pass_context
 def create_ml_application_instance_create_iam_auth_configuration_create_details(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -863,7 +861,7 @@ def create_ml_application_instance_create_iam_auth_configuration_create_details(
 @click.pass_context
 def delete_ml_application(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -881,7 +879,7 @@ def delete_ml_application(ctx, **kwargs):
 @click.pass_context
 def delete_ml_application_implementation(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_id'], str) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_id' in kwargs:
@@ -899,7 +897,7 @@ def delete_ml_application_implementation(ctx, **kwargs):
 @click.pass_context
 def delete_ml_application_instance(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_id'], str) and len(kwargs['ml_app_instance_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_id' in kwargs:
@@ -917,7 +915,7 @@ def delete_ml_application_instance(ctx, **kwargs):
 @click.pass_context
 def disable_ml_application_instance_view_trigger(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -935,7 +933,7 @@ def disable_ml_application_instance_view_trigger(ctx, **kwargs):
 @click.pass_context
 def enable_ml_application_instance_view_trigger(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -953,7 +951,7 @@ def enable_ml_application_instance_view_trigger(ctx, **kwargs):
 @click.pass_context
 def get_ml_application(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -971,7 +969,7 @@ def get_ml_application(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_historical_package_content(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_version_id'], str) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_version_id' in kwargs:
@@ -989,7 +987,7 @@ def get_ml_application_historical_package_content(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_implementation(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_id'], str) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_id' in kwargs:
@@ -1007,7 +1005,7 @@ def get_ml_application_implementation(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_implementation_version(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_version_id'], str) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_version_id' in kwargs:
@@ -1025,7 +1023,7 @@ def get_ml_application_implementation_version(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_instance(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_id'], str) and len(kwargs['ml_app_instance_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_id' in kwargs:
@@ -1043,7 +1041,7 @@ def get_ml_application_instance(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_instance_view(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -1061,7 +1059,7 @@ def get_ml_application_instance_view(ctx, **kwargs):
 @click.pass_context
 def get_ml_application_package_content(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_id'], str) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_id' in kwargs:
@@ -1162,7 +1160,7 @@ def list_ml_applications(ctx, **kwargs):
 @click.pass_context
 def recover_ml_application_instance_view(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -1180,7 +1178,7 @@ def recover_ml_application_instance_view(ctx, **kwargs):
 @click.pass_context
 def trigger_ml_application_instance_flow(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_id'], str) and len(kwargs['ml_app_instance_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_id' in kwargs:
@@ -1198,7 +1196,7 @@ def trigger_ml_application_instance_flow(ctx, **kwargs):
 @click.pass_context
 def trigger_ml_application_instance_view_flow(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:
@@ -1216,7 +1214,7 @@ def trigger_ml_application_instance_view_flow(ctx, **kwargs):
 @click.pass_context
 def update_ml_application(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_id'], str) and len(kwargs['ml_app_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
 
     if 'ml_app_id' in kwargs:
@@ -1234,7 +1232,7 @@ def update_ml_application(ctx, **kwargs):
 @click.pass_context
 def update_ml_application_implementation(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_id'], str) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_id' in kwargs:
@@ -1252,7 +1250,7 @@ def update_ml_application_implementation(ctx, **kwargs):
 @click.pass_context
 def update_ml_application_implementation_version(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_implementation_version_id'], str) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
 
     if 'ml_app_implementation_version_id' in kwargs:
@@ -1271,7 +1269,7 @@ def update_ml_application_implementation_version(ctx, **kwargs):
 @click.pass_context
 def update_ml_application_instance(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_id'], str) and len(kwargs['ml_app_instance_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_id' in kwargs:
@@ -1292,7 +1290,7 @@ def update_ml_application_instance(ctx, **kwargs):
 @click.pass_context
 def update_ml_application_instance_view(ctx, **kwargs):
 
-    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+    if isinstance(kwargs['ml_app_instance_view_id'], str) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
         raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
 
     if 'ml_app_instance_view_id' in kwargs:

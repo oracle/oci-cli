@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -116,10 +115,10 @@ management_root_group.add_command(channel_group)
 @cli_util.wrap_exceptions
 def bulk_create_skill_entities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, items):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -179,10 +178,10 @@ def bulk_create_skill_entities(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def cascading_delete_skill_custom_entities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -241,7 +240,7 @@ To monitor the status of the job, take the `opc-work-request-id` response header
 @cli_util.wrap_exceptions
 def change_oda_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -298,7 +297,7 @@ def change_oda_private_endpoint_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def configure_digital_assistant_parameters(ctx, from_json, oda_instance_id, parameters):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -344,7 +343,7 @@ def configure_digital_assistant_parameters(ctx, from_json, oda_instance_id, para
 @cli_util.wrap_exceptions
 def create_authentication_provider(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, grant_type, identity_provider, name, token_endpoint_url, client_id, client_secret, scopes, authorization_endpoint_url, short_authorization_code_request_url, revoke_token_endpoint_url, subject_claim, refresh_token_retention_period_in_days, redirect_url, is_visible, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -433,7 +432,7 @@ def create_authentication_provider(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def create_channel(ctx, from_json, oda_instance_id, name, type, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -481,7 +480,7 @@ def create_channel(ctx, from_json, oda_instance_id, name, type, description, ses
 @cli_util.wrap_exceptions
 def create_channel_create_ms_teams_channel_details(ctx, from_json, oda_instance_id, name, msa_app_id, msa_app_password, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -540,7 +539,7 @@ Typically, you'd only enter a single asterisk during development. For production
 @cli_util.wrap_exceptions
 def create_channel_create_web_channel_details(ctx, from_json, oda_instance_id, name, is_client_authentication_enabled, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, allowed_domains, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -599,7 +598,7 @@ def create_channel_create_web_channel_details(ctx, from_json, oda_instance_id, n
 @cli_util.wrap_exceptions
 def create_channel_create_facebook_channel_details(ctx, from_json, oda_instance_id, name, app_secret, page_access_token, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -652,7 +651,7 @@ def create_channel_create_facebook_channel_details(ctx, from_json, oda_instance_
 @cli_util.wrap_exceptions
 def create_channel_create_application_channel_details(ctx, from_json, oda_instance_id, name, is_authenticated_user_id, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, outbound_url):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -715,7 +714,7 @@ If the channel is connecting to Oracle B2C Service version 19A or later, and you
 @cli_util.wrap_exceptions
 def create_channel_create_service_cloud_channel_details(ctx, from_json, oda_instance_id, name, domain_name, host_name_prefix, user_name, password, client_type, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -772,7 +771,7 @@ def create_channel_create_service_cloud_channel_details(ctx, from_json, oda_inst
 @cli_util.wrap_exceptions
 def create_channel_create_slack_channel_details(ctx, from_json, oda_instance_id, name, client_id, signing_secret, client_secret, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, auth_success_url, auth_error_url, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -842,7 +841,7 @@ For FUSION, this is the host portion of your Oracle Applications Cloud (Fusion) 
 @cli_util.wrap_exceptions
 def create_channel_create_osvc_channel_details(ctx, from_json, oda_instance_id, name, host, port, user_name, password, total_session_count, authentication_provider_name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, channel_service, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -902,7 +901,7 @@ def create_channel_create_osvc_channel_details(ctx, from_json, oda_instance_id, 
 @cli_util.wrap_exceptions
 def create_channel_create_app_event_channel_details(ctx, from_json, oda_instance_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, outbound_url, event_sink_bot_ids):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ def create_channel_create_app_event_channel_details(ctx, from_json, oda_instance
 @cli_util.wrap_exceptions
 def create_channel_create_oss_channel_details(ctx, from_json, oda_instance_id, name, inbound_message_topic, outbound_message_topic, bootstrap_servers, security_protocol, sasl_mechanism, tenancy_name, user_name, stream_pool_id, auth_token, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, event_sink_bot_ids):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1025,7 +1024,7 @@ def create_channel_create_oss_channel_details(ctx, from_json, oda_instance_id, n
 @cli_util.wrap_exceptions
 def create_channel_create_cortana_channel_details(ctx, from_json, oda_instance_id, name, msa_app_id, msa_app_password, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1079,7 +1078,7 @@ def create_channel_create_cortana_channel_details(ctx, from_json, oda_instance_i
 @cli_util.wrap_exceptions
 def create_channel_create_android_channel_details(ctx, from_json, oda_instance_id, name, is_client_authentication_enabled, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1138,7 +1137,7 @@ def create_channel_create_android_channel_details(ctx, from_json, oda_instance_i
 @cli_util.wrap_exceptions
 def create_channel_create_twilio_channel_details(ctx, from_json, oda_instance_id, name, account_sid, phone_number, auth_token, is_mms_enabled, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, original_connectors_url, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1197,7 +1196,7 @@ def create_channel_create_twilio_channel_details(ctx, from_json, oda_instance_id
 @cli_util.wrap_exceptions
 def create_channel_create_webhook_channel_details(ctx, from_json, oda_instance_id, name, outbound_url, payload_version, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1251,7 +1250,7 @@ def create_channel_create_webhook_channel_details(ctx, from_json, oda_instance_i
 @cli_util.wrap_exceptions
 def create_channel_create_ios_channel_details(ctx, from_json, oda_instance_id, name, is_client_authentication_enabled, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, bot_id):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1310,7 +1309,7 @@ def create_channel_create_ios_channel_details(ctx, from_json, oda_instance_id, n
 @cli_util.wrap_exceptions
 def create_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, kind, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1397,7 +1396,7 @@ def create_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_digital_assistant_create_digital_assistant_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, version_parameterconflict, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1489,7 +1488,7 @@ def create_digital_assistant_create_digital_assistant_version_details(ctx, from_
 @cli_util.wrap_exceptions
 def create_digital_assistant_clone_digital_assistant_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1585,7 +1584,7 @@ def create_digital_assistant_clone_digital_assistant_details(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def create_digital_assistant_create_new_digital_assistant_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, name, display_name, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict, native_language_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1683,7 +1682,7 @@ def create_digital_assistant_create_new_digital_assistant_details(ctx, from_json
 @cli_util.wrap_exceptions
 def create_digital_assistant_extend_digital_assistant_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1911,7 +1910,7 @@ To monitor the status of the job, take the `opc-work-request-id` response header
 @cli_util.wrap_exceptions
 def create_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scan_listener_type, protocol, scan_listener_infos, oda_private_endpoint_id):
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1979,7 +1978,7 @@ def create_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, kind, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2072,7 +2071,7 @@ def create_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2172,7 +2171,7 @@ def create_skill_clone_skill_details(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, name, display_name, version_parameterconflict, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, native_language_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2270,7 +2269,7 @@ def create_skill_create_new_skill_details(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, version_parameterconflict, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2366,7 +2365,7 @@ def create_skill_create_skill_version_details(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def create_skill_extend_skill_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, id, name, display_name, category, description, platform_version, dialog_version, multilingual_mode, primary_language_tag, freeform_tags, defined_tags, version_parameterconflict):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2460,10 +2459,10 @@ def create_skill_extend_skill_details(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def create_skill_parameter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, name, display_name, type, value, description):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2529,7 +2528,7 @@ def create_skill_parameter(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def create_translator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, type, base_url, auth_token, properties, freeform_tags, defined_tags):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2593,10 +2592,10 @@ def create_translator(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_authentication_provider(ctx, from_json, oda_instance_id, authentication_provider_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(authentication_provider_id, six.string_types) and len(authentication_provider_id.strip()) == 0:
+    if isinstance(authentication_provider_id, str) and len(authentication_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --authentication-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2624,10 +2623,10 @@ def delete_authentication_provider(ctx, from_json, oda_instance_id, authenticati
 @cli_util.wrap_exceptions
 def delete_channel(ctx, from_json, oda_instance_id, channel_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2655,10 +2654,10 @@ def delete_channel(ctx, from_json, oda_instance_id, channel_id, if_match):
 @cli_util.wrap_exceptions
 def delete_digital_assistant(ctx, from_json, oda_instance_id, digital_assistant_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2688,7 +2687,7 @@ def delete_digital_assistant(ctx, from_json, oda_instance_id, digital_assistant_
 @cli_util.wrap_exceptions
 def delete_oda_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_id, if_match):
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2744,7 +2743,7 @@ def delete_oda_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_oda_private_endpoint_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_attachment_id, if_match):
 
-    if isinstance(oda_private_endpoint_attachment_id, six.string_types) and len(oda_private_endpoint_attachment_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_attachment_id, str) and len(oda_private_endpoint_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2801,10 +2800,10 @@ def delete_oda_private_endpoint_attachment(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_scan_proxy_id, oda_private_endpoint_id, if_match):
 
-    if isinstance(oda_private_endpoint_scan_proxy_id, six.string_types) and len(oda_private_endpoint_scan_proxy_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_scan_proxy_id, str) and len(oda_private_endpoint_scan_proxy_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-scan-proxy-id cannot be whitespace or empty string')
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2859,10 +2858,10 @@ def delete_oda_private_endpoint_scan_proxy(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_skill(ctx, from_json, oda_instance_id, skill_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2891,13 +2890,13 @@ def delete_skill(ctx, from_json, oda_instance_id, skill_id, if_match):
 @cli_util.wrap_exceptions
 def delete_skill_parameter(ctx, from_json, oda_instance_id, skill_id, parameter_name, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_name, six.string_types) and len(parameter_name.strip()) == 0:
+    if isinstance(parameter_name, str) and len(parameter_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2926,10 +2925,10 @@ def delete_skill_parameter(ctx, from_json, oda_instance_id, skill_id, parameter_
 @cli_util.wrap_exceptions
 def delete_translator(ctx, from_json, oda_instance_id, translator_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(translator_id, six.string_types) and len(translator_id.strip()) == 0:
+    if isinstance(translator_id, str) and len(translator_id.strip()) == 0:
         raise click.UsageError('Parameter --translator-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2959,10 +2958,10 @@ def delete_translator(ctx, from_json, oda_instance_id, translator_id, if_match):
 @cli_util.wrap_exceptions
 def export_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, digital_assistant_id, target):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3022,10 +3021,10 @@ def export_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def export_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, target):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3082,10 +3081,10 @@ def export_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def get_authentication_provider(ctx, from_json, oda_instance_id, authentication_provider_id, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(authentication_provider_id, six.string_types) and len(authentication_provider_id.strip()) == 0:
+    if isinstance(authentication_provider_id, str) and len(authentication_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --authentication-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3112,10 +3111,10 @@ def get_authentication_provider(ctx, from_json, oda_instance_id, authentication_
 @cli_util.wrap_exceptions
 def get_channel(ctx, from_json, oda_instance_id, channel_id, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3142,10 +3141,10 @@ def get_channel(ctx, from_json, oda_instance_id, channel_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_digital_assistant(ctx, from_json, oda_instance_id, digital_assistant_id, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3173,13 +3172,13 @@ def get_digital_assistant(ctx, from_json, oda_instance_id, digital_assistant_id,
 @cli_util.wrap_exceptions
 def get_digital_assistant_parameter(ctx, from_json, oda_instance_id, digital_assistant_id, parameter_name, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_name, six.string_types) and len(parameter_name.strip()) == 0:
+    if isinstance(parameter_name, str) and len(parameter_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3205,7 +3204,7 @@ def get_digital_assistant_parameter(ctx, from_json, oda_instance_id, digital_ass
 @cli_util.wrap_exceptions
 def get_oda_private_endpoint(ctx, from_json, oda_private_endpoint_id):
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3227,7 +3226,7 @@ def get_oda_private_endpoint(ctx, from_json, oda_private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_oda_private_endpoint_attachment(ctx, from_json, oda_private_endpoint_attachment_id):
 
-    if isinstance(oda_private_endpoint_attachment_id, six.string_types) and len(oda_private_endpoint_attachment_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_attachment_id, str) and len(oda_private_endpoint_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3250,10 +3249,10 @@ def get_oda_private_endpoint_attachment(ctx, from_json, oda_private_endpoint_att
 @cli_util.wrap_exceptions
 def get_oda_private_endpoint_scan_proxy(ctx, from_json, oda_private_endpoint_scan_proxy_id, oda_private_endpoint_id):
 
-    if isinstance(oda_private_endpoint_scan_proxy_id, six.string_types) and len(oda_private_endpoint_scan_proxy_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_scan_proxy_id, str) and len(oda_private_endpoint_scan_proxy_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-scan-proxy-id cannot be whitespace or empty string')
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3278,10 +3277,10 @@ def get_oda_private_endpoint_scan_proxy(ctx, from_json, oda_private_endpoint_sca
 @cli_util.wrap_exceptions
 def get_skill(ctx, from_json, oda_instance_id, skill_id, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3309,13 +3308,13 @@ def get_skill(ctx, from_json, oda_instance_id, skill_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_skill_parameter(ctx, from_json, oda_instance_id, skill_id, parameter_name, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_name, six.string_types) and len(parameter_name.strip()) == 0:
+    if isinstance(parameter_name, str) and len(parameter_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3343,10 +3342,10 @@ def get_skill_parameter(ctx, from_json, oda_instance_id, skill_id, parameter_nam
 @cli_util.wrap_exceptions
 def get_translator(ctx, from_json, oda_instance_id, translator_id, if_none_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(translator_id, six.string_types) and len(translator_id.strip()) == 0:
+    if isinstance(translator_id, str) and len(translator_id.strip()) == 0:
         raise click.UsageError('Parameter --translator-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3375,7 +3374,7 @@ def get_translator(ctx, from_json, oda_instance_id, translator_id, if_none_match
 @cli_util.wrap_exceptions
 def import_bot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, source):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3452,7 +3451,7 @@ def list_authentication_providers(ctx, from_json, all_pages, page_size, oda_inst
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3532,7 +3531,7 @@ def list_channels(ctx, from_json, all_pages, page_size, oda_instance_id, id, nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3610,10 +3609,10 @@ def list_digital_assistant_parameters(ctx, from_json, all_pages, page_size, oda_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3699,7 +3698,7 @@ def list_digital_assistants(ctx, from_json, all_pages, page_size, oda_instance_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3850,7 +3849,7 @@ def list_oda_private_endpoint_scan_proxies(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3990,10 +3989,10 @@ def list_skill_parameters(ctx, from_json, all_pages, page_size, oda_instance_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4079,7 +4078,7 @@ def list_skills(ctx, from_json, all_pages, page_size, oda_instance_id, id, categ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4166,7 +4165,7 @@ def list_translators(ctx, from_json, all_pages, page_size, oda_instance_id, id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4227,10 +4226,10 @@ def list_translators(ctx, from_json, all_pages, page_size, oda_instance_id, id, 
 @cli_util.wrap_exceptions
 def publish_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, digital_assistant_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4283,10 +4282,10 @@ def publish_digital_assistant(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def publish_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4336,10 +4335,10 @@ def publish_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def rotate_channel_keys(ctx, from_json, oda_instance_id, channel_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4369,10 +4368,10 @@ def rotate_channel_keys(ctx, from_json, oda_instance_id, channel_id, if_match):
 @cli_util.wrap_exceptions
 def start_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4425,10 +4424,10 @@ def start_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def stop_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4482,10 +4481,10 @@ def stop_channel(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def train_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, items, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4560,10 +4559,10 @@ def train_skill(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def update_authentication_provider(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, authentication_provider_id, token_endpoint_url, authorization_endpoint_url, short_authorization_code_request_url, revoke_token_endpoint_url, client_id, client_secret, scopes, subject_claim, refresh_token_retention_period_in_days, redirect_url, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(authentication_provider_id, six.string_types) and len(authentication_provider_id.strip()) == 0:
+    if isinstance(authentication_provider_id, str) and len(authentication_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --authentication-provider-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4667,10 +4666,10 @@ def update_authentication_provider(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_channel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, type, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4765,10 +4764,10 @@ For FUSION, this is the host portion of your Oracle Applications Cloud (Fusion) 
 @cli_util.wrap_exceptions
 def update_channel_update_osvc_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, host, port, user_name, password, total_session_count, channel_service, authentication_provider_name, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4886,10 +4885,10 @@ def update_channel_update_osvc_channel_details(ctx, from_json, force, wait_for_s
 @cli_util.wrap_exceptions
 def update_channel_update_oss_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, event_sink_bot_ids, inbound_message_topic, outbound_message_topic, bootstrap_servers, security_protocol, sasl_mechanism, tenancy_name, user_name, stream_pool_id, auth_token, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or event_sink_bot_ids:
@@ -5006,10 +5005,10 @@ def update_channel_update_oss_channel_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_channel_update_android_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, is_client_authentication_enabled, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5105,10 +5104,10 @@ def update_channel_update_android_channel_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_channel_update_ms_teams_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, msa_app_id, msa_app_password, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5203,10 +5202,10 @@ def update_channel_update_ms_teams_channel_details(ctx, from_json, force, wait_f
 @cli_util.wrap_exceptions
 def update_channel_update_app_event_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, outbound_url, event_sink_bot_ids, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or event_sink_bot_ids:
@@ -5304,10 +5303,10 @@ Typically, you'd only enter a single asterisk during development. For production
 @cli_util.wrap_exceptions
 def update_channel_update_web_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, is_client_authentication_enabled, allowed_domains, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5406,10 +5405,10 @@ def update_channel_update_web_channel_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_channel_update_ios_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, max_token_expiration_time_in_minutes, is_client_authentication_enabled, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5508,10 +5507,10 @@ def update_channel_update_ios_channel_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_channel_update_slack_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, client_id, auth_success_url, auth_error_url, signing_secret, client_secret, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5626,10 +5625,10 @@ If the channel is connecting to Oracle B2C Service version 19A or later, and you
 @cli_util.wrap_exceptions
 def update_channel_update_service_cloud_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, domain_name, host_name_prefix, user_name, password, client_type, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5734,10 +5733,10 @@ def update_channel_update_service_cloud_channel_details(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_channel_update_twilio_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, account_sid, phone_number, auth_token, is_mms_enabled, original_connectors_url, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5842,10 +5841,10 @@ def update_channel_update_twilio_channel_details(ctx, from_json, force, wait_for
 @cli_util.wrap_exceptions
 def update_channel_update_webhook_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, outbound_url, payload_version, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5940,10 +5939,10 @@ def update_channel_update_webhook_channel_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_channel_update_application_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, outbound_url, is_authenticated_user_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6036,10 +6035,10 @@ def update_channel_update_application_channel_details(ctx, from_json, force, wai
 @cli_util.wrap_exceptions
 def update_channel_update_facebook_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, app_secret, page_access_token, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6135,10 +6134,10 @@ def update_channel_update_facebook_channel_details(ctx, from_json, force, wait_f
 @cli_util.wrap_exceptions
 def update_channel_update_cortana_channel_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, channel_id, name, description, session_expiry_duration_in_milliseconds, freeform_tags, defined_tags, msa_app_id, msa_app_password, bot_id, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(channel_id, six.string_types) and len(channel_id.strip()) == 0:
+    if isinstance(channel_id, str) and len(channel_id.strip()) == 0:
         raise click.UsageError('Parameter --channel-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6230,10 +6229,10 @@ def update_channel_update_cortana_channel_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_digital_assistant(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, digital_assistant_id, category, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6308,13 +6307,13 @@ def update_digital_assistant(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_digital_assistant_parameter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, digital_assistant_id, parameter_name, value, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(digital_assistant_id, six.string_types) and len(digital_assistant_id.strip()) == 0:
+    if isinstance(digital_assistant_id, str) and len(digital_assistant_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-assistant-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_name, six.string_types) and len(parameter_name.strip()) == 0:
+    if isinstance(parameter_name, str) and len(parameter_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6379,7 +6378,7 @@ def update_digital_assistant_parameter(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_oda_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(oda_private_endpoint_id, six.string_types) and len(oda_private_endpoint_id.strip()) == 0:
+    if isinstance(oda_private_endpoint_id, str) and len(oda_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags or security_attributes:
@@ -6466,10 +6465,10 @@ def update_oda_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_skill(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, category, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6546,13 +6545,13 @@ def update_skill(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_skill_parameter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, skill_id, parameter_name, display_name, description, value, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(skill_id, six.string_types) and len(skill_id.strip()) == 0:
+    if isinstance(skill_id, str) and len(skill_id.strip()) == 0:
         raise click.UsageError('Parameter --skill-id cannot be whitespace or empty string')
 
-    if isinstance(parameter_name, six.string_types) and len(parameter_name.strip()) == 0:
+    if isinstance(parameter_name, str) and len(parameter_name.strip()) == 0:
         raise click.UsageError('Parameter --parameter-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6625,10 +6624,10 @@ def update_skill_parameter(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_translator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oda_instance_id, translator_id, base_url, auth_token, properties, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oda_instance_id, six.string_types) and len(oda_instance_id.strip()) == 0:
+    if isinstance(oda_instance_id, str) and len(oda_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oda-instance-id cannot be whitespace or empty string')
 
-    if isinstance(translator_id, six.string_types) and len(translator_id.strip()) == 0:
+    if isinstance(translator_id, str) and len(translator_id.strip()) == 0:
         raise click.UsageError('Parameter --translator-id cannot be whitespace or empty string')
     if not force:
         if properties or freeform_tags or defined_tags:

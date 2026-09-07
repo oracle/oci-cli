@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -114,7 +113,7 @@ def create_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tenancy_attachment_id, if_match):
 
-    if isinstance(tenancy_attachment_id, six.string_types) and len(tenancy_attachment_id.strip()) == 0:
+    if isinstance(tenancy_attachment_id, str) and len(tenancy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -165,7 +164,7 @@ def delete_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_tenancy_attachment(ctx, from_json, tenancy_attachment_id):
 
-    if isinstance(tenancy_attachment_id, six.string_types) and len(tenancy_attachment_id.strip()) == 0:
+    if isinstance(tenancy_attachment_id, str) and len(tenancy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -251,7 +250,7 @@ def list_tenancy_attachments(ctx, from_json, all_pages, page_size, resource_anal
 @cli_util.wrap_exceptions
 def update_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tenancy_attachment_id, description, if_match):
 
-    if isinstance(tenancy_attachment_id, six.string_types) and len(tenancy_attachment_id.strip()) == 0:
+    if isinstance(tenancy_attachment_id, str) and len(tenancy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ omhub_resource_anchor_root_group.add_command(resource_anchor_group)
 @cli_util.wrap_exceptions
 def get_resource_anchor(ctx, from_json, resource_anchor_id, subscription_service_name, subscription_id, should_fetch_compartment_name):
 
-    if isinstance(resource_anchor_id, six.string_types) and len(resource_anchor_id.strip()) == 0:
+    if isinstance(resource_anchor_id, str) and len(resource_anchor_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-anchor-id cannot be whitespace or empty string')
 
     kwargs = {}

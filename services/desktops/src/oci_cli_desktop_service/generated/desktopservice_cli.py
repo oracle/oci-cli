@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -70,7 +69,7 @@ desktops_root_group.add_command(desktop_pool_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -99,7 +98,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_desktop_pool_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, compartment_id, if_match):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -291,7 +290,7 @@ def create_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_id, if_match):
 
-    if isinstance(desktop_id, six.string_types) and len(desktop_id.strip()) == 0:
+    if isinstance(desktop_id, str) and len(desktop_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -348,7 +347,7 @@ def delete_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, if_match, are_volumes_preserved):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def delete_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_desktop(ctx, from_json, desktop_id):
 
-    if isinstance(desktop_id, six.string_types) and len(desktop_id.strip()) == 0:
+    if isinstance(desktop_id, str) and len(desktop_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -423,7 +422,7 @@ def get_desktop(ctx, from_json, desktop_id):
 @cli_util.wrap_exceptions
 def get_desktop_pool(ctx, from_json, desktop_pool_id):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -445,7 +444,7 @@ def get_desktop_pool(ctx, from_json, desktop_pool_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -483,7 +482,7 @@ def list_desktop_pool_desktops(ctx, from_json, all_pages, page_size, compartment
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -558,7 +557,7 @@ def list_desktop_pool_volumes(ctx, from_json, all_pages, page_size, desktop_pool
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -765,7 +764,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -822,7 +821,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -937,7 +936,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def start_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_id, if_match):
 
-    if isinstance(desktop_id, six.string_types) and len(desktop_id.strip()) == 0:
+    if isinstance(desktop_id, str) and len(desktop_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -992,7 +991,7 @@ def start_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def start_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, if_match):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1048,7 +1047,7 @@ def start_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_id, if_match, is_soft_stop):
 
-    if isinstance(desktop_id, six.string_types) and len(desktop_id.strip()) == 0:
+    if isinstance(desktop_id, str) and len(desktop_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1105,7 +1104,7 @@ def stop_desktop(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def stop_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, if_match):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1164,7 +1163,7 @@ def stop_desktop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_desktop(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(desktop_id, six.string_types) and len(desktop_id.strip()) == 0:
+    if isinstance(desktop_id, str) and len(desktop_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1256,7 +1255,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_desktop_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, desktop_pool_id, display_name, description, maximum_size, standby_size, device_policy, availability_policy, contact_details, time_start_scheduled, time_stop_scheduled, freeform_tags, defined_tags, session_lifecycle_actions, image, network_configuration, private_access_details, security_attributes, boot_volume_size_in_gbs, if_match):
 
-    if isinstance(desktop_pool_id, six.string_types) and len(desktop_pool_id.strip()) == 0:
+    if isinstance(desktop_pool_id, str) and len(desktop_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --desktop-pool-id cannot be whitespace or empty string')
     if not force:
         if device_policy or availability_policy or freeform_tags or defined_tags or session_lifecycle_actions or image or network_configuration or private_access_details or security_attributes:

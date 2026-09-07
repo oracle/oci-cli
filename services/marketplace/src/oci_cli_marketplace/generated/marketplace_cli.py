@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -174,7 +173,7 @@ marketplace_service_cli.marketplace_service_group.add_command(listing_group)
 @cli_util.wrap_exceptions
 def change_publication_compartment(ctx, from_json, publication_id, compartment_id, if_match):
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -433,7 +432,7 @@ def create_publication_create_image_publication_package(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def delete_accepted_agreement(ctx, from_json, accepted_agreement_id, signature, if_match):
 
-    if isinstance(accepted_agreement_id, six.string_types) and len(accepted_agreement_id.strip()) == 0:
+    if isinstance(accepted_agreement_id, str) and len(accepted_agreement_id.strip()) == 0:
         raise click.UsageError('Parameter --accepted-agreement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -464,7 +463,7 @@ def delete_accepted_agreement(ctx, from_json, accepted_agreement_id, signature, 
 @cli_util.wrap_exceptions
 def delete_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, publication_id, if_match):
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -529,10 +528,10 @@ def delete_publication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def export_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, package_version, compartment_id, container_repository_path):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+    if isinstance(package_version, str) and len(package_version.strip()) == 0:
         raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -588,7 +587,7 @@ def export_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_accepted_agreement(ctx, from_json, accepted_agreement_id):
 
-    if isinstance(accepted_agreement_id, six.string_types) and len(accepted_agreement_id.strip()) == 0:
+    if isinstance(accepted_agreement_id, str) and len(accepted_agreement_id.strip()) == 0:
         raise click.UsageError('Parameter --accepted-agreement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -613,13 +612,13 @@ def get_accepted_agreement(ctx, from_json, accepted_agreement_id):
 @cli_util.wrap_exceptions
 def get_agreement(ctx, from_json, listing_id, package_version, agreement_id, compartment_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+    if isinstance(package_version, str) and len(package_version.strip()) == 0:
         raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
 
-    if isinstance(agreement_id, six.string_types) and len(agreement_id.strip()) == 0:
+    if isinstance(agreement_id, str) and len(agreement_id.strip()) == 0:
         raise click.UsageError('Parameter --agreement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -652,7 +651,7 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @cli_util.wrap_exceptions
 def get_listing(ctx, from_json, listing_id, compartment_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -684,10 +683,10 @@ To get the image ID to launch an instance, issue a [GetAppCatalogListingResource
 @cli_util.wrap_exceptions
 def get_package(ctx, from_json, listing_id, package_version, compartment_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+    if isinstance(package_version, str) and len(package_version.strip()) == 0:
         raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -712,7 +711,7 @@ def get_package(ctx, from_json, listing_id, package_version, compartment_id):
 @cli_util.wrap_exceptions
 def get_publication(ctx, from_json, publication_id):
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -735,10 +734,10 @@ def get_publication(ctx, from_json, publication_id):
 @cli_util.wrap_exceptions
 def get_publication_package(ctx, from_json, publication_id, package_version):
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
 
-    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+    if isinstance(package_version, str) and len(package_version.strip()) == 0:
         raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -761,7 +760,7 @@ def get_publication_package(ctx, from_json, publication_id, package_version):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -858,10 +857,10 @@ def list_agreements(ctx, from_json, all_pages, page_size, listing_id, package_ve
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(package_version, six.string_types) and len(package_version.strip()) == 0:
+    if isinstance(package_version, str) and len(package_version.strip()) == 0:
         raise click.UsageError('Parameter --package-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1117,7 +1116,7 @@ def list_packages(ctx, from_json, all_pages, page_size, listing_id, package_vers
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1182,7 +1181,7 @@ def list_publication_packages(ctx, from_json, all_pages, page_size, publication_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1419,7 +1418,7 @@ def list_reports(ctx, from_json, all_pages, report_type, date, compartment_id, p
 @cli_util.wrap_exceptions
 def list_taxes(ctx, from_json, all_pages, listing_id, compartment_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1452,7 +1451,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1509,7 +1508,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1725,7 +1724,7 @@ def search_listings_free_text_search_details(ctx, from_json, text, matching_cont
 @cli_util.wrap_exceptions
 def update_accepted_agreement(ctx, from_json, force, accepted_agreement_id, display_name, defined_tags, freeform_tags, if_match):
 
-    if isinstance(accepted_agreement_id, six.string_types) and len(accepted_agreement_id.strip()) == 0:
+    if isinstance(accepted_agreement_id, str) and len(accepted_agreement_id.strip()) == 0:
         raise click.UsageError('Parameter --accepted-agreement-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1779,7 +1778,7 @@ This option is a JSON list with items of type SupportContact.  For documentation
 @cli_util.wrap_exceptions
 def update_publication(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, publication_id, name, short_description, long_description, support_contacts, defined_tags, freeform_tags, if_match):
 
-    if isinstance(publication_id, six.string_types) and len(publication_id.strip()) == 0:
+    if isinstance(publication_id, str) and len(publication_id.strip()) == 0:
         raise click.UsageError('Parameter --publication-id cannot be whitespace or empty string')
     if not force:
         if support_contacts or defined_tags or freeform_tags:

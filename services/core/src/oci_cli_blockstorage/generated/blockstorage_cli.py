@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -164,7 +163,7 @@ blockstorage_root_group.add_command(volume_kms_key_group)
 @cli_util.wrap_exceptions
 def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id, compartment_id):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -192,7 +191,7 @@ def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id,
 @cli_util.wrap_exceptions
 def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_id):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -220,7 +219,7 @@ def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_i
 @cli_util.wrap_exceptions
 def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartment_id):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -248,7 +247,7 @@ def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartme
 @cli_util.wrap_exceptions
 def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -276,7 +275,7 @@ def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
 @cli_util.wrap_exceptions
 def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_id, compartment_id):
 
-    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+    if isinstance(volume_group_backup_id, str) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -304,7 +303,7 @@ def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_i
 @cli_util.wrap_exceptions
 def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment_id):
 
-    if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
+    if isinstance(volume_group_id, str) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -341,7 +340,7 @@ Example: `us-ashburn-1`""")
 @cli_util.wrap_exceptions
 def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, destination_region, display_name, kms_key_id):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -407,7 +406,7 @@ Example: `us-ashburn-1`""")
 @cli_util.wrap_exceptions
 def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, destination_region, display_name, kms_key_id):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -473,7 +472,7 @@ Example: `us-ashburn-1`""")
 @cli_util.wrap_exceptions
 def copy_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_backup_id, destination_region, display_name, kms_key_id):
 
-    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+    if isinstance(volume_group_backup_id, str) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2681,7 +2680,7 @@ def create_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, if_match):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2744,7 +2743,7 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, if_match):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2804,7 +2803,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2832,7 +2831,7 @@ def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 @cli_util.wrap_exceptions
 def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, if_match):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2895,7 +2894,7 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, if_match):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2957,7 +2956,7 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_volume_backup_policy(ctx, from_json, policy_id, if_match):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2983,7 +2982,7 @@ def delete_volume_backup_policy(ctx, from_json, policy_id, if_match):
 @cli_util.wrap_exceptions
 def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id, if_match):
 
-    if isinstance(policy_assignment_id, six.string_types) and len(policy_assignment_id.strip()) == 0:
+    if isinstance(policy_assignment_id, str) and len(policy_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3011,7 +3010,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
 @cli_util.wrap_exceptions
 def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_id, if_match):
 
-    if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
+    if isinstance(volume_group_id, str) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3074,7 +3073,7 @@ def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_backup_id, if_match):
 
-    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+    if isinstance(volume_group_backup_id, str) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3134,7 +3133,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3157,7 +3156,7 @@ def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
 @cli_util.wrap_exceptions
 def get_block_volume_replica(ctx, from_json, block_volume_replica_id):
 
-    if isinstance(block_volume_replica_id, six.string_types) and len(block_volume_replica_id.strip()) == 0:
+    if isinstance(block_volume_replica_id, str) and len(block_volume_replica_id.strip()) == 0:
         raise click.UsageError('Parameter --block-volume-replica-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3178,7 +3177,7 @@ def get_block_volume_replica(ctx, from_json, block_volume_replica_id):
 @cli_util.wrap_exceptions
 def get_boot_volume(ctx, from_json, boot_volume_id):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3199,7 +3198,7 @@ def get_boot_volume(ctx, from_json, boot_volume_id):
 @cli_util.wrap_exceptions
 def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3221,7 +3220,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
 @cli_util.wrap_exceptions
 def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3244,7 +3243,7 @@ def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
 @cli_util.wrap_exceptions
 def get_boot_volume_replica(ctx, from_json, boot_volume_replica_id):
 
-    if isinstance(boot_volume_replica_id, six.string_types) and len(boot_volume_replica_id.strip()) == 0:
+    if isinstance(boot_volume_replica_id, str) and len(boot_volume_replica_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-replica-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3265,7 +3264,7 @@ def get_boot_volume_replica(ctx, from_json, boot_volume_replica_id):
 @cli_util.wrap_exceptions
 def get_volume(ctx, from_json, volume_id):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3286,7 +3285,7 @@ def get_volume(ctx, from_json, volume_id):
 @cli_util.wrap_exceptions
 def get_volume_backup(ctx, from_json, volume_backup_id):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3307,7 +3306,7 @@ def get_volume_backup(ctx, from_json, volume_backup_id):
 @cli_util.wrap_exceptions
 def get_volume_backup_policy(ctx, from_json, policy_id):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3354,7 +3353,7 @@ def get_volume_backup_policy_asset_assignment(ctx, from_json, asset_id, limit, p
 @cli_util.wrap_exceptions
 def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
 
-    if isinstance(policy_assignment_id, six.string_types) and len(policy_assignment_id.strip()) == 0:
+    if isinstance(policy_assignment_id, str) and len(policy_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3375,7 +3374,7 @@ def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
 @cli_util.wrap_exceptions
 def get_volume_group(ctx, from_json, volume_group_id):
 
-    if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
+    if isinstance(volume_group_id, str) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3396,7 +3395,7 @@ def get_volume_group(ctx, from_json, volume_group_id):
 @cli_util.wrap_exceptions
 def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
 
-    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+    if isinstance(volume_group_backup_id, str) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3417,7 +3416,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
 @cli_util.wrap_exceptions
 def get_volume_group_replica(ctx, from_json, volume_group_replica_id):
 
-    if isinstance(volume_group_replica_id, six.string_types) and len(volume_group_replica_id.strip()) == 0:
+    if isinstance(volume_group_replica_id, str) and len(volume_group_replica_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-replica-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3439,7 +3438,7 @@ def get_volume_group_replica(ctx, from_json, volume_group_replica_id):
 @cli_util.wrap_exceptions
 def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4160,7 +4159,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @cli_util.wrap_exceptions
 def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, if_match):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or boot_volume_replicas or autotune_policies:
@@ -4255,7 +4254,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, defined_tags, display_name, freeform_tags, kms_key_id, retention_period, is_prevent_deletion_enabled, is_retention_lock_enabled, is_indefinite_retention_enabled, if_match):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or retention_period:
@@ -4335,7 +4334,7 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_match):
 
-    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+    if isinstance(boot_volume_id, str) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4399,7 +4398,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @cli_util.wrap_exceptions
 def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, block_volume_replicas, autotune_policies, is_reservations_enabled, if_match):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or block_volume_replicas or autotune_policies:
@@ -4497,7 +4496,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, defined_tags, display_name, freeform_tags, kms_key_id, retention_period, is_prevent_deletion_enabled, is_retention_lock_enabled, is_indefinite_retention_enabled, if_match):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or retention_period:
@@ -4590,7 +4589,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, destination_region, schedules, defined_tags, freeform_tags, if_match):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
     if not force:
         if schedules or defined_tags or freeform_tags:
@@ -4656,7 +4655,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @cli_util.wrap_exceptions
 def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_id, defined_tags, display_name, freeform_tags, volume_ids, volume_group_replicas, if_match, preserve_volume_replica):
 
-    if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
+    if isinstance(volume_group_id, str) and len(volume_group_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or volume_ids or volume_group_replicas:
@@ -4743,7 +4742,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_group_backup_id, defined_tags, display_name, freeform_tags, retention_period, is_prevent_deletion_enabled, is_retention_lock_enabled, is_indefinite_retention_enabled, if_match):
 
-    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+    if isinstance(volume_group_backup_id, str) and len(volume_group_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or retention_period:
@@ -4820,7 +4819,7 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match):
 
-    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+    if isinstance(volume_id, str) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}

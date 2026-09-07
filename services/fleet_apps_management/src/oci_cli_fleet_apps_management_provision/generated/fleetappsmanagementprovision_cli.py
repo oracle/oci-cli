@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -55,7 +54,7 @@ fleet_apps_management_provision_root_group.add_command(provision_collection_grou
 @cli_util.wrap_exceptions
 def change_provision_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provision_id, compartment_id, if_match):
 
-    if isinstance(provision_id, six.string_types) and len(provision_id.strip()) == 0:
+    if isinstance(provision_id, str) and len(provision_id.strip()) == 0:
         raise click.UsageError('Parameter --provision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -203,7 +202,7 @@ def create_provision(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_provision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provision_id, if_match):
 
-    if isinstance(provision_id, six.string_types) and len(provision_id.strip()) == 0:
+    if isinstance(provision_id, str) and len(provision_id.strip()) == 0:
         raise click.UsageError('Parameter --provision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -254,7 +253,7 @@ def delete_provision(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_provision(ctx, from_json, provision_id):
 
-    if isinstance(provision_id, six.string_types) and len(provision_id.strip()) == 0:
+    if isinstance(provision_id, str) and len(provision_id.strip()) == 0:
         raise click.UsageError('Parameter --provision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -350,7 +349,7 @@ def list_provisions(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 @cli_util.wrap_exceptions
 def update_provision(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, provision_id, display_name, provision_description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(provision_id, six.string_types) and len(provision_id.strip()) == 0:
+    if isinstance(provision_id, str) and len(provision_id.strip()) == 0:
         raise click.UsageError('Parameter --provision-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

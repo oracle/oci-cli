@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -70,7 +69,7 @@ opa_root_group.add_command(opa_instance_collection_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -99,7 +98,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_opa_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opa_instance_id, compartment_id, if_match):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -245,7 +244,7 @@ def create_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opa_instance_id, if_match):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -296,7 +295,7 @@ def delete_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_opa_instance(ctx, from_json, opa_instance_id):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -318,7 +317,7 @@ def get_opa_instance(ctx, from_json, opa_instance_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -411,7 +410,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -468,7 +467,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -582,7 +581,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def start_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opa_instance_id, if_match):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -637,7 +636,7 @@ def start_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opa_instance_id, if_match):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -697,7 +696,7 @@ def stop_opa_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_opa_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opa_instance_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(opa_instance_id, six.string_types) and len(opa_instance_id.strip()) == 0:
+    if isinstance(opa_instance_id, str) and len(opa_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --opa-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

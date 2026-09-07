@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -154,7 +153,7 @@ def create_scheduled_query(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_scheduled_query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, apm_domain_id, scheduled_query_id, if_match):
 
-    if isinstance(scheduled_query_id, six.string_types) and len(scheduled_query_id.strip()) == 0:
+    if isinstance(scheduled_query_id, str) and len(scheduled_query_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -215,7 +214,7 @@ def delete_scheduled_query(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_scheduled_query(ctx, from_json, apm_domain_id, scheduled_query_id):
 
-    if isinstance(scheduled_query_id, six.string_types) and len(scheduled_query_id.strip()) == 0:
+    if isinstance(scheduled_query_id, str) and len(scheduled_query_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def list_scheduled_queries(ctx, from_json, all_pages, page_size, apm_domain_id, 
 @cli_util.wrap_exceptions
 def update_scheduled_query(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, apm_domain_id, scheduled_query_id, scheduled_query_name, scheduled_query_processing_type, scheduled_query_processing_sub_type, scheduled_query_text, scheduled_query_schedule, scheduled_query_description, scheduled_query_maximum_runtime_in_seconds, scheduled_query_retention_period_in_ms, scheduled_query_processing_configuration, scheduled_query_retention_criteria, freeform_tags, defined_tags, if_match, opc_dry_run):
 
-    if isinstance(scheduled_query_id, six.string_types) and len(scheduled_query_id.strip()) == 0:
+    if isinstance(scheduled_query_id, str) and len(scheduled_query_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-query-id cannot be whitespace or empty string')
     if not force:
         if scheduled_query_processing_configuration or freeform_tags or defined_tags:

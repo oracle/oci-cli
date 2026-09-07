@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -132,7 +131,7 @@ def create_incident(ctx, from_json, compartment_id, ticket, problem_type, user_g
 @cli_util.wrap_exceptions
 def get_incident(ctx, from_json, incident_key, compartment_id, ocid, homeregion, problemtype, bearertokentype, bearertoken, idtoken, domainid):
 
-    if isinstance(incident_key, six.string_types) and len(incident_key.strip()) == 0:
+    if isinstance(incident_key, str) and len(incident_key.strip()) == 0:
         raise click.UsageError('Parameter --incident-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -332,7 +331,7 @@ def list_incidents(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 @cli_util.wrap_exceptions
 def put_attachment(ctx, from_json, put_attachment_details, incident_key, attachment_name, compartment_id, is_restricted_flag, ocid, if_match, homeregion, problemtype, bearertokentype, bearertoken, idtoken, domainid):
 
-    if isinstance(incident_key, six.string_types) and len(incident_key.strip()) == 0:
+    if isinstance(incident_key, str) and len(incident_key.strip()) == 0:
         raise click.UsageError('Parameter --incident-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -389,7 +388,7 @@ def put_attachment(ctx, from_json, put_attachment_details, incident_key, attachm
 @cli_util.wrap_exceptions
 def update_incident(ctx, from_json, force, incident_key, ticket, compartment_id, problem_type, if_match, ocid, homeregion, bearertokentype, bearertoken, idtoken, domainid):
 
-    if isinstance(incident_key, six.string_types) and len(incident_key.strip()) == 0:
+    if isinstance(incident_key, str) and len(incident_key.strip()) == 0:
         raise click.UsageError('Parameter --incident-key cannot be whitespace or empty string')
     if not force:
         if ticket:

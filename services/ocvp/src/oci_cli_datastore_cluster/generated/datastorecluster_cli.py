@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,7 +48,7 @@ datastore_cluster_root_group.add_command(datastore_cluster_group)
 @cli_util.wrap_exceptions
 def add_datastore_to_datastore_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, datastore_ids, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -112,7 +111,7 @@ Use the [WorkRequest] operations to track the attachment of the Datastore. \n[Co
 @cli_util.wrap_exceptions
 def attach_datastore_cluster_to_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, cluster_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -175,7 +174,7 @@ Use the [WorkRequest] operations to track the attachment of the Datastore. \n[Co
 @cli_util.wrap_exceptions
 def attach_datastore_cluster_to_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, esxi_host_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -233,7 +232,7 @@ def attach_datastore_cluster_to_esxi_host(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_datastore_cluster_compartment(ctx, from_json, datastore_cluster_id, compartment_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -342,7 +341,7 @@ def create_datastore_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_datastore_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -399,7 +398,7 @@ Use the [WorkRequest] operations to track the detachment of the Datastore. \n[Co
 @cli_util.wrap_exceptions
 def detach_datastore_cluster_from_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -457,7 +456,7 @@ Use the [WorkRequest] operations to track the detachment of the Datastore. \n[Co
 @cli_util.wrap_exceptions
 def detach_datastore_cluster_from_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, esxi_host_id, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -513,7 +512,7 @@ def detach_datastore_cluster_from_esxi_host(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def get_datastore_cluster(ctx, from_json, datastore_cluster_id):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -608,7 +607,7 @@ def list_datastore_clusters(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.wrap_exceptions
 def remove_datastore_from_datastore_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, datastore_ids, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -678,7 +677,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_datastore_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_cluster_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(datastore_cluster_id, six.string_types) and len(datastore_cluster_id.strip()) == 0:
+    if isinstance(datastore_cluster_id, str) and len(datastore_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-cluster-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

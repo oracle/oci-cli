@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -76,7 +75,7 @@ speech_root_group.add_command(synthesize_speech_group)
 @cli_util.wrap_exceptions
 def cancel_transcription_job(ctx, from_json, transcription_job_id, if_match):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -102,10 +101,10 @@ def cancel_transcription_job(ctx, from_json, transcription_job_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_transcription_task(ctx, from_json, transcription_job_id, transcription_task_id, if_match):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
-    if isinstance(transcription_task_id, six.string_types) and len(transcription_task_id.strip()) == 0:
+    if isinstance(transcription_task_id, str) and len(transcription_task_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -132,7 +131,7 @@ def cancel_transcription_task(ctx, from_json, transcription_job_id, transcriptio
 @cli_util.wrap_exceptions
 def change_customization_compartment(ctx, from_json, customization_id, compartment_id, if_match):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -163,7 +162,7 @@ def change_customization_compartment(ctx, from_json, customization_id, compartme
 @cli_util.wrap_exceptions
 def change_transcription_job_compartment(ctx, from_json, transcription_job_id, compartment_id, if_match):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -714,7 +713,7 @@ def create_transcription_job_object_list_inline_input_location(ctx, from_json, w
 @cli_util.wrap_exceptions
 def delete_customization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, if_match):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -778,7 +777,7 @@ def delete_customization(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, transcription_job_id, if_match):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -837,7 +836,7 @@ def delete_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_customization(ctx, from_json, customization_id):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -859,7 +858,7 @@ def get_customization(ctx, from_json, customization_id):
 @cli_util.wrap_exceptions
 def get_transcription_job(ctx, from_json, transcription_job_id):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -882,10 +881,10 @@ def get_transcription_job(ctx, from_json, transcription_job_id):
 @cli_util.wrap_exceptions
 def get_transcription_task(ctx, from_json, transcription_job_id, transcription_task_id):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
-    if isinstance(transcription_task_id, six.string_types) and len(transcription_task_id.strip()) == 0:
+    if isinstance(transcription_task_id, str) and len(transcription_task_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1044,7 +1043,7 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1334,7 +1333,7 @@ def synthesize_speech_tts_base_audio_config(ctx, from_json, file, text, audio_co
 @cli_util.wrap_exceptions
 def update_customization(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, alias, display_name, description, model_details, training_dataset, freeform_tags, defined_tags, if_match):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
     if not force:
         if model_details or training_dataset or freeform_tags or defined_tags:
@@ -1423,7 +1422,7 @@ def update_customization(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_customization_object_storage_dataset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, training_dataset_location_details, alias, display_name, description, model_details, freeform_tags, defined_tags, if_match, training_dataset_entity_type):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
     if not force:
         if model_details or freeform_tags or defined_tags:
@@ -1518,7 +1517,7 @@ This option is a JSON list with items of type EntityList.  For documentation on 
 @cli_util.wrap_exceptions
 def update_customization_entity_list_dataset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, alias, display_name, description, model_details, freeform_tags, defined_tags, if_match, training_dataset_reference_examples, training_dataset_entity_list):
 
-    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+    if isinstance(customization_id, str) and len(customization_id.strip()) == 0:
         raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
     if not force:
         if model_details or freeform_tags or defined_tags:
@@ -1609,7 +1608,7 @@ def update_customization_entity_list_dataset(ctx, from_json, force, wait_for_sta
 @cli_util.wrap_exceptions
 def update_transcription_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, transcription_job_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(transcription_job_id, six.string_types) and len(transcription_job_id.strip()) == 0:
+    if isinstance(transcription_job_id, str) and len(transcription_job_id.strip()) == 0:
         raise click.UsageError('Parameter --transcription-job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

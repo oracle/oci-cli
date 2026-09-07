@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -77,7 +76,7 @@ psa_root_group.add_command(psa_service_collection_group)
 @cli_util.wrap_exceptions
 def cancel_psa_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -106,7 +105,7 @@ def cancel_psa_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_private_service_access_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_service_access_id, compartment_id, if_match):
 
-    if isinstance(private_service_access_id, six.string_types) and len(private_service_access_id.strip()) == 0:
+    if isinstance(private_service_access_id, str) and len(private_service_access_id.strip()) == 0:
         raise click.UsageError('Parameter --private-service-access-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -258,7 +257,7 @@ def create_private_service_access(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_private_service_access(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_service_access_id, if_match):
 
-    if isinstance(private_service_access_id, six.string_types) and len(private_service_access_id.strip()) == 0:
+    if isinstance(private_service_access_id, str) and len(private_service_access_id.strip()) == 0:
         raise click.UsageError('Parameter --private-service-access-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -309,7 +308,7 @@ def delete_private_service_access(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def get_private_service_access(ctx, from_json, private_service_access_id):
 
-    if isinstance(private_service_access_id, six.string_types) and len(private_service_access_id.strip()) == 0:
+    if isinstance(private_service_access_id, str) and len(private_service_access_id.strip()) == 0:
         raise click.UsageError('Parameter --private-service-access-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -331,7 +330,7 @@ def get_private_service_access(ctx, from_json, private_service_access_id):
 @cli_util.wrap_exceptions
 def get_psa_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -486,7 +485,7 @@ def list_psa_work_request_errors(ctx, from_json, all_pages, page_size, work_requ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -543,7 +542,7 @@ def list_psa_work_request_logs(ctx, from_json, all_pages, page_size, work_reques
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -670,7 +669,7 @@ Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\
 @cli_util.wrap_exceptions
 def update_private_service_access(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_service_access_id, defined_tags, freeform_tags, security_attributes, display_name, description, nsg_ids, if_match):
 
-    if isinstance(private_service_access_id, six.string_types) and len(private_service_access_id.strip()) == 0:
+    if isinstance(private_service_access_id, str) and len(private_service_access_id.strip()) == 0:
         raise click.UsageError('Parameter --private-service-access-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or security_attributes or nsg_ids:

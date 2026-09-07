@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -76,7 +75,7 @@ sddc_root_group.add_command(supported_commitment_summary_group)
 @cli_util.wrap_exceptions
 def cancel_downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -129,7 +128,7 @@ def cancel_downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def change_sddc_compartment(ctx, from_json, sddc_id, compartment_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -258,7 +257,7 @@ Use the [WorkRequest] operations to track the deletion of the SDDC. \n[Command R
 @cli_util.wrap_exceptions
 def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, reserving_hcx_on_premise_license_keys, sddc_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -370,7 +369,7 @@ def downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_sddc(ctx, from_json, sddc_id):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -628,7 +627,7 @@ def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size
 @cli_util.wrap_exceptions
 def refresh_hcx_license_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -681,7 +680,7 @@ def refresh_hcx_license_status(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def retrieve_password(ctx, from_json, sddc_id, type, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -728,7 +727,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, esxi_software_version, ssh_authorized_keys, sddc_byol_allocation_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
     if not force:
         if sddc_byol_allocation_details or freeform_tags or defined_tags:
@@ -808,7 +807,7 @@ def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def upgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, if_match):
 
-    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+    if isinstance(sddc_id, str) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
 
     kwargs = {}

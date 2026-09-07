@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -127,7 +126,7 @@ fs_root_group.add_command(snapshot_group)
 @cli_util.wrap_exceptions
 def add_export_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+    if isinstance(export_id, str) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -196,7 +195,7 @@ def add_export_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def add_file_system_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,7 +264,7 @@ def add_file_system_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def add_filesystem_snapshot_policy_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -334,7 +333,7 @@ def add_filesystem_snapshot_policy_lock(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def add_mount_target_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -403,7 +402,7 @@ def add_mount_target_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def add_outbound_connector_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -472,7 +471,7 @@ def add_outbound_connector_lock(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def add_replication_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -541,7 +540,7 @@ def add_replication_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def add_snapshot_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+    if isinstance(snapshot_id, str) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -606,7 +605,7 @@ def add_snapshot_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def cancel_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, if_match):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -656,7 +655,7 @@ def cancel_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_file_system_compartment(ctx, from_json, file_system_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -690,7 +689,7 @@ def change_file_system_compartment(ctx, from_json, file_system_id, compartment_i
 @cli_util.wrap_exceptions
 def change_filesystem_snapshot_policy_compartment(ctx, from_json, filesystem_snapshot_policy_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -724,7 +723,7 @@ def change_filesystem_snapshot_policy_compartment(ctx, from_json, filesystem_sna
 @cli_util.wrap_exceptions
 def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -758,7 +757,7 @@ def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment
 @cli_util.wrap_exceptions
 def change_outbound_connector_compartment(ctx, from_json, outbound_connector_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -792,7 +791,7 @@ def change_outbound_connector_compartment(ctx, from_json, outbound_connector_id,
 @cli_util.wrap_exceptions
 def change_replication_compartment(ctx, from_json, replication_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1420,7 +1419,7 @@ def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, w
 @cli_util.wrap_exceptions
 def create_quota_rule(ctx, from_json, principal_type, is_hard_quota, quota_limit_in_gigabytes, file_system_id, principal_id, display_name, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1621,7 +1620,7 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, if_match, is_lock_override):
 
-    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+    if isinstance(export_id, str) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1689,7 +1688,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, if_match, is_lock_override, can_detach_child_file_system):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1758,7 +1757,7 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match, is_lock_override):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1825,7 +1824,7 @@ def delete_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, if_match, is_lock_override):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1892,7 +1891,7 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_outbound_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, if_match, is_lock_override):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1956,10 +1955,10 @@ def delete_outbound_connector(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
-    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+    if isinstance(quota_rule_id, str) and len(quota_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1991,7 +1990,7 @@ def delete_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
 @cli_util.wrap_exceptions
 def delete_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, if_match, delete_mode, is_lock_override):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2060,7 +2059,7 @@ def delete_replication(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_replication_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_target_id, if_match, is_lock_override):
 
-    if isinstance(replication_target_id, six.string_types) and len(replication_target_id.strip()) == 0:
+    if isinstance(replication_target_id, str) and len(replication_target_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2127,7 +2126,7 @@ def delete_replication_target(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, if_match, is_lock_override):
 
-    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+    if isinstance(snapshot_id, str) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2189,7 +2188,7 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def detach_clone(ctx, from_json, file_system_id, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2215,7 +2214,7 @@ def detach_clone(ctx, from_json, file_system_id, if_match):
 @cli_util.wrap_exceptions
 def estimate_replication(ctx, from_json, file_system_id, if_match, change_rate_in_m_bps):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2241,7 +2240,7 @@ def estimate_replication(ctx, from_json, file_system_id, if_match, change_rate_i
 @cli_util.wrap_exceptions
 def get_export(ctx, from_json, export_id):
 
-    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+    if isinstance(export_id, str) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2263,7 +2262,7 @@ def get_export(ctx, from_json, export_id):
 @cli_util.wrap_exceptions
 def get_export_set(ctx, from_json, export_set_id):
 
-    if isinstance(export_set_id, six.string_types) and len(export_set_id.strip()) == 0:
+    if isinstance(export_set_id, str) and len(export_set_id.strip()) == 0:
         raise click.UsageError('Parameter --export-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2285,7 +2284,7 @@ def get_export_set(ctx, from_json, export_set_id):
 @cli_util.wrap_exceptions
 def get_file_system(ctx, from_json, file_system_id):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2307,7 +2306,7 @@ def get_file_system(ctx, from_json, file_system_id):
 @cli_util.wrap_exceptions
 def get_filesystem_snapshot_policy(ctx, from_json, filesystem_snapshot_policy_id):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2329,7 +2328,7 @@ def get_filesystem_snapshot_policy(ctx, from_json, filesystem_snapshot_policy_id
 @cli_util.wrap_exceptions
 def get_mount_target(ctx, from_json, mount_target_id):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2351,7 +2350,7 @@ def get_mount_target(ctx, from_json, mount_target_id):
 @cli_util.wrap_exceptions
 def get_outbound_connector(ctx, from_json, outbound_connector_id):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2375,10 +2374,10 @@ def get_outbound_connector(ctx, from_json, outbound_connector_id):
 @cli_util.wrap_exceptions
 def get_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
-    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+    if isinstance(quota_rule_id, str) and len(quota_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2403,7 +2402,7 @@ def get_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
 @cli_util.wrap_exceptions
 def get_replication(ctx, from_json, replication_id):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2425,7 +2424,7 @@ def get_replication(ctx, from_json, replication_id):
 @cli_util.wrap_exceptions
 def get_replication_target(ctx, from_json, replication_target_id):
 
-    if isinstance(replication_target_id, six.string_types) and len(replication_target_id.strip()) == 0:
+    if isinstance(replication_target_id, str) and len(replication_target_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2447,7 +2446,7 @@ def get_replication_target(ctx, from_json, replication_target_id):
 @cli_util.wrap_exceptions
 def get_snapshot(ctx, from_json, snapshot_id):
 
-    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+    if isinstance(snapshot_id, str) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2965,7 +2964,7 @@ def list_quota_rules(ctx, from_json, all_pages, page_size, file_system_id, princ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3260,7 +3259,7 @@ If the policy is already paused, or in the INACTIVE state, you cannot pause it a
 @cli_util.wrap_exceptions
 def pause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match, is_lock_override):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3317,7 +3316,7 @@ def pause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def remove_export_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+    if isinstance(export_id, str) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3386,7 +3385,7 @@ def remove_export_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def remove_file_system_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3455,7 +3454,7 @@ def remove_file_system_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_filesystem_snapshot_policy_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3524,7 +3523,7 @@ def remove_filesystem_snapshot_policy_lock(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def remove_mount_target_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3593,7 +3592,7 @@ def remove_mount_target_lock(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def remove_outbound_connector_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3662,7 +3661,7 @@ def remove_outbound_connector_lock(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def remove_replication_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3731,7 +3730,7 @@ def remove_replication_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_snapshot_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+    if isinstance(snapshot_id, str) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3797,7 +3796,7 @@ def remove_snapshot_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def schedule_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, requested_throughput, if_match):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3853,7 +3852,7 @@ def schedule_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def toggle_quota_rules(ctx, from_json, file_system_id, are_quota_rules_enabled, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3889,7 +3888,7 @@ If the policy is already in the ACTIVE state, you cannot unpause it. You can't u
 @cli_util.wrap_exceptions
 def unpause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, if_match, is_lock_override):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3952,7 +3951,7 @@ This option is a JSON list with items of type ClientOptions.  For documentation 
 @cli_util.wrap_exceptions
 def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, export_id, is_idmap_groups_for_sys_auth, export_options, if_match, is_lock_override):
 
-    if isinstance(export_id, six.string_types) and len(export_id.strip()) == 0:
+    if isinstance(export_id, str) and len(export_id.strip()) == 0:
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
     if not force:
         if export_options:
@@ -4024,7 +4023,7 @@ Example: `My export set`""")
 @cli_util.wrap_exceptions
 def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, display_name, max_fs_stat_bytes, max_fs_stat_files, if_match):
 
-    if isinstance(export_set_id, six.string_types) and len(export_set_id.strip()) == 0:
+    if isinstance(export_set_id, str) and len(export_set_id.strip()) == 0:
         raise click.UsageError('Parameter --export-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4101,7 +4100,7 @@ If string is empty, the policy reference (if any) would be removed.""")
 @cli_util.wrap_exceptions
 def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, display_name, freeform_tags, defined_tags, kms_key_id, filesystem_snapshot_policy_id, if_match, is_lock_override):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4192,7 +4191,7 @@ This option is a JSON list with items of type SnapshotSchedule.  For documentati
 @cli_util.wrap_exceptions
 def update_filesystem_snapshot_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, filesystem_snapshot_policy_id, display_name, policy_prefix, schedules, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(filesystem_snapshot_policy_id, six.string_types) and len(filesystem_snapshot_policy_id.strip()) == 0:
+    if isinstance(filesystem_snapshot_policy_id, str) and len(filesystem_snapshot_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --filesystem-snapshot-policy-id cannot be whitespace or empty string')
     if not force:
         if schedules or freeform_tags or defined_tags:
@@ -4282,7 +4281,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, security_attributes, if_match, is_lock_override):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
     if not force:
         if ldap_idmap or nsg_ids or kerberos or freeform_tags or defined_tags or security_attributes:
@@ -4374,7 +4373,7 @@ Example: `My Outbound Connector`""")
 @cli_util.wrap_exceptions
 def update_outbound_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_connector_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(outbound_connector_id, six.string_types) and len(outbound_connector_id.strip()) == 0:
+    if isinstance(outbound_connector_id, str) and len(outbound_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --outbound-connector-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4444,10 +4443,10 @@ def update_outbound_connector(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_quota_rule(ctx, from_json, file_system_id, quota_rule_id, display_name, quota_limit_in_gigabytes, if_match):
 
-    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+    if isinstance(file_system_id, str) and len(file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
-    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+    if isinstance(quota_rule_id, str) and len(quota_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4492,7 +4491,7 @@ def update_quota_rule(ctx, from_json, file_system_id, quota_rule_id, display_nam
 @cli_util.wrap_exceptions
 def update_replication(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, replication_id, display_name, replication_interval, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4573,7 +4572,7 @@ Example: `Thu Jan 01 01:00:00 GMT 1970`""" + custom_types.CLI_DATETIME.VALID_DAT
 @cli_util.wrap_exceptions
 def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, snapshot_id, freeform_tags, defined_tags, expiration_time, lock_duration_details, if_match, is_lock_override):
 
-    if isinstance(snapshot_id, six.string_types) and len(snapshot_id.strip()) == 0:
+    if isinstance(snapshot_id, str) and len(snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or lock_duration_details:
@@ -4647,7 +4646,7 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def upgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, requested_throughput, if_match):
 
-    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+    if isinstance(mount_target_id, str) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}

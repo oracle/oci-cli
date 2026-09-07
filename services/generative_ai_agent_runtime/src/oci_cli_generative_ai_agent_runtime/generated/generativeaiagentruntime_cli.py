@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -73,7 +72,7 @@ This option is a JSON list with items of type PerformedAction.  For documentatio
 @cli_util.wrap_exceptions
 def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session_id, tool_parameters, tool_inputs, performed_actions, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -123,7 +122,7 @@ Use this API to create an agent session. \n[Command Reference](createSession)"""
 @cli_util.wrap_exceptions
 def create_session(ctx, from_json, agent_endpoint_id, display_name, description):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -158,10 +157,10 @@ def create_session(ctx, from_json, agent_endpoint_id, display_name, description)
 @cli_util.wrap_exceptions
 def delete_session(ctx, from_json, agent_endpoint_id, session_id, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,10 +186,10 @@ def delete_session(ctx, from_json, agent_endpoint_id, session_id, if_match):
 @cli_util.wrap_exceptions
 def get_session(ctx, from_json, agent_endpoint_id, session_id):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -217,7 +216,7 @@ This option is a JSON list with items of type MetadataFilter.  For documentation
 @cli_util.wrap_exceptions
 def retrieve_metadata(ctx, from_json, knowledge_base_id, filters, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -252,10 +251,10 @@ def retrieve_metadata(ctx, from_json, knowledge_base_id, filters, if_match):
 @cli_util.wrap_exceptions
 def update_session(ctx, from_json, agent_endpoint_id, session_id, display_name, description, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
-    if isinstance(session_id, six.string_types) and len(session_id.strip()) == 0:
+    if isinstance(session_id, str) and len(session_id.strip()) == 0:
         raise click.UsageError('Parameter --session-id cannot be whitespace or empty string')
 
     kwargs = {}

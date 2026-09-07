@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -55,7 +54,7 @@ quote_attachment_root_group.add_command(quote_attachment_group)
 @cli_util.wrap_exceptions
 def create_quote_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, offer_quote_id, file_base64_encoded, display_name, type, recipient):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -111,10 +110,10 @@ def create_quote_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_quote_attachment(ctx, from_json, offer_quote_id, quote_attachment_id, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
-    if isinstance(quote_attachment_id, six.string_types) and len(quote_attachment_id.strip()) == 0:
+    if isinstance(quote_attachment_id, str) and len(quote_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --quote-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -140,10 +139,10 @@ def delete_quote_attachment(ctx, from_json, offer_quote_id, quote_attachment_id,
 @cli_util.wrap_exceptions
 def get_quote_attachment(ctx, from_json, offer_quote_id, quote_attachment_id):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
-    if isinstance(quote_attachment_id, six.string_types) and len(quote_attachment_id.strip()) == 0:
+    if isinstance(quote_attachment_id, str) and len(quote_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --quote-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -168,10 +167,10 @@ def get_quote_attachment(ctx, from_json, offer_quote_id, quote_attachment_id):
 @cli_util.wrap_exceptions
 def get_quote_attachment_content(ctx, from_json, file, offer_quote_id, quote_attachment_id):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
-    if isinstance(quote_attachment_id, six.string_types) and len(quote_attachment_id.strip()) == 0:
+    if isinstance(quote_attachment_id, str) and len(quote_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --quote-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -230,7 +229,7 @@ def list_quote_attachments(ctx, from_json, all_pages, page_size, offer_quote_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}

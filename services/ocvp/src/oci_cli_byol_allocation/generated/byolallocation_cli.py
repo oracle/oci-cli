@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -51,7 +50,7 @@ byol_allocation_root_group.add_command(byol_allocation_group)
 @cli_util.wrap_exceptions
 def change_byol_allocation_compartment(ctx, from_json, byol_allocation_id, compartment_id, if_match):
 
-    if isinstance(byol_allocation_id, six.string_types) and len(byol_allocation_id.strip()) == 0:
+    if isinstance(byol_allocation_id, str) and len(byol_allocation_id.strip()) == 0:
         raise click.UsageError('Parameter --byol-allocation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -158,7 +157,7 @@ def create_byol_allocation(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_byol_allocation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_allocation_id, if_match):
 
-    if isinstance(byol_allocation_id, six.string_types) and len(byol_allocation_id.strip()) == 0:
+    if isinstance(byol_allocation_id, str) and len(byol_allocation_id.strip()) == 0:
         raise click.UsageError('Parameter --byol-allocation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def delete_byol_allocation(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_byol_allocation(ctx, from_json, byol_allocation_id):
 
-    if isinstance(byol_allocation_id, six.string_types) and len(byol_allocation_id.strip()) == 0:
+    if isinstance(byol_allocation_id, str) and len(byol_allocation_id.strip()) == 0:
         raise click.UsageError('Parameter --byol-allocation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -318,7 +317,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_byol_allocation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byol_allocation_id, display_name, allocated_units, freeform_tags, defined_tags, if_match):
 
-    if isinstance(byol_allocation_id, six.string_types) and len(byol_allocation_id.strip()) == 0:
+    if isinstance(byol_allocation_id, str) and len(byol_allocation_id.strip()) == 0:
         raise click.UsageError('Parameter --byol-allocation-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

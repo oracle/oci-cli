@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -125,7 +124,7 @@ def analyze_assets(ctx, from_json, compartment_id, aggregation_properties, limit
 @cli_util.wrap_exceptions
 def change_asset_compartment(ctx, from_json, asset_id, compartment_id, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -160,7 +159,7 @@ def change_asset_compartment(ctx, from_json, asset_id, compartment_id, if_match)
 @cli_util.wrap_exceptions
 def change_asset_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -684,7 +683,7 @@ def create_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -748,7 +747,7 @@ def delete_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, if_match):
 
-    if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
+    if isinstance(inventory_id, str) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -799,7 +798,7 @@ def delete_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_asset(ctx, from_json, asset_id):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -824,7 +823,7 @@ def get_asset(ctx, from_json, asset_id):
 @cli_util.wrap_exceptions
 def get_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id):
 
-    if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
+    if isinstance(inventory_id, str) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -880,7 +879,7 @@ def get_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def import_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, inventory_id, resource_type, freeform_tags, defined_tags):
 
-    if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
+    if isinstance(inventory_id, str) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -951,7 +950,7 @@ def import_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, data, asset_type, inventory_id, freeform_tags, defined_tags):
 
-    if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
+    if isinstance(inventory_id, str) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1105,7 +1104,7 @@ def list_historical_metrics(ctx, from_json, all_pages, page_size, asset_id, limi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1212,7 +1211,7 @@ def list_inventories(ctx, from_json, all_pages, page_size, compartment_id, sort_
 @cli_util.wrap_exceptions
 def submit_historical_metrics(ctx, from_json, historical_metrics, asset_id, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1251,7 +1250,7 @@ def submit_historical_metrics(ctx, from_json, historical_metrics, asset_id, if_m
 @cli_util.wrap_exceptions
 def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, asset_type, display_name, asset_source_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags:
@@ -1328,7 +1327,7 @@ def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_asset_update_vm_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags:
@@ -1407,7 +1406,7 @@ def update_asset_update_vm_asset_details(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_asset_update_aws_ebs_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, aws_ebs, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags or aws_ebs:
@@ -1492,7 +1491,7 @@ def update_asset_update_aws_ebs_asset_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_asset_update_inventory_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, asset_class_name, asset_class_version, asset_details, display_name, asset_source_ids, freeform_tags, defined_tags, environment_type, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags or asset_details:
@@ -1580,7 +1579,7 @@ def update_asset_update_inventory_asset_details(ctx, from_json, force, wait_for_
 @cli_util.wrap_exceptions
 def update_asset_update_vmware_vm_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, vmware_vm, vmware_v_center, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags or compute or vm or vmware_vm or vmware_v_center:
@@ -1675,7 +1674,7 @@ def update_asset_update_vmware_vm_asset_details(ctx, from_json, force, wait_for_
 @cli_util.wrap_exceptions
 def update_asset_update_aws_ec2_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
 
-    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+    if isinstance(asset_id, str) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
         if asset_source_ids or freeform_tags or defined_tags or compute or vm or aws_ec2 or aws_ec2_cost or attached_ebs_volumes_cost:
@@ -1767,7 +1766,7 @@ def update_asset_update_aws_ec2_asset_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_inventory(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
+    if isinstance(inventory_id, str) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
