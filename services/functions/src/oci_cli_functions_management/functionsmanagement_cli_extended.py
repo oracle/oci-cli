@@ -91,7 +91,7 @@ def update_function_extended(ctx, **kwargs):
 
 
 # Remove create-function-pre-built-function-source-details from oci fn function
-functionsmanagement_cli.function_group.commands.pop(functionsmanagement_cli.create_function_pre_built_function_source_details.name)
+# functionsmanagement_cli.function_group.commands.pop(functionsmanagement_cli.create_function_pre_built_function_source_details.name)
 
 
 # Remove create-function-none-failure-destination-details from oci fn function

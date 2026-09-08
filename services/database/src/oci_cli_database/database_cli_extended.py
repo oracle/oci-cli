@@ -1648,6 +1648,7 @@ database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_history_e
 @cli_util.option('--update-mode', help="""The update mode applicable to OS Update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
 @cli_util.option('--gi-image-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure software image. This is a database software image of type `GRID_IMAGE`.""")
+@cli_util.option('--gi-home-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure home.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}}, output_type={'module': 'database', 'class': 'VmCluster'})
@@ -1667,28 +1668,28 @@ def update_vm_cluster_extended(ctx, **kwargs):
 
     update_action = kwargs.get('update_action')
     update_mode = kwargs.get('update_mode')
-    update_id = kwargs.get('update_id')
-    gi_image_id = kwargs.get('gi_image_id')
-    if update_id and gi_image_id:
-        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image')
-    elif update_action and not (update_id or gi_image_id):
-        raise click.UsageError('--update-id or --gi-image-id is required if --update-action is specified')
-    elif (update_id or gi_image_id) and not update_action:
-        raise click.UsageError('--update-action is required if --update-id or --gi-image-id is specified')
-    elif update_mode is not None and not update_id:
+    update_identifiers = {
+        'updateId': kwargs.get('update_id'),
+        'giImageId': kwargs.get('gi_image_id'),
+        'giHomeId': kwargs.get('gi_home_id')
+    }
+    provided_update_identifiers = {key: value for key, value in six.iteritems(update_identifiers) if value is not None}
+    if len(provided_update_identifiers) > 1:
+        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image or --gi-home-id for GI Home')
+    elif update_action and not provided_update_identifiers:
+        raise click.UsageError('--update-id or --gi-image-id or --gi-home-id is required if --update-action is specified')
+    elif provided_update_identifiers and not update_action:
+        raise click.UsageError('--update-action is required if --update-id or --gi-image-id or --gi-home-id is specified')
+    elif update_mode is not None and 'updateId' not in provided_update_identifiers:
         raise click.UsageError('--update-mode is only required if --update-id is specified to perform DomU OS Update')
-    elif update_id and update_action:
+    elif update_action and provided_update_identifiers:
+        update_detail_name, update_detail_value = next(six.iteritems(provided_update_identifiers))
         kwargs['update_details'] = {
-            "updateAction": update_action,
-            "updateId": update_id
+            'updateAction': update_action,
+            update_detail_name: update_detail_value
         }
         if update_mode is not None:
             kwargs['update_details']['updateMode'] = update_mode
-    elif gi_image_id and update_action:
-        kwargs['update_details'] = {
-            "updateAction": update_action,
-            "giSoftwareImageId": gi_image_id
-        }
 
     # remove kwargs that update_vm_cluster wont recognize
     del kwargs['patch_action']
@@ -1697,6 +1698,7 @@ def update_vm_cluster_extended(ctx, **kwargs):
     del kwargs['update_id']
     del kwargs['gi_image_id']
     del kwargs['update_mode']
+    del kwargs['gi_home_id']
 
     ctx.invoke(database_cli.update_vm_cluster, **kwargs)
 
@@ -2311,6 +2313,7 @@ def list_cloud_vm_clusters(ctx, **kwargs):
 @cli_util.option('--update-mode', help="""The update mode applicable to OS Update.""")
 @cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
 @cli_util.option('--gi-image-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure software image. This is a database software image of type `GRID_IMAGE`.""")
+@cli_util.option('--gi-home-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure home.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the cloud VM cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
 @click.pass_context
@@ -2323,28 +2326,28 @@ def update_cloud_vm_cluster(ctx, **kwargs):
 
     update_action = kwargs.get('update_action')
     update_mode = kwargs.get('update_mode')
-    update_id = kwargs.get('update_id')
-    gi_image_id = kwargs.get('gi_image_id')
-    if update_id and gi_image_id:
-        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image')
-    elif update_action and not (update_id or gi_image_id):
-        raise click.UsageError('--update-id or --gi-image-id is required if --update-action is specified')
-    elif (update_id or gi_image_id) and not update_action:
-        raise click.UsageError('--update-action is required if --update-id or --gi-image-id is specified')
-    elif update_mode is not None and not update_id:
+    update_identifiers = {
+        'updateId': kwargs.get('update_id'),
+        'giImageId': kwargs.get('gi_image_id'),
+        'giHomeId': kwargs.get('gi_home_id')
+    }
+    provided_update_identifiers = {key: value for key, value in six.iteritems(update_identifiers) if value is not None}
+    if len(provided_update_identifiers) > 1:
+        raise click.UsageError('Provide only one of the identifiers --update-id for Oracle released update or --gi-image-id for custom software image or --gi-home-id for GI Home')
+    elif update_action and not provided_update_identifiers:
+        raise click.UsageError('--update-id or --gi-image-id or --gi-home-id is required if --update-action is specified')
+    elif provided_update_identifiers and not update_action:
+        raise click.UsageError('--update-action is required if --update-id or --gi-image-id or --gi-home-id is specified')
+    elif update_mode is not None and 'updateId' not in provided_update_identifiers:
         raise click.UsageError('--update-mode is only required if --update-id is specified to perform DomU OS Update')
-    elif update_id and update_action:
+    elif update_action and provided_update_identifiers:
+        update_detail_name, update_detail_value = next(six.iteritems(provided_update_identifiers))
         kwargs['update_details'] = {
-            "updateAction": update_action,
-            "updateId": update_id
+            'updateAction': update_action,
+            update_detail_name: update_detail_value
         }
         if update_mode is not None:
             kwargs['update_details']['updateMode'] = update_mode
-    elif gi_image_id and update_action:
-        kwargs['update_details'] = {
-            "updateAction": update_action,
-            "giSoftwareImageId": gi_image_id
-        }
 
     # remove kwargs that update cloud vm cluster wont recognize
     del kwargs['ssh_authorized_keys_file']
@@ -2352,6 +2355,7 @@ def update_cloud_vm_cluster(ctx, **kwargs):
     del kwargs['update_id']
     del kwargs['gi_image_id']
     del kwargs['update_mode']
+    del kwargs['gi_home_id']
 
     ctx.invoke(database_cli.update_cloud_vm_cluster, **kwargs)
 

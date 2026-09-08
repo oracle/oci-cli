@@ -4,6 +4,7 @@
 import click
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from oci_cli import custom_types
 from oci_cli.cli_util import get_param
 from services.ocvp.src.oci_cli_esxi_host.generated import esxihost_cli
 from services.ocvp.src.oci_cli_ocvp.generated import ocvs_service_cli
@@ -77,3 +78,48 @@ def list_esxi_host(ctx, **kwargs):
 ocvs_service_cli.ocvs_service_group.commands.pop(esxihost_cli.esxi_host_root_group.name)
 ocvs_service_cli.ocvs_service_group.add_command(esxihost_cli.esxi_host_group)
 esxihost_cli.esxi_host_group.add_command(list_esxi_host)
+
+
+@cli_util.copy_params_from_generated_command(esxihost_cli.create_esxi_host, params_to_exclude=['initial_fault_domain_host_distribution'])
+@esxihost_cli.esxi_host_group.command(name=esxihost_cli.create_esxi_host.name, help=esxihost_cli.create_esxi_host.help)
+@cli_util.option('--fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""The initial fault domain host distribution mode for the ESXi host.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_esxi_host_extended(ctx, **kwargs):
+
+    if 'fault_domain_host_distribution' in kwargs:
+        kwargs['initial_fault_domain_host_distribution'] = kwargs['fault_domain_host_distribution']
+        kwargs.pop('fault_domain_host_distribution')
+
+    ctx.invoke(esxihost_cli.create_esxi_host, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(esxihost_cli.inplace_upgrade, params_to_exclude=['initial_fault_domain_host_distribution'])
+@esxihost_cli.esxi_host_group.command(name=esxihost_cli.inplace_upgrade.name, help=esxihost_cli.inplace_upgrade.help)
+@cli_util.option('--fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""Initial Fault Domain Host distribution mode for the ESXi host.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def inplace_upgrade_extended(ctx, **kwargs):
+
+    if 'fault_domain_host_distribution' in kwargs:
+        kwargs['initial_fault_domain_host_distribution'] = kwargs['fault_domain_host_distribution']
+        kwargs.pop('fault_domain_host_distribution')
+
+    ctx.invoke(esxihost_cli.inplace_upgrade, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(esxihost_cli.replace_host, params_to_exclude=['initial_fault_domain_host_distribution'])
+@esxihost_cli.esxi_host_group.command(name=esxihost_cli.replace_host.name, help=esxihost_cli.replace_host.help)
+@cli_util.option('--fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""Initial Fault Domain Host distribution mode for the ESXi host.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def replace_host_extended(ctx, **kwargs):
+
+    if 'fault_domain_host_distribution' in kwargs:
+        kwargs['initial_fault_domain_host_distribution'] = kwargs['fault_domain_host_distribution']
+        kwargs.pop('fault_domain_host_distribution')
+
+    ctx.invoke(esxihost_cli.replace_host, **kwargs)

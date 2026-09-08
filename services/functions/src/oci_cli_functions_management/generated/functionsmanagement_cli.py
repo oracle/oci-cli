@@ -22,31 +22,31 @@ def functions_management_root_group():
     pass
 
 
-@click.command(cli_util.override('functions_management.pbf_listing_group.command_name', 'pbf-listing'), cls=CommandGroupWithAlias, help="""PbfListing resources provide details about the available PBFs for consumption by the user. This resource contains details about PBF's functionality, policies required, configuration parameters expected etc.""")
+@click.command(cli_util.override('functions_management.pbf_listing_group.command_name', 'pbf-listing'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. PbfListing resources provide details about the available PBFs for consumption by the user. This resource contains details about PBF's functionality, policies required, configuration parameters expected etc.""")
 @cli_util.help_option_group
 def pbf_listing_group():
     pass
 
 
-@click.command(cli_util.override('functions_management.application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""An application contains functions and defined attributes shared between those functions, such as network configuration and configuration. Avoid entering confidential information.""")
+@click.command(cli_util.override('functions_management.application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. An application contains functions and defined attributes shared between those functions, such as network configuration and configuration. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def application_group():
     pass
 
 
-@click.command(cli_util.override('functions_management.function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
+@click.command(cli_util.override('functions_management.function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def function_group():
     pass
 
 
-@click.command(cli_util.override('functions_management.triggers_collection_group.command_name', 'triggers-collection'), cls=CommandGroupWithAlias, help="""Results of a Trigger search. Contains boh TriggerSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('functions_management.triggers_collection_group.command_name', 'triggers-collection'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. Results of a Trigger search. Contains boh TriggerSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def triggers_collection_group():
     pass
 
 
-@click.command(cli_util.override('functions_management.pbf_listing_version_group.command_name', 'pbf-listing-version'), cls=CommandGroupWithAlias, help="""This represents a version of a PbfListing. Each new update from the publisher or the change in the image will result in the creation of new PbfListingVersion resource creation. This is a sub-resource of a PbfListing.""")
+@click.command(cli_util.override('functions_management.pbf_listing_version_group.command_name', 'pbf-listing-version'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. This represents a version of a PbfListing. Each new update from the publisher or the change in the image will result in the creation of new PbfListingVersion resource creation. This is a sub-resource of a PbfListing.""")
 @cli_util.help_option_group
 def pbf_listing_version_group():
     pass
@@ -60,7 +60,7 @@ functions_management_root_group.add_command(triggers_collection_group)
 functions_management_root_group.add_command(pbf_listing_version_group)
 
 
-@application_group.command(name=cli_util.override('functions_management.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeApplicationCompartment)""")
+@application_group.command(name=cli_util.override('functions_management.change_application_compartment.command_name', 'change-compartment'), help=u"""Note: Deprecated. Use the new operation instead. Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changeApplicationCompartment)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -91,7 +91,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('functions_management.create_application.command_name', 'create'), help=u"""Creates a new application. \n[Command Reference](createApplication)""")
+@application_group.command(name=cli_util.override('functions_management.create_application.command_name', 'create'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new application.\" \n[Command Reference](createApplication)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the application within.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the application. The display name must be unique within the compartment containing the application. Avoid entering confidential information.""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the subnets in which to run functions in the application.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -196,7 +196,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function.command_name', 'create'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function.command_name', 'create'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -305,7 +305,7 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_pre_built_function_source_details.command_name', 'create-function-pre-built-function-source-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_pre_built_function_source_details.command_name', 'create-function-pre-built-function-source-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -415,7 +415,7 @@ def create_function_pre_built_function_source_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_none_provisioned_concurrency_config.command_name', 'create-function-none-provisioned-concurrency-config'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_none_provisioned_concurrency_config.command_name', 'create-function-none-provisioned-concurrency-config'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -523,7 +523,7 @@ def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_constant_provisioned_concurrency_config.command_name', 'create-function-constant-provisioned-concurrency-config'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_constant_provisioned_concurrency_config.command_name', 'create-function-constant-provisioned-concurrency-config'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -633,7 +633,7 @@ def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_stream_failure_destination_details.command_name', 'create-function-stream-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_stream_failure_destination_details.command_name', 'create-function-stream-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -743,7 +743,7 @@ def create_function_stream_failure_destination_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_queue_failure_destination_details.command_name', 'create-function-queue-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_queue_failure_destination_details.command_name', 'create-function-queue-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -857,7 +857,7 @@ def create_function_queue_failure_destination_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_notification_failure_destination_details.command_name', 'create-function-notification-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_notification_failure_destination_details.command_name', 'create-function-notification-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -967,7 +967,7 @@ def create_function_notification_failure_destination_details(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_none_failure_destination_details.command_name', 'create-function-none-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_none_failure_destination_details.command_name', 'create-function-none-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -1075,7 +1075,7 @@ def create_function_none_failure_destination_details(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_stream_success_destination_details.command_name', 'create-function-stream-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_stream_success_destination_details.command_name', 'create-function-stream-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -1185,7 +1185,7 @@ def create_function_stream_success_destination_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_notification_success_destination_details.command_name', 'create-function-notification-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_notification_success_destination_details.command_name', 'create-function-notification-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -1295,7 +1295,7 @@ def create_function_notification_success_destination_details(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_queue_success_destination_details.command_name', 'create-function-queue-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_queue_success_destination_details.command_name', 'create-function-queue-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -1409,7 +1409,7 @@ def create_function_queue_success_destination_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.create_function_none_success_destination_details.command_name', 'create-function-none-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@function_group.command(name=cli_util.override('functions_management.create_function_none_success_destination_details.command_name', 'create-function-none-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Creates a new function.\" \n[Command Reference](createFunction)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
@@ -1517,7 +1517,7 @@ def create_function_none_success_destination_details(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('functions_management.delete_application.command_name', 'delete'), help=u"""Deletes an application. \n[Command Reference](deleteApplication)""")
+@application_group.command(name=cli_util.override('functions_management.delete_application.command_name', 'delete'), help=u"""Note: Deprecated. Use the new operation instead. Deletes an application. \n[Command Reference](deleteApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1581,7 +1581,7 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.delete_function.command_name', 'delete'), help=u"""Deletes a function. \n[Command Reference](deleteFunction)""")
+@function_group.command(name=cli_util.override('functions_management.delete_function.command_name', 'delete'), help=u"""Note: Deprecated. Use the new operation instead. Deletes a function. \n[Command Reference](deleteFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1645,7 +1645,7 @@ def delete_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('functions_management.get_application.command_name', 'get'), help=u"""Retrieves an application. \n[Command Reference](getApplication)""")
+@application_group.command(name=cli_util.override('functions_management.get_application.command_name', 'get'), help=u"""Note: Deprecated. Use the new operation instead. \"Retrieves an application.\" \n[Command Reference](getApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1667,7 +1667,7 @@ def get_application(ctx, from_json, application_id):
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.get_function.command_name', 'get'), help=u"""Retrieves a function. \n[Command Reference](getFunction)""")
+@function_group.command(name=cli_util.override('functions_management.get_function.command_name', 'get'), help=u"""Note: Deprecated. Use the new operation instead. \"Retrieves a function.\" \n[Command Reference](getFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1689,7 +1689,7 @@ def get_function(ctx, from_json, function_id):
     cli_util.render_response(result, ctx)
 
 
-@pbf_listing_group.command(name=cli_util.override('functions_management.get_pbf_listing.command_name', 'get'), help=u"""Fetches a Pre-built Function(PBF) Listing. Returns a PbfListing response model. \n[Command Reference](getPbfListing)""")
+@pbf_listing_group.command(name=cli_util.override('functions_management.get_pbf_listing.command_name', 'get'), help=u"""Note: Deprecated. Use the new operation instead. Fetches a Pre-built Function(PBF) Listing. Returns a PbfListing response model. \n[Command Reference](getPbfListing)""")
 @cli_util.option('--pbf-listing-id', required=True, help=u"""unique PbfListing identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1711,7 +1711,7 @@ def get_pbf_listing(ctx, from_json, pbf_listing_id):
     cli_util.render_response(result, ctx)
 
 
-@pbf_listing_version_group.command(name=cli_util.override('functions_management.get_pbf_listing_version.command_name', 'get'), help=u"""Gets a PbfListingVersion by identifier for a PbfListing. \n[Command Reference](getPbfListingVersion)""")
+@pbf_listing_version_group.command(name=cli_util.override('functions_management.get_pbf_listing_version.command_name', 'get'), help=u"""Note: Deprecated. Use the new operation instead. Gets a PbfListingVersion by identifier for a PbfListing. \n[Command Reference](getPbfListingVersion)""")
 @cli_util.option('--pbf-listing-version-id', required=True, help=u"""unique PbfListingVersion identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1733,7 +1733,7 @@ def get_pbf_listing_version(ctx, from_json, pbf_listing_version_id):
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('functions_management.list_applications.command_name', 'list'), help=u"""Lists applications for a compartment. \n[Command Reference](listApplications)""")
+@application_group.command(name=cli_util.override('functions_management.list_applications.command_name', 'list'), help=u"""Note: Deprecated. Use the new operation instead. \"Lists applications for a compartment.\" \n[Command Reference](listApplications)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this resource belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
@@ -1804,7 +1804,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.list_functions.command_name', 'list'), help=u"""Lists functions for an application. \n[Command Reference](listFunctions)""")
+@function_group.command(name=cli_util.override('functions_management.list_functions.command_name', 'list'), help=u"""Note: Deprecated. Use the new operation instead. \"Lists functions for an application.\" \n[Command Reference](listFunctions)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of the application to which this function belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
@@ -1875,7 +1875,7 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@pbf_listing_version_group.command(name=cli_util.override('functions_management.list_pbf_listing_versions.command_name', 'list'), help=u"""Fetches a wrapped list of all Pre-built Function(PBF) Listing versions. Returns a PbfListingVersionCollection containing an array of PbfListingVersionSummary response models.
+@pbf_listing_version_group.command(name=cli_util.override('functions_management.list_pbf_listing_versions.command_name', 'list'), help=u"""Note: Deprecated. Use the new operation instead. Fetches a wrapped list of all Pre-built Function(PBF) Listing versions. Returns a PbfListingVersionCollection containing an array of PbfListingVersionSummary response models.
 
 Note that the PbfListingIdentifier must be provided as a query parameter, otherwise an exception shall be thrown. \n[Command Reference](listPbfListingVersions)""")
 @cli_util.option('--pbf-listing-id', required=True, help=u"""unique PbfListing identifier""")
@@ -1947,7 +1947,7 @@ def list_pbf_listing_versions(ctx, from_json, all_pages, page_size, pbf_listing_
     cli_util.render_response(result, ctx)
 
 
-@pbf_listing_group.command(name=cli_util.override('functions_management.list_pbf_listings.command_name', 'list'), help=u"""Fetches a wrapped list of all Pre-built Function(PBF) Listings. Returns a PbfListingCollection containing an array of PbfListingSummary response models. \n[Command Reference](listPbfListings)""")
+@pbf_listing_group.command(name=cli_util.override('functions_management.list_pbf_listings.command_name', 'list'), help=u"""Note: Deprecated. Use the new operation instead. Fetches a wrapped list of all Pre-built Function(PBF) Listings. Returns a PbfListingCollection containing an array of PbfListingSummary response models. \n[Command Reference](listPbfListings)""")
 @cli_util.option('--pbf-listing-id', help=u"""unique PbfListing identifier""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire PBF name given.""")
 @cli_util.option('--name-contains', help=u"""A filter to return only resources that contain the supplied filter text in the PBF name given.""")
@@ -2019,7 +2019,7 @@ def list_pbf_listings(ctx, from_json, all_pages, page_size, pbf_listing_id, name
     cli_util.render_response(result, ctx)
 
 
-@triggers_collection_group.command(name=cli_util.override('functions_management.list_triggers.command_name', 'list-triggers'), help=u"""Returns a list of Triggers. \n[Command Reference](listTriggers)""")
+@triggers_collection_group.command(name=cli_util.override('functions_management.list_triggers.command_name', 'list-triggers'), help=u"""Note: Deprecated. Use the new operation instead. Returns a list of Triggers. \n[Command Reference](listTriggers)""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the service trigger source of a PBF.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
@@ -2073,7 +2073,7 @@ def list_triggers(ctx, from_json, all_pages, page_size, name, limit, page, sort_
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('functions_management.update_application.command_name', 'update'), help=u"""Modifies an application \n[Command Reference](updateApplication)""")
+@application_group.command(name=cli_util.override('functions_management.update_application.command_name', 'update'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies an application\" \n[Command Reference](updateApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Application configuration. These values are passed on to the function as environment variables, functions may override application configuration. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
 
@@ -2181,7 +2181,7 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function.command_name', 'update'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function.command_name', 'update'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
@@ -2295,7 +2295,7 @@ def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_none_provisioned_concurrency_config.command_name', 'update-function-none-provisioned-concurrency-config'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_none_provisioned_concurrency_config.command_name', 'update-function-none-provisioned-concurrency-config'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
@@ -2408,7 +2408,7 @@ def update_function_none_provisioned_concurrency_config(ctx, from_json, force, w
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_constant_provisioned_concurrency_config.command_name', 'update-function-constant-provisioned-concurrency-config'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_constant_provisioned_concurrency_config.command_name', 'update-function-constant-provisioned-concurrency-config'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--provisioned-concurrency-config-count', required=True, type=click.INT, help=u"""Configuration specifying a constant amount of provisioned concurrency.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -2523,7 +2523,7 @@ def update_function_constant_provisioned_concurrency_config(ctx, from_json, forc
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_stream_failure_destination_details.command_name', 'update-function-stream-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_stream_failure_destination_details.command_name', 'update-function-stream-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--failure-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -2638,7 +2638,7 @@ def update_function_stream_failure_destination_details(ctx, from_json, force, wa
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_queue_failure_destination_details.command_name', 'update-function-queue-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_queue_failure_destination_details.command_name', 'update-function-queue-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--failure-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -2757,7 +2757,7 @@ def update_function_queue_failure_destination_details(ctx, from_json, force, wai
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_notification_failure_destination_details.command_name', 'update-function-notification-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_notification_failure_destination_details.command_name', 'update-function-notification-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--failure-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -2872,7 +2872,7 @@ def update_function_notification_failure_destination_details(ctx, from_json, for
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_none_failure_destination_details.command_name', 'update-function-none-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_none_failure_destination_details.command_name', 'update-function-none-failure-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
@@ -2985,7 +2985,7 @@ def update_function_none_failure_destination_details(ctx, from_json, force, wait
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_stream_success_destination_details.command_name', 'update-function-stream-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_stream_success_destination_details.command_name', 'update-function-stream-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--success-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -3100,7 +3100,7 @@ def update_function_stream_success_destination_details(ctx, from_json, force, wa
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_notification_success_destination_details.command_name', 'update-function-notification-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_notification_success_destination_details.command_name', 'update-function-notification-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--success-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -3215,7 +3215,7 @@ def update_function_notification_success_destination_details(ctx, from_json, for
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_queue_success_destination_details.command_name', 'update-function-queue-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_queue_success_destination_details.command_name', 'update-function-queue-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--success-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -3334,7 +3334,7 @@ def update_function_queue_success_destination_details(ctx, from_json, force, wai
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('functions_management.update_function_none_success_destination_details.command_name', 'update-function-none-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@function_group.command(name=cli_util.override('functions_management.update_function_none_success_destination_details.command_name', 'update-function-none-success-destination-details'), help=u"""Note: Deprecated. Use the new operation instead. \"Modifies a function\" \n[Command Reference](updateFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")

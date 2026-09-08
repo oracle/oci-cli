@@ -3,7 +3,9 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import click
+import os
 import oci
+import requests
 import tempfile
 import unittest
 import unittest.mock as mock
@@ -174,6 +176,72 @@ class TestCliUtil(unittest.TestCase):
 
             # ensure that returned value is a file handle, not a string
             assert hasattr(value, 'read')
+
+    def test_set_request_session_properties_uses_requests_ca_bundle_env(self):
+        ctx = Obj()
+        ctx.obj = {
+            'cert_bundle': None,
+            'proxy': None,
+            'settings': {}
+        }
+        session = requests.Session()
+        session.trust_env = False
+
+        with tempfile.NamedTemporaryFile() as cert_bundle:
+            with mock.patch.dict(os.environ, {'REQUESTS_CA_BUNDLE': cert_bundle.name}):
+                cli_util.set_request_session_properties_from_context(session, ctx)
+
+            assert session.verify == cert_bundle.name
+
+    def test_set_request_session_properties_uses_curl_ca_bundle_env(self):
+        ctx = Obj()
+        ctx.obj = {
+            'cert_bundle': None,
+            'proxy': None,
+            'settings': {}
+        }
+        session = requests.Session()
+        session.trust_env = False
+
+        with tempfile.NamedTemporaryFile() as cert_bundle:
+            with mock.patch.dict(os.environ, {'CURL_CA_BUNDLE': cert_bundle.name}, clear=False):
+                os.environ.pop('REQUESTS_CA_BUNDLE', None)
+                cli_util.set_request_session_properties_from_context(session, ctx)
+
+            assert session.verify == cert_bundle.name
+
+    def test_set_request_session_properties_rejects_missing_env_ca_bundle(self):
+        ctx = Obj()
+        ctx.obj = {
+            'cert_bundle': None,
+            'proxy': None,
+            'settings': {}
+        }
+        session = requests.Session()
+        session.trust_env = False
+
+        with tempfile.NamedTemporaryFile() as missing_bundle:
+            missing_bundle_path = missing_bundle.name
+
+        with mock.patch.dict(os.environ, {'REQUESTS_CA_BUNDLE': missing_bundle_path}):
+            with self.assertRaises(click.BadParameter):
+                cli_util.set_request_session_properties_from_context(session, ctx)
+
+    def test_set_request_session_properties_cert_bundle_overrides_env(self):
+        ctx = Obj()
+        ctx.obj = {
+            'proxy': None,
+            'settings': {}
+        }
+        session = requests.Session()
+        session.trust_env = False
+
+        with tempfile.NamedTemporaryFile() as cert_bundle:
+            ctx.obj['cert_bundle'] = cert_bundle.name
+            with mock.patch.dict(os.environ, {'REQUESTS_CA_BUNDLE': '/tmp/test-ca-bundle.pem'}):
+                cli_util.set_request_session_properties_from_context(session, ctx)
+
+            assert session.verify == cert_bundle.name
 
     def test_get_possible_subtype_based_on_payload(self):
         payload = {

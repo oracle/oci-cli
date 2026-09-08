@@ -69,6 +69,7 @@ This option is a JSON list with items of type DatastoreInfo.  For documentation 
 @cli_util.option('--datastore-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore clusters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The VMware software bundle to install on the ESXi hosts in the Cluster. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi hosts in the Cluster. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
+@cli_util.option('--initial-fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""The initial fault domain host distribution mode for the Cluster.""")
 @cli_util.option('--cluster-byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-vcf-byol-allocation-id', help=u"""The [OCID] of the initial VMware BYOL Allocation used to deploy VMware Cloud Foundation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -85,7 +86,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, datastore_cluster_ids, vmware_software_version, esxi_software_version, cluster_byol_allocation_details, initial_vcf_byol_allocation_id, freeform_tags, defined_tags):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, datastore_cluster_ids, vmware_software_version, esxi_software_version, initial_fault_domain_host_distribution, cluster_byol_allocation_details, initial_vcf_byol_allocation_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -131,6 +132,9 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if esxi_software_version is not None:
         _details['esxiSoftwareVersion'] = esxi_software_version
+
+    if initial_fault_domain_host_distribution is not None:
+        _details['initialFaultDomainHostDistribution'] = initial_fault_domain_host_distribution
 
     if cluster_byol_allocation_details is not None:
         _details['clusterByolAllocationDetails'] = cli_util.parse_json_parameter("cluster_byol_allocation_details", cluster_byol_allocation_details)
@@ -234,6 +238,28 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cluster_group.command(name=cli_util.override('cluster.generate_host_distribution_report.command_name', 'generate-host-distribution-report'), help=u"""Generates report for how ESXi hosts are distributed across Fault Domains. \n[Command Reference](generateHostDistributionReport)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'HostDistributionReportDetails'})
+@cli_util.wrap_exceptions
+def generate_host_distribution_report(ctx, from_json, cluster_id):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'cluster', ctx)
+    result = client.generate_host_distribution_report(
+        cluster_id=cluster_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
