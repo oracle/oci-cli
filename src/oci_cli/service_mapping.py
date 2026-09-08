@@ -594,7 +594,7 @@ service_mapping = {
         "Databases"
     ],
     "occ": [
-        "occ",
+        "oci_control_center",
         "OCI Control Center",
         "Others"
     ],

@@ -481,6 +481,14 @@ def set_request_session_properties_from_context(session, ctx, uses_ssl=True):
 
         # TODO: Update this once alternate certs are exposed in the SDK.
         session.verify = cert_bundle
+    else:
+        cert_bundle = os.environ.get('REQUESTS_CA_BUNDLE') or os.environ.get('CURL_CA_BUNDLE')
+        if cert_bundle:
+            cert_bundle = os.path.expanduser(cert_bundle)
+            if not os.path.isfile(cert_bundle):
+                raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
+
+            session.verify = cert_bundle
 
     if ctx.obj.get('settings', {}).get('proxy') or ctx.obj.get('proxy') is not None:
         # If the proxy is specified explicitly on the command line then use that, otherwise use

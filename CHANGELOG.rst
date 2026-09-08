@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.92.1 - 2026-09-08
+-------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for Grid Infrastructure Home (GI Home) lifecycle operations
+
+    * ``oci db gi-home create``
+    * ``oci db gi-home delete``
+    * ``oci db gi-home get``
+    * ``oci db gi-home list``
+    * ``oci db gi-home update``
+
+  * Support for new optional parameter ``--source-gi-home-id``
+
+    * ``oci db database-software-image create --source-gi-home-id``
+
+* OCI Cache
+
+  * Support for converting an existing OCI Cache cluster into a secondary cluster, converting a secondary cluster into a standalone cluster, and performing switchover between primary and secondary clusters
+
+    * ``oci redis redis-cluster redis-cluster convert-to-secondary-cluster``
+    * ``oci redis redis-cluster redis-cluster convert-to-standalone-cluster``
+    * ``oci redis redis-cluster redis-cluster switchover``
+
+  * Support for new optional parameter ``--primary-cluster-id``
+
+    * ``oci redis redis-cluster redis-cluster create --primary-cluster-id``
+
+* Oracle Cloud VMware Solution
+
+  * Support for configurable fault domain host distribution via new optional parameter ``--initial-fault-domain-host-distribution`` (accepted values: EVENLY_DISTRIBUTED, UNEVENLY_DISTRIBUTED)
+
+    * ``oci ocvs cluster create --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host create --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host inplace-upgrade --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host replace-host --initial-fault-domain-host-distribution``
+
+  * Support for new command
+
+    * ``oci ocvs cluster generate-host-distribution-report``
+
 3.92.0 - 2026-09-01
 -------------------
 Added

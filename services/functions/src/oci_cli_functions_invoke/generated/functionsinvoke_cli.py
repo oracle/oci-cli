@@ -22,7 +22,7 @@ def functions_invoke_root_group():
     pass
 
 
-@click.command(cli_util.override('functions_invoke.function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
+@click.command(cli_util.override('functions_invoke.function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""Note: Deprecated. Use the new resource model APIs instead. A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def function_group():
     pass
@@ -32,7 +32,7 @@ fn_service_cli.fn_service_group.add_command(functions_invoke_root_group)
 functions_invoke_root_group.add_command(function_group)
 
 
-@function_group.command(name=cli_util.override('functions_invoke.invoke_function.command_name', 'invoke'), help=u"""Invokes a function \n[Command Reference](invokeFunction)""")
+@function_group.command(name=cli_util.override('functions_invoke.invoke_function.command_name', 'invoke'), help=u"""Note: Deprecated. Use the new operation instead. \"Invokes a function\" \n[Command Reference](invokeFunction)""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--invoke-function-body', help=u"""The body of the function invocation. Note: The maximum size of the request is limited. This limit is currently 6MB and the endpoint will not accept requests that are bigger than this limit.""")

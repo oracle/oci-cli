@@ -19,6 +19,7 @@ cluster_cli.cluster_root_group.add_command(cluster_cli.create_cluster)
 cluster_cli.cluster_root_group.add_command(cluster_cli.delete_cluster)
 cluster_cli.cluster_root_group.add_command(cluster_cli.get_cluster)
 cluster_cli.cluster_root_group.add_command(cluster_cli.update_cluster)
+cluster_cli.cluster_root_group.add_command(cluster_cli.generate_host_distribution_report)
 
 
 # Move commands under 'oci ocvs cluster cluster-summary' -> 'oci ocvs cluster'
@@ -26,8 +27,9 @@ cluster_cli.cluster_root_group.commands.pop(cluster_cli.cluster_summary_group.na
 cluster_cli.cluster_root_group.add_command(cluster_cli.list_clusters)
 
 
-@cli_util.copy_params_from_generated_command(cluster_cli.create_cluster, params_to_exclude=['cluster_byol_allocation_details'])
+@cli_util.copy_params_from_generated_command(cluster_cli.create_cluster, params_to_exclude=['cluster_byol_allocation_details', 'initial_fault_domain_host_distribution'])
 @cluster_cli.cluster_group.command(name=cluster_cli.create_cluster.name, help=cluster_cli.create_cluster.help)
+@cli_util.option('--fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help="""The initial fault domain host distribution mode for the Cluster.""")
 @cli_util.option('--byol-allocation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -37,6 +39,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'cluster-byol-allocation-details': {'module': 'ocvp', 'class': 'ClusterByolAllocationDetails'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
 def create_cluster_extended(ctx, **kwargs):
+
+    if 'fault_domain_host_distribution' in kwargs:
+        kwargs['initial_fault_domain_host_distribution'] = kwargs['fault_domain_host_distribution']
+        kwargs.pop('fault_domain_host_distribution')
 
     if 'byol_allocation_details' in kwargs:
         kwargs['cluster_byol_allocation_details'] = kwargs['byol_allocation_details']
