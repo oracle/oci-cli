@@ -32,6 +32,7 @@ from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
 from oci_cli import cli_exceptions
+from oci_cli.aliasing import CommandGroupWithAlias
 
 
 # oci database-migration agent-image-summary -> oci database-migration agent-image
@@ -395,3 +396,64 @@ def create_connection_create_oracle_connection_details_extended(ctx, **kwargs):
                 raise click.ClickException(str(e))
 
     ctx.invoke(databasemigration_cli.create_connection_create_oracle_connection_details, **kwargs)
+
+
+# oci database-migration data-verification-detail get -> oci database-migration data-verification-detail get-detail
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.data_verification_detail_group, databasemigration_cli.get_data_verification_detail, "get-detail")
+
+
+# oci database-migration data-verification-object-status-collection list-data-verification-object-statuses -> oci database-migration data-verification-object-status-collection list-object-statuses
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.data_verification_object_status_collection_group, databasemigration_cli.list_data_verification_object_statuses, "list-object-statuses")
+
+
+# oci database-migration data-verification-object-type-count-collection list-data-verification-object-type-counts -> oci database-migration data-verification-object-type-count-collection list-object-type-counts
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.data_verification_object_type_count_collection_group, databasemigration_cli.list_data_verification_object_type_counts, "list-object-type-counts")
+
+
+# oci database-migration data-verification-table-row-count-collection list-data-verification-table-row-counts -> oci database-migration data-verification-table-row-count-collection list-table-row-counts
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.data_verification_table_row_count_collection_group, databasemigration_cli.list_data_verification_table_row_counts, "list-table-row-counts")
+
+
+# oci database-migration migration run-data-verification -> oci database-migration migration run
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.migration_group, databasemigration_cli.run_data_verification, "run")
+
+
+# oci database-migration migration run-data-verification-default-run-data-verification-details -> oci database-migration migration run-default
+cli_util.rename_command(databasemigration_cli, databasemigration_cli.migration_group, databasemigration_cli.run_data_verification_default_run_data_verification_details, "run-default")
+
+
+# oci database-migration migration data-verification
+@click.command('data-verification', cls=CommandGroupWithAlias, help="""Data Verification commands for a migration.""")
+@cli_util.help_option_group
+def data_verification_group():
+    pass
+
+
+databasemigration_cli.migration_group.add_command(data_verification_group)
+
+
+# Move the renamed Data Verification commands under migration data-verification.
+databasemigration_cli.data_verification_detail_group.commands.pop(databasemigration_cli.get_data_verification_detail.name)
+data_verification_group.add_command(databasemigration_cli.get_data_verification_detail)
+
+databasemigration_cli.data_verification_object_status_collection_group.commands.pop(databasemigration_cli.list_data_verification_object_statuses.name)
+data_verification_group.add_command(databasemigration_cli.list_data_verification_object_statuses)
+
+databasemigration_cli.data_verification_object_type_count_collection_group.commands.pop(databasemigration_cli.list_data_verification_object_type_counts.name)
+data_verification_group.add_command(databasemigration_cli.list_data_verification_object_type_counts)
+
+databasemigration_cli.data_verification_table_row_count_collection_group.commands.pop(databasemigration_cli.list_data_verification_table_row_counts.name)
+data_verification_group.add_command(databasemigration_cli.list_data_verification_table_row_counts)
+
+databasemigration_cli.migration_group.commands.pop(databasemigration_cli.run_data_verification.name)
+data_verification_group.add_command(databasemigration_cli.run_data_verification)
+
+databasemigration_cli.migration_group.commands.pop(databasemigration_cli.run_data_verification_default_run_data_verification_details.name)
+data_verification_group.add_command(databasemigration_cli.run_data_verification_default_run_data_verification_details)
+
+
+# Remove the generated root groups after their commands have moved.
+databasemigration_cli.database_migration_root_group.commands.pop(databasemigration_cli.data_verification_detail_group.name)
+databasemigration_cli.database_migration_root_group.commands.pop(databasemigration_cli.data_verification_object_status_collection_group.name)
+databasemigration_cli.database_migration_root_group.commands.pop(databasemigration_cli.data_verification_object_type_count_collection_group.name)
+databasemigration_cli.database_migration_root_group.commands.pop(databasemigration_cli.data_verification_table_row_count_collection_group.name)

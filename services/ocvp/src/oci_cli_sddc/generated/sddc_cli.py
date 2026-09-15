@@ -361,6 +361,34 @@ def downgrade_hcx(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@sddc_group.command(name=cli_util.override('sddc.generate_vmware_binary_download_info.command_name', 'generate-vmware-binary-download-info'), help=u"""Generate the VMware binary download information. \n[Command Reference](generateVmwareBinaryDownloadInfo)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--vmware-binary-file-name', required=True, help=u"""The name of the VMware binary file.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'VmwareBinaryDownloadInfo'})
+@cli_util.wrap_exceptions
+def generate_vmware_binary_download_info(ctx, from_json, sddc_id, vmware_binary_file_name):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['vmwareBinaryFileName'] = vmware_binary_file_name
+
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.generate_vmware_binary_download_info(
+        sddc_id=sddc_id,
+        generate_vmware_binary_download_info_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sddc_group.command(name=cli_util.override('sddc.get_sddc.command_name', 'get'), help=u"""Gets the specified SDDC's information. \n[Command Reference](getSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -692,6 +720,34 @@ def retrieve_password(ctx, from_json, sddc_id, type, if_match):
     result = client.retrieve_password(
         sddc_id=sddc_id,
         type=type,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sddc_group.command(name=cli_util.override('sddc.retrieve_vmware_binaries.command_name', 'retrieve-vmware-binaries'), help=u"""Retrieve the list of available VMware binaries for the SDDC. \n[Command Reference](retrieveVmwareBinaries)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'VmwareBinaryCollection'})
+@cli_util.wrap_exceptions
+def retrieve_vmware_binaries(ctx, from_json, sddc_id, limit, page):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.retrieve_vmware_binaries(
+        sddc_id=sddc_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

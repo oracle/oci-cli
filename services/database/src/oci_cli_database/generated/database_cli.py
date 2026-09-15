@@ -30073,7 +30073,7 @@ def list_flex_components(ctx, from_json, all_pages, page_size, compartment_id, n
 
 @gi_home_group.command(name=cli_util.override('db.list_gi_homes.command_name', 'list'), help=u"""Lists the Grid Infrastructure Homes. \n[Command Reference](listGiHomes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of gi home versions which are supported for the DB system.""")
+@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--gi-version', help=u"""The Grid Infrastructure version. If provided, filters the results matching the provided grid infrastructure version.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
