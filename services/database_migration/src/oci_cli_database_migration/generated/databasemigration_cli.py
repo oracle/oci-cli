@@ -28,6 +28,12 @@ def assessor_check_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.data_verification_object_status_collection_group.command_name', 'data-verification-object-status-collection'), cls=CommandGroupWithAlias, help="""Results of an Object Status listing.""")
+@cli_util.help_option_group
+def data_verification_object_status_collection_group():
+    pass
+
+
 @click.command(cli_util.override('database_migration.assessment_summary_group.command_name', 'assessment-summary'), cls=CommandGroupWithAlias, help="""Assessment Summary resource""")
 @cli_util.help_option_group
 def assessment_summary_group():
@@ -106,9 +112,21 @@ def connection_group():
     pass
 
 
+@click.command(cli_util.override('database_migration.data_verification_detail_group.command_name', 'data-verification-detail'), cls=CommandGroupWithAlias, help="""Summary/status information used to enable and drive the Data Verification UI.""")
+@cli_util.help_option_group
+def data_verification_detail_group():
+    pass
+
+
 @click.command(cli_util.override('database_migration.assessment_object_type_summary_group.command_name', 'assessment-object-type-summary'), cls=CommandGroupWithAlias, help="""Assessment Object Type""")
 @cli_util.help_option_group
 def assessment_object_type_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.data_verification_object_type_count_collection_group.command_name', 'data-verification-object-type-count-collection'), cls=CommandGroupWithAlias, help="""Results of an Object Type Count Comparison listing.""")
+@cli_util.help_option_group
+def data_verification_object_type_count_collection_group():
     pass
 
 
@@ -139,6 +157,12 @@ def work_request_log_entry_group():
 @click.command(cli_util.override('database_migration.excluded_object_summary_group.command_name', 'excluded-object-summary'), cls=CommandGroupWithAlias, help="""Excluded object summary line.""")
 @cli_util.help_option_group
 def excluded_object_summary_group():
+    pass
+
+
+@click.command(cli_util.override('database_migration.data_verification_table_row_count_collection_group.command_name', 'data-verification-table-row-count-collection'), cls=CommandGroupWithAlias, help="""Results of a Table Row Count Comparison listing.""")
+@cli_util.help_option_group
+def data_verification_table_row_count_collection_group():
     pass
 
 
@@ -185,6 +209,7 @@ def binary_group():
 
 
 database_migration_root_group.add_command(assessor_check_group)
+database_migration_root_group.add_command(data_verification_object_status_collection_group)
 database_migration_root_group.add_command(assessment_summary_group)
 database_migration_root_group.add_command(assessor_group)
 database_migration_root_group.add_command(work_request_summary_group)
@@ -198,12 +223,15 @@ database_migration_root_group.add_command(database_connection_type_summary_group
 database_migration_root_group.add_command(migration_object_type_summary_group)
 database_migration_root_group.add_command(work_request_error_group)
 database_migration_root_group.add_command(connection_group)
+database_migration_root_group.add_command(data_verification_detail_group)
 database_migration_root_group.add_command(assessment_object_type_summary_group)
+database_migration_root_group.add_command(data_verification_object_type_count_collection_group)
 database_migration_root_group.add_command(assessor_check_summary_group)
 database_migration_root_group.add_command(assessment_object_collection_group)
 database_migration_root_group.add_command(migration_object_collection_group)
 database_migration_root_group.add_command(work_request_log_entry_group)
 database_migration_root_group.add_command(excluded_object_summary_group)
+database_migration_root_group.add_command(data_verification_table_row_count_collection_group)
 database_migration_root_group.add_command(assessor_summary_group)
 database_migration_root_group.add_command(job_summary_group)
 database_migration_root_group.add_command(migration_group)
@@ -900,18 +928,19 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'CloneOracleMigrationSettings'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'CloneOracleMigrationSettings'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, assessment_id, freeform_tags, defined_tags, source_container_database_connection_id, source_standby_database_connection_id, if_match):
+def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, assessment_id, freeform_tags, defined_tags, migration_settings, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -939,6 +968,9 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if migration_settings is not None:
+        _details['migrationSettings'] = cli_util.parse_json_parameter("migration_settings", migration_settings)
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
@@ -2028,6 +2060,7 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--assessment-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--migration-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-load-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2048,12 +2081,12 @@ This option is a JSON list with items of type OracleDatabaseObject.  For documen
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'CreateOracleMigrationSettings'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'CreateOracleMigrationSettings'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, description, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, assessment_id, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, description, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, assessment_id, migration_settings, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2082,6 +2115,9 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
 
     if assessment_id is not None:
         _details['assessmentId'] = assessment_id
+
+    if migration_settings is not None:
+        _details['migrationSettings'] = cli_util.parse_json_parameter("migration_settings", migration_settings)
 
     if data_transfer_medium_details is not None:
         _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)
@@ -2715,6 +2751,31 @@ def get_connection(ctx, from_json, connection_id):
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.get_connection(
         connection_id=connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@data_verification_detail_group.command(name=cli_util.override('database_migration.get_data_verification_detail.command_name', 'get'), help=u"""Returns availability and report status information used by the Data Verification UI. \n[Command Reference](getDataVerificationDetail)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationDetail'})
+@cli_util.wrap_exceptions
+def get_data_verification_detail(ctx, from_json, migration_id, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.get_data_verification_detail(
+        migration_id=migration_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3463,6 +3524,251 @@ def list_connections(ctx, from_json, all_pages, page_size, compartment_id, techn
         )
     else:
         result = client.list_connections(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@data_verification_object_status_collection_group.command(name=cli_util.override('database_migration.list_data_verification_object_statuses.command_name', 'list-data-verification-object-statuses'), help=u"""Lists per-object status comparison results for a migration.
+
+The `objectType` filter is a database-specific string and is validated by the backend. \n[Command Reference](listDataVerificationObjectStatuses)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--owner', help=u"""A filter to return only results for a specific owner.""")
+@cli_util.option('--object-type', help=u"""A filter to return only results for a specific object type.
+
+The allowed values depend on the migration's `databaseCombination`: - Oracle migrations: `OracleDatabaseObjectTypes` - MySQL migrations: `MySqlDatabaseObjectTypes`""")
+@cli_util.option('--filter', help=u"""Free-text filter applied by the service to relevant fields for the report.""")
+@cli_util.option('--is-match', type=click.BOOL, help=u"""Match filter for object status results.
+
+When `true`, returns only rows where source and target match. When `false`, returns only rows with mismatches. When omitted, returns all rows, ordered by mismatch first.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["isMatch", "owner", "objectType", "objectName"]), help=u"""The field to sort by. Only one sort order may be provided. By default, non-matching object statuses are returned first, followed by matching statuses. Rows with the same match result are then sorted by owner, object type, and object name.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationObjectStatusCollection'})
+@cli_util.wrap_exceptions
+def list_data_verification_object_statuses(ctx, from_json, all_pages, page_size, migration_id, compartment_id, if_match, name, owner, object_type, filter, is_match, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if name is not None:
+        kwargs['name'] = name
+    if owner is not None:
+        kwargs['owner'] = owner
+    if object_type is not None:
+        kwargs['object_type'] = object_type
+    if filter is not None:
+        kwargs['filter'] = filter
+    if is_match is not None:
+        kwargs['is_match'] = is_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_verification_object_statuses,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_verification_object_statuses,
+            limit,
+            page_size,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_verification_object_statuses(
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@data_verification_object_type_count_collection_group.command(name=cli_util.override('database_migration.list_data_verification_object_type_counts.command_name', 'list-data-verification-object-type-counts'), help=u"""Lists object type count comparison results for a migration.
+
+The `objectType` filter is a database-specific string and is validated by the backend. \n[Command Reference](listDataVerificationObjectTypeCounts)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--schema-name', help=u"""A filter to return only results for a specific schema/owner.""")
+@cli_util.option('--object-type', help=u"""A filter to return only results for a specific object type.
+
+The allowed values depend on the migration's `databaseCombination`: - Oracle migrations: `OracleDatabaseObjectTypes` - MySQL migrations: `MySqlDatabaseObjectTypes`""")
+@cli_util.option('--filter', help=u"""Free-text filter applied by the service to relevant fields for the report.""")
+@cli_util.option('--min-abs-delta-percent', help=u"""Minimum absolute deltaPercent threshold (magnitude) to return. The service filters results where `abs(deltaPercent) >= minAbsDeltaPercent`. Must be non-negative.
+
+Note: This filter applies to the object type counts report, which uses `deltaPercent`. Table row count reports use `variancePercent` instead.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["deltaPercent", "schemaName", "objectType", "sourceObjectCount", "targetObjectCount", "sourceInvalidCount", "targetInvalidCount"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for deltaPercent is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationObjectTypeCountCollection'})
+@cli_util.wrap_exceptions
+def list_data_verification_object_type_counts(ctx, from_json, all_pages, page_size, migration_id, compartment_id, if_match, schema_name, object_type, filter, min_abs_delta_percent, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if schema_name is not None:
+        kwargs['schema_name'] = schema_name
+    if object_type is not None:
+        kwargs['object_type'] = object_type
+    if filter is not None:
+        kwargs['filter'] = filter
+    if min_abs_delta_percent is not None:
+        kwargs['min_abs_delta_percent'] = min_abs_delta_percent
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_verification_object_type_counts,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_verification_object_type_counts,
+            limit,
+            page_size,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_verification_object_type_counts(
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@data_verification_table_row_count_collection_group.command(name=cli_util.override('database_migration.list_data_verification_table_row_counts.command_name', 'list-data-verification-table-row-counts'), help=u"""Lists table row count comparison results for a migration. \n[Command Reference](listDataVerificationTableRowCounts)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--owner', help=u"""A filter to return only results for a specific owner.""")
+@cli_util.option('--table-name', help=u"""A filter to return only results for a specific table.""")
+@cli_util.option('--filter', help=u"""Free-text filter applied by the service to relevant fields for the report.""")
+@cli_util.option('--min-abs-delta-percent', help=u"""Minimum absolute deltaPercent threshold (magnitude) to return. The service filters results where `abs(deltaPercent) >= minAbsDeltaPercent`. Must be non-negative.
+
+Note: This filter applies to the object type counts report, which uses `deltaPercent`. Table row count reports use `variancePercent` instead.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["variancePercent", "owner", "tableName", "timeLastSourceStatisticsCollection", "timeLastTargetStatisticsCollection", "sourceRowCount", "targetRowCount"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for variancePercent is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationTableRowCountCollection'})
+@cli_util.wrap_exceptions
+def list_data_verification_table_row_counts(ctx, from_json, all_pages, page_size, migration_id, compartment_id, if_match, owner, table_name, filter, min_abs_delta_percent, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if owner is not None:
+        kwargs['owner'] = owner
+    if table_name is not None:
+        kwargs['table_name'] = table_name
+    if filter is not None:
+        kwargs['filter'] = filter
+    if min_abs_delta_percent is not None:
+        kwargs['min_abs_delta_percent'] = min_abs_delta_percent
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_data_verification_table_row_counts,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_data_verification_table_row_counts,
+            limit,
+            page_size,
+            migration_id=migration_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_data_verification_table_row_counts(
+            migration_id=migration_id,
             compartment_id=compartment_id,
             **kwargs
         )
@@ -4730,6 +5036,68 @@ def retrieve_supported_phases(ctx, from_json, migration_id):
     client = cli_util.build_client('database_migration', 'database_migration', ctx)
     result = client.retrieve_supported_phases(
         migration_id=migration_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.run_data_verification.command_name', 'run-data-verification'), help=u"""Runs Data Verification for a migration and returns the updated Data Verification summary. \n[Command Reference](runDataVerification)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type discriminator for Run Data Verification details.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationDetail'})
+@cli_util.wrap_exceptions
+def run_data_verification(ctx, from_json, migration_id, type, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.run_data_verification(
+        migration_id=migration_id,
+        run_data_verification_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@migration_group.command(name=cli_util.override('database_migration.run_data_verification_default_run_data_verification_details.command_name', 'run-data-verification-default-run-data-verification-details'), help=u"""Runs Data Verification for a migration and returns the updated Data Verification summary. \n[Command Reference](runDataVerification)""")
+@cli_util.option('--migration-id', required=True, help=u"""The OCID of the migration""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_migration', 'class': 'DataVerificationDetail'})
+@cli_util.wrap_exceptions
+def run_data_verification_default_run_data_verification_details(ctx, from_json, migration_id, if_match):
+
+    if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
+        raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('database_migration', 'database_migration', ctx)
+    result = client.run_data_verification(
+        migration_id=migration_id,
+        run_data_verification_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6214,6 +6582,7 @@ def update_migration_update_my_sql_migration_details(ctx, from_json, force, wait
 @cli_util.option('--target-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--migration-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-transfer-medium-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-load-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--advisor-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6229,18 +6598,18 @@ This option is a JSON list with items of type MigrationParameterDetails.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'UpdateOracleMigrationSettings'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'migration-settings': {'module': 'database_migration', 'class': 'UpdateOracleMigrationSettings'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
 @cli_util.wrap_exceptions
-def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, if_match):
+def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, migration_settings, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details or advanced_parameters:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and data-transfer-medium-details and initial-load-settings and advisor-settings and hub-details and ggs-details and advanced-parameters will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or migration_settings or data_transfer_medium_details or initial_load_settings or advisor_settings or hub_details or ggs_details or advanced_parameters:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and migration-settings and data-transfer-medium-details and initial-load-settings and advisor-settings and hub-details and ggs-details and advanced-parameters will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6270,6 +6639,9 @@ def update_migration_update_oracle_migration_details(ctx, from_json, force, wait
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if migration_settings is not None:
+        _details['migrationSettings'] = cli_util.parse_json_parameter("migration_settings", migration_settings)
 
     if data_transfer_medium_details is not None:
         _details['dataTransferMediumDetails'] = cli_util.parse_json_parameter("data_transfer_medium_details", data_transfer_medium_details)

@@ -96,6 +96,49 @@ def activate_subscription(ctx, from_json, subscription_id, product_id, freeform_
     cli_util.render_response(result, ctx)
 
 
+@partner_subscription_group.command(name=cli_util.override('partner_integeration.activate_subscription_deprecated.command_name', 'activate-subscription-deprecated'), help=u"""Deprecated. This endpoint has moved permanently to `/partners/subscriptions/{subscriptionId}/actions/activate`. \n[Command Reference](activateSubscriptionDeprecated)""")
+@cli_util.option('--subscription-id', required=True, help=u"""The unique identifier for the subscription.""")
+@cli_util.option('--product-id', required=True, help=u"""The unique identifier of the marketplace product listing.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'self', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'self', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'self', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'self', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'self', 'class': 'ActivateSubscriptionResult'})
+@cli_util.wrap_exceptions
+def activate_subscription_deprecated(ctx, from_json, subscription_id, product_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['productId'] = product_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('self', 'partner_integeration', ctx)
+    result = client.activate_subscription_deprecated(
+        subscription_id=subscription_id,
+        activate_subscription_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @partner_group.command(name=cli_util.override('partner_integeration.list_partners.command_name', 'list'), help=u"""Lists marketplace publisher partner info for a compartment. \n[Command Reference](listPartners)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given name.""")
@@ -186,6 +229,40 @@ def listing_subscriptions(ctx, from_json, listing_id, display_name, sort_by, sor
     cli_util.render_response(result, ctx)
 
 
+@listing_subscriptions_collection_group.command(name=cli_util.override('partner_integeration.listing_subscriptions_deprecated.command_name', 'listing-subscriptions-deprecated'), help=u"""Deprecated. This endpoint has moved permanently to `/partners/subscriptions`. \n[Command Reference](listingSubscriptionsDeprecated)""")
+@cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "productId"]), help=u"""The field to sort by. Only one sort order may be provided.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'self', 'class': 'ListingSubscriptionsCollection'})
+@cli_util.wrap_exceptions
+def listing_subscriptions_deprecated(ctx, from_json, listing_id, display_name, sort_by, sort_order, limit, page):
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('self', 'partner_integeration', ctx)
+    result = client.listing_subscriptions_deprecated(
+        listing_id=listing_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @partner_subscription_group.command(name=cli_util.override('partner_integeration.resolve_subscription.command_name', 'resolve-subscription'), help=u"""This API returns the subscription details by resolving JWT token to corresponding subscription and move its state to Pending Activation state. \n[Command Reference](resolveSubscription)""")
 @cli_util.option('--self-token', required=True, help=u"""The base 64 encoded JWT token which is mapped to a particular subscription""")
 @cli_util.option('--product-id', required=True, help=u"""The [OCID] of the marketplace product listing.""")
@@ -226,9 +303,49 @@ def resolve_subscription(ctx, from_json, self_token, product_id, freeform_tags, 
     cli_util.render_response(result, ctx)
 
 
-@create_subscription_usage_record_details_group.command(name=cli_util.override('partner_integeration.submit_subscription_usage_batch.command_name', 'submit-subscription-usage-batch'), help=u"""Asynchronously submits a UTF-8 CSV usage file for marketplace offers. The file must not exceed 50 MB or 10,000 rows and must include required usage columns. \n[Command Reference](submitSubscriptionUsageBatch)""")
+@partner_subscription_group.command(name=cli_util.override('partner_integeration.resolve_subscription_deprecated.command_name', 'resolve-subscription-deprecated'), help=u"""Deprecated. This endpoint has moved permanently to `/partners/subscriptions/actions/resolve`. It returns a 301 response and does not resolve a subscription. \n[Command Reference](resolveSubscriptionDeprecated)""")
+@cli_util.option('--self-token', required=True, help=u"""The base 64 encoded JWT token which is mapped to a particular subscription""")
+@cli_util.option('--product-id', required=True, help=u"""The [OCID] of the marketplace product listing.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'self', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'self', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'self', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'self', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'self', 'class': 'PartnerSubscription'})
+@cli_util.wrap_exceptions
+def resolve_subscription_deprecated(ctx, from_json, self_token, product_id, freeform_tags, defined_tags, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['selfToken'] = self_token
+    _details['productId'] = product_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('self', 'partner_integeration', ctx)
+    result = client.resolve_subscription_deprecated(
+        resolve_subscription_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@create_subscription_usage_record_details_group.command(name=cli_util.override('partner_integeration.submit_subscription_usage_batch.command_name', 'submit-subscription-usage-batch'), help=u"""Asynchronously submits a UTF-8 CSV usage file for marketplace offers. The file must not exceed 50 MB or 30,000 rows and must include required usage columns. \n[Command Reference](submitSubscriptionUsageBatch)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment associated with the usage records request.""")
-@cli_util.option('--submit-subscription-usage-batch-details', required=True, help=u"""UTF-8 CSV file with no more than 10,000 usage records and a maximum size of 50 MB. Required columns are `MarketplaceOfferId`, `Id`, `Amount`, `CurrencyCode`, `UsageStartTime`, `UsageEndTime`, and `UsageDimensionName`. Optional columns are `ConsumedQuantity`, `CustomerTenancyId`, `BillingIdentifier`, `ProductSku`, `UnitOfMeasure`, `UnitPrice`, `ContractDuration`, and `AdditionalMetadata`. When provided in CSV, `AdditionalMetadata` must be a JSON array of `ExtendedMetadata` objects. `MarketplaceOfferId` must be a subscription or private offer OCID.""")
+@cli_util.option('--submit-subscription-usage-batch-details', required=True, help=u"""UTF-8 CSV file with no more than 30,000 usage records and a maximum size of 50 MB. Required columns are `MarketplaceOfferId`, `Id`, `Amount`, `CurrencyCode`, `UsageStartTime`, `UsageEndTime`, and `UsageDimensionName`. Optional columns are `ConsumedQuantity`, `CustomerTenancyId`, `BillingIdentifier`, `ProductSku`, `UnitOfMeasure`, `UnitPrice`, `ContractDuration`, and `AdditionalMetadata`. When provided in CSV, `AdditionalMetadata` must be a JSON array of `ExtendedMetadata` objects. `MarketplaceOfferId` must be a subscription or private offer OCID.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -283,7 +400,7 @@ def submit_subscription_usage_batch(ctx, from_json, wait_for_state, max_wait_sec
 
 @create_subscription_usage_record_details_group.command(name=cli_util.override('partner_integeration.submit_subscription_usage_records.command_name', 'submit-subscription-usage-records'), help=u"""Synchronously submits usage records for marketplace offers. Each record must include `id`, `marketplaceOfferId`, `amount`, `currencyCode`, `timeUsageStarted`, `timeUsageEnded`, and `usageDimensionName`. \n[Command Reference](submitSubscriptionUsageRecords)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment associated with the usage records request.""")
-@cli_util.option('--subscription-usage-records', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The usage records to submit. The array must contain at least one record and no more than 100 records.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subscription-usage-records', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The usage records to submit. The array must contain at least one record and no more than 1,000 records.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'subscription-usage-records': {'module': 'self', 'class': 'list[CreateSubscriptionUsageRecordDetails]'}})
 @cli_util.help_option
 @click.pass_context

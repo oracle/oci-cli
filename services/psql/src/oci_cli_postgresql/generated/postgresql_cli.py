@@ -142,16 +142,17 @@ psql_root_group.add_command(backup_collection_group)
 @cli_util.option('--compartment-id', required=True, help=u"""target compartment to place a new backup""")
 @cli_util.option('--regions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of region names of the remote regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--retention-period', type=click.INT, help=u"""Retention period in days of the backup copy.""")
+@cli_util.option('--kms-key-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of key ids of the remote regions""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'regions': {'module': 'psql', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'regions': {'module': 'psql', 'class': 'list[string]'}, 'kms-key-ids': {'module': 'psql', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'regions': {'module': 'psql', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'regions': {'module': 'psql', 'class': 'list[string]'}, 'kms-key-ids': {'module': 'psql', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, regions, retention_period, if_match):
+def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, regions, retention_period, kms_key_ids, if_match):
 
     if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
@@ -167,6 +168,9 @@ def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if retention_period is not None:
         _details['retentionPeriod'] = retention_period
+
+    if kms_key_ids is not None:
+        _details['kmsKeyIds'] = cli_util.parse_json_parameter("kms_key_ids", kms_key_ids)
 
     client = cli_util.build_client('psql', 'postgresql', ctx)
     result = client.backup_copy(
@@ -794,6 +798,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-details-availability-domain', help=u"""Specifies the availability domain of AD-local storage. If `isRegionallyDurable` is set to true, `availabilityDomain` should not be specified. If `isRegionallyDurable` is set to false, `availabilityDomain` must be specified.""")
+@cli_util.option('--storage-details-kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the database system.""")
 @cli_util.option('--storage-details-iops', type=click.INT, help=u"""Guaranteed input/output storage requests per second (IOPS) available to the database system.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -803,7 +808,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'source': {'module': 'psql', 'class': 'SourceDetails'}, 'replication-config': {'module': 'psql', 'class': 'CreateReplicationConfigDetails'}, 'odsp-insight-details': {'module': 'psql', 'class': 'OdspInsightDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, network_details, storage_details_is_regionally_durable, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, source, replication_config, odsp_insight_details, freeform_tags, defined_tags, storage_details_availability_domain, storage_details_iops):
+def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, network_details, storage_details_is_regionally_durable, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, source, replication_config, odsp_insight_details, freeform_tags, defined_tags, storage_details_availability_domain, storage_details_kms_key_id, storage_details_iops):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -861,6 +866,9 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
 
     if storage_details_availability_domain is not None:
         _details['storageDetails']['availabilityDomain'] = storage_details_availability_domain
+
+    if storage_details_kms_key_id is not None:
+        _details['storageDetails']['kmsKeyId'] = storage_details_kms_key_id
 
     if storage_details_iops is not None:
         _details['storageDetails']['iops'] = storage_details_iops

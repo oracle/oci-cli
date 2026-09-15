@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.93.0 - 2026-09-15
+-------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for Basic Data Validation in Database Migration Service
+
+    * ``oci database-migration migration data-verification get-detail --migration-id``
+    * ``oci database-migration migration data-verification list-object-type-counts --compartment-id --migration-id``
+    * ``oci database-migration migration data-verification list-table-row-counts --compartment-id --migration-id``
+    * ``oci database-migration migration data-verification list-object-statuses --compartment-id --migration-id``
+    * ``oci database-migration migration data-verification run --migration-id --type``
+    * ``oci database-migration migration data-verification run-default --migration-id``
+
+  * Support for new optional parameters ``--migration-settings``
+
+    * ``oci database-migration migration clone-oracle-migration``
+    * ``oci database-migration migration create-oracle-migration``
+    * ``oci database-migration migration update-oracle-migration``
+
+* SELF Service
+
+  * Support for Usage Based SaaS listings on Marketplace
+
+    * ``oci self partner-integeration listing-subs-collection listing-subscriptions-deprecated``
+    * ``oci self partner-integeration partner-subscription activate-subscription-deprecated``
+    * ``oci self partner-integeration partner-subscription resolve-subscription-deprecated``
+
+* Oracle Cloud VMware Solution
+
+  * Support for configurable initial fault domain host distribution
+
+    * ``oci ocvs cluster create --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host create --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host inplace-upgrade --initial-fault-domain-host-distribution``
+    * ``oci ocvs esxi-host replace-host --initial-fault-domain-host-distribution``
+    * ``oci ocvs cluster generate-host-distribution-report``
+
+  * Support for VMware Binary Distribution
+
+    * ``oci ocvs sddc retrieve-vmware-binaries --sddc-id``
+    * ``oci ocvs sddc generate-vmware-binary-download-info --sddc-id --vmware-binary-file-name``
+
+* PGSQL Control Plane
+
+  * Support for new optional parameters ``--kms-key-ids``
+
+    * ``oci psql backup backup-copy``
+
+  * Support for new optional parameters ``--storage-details-kms-key-id``
+
+    * ``oci psql db-system create-db-system-oci-optimized-storage-details``
+
 3.92.1 - 2026-09-08
 -------------------
 Added
