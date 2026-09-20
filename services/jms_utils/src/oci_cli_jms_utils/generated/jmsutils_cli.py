@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -91,7 +90,7 @@ jms_utils_root_group.add_command(subscription_acknowledgment_configuration_group
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -117,7 +116,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def delete_java_migration_analysis(ctx, from_json, java_migration_analysis_id, if_match):
 
-    if isinstance(java_migration_analysis_id, six.string_types) and len(java_migration_analysis_id.strip()) == 0:
+    if isinstance(java_migration_analysis_id, str) and len(java_migration_analysis_id.strip()) == 0:
         raise click.UsageError('Parameter --java-migration-analysis-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -143,7 +142,7 @@ def delete_java_migration_analysis(ctx, from_json, java_migration_analysis_id, i
 @cli_util.wrap_exceptions
 def delete_performance_tuning_analysis(ctx, from_json, performance_tuning_analysis_id, if_match):
 
-    if isinstance(performance_tuning_analysis_id, six.string_types) and len(performance_tuning_analysis_id.strip()) == 0:
+    if isinstance(performance_tuning_analysis_id, str) and len(performance_tuning_analysis_id.strip()) == 0:
         raise click.UsageError('Parameter --performance-tuning-analysis-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,7 +186,7 @@ def get_analyze_applications_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_java_migration_analysis(ctx, from_json, java_migration_analysis_id):
 
-    if isinstance(java_migration_analysis_id, six.string_types) and len(java_migration_analysis_id.strip()) == 0:
+    if isinstance(java_migration_analysis_id, str) and len(java_migration_analysis_id.strip()) == 0:
         raise click.UsageError('Parameter --java-migration-analysis-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def get_java_migration_analysis(ctx, from_json, java_migration_analysis_id):
 @cli_util.wrap_exceptions
 def get_performance_tuning_analysis(ctx, from_json, performance_tuning_analysis_id):
 
-    if isinstance(performance_tuning_analysis_id, six.string_types) and len(performance_tuning_analysis_id.strip()) == 0:
+    if isinstance(performance_tuning_analysis_id, str) and len(performance_tuning_analysis_id.strip()) == 0:
         raise click.UsageError('Parameter --performance-tuning-analysis-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -251,7 +250,7 @@ def get_subscription_acknowledgment_configuration(ctx, from_json, compartment_id
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def list_work_items(ctx, from_json, all_pages, page_size, work_request_id, page,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -454,7 +453,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -511,7 +510,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}

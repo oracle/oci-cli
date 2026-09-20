@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,7 +48,7 @@ oci_cache_default_config_set_root_group.add_command(oci_cache_default_config_set
 @cli_util.wrap_exceptions
 def get_oci_cache_default_config_set(ctx, from_json, compartment_id, oci_cache_default_config_set_id):
 
-    if isinstance(oci_cache_default_config_set_id, six.string_types) and len(oci_cache_default_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_default_config_set_id, str) and len(oci_cache_default_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-default-config-set-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -92,7 +91,7 @@ waf_root_group.add_command(network_address_list_group)
 @cli_util.wrap_exceptions
 def change_network_address_list_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_address_list_id, compartment_id, if_match):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -153,7 +152,7 @@ def change_network_address_list_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_web_app_firewall_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_id, compartment_id, if_match):
 
-    if isinstance(web_app_firewall_id, six.string_types) and len(web_app_firewall_id.strip()) == 0:
+    if isinstance(web_app_firewall_id, str) and len(web_app_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -214,7 +213,7 @@ def change_web_app_firewall_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_web_app_firewall_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_policy_id, compartment_id, if_match):
 
-    if isinstance(web_app_firewall_policy_id, six.string_types) and len(web_app_firewall_policy_id.strip()) == 0:
+    if isinstance(web_app_firewall_policy_id, str) and len(web_app_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -735,7 +734,7 @@ def create_web_app_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_network_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_address_list_id, if_match):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -791,7 +790,7 @@ def delete_network_address_list(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_web_app_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_id, if_match):
 
-    if isinstance(web_app_firewall_id, six.string_types) and len(web_app_firewall_id.strip()) == 0:
+    if isinstance(web_app_firewall_id, str) and len(web_app_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -847,7 +846,7 @@ def delete_web_app_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_web_app_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_policy_id, if_match):
 
-    if isinstance(web_app_firewall_policy_id, six.string_types) and len(web_app_firewall_policy_id.strip()) == 0:
+    if isinstance(web_app_firewall_policy_id, str) and len(web_app_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -898,7 +897,7 @@ def delete_web_app_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_network_address_list(ctx, from_json, network_address_list_id):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -920,7 +919,7 @@ def get_network_address_list(ctx, from_json, network_address_list_id):
 @cli_util.wrap_exceptions
 def get_web_app_firewall(ctx, from_json, web_app_firewall_id):
 
-    if isinstance(web_app_firewall_id, six.string_types) and len(web_app_firewall_id.strip()) == 0:
+    if isinstance(web_app_firewall_id, str) and len(web_app_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -942,7 +941,7 @@ def get_web_app_firewall(ctx, from_json, web_app_firewall_id):
 @cli_util.wrap_exceptions
 def get_web_app_firewall_policy(ctx, from_json, web_app_firewall_policy_id):
 
-    if isinstance(web_app_firewall_policy_id, six.string_types) and len(web_app_firewall_policy_id.strip()) == 0:
+    if isinstance(web_app_firewall_policy_id, str) and len(web_app_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ def get_web_app_firewall_policy(ctx, from_json, web_app_firewall_policy_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1314,7 +1313,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1365,7 +1364,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1470,7 +1469,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_network_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_address_list_id, type, display_name, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -1552,7 +1551,7 @@ def update_network_address_list(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_network_address_list_update_network_address_list_addresses_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_address_list_id, display_name, freeform_tags, defined_tags, system_tags, addresses, if_match):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or addresses:
@@ -1640,7 +1639,7 @@ This option is a JSON list with items of type PrivateAddresses.  For documentati
 @cli_util.wrap_exceptions
 def update_network_address_list_update_network_address_list_vcn_addresses_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_address_list_id, display_name, freeform_tags, defined_tags, system_tags, vcn_addresses, if_match):
 
-    if isinstance(network_address_list_id, six.string_types) and len(network_address_list_id.strip()) == 0:
+    if isinstance(network_address_list_id, str) and len(network_address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --network-address-list-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or vcn_addresses:
@@ -1726,7 +1725,7 @@ def update_network_address_list_update_network_address_list_vcn_addresses_detail
 @cli_util.wrap_exceptions
 def update_web_app_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_id, display_name, web_app_firewall_policy_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(web_app_firewall_id, six.string_types) and len(web_app_firewall_id.strip()) == 0:
+    if isinstance(web_app_firewall_id, str) and len(web_app_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -1817,7 +1816,7 @@ This option is a JSON list with items of type Action.  For documentation on Acti
 @cli_util.wrap_exceptions
 def update_web_app_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_firewall_policy_id, display_name, actions, request_access_control, request_rate_limiting, request_protection, response_access_control, response_protection, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(web_app_firewall_policy_id, six.string_types) and len(web_app_firewall_policy_id.strip()) == 0:
+    if isinstance(web_app_firewall_policy_id, str) and len(web_app_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-firewall-policy-id cannot be whitespace or empty string')
     if not force:
         if actions or request_access_control or request_rate_limiting or request_protection or response_access_control or response_protection or freeform_tags or defined_tags or system_tags:

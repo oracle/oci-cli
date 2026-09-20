@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -43,7 +42,7 @@ model_deployment_root_group.add_command(inference_result_group)
 @cli_util.wrap_exceptions
 def predict(ctx, from_json, model_deployment_id, request_body):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -68,7 +67,7 @@ def predict(ctx, from_json, model_deployment_id, request_body):
 @cli_util.wrap_exceptions
 def predict_with_response_stream(ctx, from_json, file, model_deployment_id, request_body):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -677,7 +676,7 @@ data_safe_root_group.add_command(target_alert_policy_association_summary_group)
 @cli_util.wrap_exceptions
 def activate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, credentials, target_database_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -737,7 +736,7 @@ def activate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def add_masking_columns_from_sdm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,7 +860,7 @@ def alerts_update(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def apply_discovery_job_results(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, discovery_job_id, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -922,7 +921,7 @@ def apply_discovery_job_results(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def apply_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, sdm_masking_policy_difference_id, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -983,7 +982,7 @@ def apply_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def apply_security_assessment_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, template_assessment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1524,7 +1523,7 @@ def bulk_delete_sql_firewall_allowed_sqls_scim_query_selection_mode(ctx, from_js
 @cli_util.wrap_exceptions
 def calculate_audit_volume_available(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, audit_collection_start_time, trail_locations, database_unique_name, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1594,7 +1593,7 @@ def calculate_audit_volume_available(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def calculate_audit_volume_collected(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, time_from_month, time_to_month, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1655,7 +1654,7 @@ def calculate_audit_volume_collected(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1681,7 +1680,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_alert_compartment(ctx, from_json, alert_id, compartment_id, if_match):
 
-    if isinstance(alert_id, six.string_types) and len(alert_id.strip()) == 0:
+    if isinstance(alert_id, str) and len(alert_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1715,7 +1714,7 @@ def change_alert_compartment(ctx, from_json, alert_id, compartment_id, if_match)
 @cli_util.wrap_exceptions
 def change_alert_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, compartment_id, if_match):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1776,7 +1775,7 @@ def change_alert_policy_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_attribute_set_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, attribute_set_id, compartment_id, if_match):
 
-    if isinstance(attribute_set_id, six.string_types) and len(attribute_set_id.strip()) == 0:
+    if isinstance(attribute_set_id, str) and len(attribute_set_id.strip()) == 0:
         raise click.UsageError('Parameter --attribute-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1837,7 +1836,7 @@ def change_attribute_set_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_audit_archive_retrieval_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_archive_retrieval_id, compartment_id, if_match):
 
-    if isinstance(audit_archive_retrieval_id, six.string_types) and len(audit_archive_retrieval_id.strip()) == 0:
+    if isinstance(audit_archive_retrieval_id, str) and len(audit_archive_retrieval_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-archive-retrieval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1898,7 +1897,7 @@ def change_audit_archive_retrieval_compartment(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_audit_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_policy_id, compartment_id, if_match):
 
-    if isinstance(audit_policy_id, six.string_types) and len(audit_policy_id.strip()) == 0:
+    if isinstance(audit_policy_id, str) and len(audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1959,7 +1958,7 @@ def change_audit_policy_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_audit_profile_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, compartment_id, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2020,7 +2019,7 @@ def change_audit_profile_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_data_safe_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_safe_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(data_safe_private_endpoint_id, six.string_types) and len(data_safe_private_endpoint_id.strip()) == 0:
+    if isinstance(data_safe_private_endpoint_id, str) and len(data_safe_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-safe-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2083,7 +2082,7 @@ def change_data_safe_private_endpoint_compartment(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def change_database_security_config_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_security_config_id, compartment_id, if_match):
 
-    if isinstance(database_security_config_id, six.string_types) and len(database_security_config_id.strip()) == 0:
+    if isinstance(database_security_config_id, str) and len(database_security_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-security-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2141,7 +2140,7 @@ def change_database_security_config_compartment(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def change_discovery_job_compartment(ctx, from_json, discovery_job_id, compartment_id, if_match):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2172,7 +2171,7 @@ def change_discovery_job_compartment(ctx, from_json, discovery_job_id, compartme
 @cli_util.wrap_exceptions
 def change_library_masking_format_compartment(ctx, from_json, library_masking_format_id, compartment_id, if_match):
 
-    if isinstance(library_masking_format_id, six.string_types) and len(library_masking_format_id.strip()) == 0:
+    if isinstance(library_masking_format_id, str) and len(library_masking_format_id.strip()) == 0:
         raise click.UsageError('Parameter --library-masking-format-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2203,7 +2202,7 @@ def change_library_masking_format_compartment(ctx, from_json, library_masking_fo
 @cli_util.wrap_exceptions
 def change_masking_policy_compartment(ctx, from_json, masking_policy_id, compartment_id, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2234,7 +2233,7 @@ def change_masking_policy_compartment(ctx, from_json, masking_policy_id, compart
 @cli_util.wrap_exceptions
 def change_masking_policy_health_report_compartment(ctx, from_json, masking_policy_health_report_id, compartment_id, if_match):
 
-    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+    if isinstance(masking_policy_health_report_id, str) and len(masking_policy_health_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2265,7 +2264,7 @@ def change_masking_policy_health_report_compartment(ctx, from_json, masking_poli
 @cli_util.wrap_exceptions
 def change_on_prem_connector_compartment(ctx, from_json, on_prem_connector_id, compartment_id, if_match):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2299,7 +2298,7 @@ def change_on_prem_connector_compartment(ctx, from_json, on_prem_connector_id, c
 @cli_util.wrap_exceptions
 def change_report_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_id, compartment_id, if_match):
 
-    if isinstance(report_id, six.string_types) and len(report_id.strip()) == 0:
+    if isinstance(report_id, str) and len(report_id.strip()) == 0:
         raise click.UsageError('Parameter --report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2360,7 +2359,7 @@ def change_report_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def change_report_definition_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, compartment_id, if_match):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2423,7 +2422,7 @@ def change_report_definition_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_retention(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, online_months, offline_months, is_override_global_retention_setting, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2489,7 +2488,7 @@ def change_retention(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def change_sdm_masking_policy_difference_compartment(ctx, from_json, sdm_masking_policy_difference_id, compartment_id, if_match):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2524,7 +2523,7 @@ The existing saved security assessments created due to the schedule are not move
 @cli_util.wrap_exceptions
 def change_security_assessment_compartment(ctx, from_json, security_assessment_id, compartment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2558,7 +2557,7 @@ def change_security_assessment_compartment(ctx, from_json, security_assessment_i
 @cli_util.wrap_exceptions
 def change_security_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_id, compartment_id, if_match):
 
-    if isinstance(security_policy_id, six.string_types) and len(security_policy_id.strip()) == 0:
+    if isinstance(security_policy_id, str) and len(security_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2619,7 +2618,7 @@ def change_security_policy_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def change_security_policy_config_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_config_id, compartment_id, if_match):
 
-    if isinstance(security_policy_config_id, six.string_types) and len(security_policy_config_id.strip()) == 0:
+    if isinstance(security_policy_config_id, str) and len(security_policy_config_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2680,7 +2679,7 @@ def change_security_policy_config_compartment(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_security_policy_deployment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_deployment_id, compartment_id, if_match):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2738,7 +2737,7 @@ def change_security_policy_deployment_compartment(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def change_sensitive_data_model_compartment(ctx, from_json, sensitive_data_model_id, compartment_id, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2769,7 +2768,7 @@ def change_sensitive_data_model_compartment(ctx, from_json, sensitive_data_model
 @cli_util.wrap_exceptions
 def change_sensitive_type_compartment(ctx, from_json, sensitive_type_id, compartment_id, if_match):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2800,7 +2799,7 @@ def change_sensitive_type_compartment(ctx, from_json, sensitive_type_id, compart
 @cli_util.wrap_exceptions
 def change_sensitive_type_group_compartment(ctx, from_json, sensitive_type_group_id, compartment_id, if_match):
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2831,7 +2830,7 @@ def change_sensitive_type_group_compartment(ctx, from_json, sensitive_type_group
 @cli_util.wrap_exceptions
 def change_sensitive_types_export_compartment(ctx, from_json, sensitive_types_export_id, compartment_id, if_match):
 
-    if isinstance(sensitive_types_export_id, six.string_types) and len(sensitive_types_export_id.strip()) == 0:
+    if isinstance(sensitive_types_export_id, str) and len(sensitive_types_export_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-types-export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2865,7 +2864,7 @@ def change_sensitive_types_export_compartment(ctx, from_json, sensitive_types_ex
 @cli_util.wrap_exceptions
 def change_sql_collection_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, compartment_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2926,7 +2925,7 @@ def change_sql_collection_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_sql_firewall_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, compartment_id, if_match):
 
-    if isinstance(sql_firewall_policy_id, six.string_types) and len(sql_firewall_policy_id.strip()) == 0:
+    if isinstance(sql_firewall_policy_id, str) and len(sql_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2984,7 +2983,7 @@ def change_sql_firewall_policy_compartment(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def change_target_alert_policy_association_compartment(ctx, from_json, target_alert_policy_association_id, compartment_id, if_match):
 
-    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+    if isinstance(target_alert_policy_association_id, str) and len(target_alert_policy_association_id.strip()) == 0:
         raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3015,7 +3014,7 @@ def change_target_alert_policy_association_compartment(ctx, from_json, target_al
 @cli_util.wrap_exceptions
 def change_target_database_compartment(ctx, from_json, target_database_id, compartment_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3049,7 +3048,7 @@ def change_target_database_compartment(ctx, from_json, target_database_id, compa
 @cli_util.wrap_exceptions
 def change_target_database_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_group_id, compartment_id, if_match):
 
-    if isinstance(target_database_group_id, six.string_types) and len(target_database_group_id.strip()) == 0:
+    if isinstance(target_database_group_id, str) and len(target_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3110,7 +3109,7 @@ def change_target_database_group_compartment(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def change_unified_audit_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_id, compartment_id, if_match):
 
-    if isinstance(unified_audit_policy_id, six.string_types) and len(unified_audit_policy_id.strip()) == 0:
+    if isinstance(unified_audit_policy_id, str) and len(unified_audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3171,7 +3170,7 @@ def change_unified_audit_policy_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_unified_audit_policy_definition_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_definition_id, compartment_id, if_match):
 
-    if isinstance(unified_audit_policy_definition_id, six.string_types) and len(unified_audit_policy_definition_id.strip()) == 0:
+    if isinstance(unified_audit_policy_definition_id, str) and len(unified_audit_policy_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3229,7 +3228,7 @@ def change_unified_audit_policy_definition_compartment(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def change_user_assessment_compartment(ctx, from_json, user_assessment_id, compartment_id, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3263,7 +3262,7 @@ def change_user_assessment_compartment(ctx, from_json, user_assessment_id, compa
 @cli_util.wrap_exceptions
 def compare_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, comparison_security_assessment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3324,7 +3323,7 @@ def compare_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def compare_to_template_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, comparison_security_assessment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3385,7 +3384,7 @@ def compare_to_template_baseline(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def compare_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, comparison_user_assessment_id, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3528,7 +3527,7 @@ def create_alert_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def create_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, expression, alert_policy_id, description, display_name):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4115,7 +4114,7 @@ This option is a JSON list with items of type MaskingFormat.  For documentation 
 @cli_util.wrap_exceptions
 def create_masking_column(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schema_name, object_name, column_name, masking_policy_id, object_type, masking_column_group, sensitive_type_id, is_masking_enabled, masking_formats):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4593,7 +4592,7 @@ def create_on_prem_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details, display_name, description, dataguard_association_id, tls_config, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4674,7 +4673,7 @@ def create_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def create_peer_target_database_installed_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, dataguard_association_id, tls_config, if_match, database_details_instance_id, database_details_ip_addresses):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4763,7 +4762,7 @@ def create_peer_target_database_installed_database_details(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def create_peer_target_database_autonomous_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, dataguard_association_id, tls_config, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4849,7 +4848,7 @@ def create_peer_target_database_autonomous_database_details(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def create_peer_target_database_database_cloud_service_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, display_name, description, dataguard_association_id, tls_config, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_pluggable_database_id, database_details_listener_port, database_details_service_name):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4942,7 +4941,7 @@ def create_peer_target_database_database_cloud_service_details(ctx, from_json, w
 @cli_util.wrap_exceptions
 def create_referential_relation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, relation_type, parent, child, is_sensitive):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5498,7 +5497,7 @@ def create_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def create_sensitive_column(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, schema_name, object_name, column_name, app_name, object_type, data_type, status, sensitive_type_id, parent_column_keys, relation_type, app_defined_child_column_keys, db_defined_child_column_keys):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7101,7 +7100,7 @@ def create_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def deactivate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7157,7 +7156,7 @@ def deactivate_target_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_alert_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, if_match):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7214,10 +7213,10 @@ def delete_alert_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, rule_key, if_match):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
-    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+    if isinstance(rule_key, str) and len(rule_key.strip()) == 0:
         raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7274,7 +7273,7 @@ def delete_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_attribute_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, attribute_set_id, if_match):
 
-    if isinstance(attribute_set_id, six.string_types) and len(attribute_set_id.strip()) == 0:
+    if isinstance(attribute_set_id, str) and len(attribute_set_id.strip()) == 0:
         raise click.UsageError('Parameter --attribute-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7330,7 +7329,7 @@ def delete_attribute_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_audit_archive_retrieval(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_archive_retrieval_id, if_match):
 
-    if isinstance(audit_archive_retrieval_id, six.string_types) and len(audit_archive_retrieval_id.strip()) == 0:
+    if isinstance(audit_archive_retrieval_id, str) and len(audit_archive_retrieval_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-archive-retrieval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7386,7 +7385,7 @@ def delete_audit_archive_retrieval(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_audit_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7442,7 +7441,7 @@ def delete_audit_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_trail_id, if_match):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7498,7 +7497,7 @@ def delete_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_safe_private_endpoint_id, if_match):
 
-    if isinstance(data_safe_private_endpoint_id, six.string_types) and len(data_safe_private_endpoint_id.strip()) == 0:
+    if isinstance(data_safe_private_endpoint_id, str) and len(data_safe_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-safe-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7554,7 +7553,7 @@ def delete_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, discovery_job_id, if_match):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7608,10 +7607,10 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_discovery_job_result(ctx, from_json, discovery_job_id, result_key, if_match):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
-    if isinstance(result_key, six.string_types) and len(result_key.strip()) == 0:
+    if isinstance(result_key, str) and len(result_key.strip()) == 0:
         raise click.UsageError('Parameter --result-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7641,7 +7640,7 @@ def delete_discovery_job_result(ctx, from_json, discovery_job_id, result_key, if
 @cli_util.wrap_exceptions
 def delete_library_masking_format(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, library_masking_format_id, if_match):
 
-    if isinstance(library_masking_format_id, six.string_types) and len(library_masking_format_id.strip()) == 0:
+    if isinstance(library_masking_format_id, str) and len(library_masking_format_id.strip()) == 0:
         raise click.UsageError('Parameter --library-masking-format-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7703,10 +7702,10 @@ def delete_library_masking_format(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_masking_column(ctx, from_json, masking_column_key, masking_policy_id, if_match):
 
-    if isinstance(masking_column_key, six.string_types) and len(masking_column_key.strip()) == 0:
+    if isinstance(masking_column_key, str) and len(masking_column_key.strip()) == 0:
         raise click.UsageError('Parameter --masking-column-key cannot be whitespace or empty string')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7736,7 +7735,7 @@ def delete_masking_column(ctx, from_json, masking_column_key, masking_policy_id,
 @cli_util.wrap_exceptions
 def delete_masking_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7792,7 +7791,7 @@ def delete_masking_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_masking_policy_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_health_report_id, if_match):
 
-    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+    if isinstance(masking_policy_health_report_id, str) and len(masking_policy_health_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7848,7 +7847,7 @@ def delete_masking_policy_health_report(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_masking_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_report_id, if_match):
 
-    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+    if isinstance(masking_report_id, str) and len(masking_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7904,7 +7903,7 @@ def delete_masking_report(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_on_prem_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, on_prem_connector_id, if_match):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7961,10 +7960,10 @@ def delete_on_prem_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8019,10 +8018,10 @@ def delete_peer_target_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_referential_relation(ctx, from_json, sensitive_data_model_id, referential_relation_key, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
-    if isinstance(referential_relation_key, six.string_types) and len(referential_relation_key.strip()) == 0:
+    if isinstance(referential_relation_key, str) and len(referential_relation_key.strip()) == 0:
         raise click.UsageError('Parameter --referential-relation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8052,7 +8051,7 @@ def delete_referential_relation(ctx, from_json, sensitive_data_model_id, referen
 @cli_util.wrap_exceptions
 def delete_report_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, if_match):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8108,7 +8107,7 @@ def delete_report_definition(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdm_masking_policy_difference_id, if_match):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8164,7 +8163,7 @@ def delete_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8220,7 +8219,7 @@ def delete_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_security_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_id, if_match):
 
-    if isinstance(security_policy_id, six.string_types) and len(security_policy_id.strip()) == 0:
+    if isinstance(security_policy_id, str) and len(security_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8276,7 +8275,7 @@ def delete_security_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_security_policy_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_config_id, if_match):
 
-    if isinstance(security_policy_config_id, six.string_types) and len(security_policy_config_id.strip()) == 0:
+    if isinstance(security_policy_config_id, str) and len(security_policy_config_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8332,7 +8331,7 @@ def delete_security_policy_config(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_deployment_id, if_match):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8386,10 +8385,10 @@ def delete_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_sensitive_column(ctx, from_json, sensitive_data_model_id, sensitive_column_key, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
-    if isinstance(sensitive_column_key, six.string_types) and len(sensitive_column_key.strip()) == 0:
+    if isinstance(sensitive_column_key, str) and len(sensitive_column_key.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-column-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8419,7 +8418,7 @@ def delete_sensitive_column(ctx, from_json, sensitive_data_model_id, sensitive_c
 @cli_util.wrap_exceptions
 def delete_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8475,7 +8474,7 @@ def delete_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_sensitive_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_id, if_match):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8539,7 +8538,7 @@ def delete_sensitive_type(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_sensitive_type_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, if_match):
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8595,7 +8594,7 @@ def delete_sensitive_type_group(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_sensitive_types_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_types_export_id, if_match):
 
-    if isinstance(sensitive_types_export_id, six.string_types) and len(sensitive_types_export_id.strip()) == 0:
+    if isinstance(sensitive_types_export_id, str) and len(sensitive_types_export_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-types-export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8659,7 +8658,7 @@ def delete_sensitive_types_export(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8715,7 +8714,7 @@ def delete_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_allowed_sql_id, if_match):
 
-    if isinstance(sql_firewall_allowed_sql_id, six.string_types) and len(sql_firewall_allowed_sql_id.strip()) == 0:
+    if isinstance(sql_firewall_allowed_sql_id, str) and len(sql_firewall_allowed_sql_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-allowed-sql-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8771,7 +8770,7 @@ def delete_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def delete_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, if_match):
 
-    if isinstance(sql_firewall_policy_id, six.string_types) and len(sql_firewall_policy_id.strip()) == 0:
+    if isinstance(sql_firewall_policy_id, str) and len(sql_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8827,7 +8826,7 @@ def delete_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_target_alert_policy_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_alert_policy_association_id, if_match):
 
-    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+    if isinstance(target_alert_policy_association_id, str) and len(target_alert_policy_association_id.strip()) == 0:
         raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8883,7 +8882,7 @@ def delete_target_alert_policy_association(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8939,7 +8938,7 @@ def delete_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_target_database_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_group_id, if_match):
 
-    if isinstance(target_database_group_id, six.string_types) and len(target_database_group_id.strip()) == 0:
+    if isinstance(target_database_group_id, str) and len(target_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8995,7 +8994,7 @@ def delete_target_database_group(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_unified_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_id, if_match):
 
-    if isinstance(unified_audit_policy_id, six.string_types) and len(unified_audit_policy_id.strip()) == 0:
+    if isinstance(unified_audit_policy_id, str) and len(unified_audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9051,7 +9050,7 @@ def delete_unified_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_unified_audit_policy_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_definition_id, if_match):
 
-    if isinstance(unified_audit_policy_definition_id, six.string_types) and len(unified_audit_policy_definition_id.strip()) == 0:
+    if isinstance(unified_audit_policy_definition_id, str) and len(unified_audit_policy_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9107,7 +9106,7 @@ def delete_unified_audit_policy_definition(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9162,7 +9161,7 @@ def delete_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def deploy_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_deployment_id, if_match):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9217,7 +9216,7 @@ def deploy_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def discover_audit_trails(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9271,7 +9270,7 @@ def discover_audit_trails(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def download_discovery_report(ctx, from_json, file, sensitive_data_model_id, discovery_job_id, report_format):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9328,7 +9327,7 @@ def download_discovery_report(ctx, from_json, file, sensitive_data_model_id, dis
 @cli_util.wrap_exceptions
 def download_masking_log(ctx, from_json, file, masking_policy_id, target_id, masking_work_request_id):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9384,7 +9383,7 @@ def download_masking_log(ctx, from_json, file, masking_policy_id, target_id, mas
 @cli_util.wrap_exceptions
 def download_masking_policy(ctx, from_json, file, masking_policy_id, policy_format):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9438,7 +9437,7 @@ def download_masking_policy(ctx, from_json, file, masking_policy_id, policy_form
 @cli_util.wrap_exceptions
 def download_masking_report(ctx, from_json, file, masking_policy_id, report_id, report_format):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9537,7 +9536,7 @@ Important: - This flag is only applicable when the security assessment OCID refe
 @cli_util.wrap_exceptions
 def download_security_assessment_report(ctx, from_json, file, security_assessment_id, format, is_single_report, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9593,7 +9592,7 @@ def download_security_assessment_report(ctx, from_json, file, security_assessmen
 @cli_util.wrap_exceptions
 def download_sensitive_data_model(ctx, from_json, file, sensitive_data_model_id, data_model_format):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9646,7 +9645,7 @@ def download_sensitive_data_model(ctx, from_json, file, sensitive_data_model_id,
 @cli_util.wrap_exceptions
 def download_sensitive_types_export(ctx, from_json, file, sensitive_types_export_id, data_model_format):
 
-    if isinstance(sensitive_types_export_id, six.string_types) and len(sensitive_types_export_id.strip()) == 0:
+    if isinstance(sensitive_types_export_id, str) and len(sensitive_types_export_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-types-export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9700,7 +9699,7 @@ def download_sensitive_types_export(ctx, from_json, file, sensitive_types_export
 @cli_util.wrap_exceptions
 def download_user_assessment_report(ctx, from_json, file, user_assessment_id, format, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9815,7 +9814,7 @@ def enable_data_safe_configuration(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def generate_discovery_report_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, report_format, discovery_job_id):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9884,7 +9883,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, check_type, target_id, compartment_id, tablespace, freeform_tags, defined_tags, target_credentials):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9962,7 +9961,7 @@ def generate_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def generate_masking_policy_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, policy_format):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10023,7 +10022,7 @@ def generate_masking_policy_for_download(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def generate_masking_report_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, report_id, report_format):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10081,7 +10080,7 @@ def generate_masking_report_for_download(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_prem_connector_id, if_match):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10149,7 +10148,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @cli_util.wrap_exceptions
 def generate_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, display_name, compartment_id, mime_type, target_ids, target_group_ids, description, time_less_than, time_greater_than, row_limit, is_pagination_enabled, if_match, scim_query):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10238,7 +10237,7 @@ Important: - This flag is only applicable when the security assessment OCID refe
 @cli_util.wrap_exceptions
 def generate_security_assessment_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, format, is_single_report, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10301,7 +10300,7 @@ def generate_security_assessment_report(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def generate_sensitive_data_model_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, data_model_format):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10361,7 +10360,7 @@ def generate_sensitive_data_model_for_download(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def generate_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10417,7 +10416,7 @@ def generate_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def generate_user_assessment_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, format, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10473,7 +10472,7 @@ def generate_user_assessment_report(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def get_alert(ctx, from_json, alert_id):
 
-    if isinstance(alert_id, six.string_types) and len(alert_id.strip()) == 0:
+    if isinstance(alert_id, str) and len(alert_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10495,7 +10494,7 @@ def get_alert(ctx, from_json, alert_id):
 @cli_util.wrap_exceptions
 def get_alert_policy(ctx, from_json, alert_policy_id):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10518,10 +10517,10 @@ def get_alert_policy(ctx, from_json, alert_policy_id):
 @cli_util.wrap_exceptions
 def get_alert_policy_rule(ctx, from_json, alert_policy_id, rule_key):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
-    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+    if isinstance(rule_key, str) and len(rule_key.strip()) == 0:
         raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10545,7 +10544,7 @@ def get_alert_policy_rule(ctx, from_json, alert_policy_id, rule_key):
 @cli_util.wrap_exceptions
 def get_attribute_set(ctx, from_json, attribute_set_id, if_match):
 
-    if isinstance(attribute_set_id, six.string_types) and len(attribute_set_id.strip()) == 0:
+    if isinstance(attribute_set_id, str) and len(attribute_set_id.strip()) == 0:
         raise click.UsageError('Parameter --attribute-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10570,7 +10569,7 @@ def get_attribute_set(ctx, from_json, attribute_set_id, if_match):
 @cli_util.wrap_exceptions
 def get_audit_archive_retrieval(ctx, from_json, audit_archive_retrieval_id, if_match):
 
-    if isinstance(audit_archive_retrieval_id, six.string_types) and len(audit_archive_retrieval_id.strip()) == 0:
+    if isinstance(audit_archive_retrieval_id, str) and len(audit_archive_retrieval_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-archive-retrieval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10594,7 +10593,7 @@ def get_audit_archive_retrieval(ctx, from_json, audit_archive_retrieval_id, if_m
 @cli_util.wrap_exceptions
 def get_audit_policy(ctx, from_json, audit_policy_id):
 
-    if isinstance(audit_policy_id, six.string_types) and len(audit_policy_id.strip()) == 0:
+    if isinstance(audit_policy_id, str) and len(audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10616,7 +10615,7 @@ def get_audit_policy(ctx, from_json, audit_policy_id):
 @cli_util.wrap_exceptions
 def get_audit_profile(ctx, from_json, audit_profile_id):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10638,7 +10637,7 @@ def get_audit_profile(ctx, from_json, audit_profile_id):
 @cli_util.wrap_exceptions
 def get_audit_trail(ctx, from_json, audit_trail_id):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10734,7 +10733,7 @@ def get_data_safe_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_data_safe_private_endpoint(ctx, from_json, data_safe_private_endpoint_id):
 
-    if isinstance(data_safe_private_endpoint_id, six.string_types) and len(data_safe_private_endpoint_id.strip()) == 0:
+    if isinstance(data_safe_private_endpoint_id, str) and len(data_safe_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-safe-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10756,7 +10755,7 @@ def get_data_safe_private_endpoint(ctx, from_json, data_safe_private_endpoint_id
 @cli_util.wrap_exceptions
 def get_database_security_config(ctx, from_json, database_security_config_id):
 
-    if isinstance(database_security_config_id, six.string_types) and len(database_security_config_id.strip()) == 0:
+    if isinstance(database_security_config_id, str) and len(database_security_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-security-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10779,10 +10778,10 @@ def get_database_security_config(ctx, from_json, database_security_config_id):
 @cli_util.wrap_exceptions
 def get_database_table_access_entry(ctx, from_json, security_policy_report_id, database_table_access_entry_key):
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
-    if isinstance(database_table_access_entry_key, six.string_types) and len(database_table_access_entry_key.strip()) == 0:
+    if isinstance(database_table_access_entry_key, str) and len(database_table_access_entry_key.strip()) == 0:
         raise click.UsageError('Parameter --database-table-access-entry-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10806,10 +10805,10 @@ def get_database_table_access_entry(ctx, from_json, security_policy_report_id, d
 @cli_util.wrap_exceptions
 def get_database_view_access_entry(ctx, from_json, security_policy_report_id, database_view_access_entry_key):
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
-    if isinstance(database_view_access_entry_key, six.string_types) and len(database_view_access_entry_key.strip()) == 0:
+    if isinstance(database_view_access_entry_key, str) and len(database_view_access_entry_key.strip()) == 0:
         raise click.UsageError('Parameter --database-view-access-entry-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10833,10 +10832,10 @@ def get_database_view_access_entry(ctx, from_json, security_policy_report_id, da
 @cli_util.wrap_exceptions
 def get_difference_column(ctx, from_json, sdm_masking_policy_difference_id, difference_column_key):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
-    if isinstance(difference_column_key, six.string_types) and len(difference_column_key.strip()) == 0:
+    if isinstance(difference_column_key, str) and len(difference_column_key.strip()) == 0:
         raise click.UsageError('Parameter --difference-column-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10859,7 +10858,7 @@ def get_difference_column(ctx, from_json, sdm_masking_policy_difference_id, diff
 @cli_util.wrap_exceptions
 def get_discovery_job(ctx, from_json, discovery_job_id):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10882,10 +10881,10 @@ def get_discovery_job(ctx, from_json, discovery_job_id):
 @cli_util.wrap_exceptions
 def get_discovery_job_result(ctx, from_json, discovery_job_id, result_key):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
-    if isinstance(result_key, six.string_types) and len(result_key.strip()) == 0:
+    if isinstance(result_key, str) and len(result_key.strip()) == 0:
         raise click.UsageError('Parameter --result-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10911,7 +10910,7 @@ def get_discovery_job_result(ctx, from_json, discovery_job_id, result_key):
 @cli_util.wrap_exceptions
 def get_group_members(ctx, from_json, target_database_group_id, target_database_id, limit, page):
 
-    if isinstance(target_database_group_id, six.string_types) and len(target_database_group_id.strip()) == 0:
+    if isinstance(target_database_group_id, str) and len(target_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10939,7 +10938,7 @@ def get_group_members(ctx, from_json, target_database_group_id, target_database_
 @cli_util.wrap_exceptions
 def get_library_masking_format(ctx, from_json, library_masking_format_id):
 
-    if isinstance(library_masking_format_id, six.string_types) and len(library_masking_format_id.strip()) == 0:
+    if isinstance(library_masking_format_id, str) and len(library_masking_format_id.strip()) == 0:
         raise click.UsageError('Parameter --library-masking-format-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10962,10 +10961,10 @@ def get_library_masking_format(ctx, from_json, library_masking_format_id):
 @cli_util.wrap_exceptions
 def get_masking_column(ctx, from_json, masking_policy_id, masking_column_key):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
-    if isinstance(masking_column_key, six.string_types) and len(masking_column_key.strip()) == 0:
+    if isinstance(masking_column_key, str) and len(masking_column_key.strip()) == 0:
         raise click.UsageError('Parameter --masking-column-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10988,7 +10987,7 @@ def get_masking_column(ctx, from_json, masking_policy_id, masking_column_key):
 @cli_util.wrap_exceptions
 def get_masking_policy(ctx, from_json, masking_policy_id):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11010,7 +11009,7 @@ def get_masking_policy(ctx, from_json, masking_policy_id):
 @cli_util.wrap_exceptions
 def get_masking_policy_health_report(ctx, from_json, masking_policy_health_report_id):
 
-    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+    if isinstance(masking_policy_health_report_id, str) and len(masking_policy_health_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11032,7 +11031,7 @@ def get_masking_policy_health_report(ctx, from_json, masking_policy_health_repor
 @cli_util.wrap_exceptions
 def get_masking_report(ctx, from_json, masking_report_id):
 
-    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+    if isinstance(masking_report_id, str) and len(masking_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11054,7 +11053,7 @@ def get_masking_report(ctx, from_json, masking_report_id):
 @cli_util.wrap_exceptions
 def get_on_prem_connector(ctx, from_json, on_prem_connector_id):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11077,10 +11076,10 @@ def get_on_prem_connector(ctx, from_json, on_prem_connector_id):
 @cli_util.wrap_exceptions
 def get_peer_target_database(ctx, from_json, target_database_id, peer_target_database_id):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11106,10 +11105,10 @@ The GetProfile operation returns only the profiles in the specified 'userAssessm
 @cli_util.wrap_exceptions
 def get_profile(ctx, from_json, user_assessment_id, profile_name):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(profile_name, six.string_types) and len(profile_name.strip()) == 0:
+    if isinstance(profile_name, str) and len(profile_name.strip()) == 0:
         raise click.UsageError('Parameter --profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11133,10 +11132,10 @@ def get_profile(ctx, from_json, user_assessment_id, profile_name):
 @cli_util.wrap_exceptions
 def get_referential_relation(ctx, from_json, sensitive_data_model_id, referential_relation_key):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
-    if isinstance(referential_relation_key, six.string_types) and len(referential_relation_key.strip()) == 0:
+    if isinstance(referential_relation_key, str) and len(referential_relation_key.strip()) == 0:
         raise click.UsageError('Parameter --referential-relation-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11159,7 +11158,7 @@ def get_referential_relation(ctx, from_json, sensitive_data_model_id, referentia
 @cli_util.wrap_exceptions
 def get_report(ctx, from_json, report_id):
 
-    if isinstance(report_id, six.string_types) and len(report_id.strip()) == 0:
+    if isinstance(report_id, str) and len(report_id.strip()) == 0:
         raise click.UsageError('Parameter --report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11182,7 +11181,7 @@ def get_report(ctx, from_json, report_id):
 @cli_util.wrap_exceptions
 def get_report_content(ctx, from_json, file, report_id):
 
-    if isinstance(report_id, six.string_types) and len(report_id.strip()) == 0:
+    if isinstance(report_id, str) and len(report_id.strip()) == 0:
         raise click.UsageError('Parameter --report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11226,7 +11225,7 @@ def get_report_content(ctx, from_json, file, report_id):
 @cli_util.wrap_exceptions
 def get_report_definition(ctx, from_json, report_definition_id):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11248,7 +11247,7 @@ def get_report_definition(ctx, from_json, report_definition_id):
 @cli_util.wrap_exceptions
 def get_sdm_masking_policy_difference(ctx, from_json, sdm_masking_policy_difference_id):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11270,7 +11269,7 @@ def get_sdm_masking_policy_difference(ctx, from_json, sdm_masking_policy_differe
 @cli_util.wrap_exceptions
 def get_security_assessment(ctx, from_json, security_assessment_id):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11293,10 +11292,10 @@ def get_security_assessment(ctx, from_json, security_assessment_id):
 @cli_util.wrap_exceptions
 def get_security_assessment_comparison(ctx, from_json, security_assessment_id, comparison_security_assessment_id):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(comparison_security_assessment_id, six.string_types) and len(comparison_security_assessment_id.strip()) == 0:
+    if isinstance(comparison_security_assessment_id, str) and len(comparison_security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --comparison-security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11319,7 +11318,7 @@ def get_security_assessment_comparison(ctx, from_json, security_assessment_id, c
 @cli_util.wrap_exceptions
 def get_security_policy(ctx, from_json, security_policy_id):
 
-    if isinstance(security_policy_id, six.string_types) and len(security_policy_id.strip()) == 0:
+    if isinstance(security_policy_id, str) and len(security_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11341,7 +11340,7 @@ def get_security_policy(ctx, from_json, security_policy_id):
 @cli_util.wrap_exceptions
 def get_security_policy_config(ctx, from_json, security_policy_config_id):
 
-    if isinstance(security_policy_config_id, six.string_types) and len(security_policy_config_id.strip()) == 0:
+    if isinstance(security_policy_config_id, str) and len(security_policy_config_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11363,7 +11362,7 @@ def get_security_policy_config(ctx, from_json, security_policy_config_id):
 @cli_util.wrap_exceptions
 def get_security_policy_deployment(ctx, from_json, security_policy_deployment_id):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11386,10 +11385,10 @@ def get_security_policy_deployment(ctx, from_json, security_policy_deployment_id
 @cli_util.wrap_exceptions
 def get_security_policy_entry_state(ctx, from_json, security_policy_deployment_id, security_policy_entry_state_id):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
-    if isinstance(security_policy_entry_state_id, six.string_types) and len(security_policy_entry_state_id.strip()) == 0:
+    if isinstance(security_policy_entry_state_id, str) and len(security_policy_entry_state_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-entry-state-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11412,7 +11411,7 @@ def get_security_policy_entry_state(ctx, from_json, security_policy_deployment_i
 @cli_util.wrap_exceptions
 def get_security_policy_report(ctx, from_json, security_policy_report_id):
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11435,10 +11434,10 @@ def get_security_policy_report(ctx, from_json, security_policy_report_id):
 @cli_util.wrap_exceptions
 def get_sensitive_column(ctx, from_json, sensitive_data_model_id, sensitive_column_key):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
-    if isinstance(sensitive_column_key, six.string_types) and len(sensitive_column_key.strip()) == 0:
+    if isinstance(sensitive_column_key, str) and len(sensitive_column_key.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-column-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11461,7 +11460,7 @@ def get_sensitive_column(ctx, from_json, sensitive_data_model_id, sensitive_colu
 @cli_util.wrap_exceptions
 def get_sensitive_data_model(ctx, from_json, sensitive_data_model_id):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11483,7 +11482,7 @@ def get_sensitive_data_model(ctx, from_json, sensitive_data_model_id):
 @cli_util.wrap_exceptions
 def get_sensitive_type(ctx, from_json, sensitive_type_id):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11505,7 +11504,7 @@ def get_sensitive_type(ctx, from_json, sensitive_type_id):
 @cli_util.wrap_exceptions
 def get_sensitive_type_group(ctx, from_json, sensitive_type_group_id):
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11527,7 +11526,7 @@ def get_sensitive_type_group(ctx, from_json, sensitive_type_group_id):
 @cli_util.wrap_exceptions
 def get_sensitive_types_export(ctx, from_json, sensitive_types_export_id):
 
-    if isinstance(sensitive_types_export_id, six.string_types) and len(sensitive_types_export_id.strip()) == 0:
+    if isinstance(sensitive_types_export_id, str) and len(sensitive_types_export_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-types-export-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11549,7 +11548,7 @@ def get_sensitive_types_export(ctx, from_json, sensitive_types_export_id):
 @cli_util.wrap_exceptions
 def get_sql_collection(ctx, from_json, sql_collection_id):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11571,7 +11570,7 @@ def get_sql_collection(ctx, from_json, sql_collection_id):
 @cli_util.wrap_exceptions
 def get_sql_firewall_allowed_sql(ctx, from_json, sql_firewall_allowed_sql_id):
 
-    if isinstance(sql_firewall_allowed_sql_id, six.string_types) and len(sql_firewall_allowed_sql_id.strip()) == 0:
+    if isinstance(sql_firewall_allowed_sql_id, str) and len(sql_firewall_allowed_sql_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-allowed-sql-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11593,7 +11592,7 @@ def get_sql_firewall_allowed_sql(ctx, from_json, sql_firewall_allowed_sql_id):
 @cli_util.wrap_exceptions
 def get_sql_firewall_policy(ctx, from_json, sql_firewall_policy_id):
 
-    if isinstance(sql_firewall_policy_id, six.string_types) and len(sql_firewall_policy_id.strip()) == 0:
+    if isinstance(sql_firewall_policy_id, str) and len(sql_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11615,7 +11614,7 @@ def get_sql_firewall_policy(ctx, from_json, sql_firewall_policy_id):
 @cli_util.wrap_exceptions
 def get_target_alert_policy_association(ctx, from_json, target_alert_policy_association_id):
 
-    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+    if isinstance(target_alert_policy_association_id, str) and len(target_alert_policy_association_id.strip()) == 0:
         raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11637,7 +11636,7 @@ def get_target_alert_policy_association(ctx, from_json, target_alert_policy_asso
 @cli_util.wrap_exceptions
 def get_target_database(ctx, from_json, target_database_id):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11659,7 +11658,7 @@ def get_target_database(ctx, from_json, target_database_id):
 @cli_util.wrap_exceptions
 def get_target_database_group(ctx, from_json, target_database_group_id):
 
-    if isinstance(target_database_group_id, six.string_types) and len(target_database_group_id.strip()) == 0:
+    if isinstance(target_database_group_id, str) and len(target_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11685,10 +11684,10 @@ def get_target_database_group(ctx, from_json, target_database_group_id):
 @cli_util.wrap_exceptions
 def get_template_baseline_comparison(ctx, from_json, security_assessment_id, comparison_security_assessment_id, target_id, category, finding_key):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(comparison_security_assessment_id, six.string_types) and len(comparison_security_assessment_id.strip()) == 0:
+    if isinstance(comparison_security_assessment_id, str) and len(comparison_security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --comparison-security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11717,7 +11716,7 @@ def get_template_baseline_comparison(ctx, from_json, security_assessment_id, com
 @cli_util.wrap_exceptions
 def get_unified_audit_policy(ctx, from_json, unified_audit_policy_id):
 
-    if isinstance(unified_audit_policy_id, six.string_types) and len(unified_audit_policy_id.strip()) == 0:
+    if isinstance(unified_audit_policy_id, str) and len(unified_audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11739,7 +11738,7 @@ def get_unified_audit_policy(ctx, from_json, unified_audit_policy_id):
 @cli_util.wrap_exceptions
 def get_unified_audit_policy_definition(ctx, from_json, unified_audit_policy_definition_id):
 
-    if isinstance(unified_audit_policy_definition_id, six.string_types) and len(unified_audit_policy_definition_id.strip()) == 0:
+    if isinstance(unified_audit_policy_definition_id, str) and len(unified_audit_policy_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11761,7 +11760,7 @@ def get_unified_audit_policy_definition(ctx, from_json, unified_audit_policy_def
 @cli_util.wrap_exceptions
 def get_user_assessment(ctx, from_json, user_assessment_id):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11784,10 +11783,10 @@ def get_user_assessment(ctx, from_json, user_assessment_id):
 @cli_util.wrap_exceptions
 def get_user_assessment_comparison(ctx, from_json, user_assessment_id, comparison_user_assessment_id):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(comparison_user_assessment_id, six.string_types) and len(comparison_user_assessment_id.strip()) == 0:
+    if isinstance(comparison_user_assessment_id, str) and len(comparison_user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --comparison-user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11810,7 +11809,7 @@ def get_user_assessment_comparison(ctx, from_json, user_assessment_id, compariso
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12007,7 +12006,7 @@ def list_alert_policy_rules(ctx, from_json, all_pages, page_size, alert_policy_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12132,7 +12131,7 @@ def list_associated_resources(ctx, from_json, all_pages, page_size, attribute_se
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(attribute_set_id, six.string_types) and len(attribute_set_id.strip()) == 0:
+    if isinstance(attribute_set_id, str) and len(attribute_set_id.strip()) == 0:
         raise click.UsageError('Parameter --attribute-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12993,7 +12992,7 @@ def list_available_audit_volumes(ctx, from_json, all_pages, page_size, audit_pro
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13065,7 +13064,7 @@ def list_checks(ctx, from_json, all_pages, page_size, security_assessment_id, li
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13141,7 +13140,7 @@ def list_collected_audit_volumes(ctx, from_json, all_pages, page_size, audit_pro
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13212,7 +13211,7 @@ def list_columns(ctx, from_json, all_pages, page_size, target_database_id, limit
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13448,7 +13447,7 @@ def list_database_table_access_entries(ctx, from_json, all_pages, page_size, sec
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13513,7 +13512,7 @@ def list_database_view_access_entries(ctx, from_json, all_pages, page_size, secu
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13580,7 +13579,7 @@ def list_difference_columns(ctx, from_json, all_pages, page_size, sdm_masking_po
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13734,7 +13733,7 @@ def list_discovery_job_results(ctx, from_json, all_pages, page_size, discovery_j
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13993,7 +13992,7 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14095,7 +14094,7 @@ def list_findings_change_audit_logs(ctx, from_json, all_pages, page_size, securi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14178,10 +14177,10 @@ def list_grants(ctx, from_json, all_pages, page_size, user_assessment_id, user_k
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(user_key, six.string_types) and len(user_key.strip()) == 0:
+    if isinstance(user_key, str) and len(user_key.strip()) == 0:
         raise click.UsageError('Parameter --user-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14254,7 +14253,7 @@ def list_grouped_sensitive_types(ctx, from_json, all_pages, page_size, sensitive
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14397,7 +14396,7 @@ def list_masked_columns(ctx, from_json, all_pages, page_size, masking_report_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+    if isinstance(masking_report_id, str) and len(masking_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14556,7 +14555,7 @@ def list_masking_columns(ctx, from_json, all_pages, page_size, masking_policy_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14642,7 +14641,7 @@ def list_masking_errors(ctx, from_json, all_pages, page_size, masking_report_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+    if isinstance(masking_report_id, str) and len(masking_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14704,7 +14703,7 @@ def list_masking_objects(ctx, from_json, all_pages, page_size, masking_policy_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14853,7 +14852,7 @@ def list_masking_policy_health_report_logs(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_policy_health_report_id, six.string_types) and len(masking_policy_health_report_id.strip()) == 0:
+    if isinstance(masking_policy_health_report_id, str) and len(masking_policy_health_report_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-health-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14991,7 +14990,7 @@ def list_masking_policy_referential_relations(ctx, from_json, all_pages, page_si
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15126,7 +15125,7 @@ def list_masking_schemas(ctx, from_json, all_pages, page_size, masking_policy_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15254,7 +15253,7 @@ To use ListPasswordExpiryDateAnalytics to get a full list of all compartments an
 @cli_util.wrap_exceptions
 def list_password_expiry_date_analytics(ctx, from_json, all_pages, user_assessment_id, compartment_id_in_subtree, access_level, user_category, time_password_expiry_less_than):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15292,7 +15291,7 @@ def list_peer_target_databases(ctx, from_json, all_pages, page_size, target_data
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15358,7 +15357,7 @@ def list_profile_analytics(ctx, from_json, all_pages, page_size, user_assessment
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15449,7 +15448,7 @@ def list_profile_summaries(ctx, from_json, all_pages, page_size, user_assessment
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15546,7 +15545,7 @@ def list_referential_relations(ctx, from_json, all_pages, page_size, sensitive_d
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15778,7 +15777,7 @@ def list_role_grant_paths(ctx, from_json, all_pages, page_size, security_policy_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_policy_report_id, six.string_types) and len(security_policy_report_id.strip()) == 0:
+    if isinstance(security_policy_report_id, str) and len(security_policy_report_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15841,7 +15840,7 @@ def list_roles(ctx, from_json, all_pages, page_size, target_database_id, limit, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15909,7 +15908,7 @@ def list_schemas(ctx, from_json, all_pages, page_size, target_database_id, limit
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16534,7 +16533,7 @@ def list_security_policy_entry_states(ctx, from_json, all_pages, page_size, secu
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16780,7 +16779,7 @@ def list_sensitive_columns(ctx, from_json, all_pages, page_size, sensitive_data_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16874,7 +16873,7 @@ def list_sensitive_data_model_sensitive_types(ctx, from_json, all_pages, page_si
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17018,7 +17017,7 @@ def list_sensitive_objects(ctx, from_json, all_pages, page_size, sensitive_data_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17082,7 +17081,7 @@ def list_sensitive_schemas(ctx, from_json, all_pages, page_size, sensitive_data_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17472,7 +17471,7 @@ def list_sql_collection_log_insights(ctx, from_json, all_pages, page_size, time_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18082,7 +18081,7 @@ def list_tables(ctx, from_json, all_pages, page_size, target_database_id, limit,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18232,7 +18231,7 @@ def list_target_alert_policy_unassociated_members(ctx, from_json, all_pages, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+    if isinstance(target_alert_policy_association_id, str) and len(target_alert_policy_association_id.strip()) == 0:
         raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18450,7 +18449,7 @@ def list_target_overrides(ctx, from_json, all_pages, page_size, audit_profile_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18836,7 +18835,7 @@ def list_user_access_analytics(ctx, from_json, all_pages, page_size, user_assess
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18921,7 +18920,7 @@ def list_user_analytics(ctx, from_json, all_pages, page_size, user_assessment_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19144,7 +19143,7 @@ def list_users(ctx, from_json, all_pages, page_size, user_assessment_id, limit, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19243,7 +19242,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19294,7 +19293,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19426,7 +19425,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @cli_util.wrap_exceptions
 def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, user_defined_function_seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, target_credentials):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19534,7 +19533,7 @@ def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @cli_util.wrap_exceptions
 def modify_global_settings(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_paid_usage, online_retention_period, offline_retention_period, if_match):
 
-    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+    if isinstance(compartment_id, str) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19669,7 +19668,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_checks(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, items, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19734,7 +19733,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_discovery_job_results(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, discovery_job_id, items, if_match):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19799,7 +19798,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_findings(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, items, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19864,7 +19863,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_grouped_sensitive_types(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, items, if_match):
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19929,7 +19928,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_masking_columns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, items, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19994,7 +19993,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_sdm_masking_policy_difference_columns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdm_masking_policy_difference_id, items, if_match):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20059,7 +20058,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_sensitive_columns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, items, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20239,7 +20238,7 @@ def patch_target_alert_policy_association(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def provision_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, provision_audit_conditions, audit_policy_id, is_data_safe_service_account_excluded, if_match):
 
-    if isinstance(audit_policy_id, six.string_types) and len(audit_policy_id.strip()) == 0:
+    if isinstance(audit_policy_id, str) and len(audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20302,7 +20301,7 @@ def provision_audit_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def purge_sql_collection_logs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20357,7 +20356,7 @@ def purge_sql_collection_logs(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def refresh_database_security_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_security_config_id, if_match):
 
-    if isinstance(database_security_config_id, six.string_types) and len(database_security_config_id.strip()) == 0:
+    if isinstance(database_security_config_id, str) and len(database_security_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-security-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20418,7 +20417,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def refresh_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, compartment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20489,7 +20488,7 @@ def refresh_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def refresh_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_deployment_id, if_match):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20544,7 +20543,7 @@ def refresh_security_policy_deployment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def refresh_sql_collection_log_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20599,7 +20598,7 @@ def refresh_sql_collection_log_insights(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def refresh_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20661,7 +20660,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def refresh_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, compartment_id, description, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20735,7 +20734,7 @@ def refresh_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, if_match):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20790,7 +20789,7 @@ def remove_schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def remove_security_assessment_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20845,7 +20844,7 @@ def remove_security_assessment_template(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def resume_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_trail_id, if_match):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20897,7 +20896,7 @@ def resume_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def resume_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20925,7 +20924,7 @@ def resume_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_policy_id, if_match):
 
-    if isinstance(audit_policy_id, six.string_types) and len(audit_policy_id.strip()) == 0:
+    if isinstance(audit_policy_id, str) and len(audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20988,7 +20987,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @cli_util.wrap_exceptions
 def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details, display_name, is_pagination_enabled, if_match):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21066,7 +21065,7 @@ Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> 
 @cli_util.wrap_exceptions
 def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, schedule, mime_type, compartment_id, report_details_record_time_span, display_name, is_pagination_enabled, if_match, report_details_row_limit):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21142,7 +21141,7 @@ def schedule_report_schedule_audit_report_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def set_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match, assessment_ids):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21205,7 +21204,7 @@ def set_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def set_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, if_match, assessment_ids):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21270,7 +21269,7 @@ def set_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def start_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_collection_start_time, audit_trail_id, is_auto_purge_enabled, can_update_last_archive_time_on_target, if_match):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21336,7 +21335,7 @@ def start_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def start_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21391,7 +21390,7 @@ def start_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def stop_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_trail_id, if_match):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21446,7 +21445,7 @@ def stop_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def stop_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21498,7 +21497,7 @@ def stop_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def suspend_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21527,7 +21526,7 @@ def suspend_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match, target_ids):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21590,7 +21589,7 @@ def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def unset_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, if_match, target_ids):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21659,7 +21658,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_alert(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_id, comment, status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(alert_id, six.string_types) and len(alert_id.strip()) == 0:
+    if isinstance(alert_id, str) and len(alert_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21738,7 +21737,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_alert_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, display_name, description, severity, freeform_tags, defined_tags, if_match):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21820,10 +21819,10 @@ def update_alert_policy(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, rule_key, description, expression, display_name, if_match):
 
-    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+    if isinstance(alert_policy_id, str) and len(alert_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
 
-    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+    if isinstance(rule_key, str) and len(rule_key.strip()) == 0:
         raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21900,7 +21899,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_attribute_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, attribute_set_id, display_name, description, attribute_set_values, freeform_tags, defined_tags, if_match):
 
-    if isinstance(attribute_set_id, six.string_types) and len(attribute_set_id.strip()) == 0:
+    if isinstance(attribute_set_id, str) and len(attribute_set_id.strip()) == 0:
         raise click.UsageError('Parameter --attribute-set-id cannot be whitespace or empty string')
     if not force:
         if attribute_set_values or freeform_tags or defined_tags:
@@ -21985,7 +21984,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_audit_archive_retrieval(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_archive_retrieval_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(audit_archive_retrieval_id, six.string_types) and len(audit_archive_retrieval_id.strip()) == 0:
+    if isinstance(audit_archive_retrieval_id, str) and len(audit_archive_retrieval_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-archive-retrieval-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22067,7 +22066,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_audit_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_policy_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(audit_policy_id, six.string_types) and len(audit_policy_id.strip()) == 0:
+    if isinstance(audit_policy_id, str) and len(audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22151,7 +22150,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_audit_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_profile_id, description, display_name, is_paid_usage_enabled, is_override_global_paid_usage, freeform_tags, defined_tags, if_match):
 
-    if isinstance(audit_profile_id, six.string_types) and len(audit_profile_id.strip()) == 0:
+    if isinstance(audit_profile_id, str) and len(audit_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-profile-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22241,7 +22240,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_audit_trail(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, audit_trail_id, description, display_name, is_auto_purge_enabled, can_update_last_archive_time_on_target, freeform_tags, defined_tags, if_match):
 
-    if isinstance(audit_trail_id, six.string_types) and len(audit_trail_id.strip()) == 0:
+    if isinstance(audit_trail_id, str) and len(audit_trail_id.strip()) == 0:
         raise click.UsageError('Parameter --audit-trail-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22331,7 +22330,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_data_safe_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_safe_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(data_safe_private_endpoint_id, six.string_types) and len(data_safe_private_endpoint_id.strip()) == 0:
+    if isinstance(data_safe_private_endpoint_id, str) and len(data_safe_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-safe-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags or security_attributes:
@@ -22420,7 +22419,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_database_security_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_security_config_id, display_name, description, sql_firewall_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_security_config_id, six.string_types) and len(database_security_config_id.strip()) == 0:
+    if isinstance(database_security_config_id, str) and len(database_security_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-security-config-id cannot be whitespace or empty string')
     if not force:
         if sql_firewall_config or freeform_tags or defined_tags:
@@ -22502,10 +22501,10 @@ def update_database_security_config(ctx, from_json, force, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def update_finding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, finding_key, severity, justification, time_valid_until, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
 
-    if isinstance(finding_key, six.string_types) and len(finding_key.strip()) == 0:
+    if isinstance(finding_key, str) and len(finding_key.strip()) == 0:
         raise click.UsageError('Parameter --finding-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22585,7 +22584,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_library_masking_format(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, library_masking_format_id, display_name, description, sensitive_type_ids, format_entries, freeform_tags, defined_tags, if_match):
 
-    if isinstance(library_masking_format_id, six.string_types) and len(library_masking_format_id.strip()) == 0:
+    if isinstance(library_masking_format_id, str) and len(library_masking_format_id.strip()) == 0:
         raise click.UsageError('Parameter --library-masking-format-id cannot be whitespace or empty string')
     if not force:
         if sensitive_type_ids or format_entries or freeform_tags or defined_tags:
@@ -22675,10 +22674,10 @@ This option is a JSON list with items of type MaskingFormat.  For documentation 
 @cli_util.wrap_exceptions
 def update_masking_column(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_column_key, masking_policy_id, object_type, masking_column_group, sensitive_type_id, is_masking_enabled, masking_formats, if_match):
 
-    if isinstance(masking_column_key, six.string_types) and len(masking_column_key.strip()) == 0:
+    if isinstance(masking_column_key, str) and len(masking_column_key.strip()) == 0:
         raise click.UsageError('Parameter --masking-column-key cannot be whitespace or empty string')
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
     if not force:
         if masking_formats:
@@ -22772,7 +22771,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_masking_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, display_name, description, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, pre_masking_script, post_masking_script, column_source, freeform_tags, defined_tags, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
     if not force:
         if column_source or freeform_tags or defined_tags:
@@ -22886,7 +22885,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_masking_policy_update_column_source_sdm_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, column_source_sensitive_data_model_id, display_name, description, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, pre_masking_script, post_masking_script, freeform_tags, defined_tags, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23001,7 +23000,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_masking_policy_update_column_source_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, column_source_target_id, display_name, description, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, pre_masking_script, post_masking_script, freeform_tags, defined_tags, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23108,7 +23107,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_on_prem_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, on_prem_connector_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23184,7 +23183,7 @@ def update_on_prem_connector(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_on_prem_connector_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, on_prem_connector_id, is_update, if_match):
 
-    if isinstance(on_prem_connector_id, six.string_types) and len(on_prem_connector_id.strip()) == 0:
+    if isinstance(on_prem_connector_id, str) and len(on_prem_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --on-prem-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23252,10 +23251,10 @@ def update_on_prem_connector_wallet(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_peer_target_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, display_name, description, database_details, tls_config, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
     if not force:
         if database_details or tls_config:
@@ -23341,10 +23340,10 @@ def update_peer_target_database(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_peer_target_database_installed_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, tls_config, if_match, database_details_instance_id, database_details_ip_addresses):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
     if not force:
         if tls_config:
@@ -23436,10 +23435,10 @@ def update_peer_target_database_installed_database_details(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_peer_target_database_autonomous_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, tls_config, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
     if not force:
         if tls_config:
@@ -23528,10 +23527,10 @@ def update_peer_target_database_autonomous_database_details(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_peer_target_database_database_cloud_service_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, peer_target_database_id, database_details_infrastructure_type, display_name, description, tls_config, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_pluggable_database_id, database_details_listener_port, database_details_service_name):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
 
-    if isinstance(peer_target_database_id, six.string_types) and len(peer_target_database_id.strip()) == 0:
+    if isinstance(peer_target_database_id, str) and len(peer_target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-target-database-id cannot be whitespace or empty string')
     if not force:
         if tls_config:
@@ -23628,7 +23627,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, report_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(report_id, six.string_types) and len(report_id.strip()) == 0:
+    if isinstance(report_id, str) and len(report_id.strip()) == 0:
         raise click.UsageError('Parameter --report-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23708,7 +23707,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_report_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, report_definition_id, display_name, column_info, column_filters, column_sortings, summary, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(report_definition_id, six.string_types) and len(report_definition_id.strip()) == 0:
+    if isinstance(report_definition_id, str) and len(report_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --report-definition-id cannot be whitespace or empty string')
     if not force:
         if column_info or column_filters or column_sortings or summary or freeform_tags or defined_tags:
@@ -23791,7 +23790,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sdm_masking_policy_difference(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sdm_masking_policy_difference_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sdm_masking_policy_difference_id, six.string_types) and len(sdm_masking_policy_difference_id.strip()) == 0:
+    if isinstance(sdm_masking_policy_difference_id, str) and len(sdm_masking_policy_difference_id.strip()) == 0:
         raise click.UsageError('Parameter --sdm-masking-policy-difference-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23874,7 +23873,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, display_name, description, is_assessment_scheduled, schedule, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
+    if isinstance(security_assessment_id, str) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -23962,7 +23961,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_policy_id, six.string_types) and len(security_policy_id.strip()) == 0:
+    if isinstance(security_policy_id, str) and len(security_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24046,7 +24045,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_config_id, display_name, description, firewall_config, unified_audit_policy_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_policy_config_id, six.string_types) and len(security_policy_config_id.strip()) == 0:
+    if isinstance(security_policy_config_id, str) and len(security_policy_config_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-config-id cannot be whitespace or empty string')
     if not force:
         if firewall_config or unified_audit_policy_config or freeform_tags or defined_tags:
@@ -24134,7 +24133,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_security_policy_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_policy_deployment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_policy_deployment_id, six.string_types) and len(security_policy_deployment_id.strip()) == 0:
+    if isinstance(security_policy_deployment_id, str) and len(security_policy_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-policy-deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24218,10 +24217,10 @@ def update_security_policy_deployment(ctx, from_json, force, wait_for_state, max
 @cli_util.wrap_exceptions
 def update_sensitive_column(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, sensitive_column_key, data_type, status, sensitive_type_id, parent_column_keys, relation_type, app_defined_child_column_keys, db_defined_child_column_keys, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
-    if isinstance(sensitive_column_key, six.string_types) and len(sensitive_column_key.strip()) == 0:
+    if isinstance(sensitive_column_key, str) and len(sensitive_column_key.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-column-key cannot be whitespace or empty string')
     if not force:
         if parent_column_keys or app_defined_child_column_keys or db_defined_child_column_keys:
@@ -24323,7 +24322,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, display_name, target_id, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, sensitive_type_group_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
     if not force:
         if schemas_for_discovery or tables_for_discovery or sensitive_type_ids_for_discovery or sensitive_type_group_ids_for_discovery or freeform_tags or defined_tags:
@@ -24432,7 +24431,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_type(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_id, entity_type, display_name, short_name, description, parent_category_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24523,7 +24522,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_type_update_sensitive_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_id, display_name, short_name, description, parent_category_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24620,7 +24619,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_type_update_sensitive_type_pattern_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_id, display_name, short_name, description, parent_category_id, freeform_tags, defined_tags, name_pattern, comment_pattern, data_pattern, search_type, default_masking_format_id, if_match):
 
-    if isinstance(sensitive_type_id, six.string_types) and len(sensitive_type_id.strip()) == 0:
+    if isinstance(sensitive_type_id, str) and len(sensitive_type_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24725,7 +24724,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_type_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+    if isinstance(sensitive_type_group_id, str) and len(sensitive_type_group_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24807,7 +24806,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sensitive_types_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_types_export_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sensitive_types_export_id, six.string_types) and len(sensitive_types_export_id.strip()) == 0:
+    if isinstance(sensitive_types_export_id, str) and len(sensitive_types_export_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-types-export-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24889,7 +24888,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sql_collection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_collection_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sql_collection_id, six.string_types) and len(sql_collection_id.strip()) == 0:
+    if isinstance(sql_collection_id, str) and len(sql_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-collection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -24978,7 +24977,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_sql_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, display_name, description, status, enforcement_scope, violation_action, violation_audit, allowed_client_ips, allowed_client_os_usernames, allowed_client_programs, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sql_firewall_policy_id, six.string_types) and len(sql_firewall_policy_id.strip()) == 0:
+    if isinstance(sql_firewall_policy_id, str) and len(sql_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-firewall-policy-id cannot be whitespace or empty string')
     if not force:
         if allowed_client_ips or allowed_client_os_usernames or allowed_client_programs or freeform_tags or defined_tags:
@@ -25082,7 +25081,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_alert_policy_association(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_alert_policy_association_id, is_enabled, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_alert_policy_association_id, six.string_types) and len(target_alert_policy_association_id.strip()) == 0:
+    if isinstance(target_alert_policy_association_id, str) and len(target_alert_policy_association_id.strip()) == 0:
         raise click.UsageError('Parameter --target-alert-policy-association-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -25171,7 +25170,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, display_name, description, database_details, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if database_details or credentials or tls_config or connection_option or freeform_tags or defined_tags:
@@ -25273,7 +25272,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_installed_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_listener_port, database_details_service_name, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_instance_id, database_details_ip_addresses):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if credentials or tls_config or connection_option or freeform_tags or defined_tags:
@@ -25381,7 +25380,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_autonomous_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, database_details_autonomous_database_id, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if credentials or tls_config or connection_option or freeform_tags or defined_tags:
@@ -25486,7 +25485,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_database_cloud_service_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, database_details_infrastructure_type, display_name, description, credentials, tls_config, connection_option, freeform_tags, defined_tags, if_match, database_details_vm_cluster_id, database_details_db_system_id, database_details_pluggable_database_id, database_details_listener_port, database_details_service_name):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if credentials or tls_config or connection_option or freeform_tags or defined_tags:
@@ -25600,7 +25599,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, connection_option_datasafe_private_endpoint_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if database_details or credentials or tls_config or freeform_tags or defined_tags:
@@ -25699,7 +25698,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, connection_option_on_prem_connector_id, display_name, description, database_details, credentials, tls_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+    if isinstance(target_database_id, str) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
     if not force:
         if database_details or credentials or tls_config or freeform_tags or defined_tags:
@@ -25795,7 +25794,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_target_database_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_group_id, display_name, description, matching_criteria, freeform_tags, defined_tags, if_match):
 
-    if isinstance(target_database_group_id, six.string_types) and len(target_database_group_id.strip()) == 0:
+    if isinstance(target_database_group_id, str) and len(target_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-group-id cannot be whitespace or empty string')
     if not force:
         if matching_criteria or freeform_tags or defined_tags:
@@ -25884,7 +25883,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_unified_audit_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_id, display_name, description, status, conditions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(unified_audit_policy_id, six.string_types) and len(unified_audit_policy_id.strip()) == 0:
+    if isinstance(unified_audit_policy_id, str) and len(unified_audit_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-id cannot be whitespace or empty string')
     if not force:
         if conditions or freeform_tags or defined_tags:
@@ -25972,7 +25971,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_unified_audit_policy_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_audit_policy_definition_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(unified_audit_policy_definition_id, six.string_types) and len(unified_audit_policy_definition_id.strip()) == 0:
+    if isinstance(unified_audit_policy_definition_id, str) and len(unified_audit_policy_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-audit-policy-definition-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -26058,7 +26057,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_user_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, description, display_name, is_assessment_scheduled, schedule, freeform_tags, defined_tags, if_match):
 
-    if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
+    if isinstance(user_assessment_id, str) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -26140,7 +26139,7 @@ def update_user_assessment(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def upload_masking_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, upload_masking_policy_details, masking_policy_id, if_match):
 
-    if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
+    if isinstance(masking_policy_id, str) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26201,7 +26200,7 @@ def upload_masking_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def upload_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, upload_sensitive_data_model_details, if_match):
 
-    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+    if isinstance(sensitive_data_model_id, str) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
 
     kwargs = {}

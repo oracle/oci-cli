@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -56,7 +55,7 @@ access_requests_root_group.add_command(access_request_group)
 @cli_util.wrap_exceptions
 def approve_access_request(ctx, from_json, access_request_id, approver_comment, audit_type, additional_message, time_of_user_creation, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -96,7 +95,7 @@ def approve_access_request(ctx, from_json, access_request_id, approver_comment, 
 @cli_util.wrap_exceptions
 def get_access_request(ctx, from_json, access_request_id):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -119,7 +118,7 @@ def get_access_request(ctx, from_json, access_request_id):
 @cli_util.wrap_exceptions
 def get_audit_log_report(ctx, from_json, access_request_id, enable_process_tree):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -148,7 +147,7 @@ def get_audit_log_report(ctx, from_json, access_request_id, enable_process_tree)
 @cli_util.wrap_exceptions
 def interaction_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, access_request_id, more_info_details, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def list_access_request_histories(ctx, from_json, all_pages, page_size, access_r
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -332,7 +331,7 @@ def list_interactions(ctx, from_json, all_pages, page_size, access_request_id, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -378,7 +377,7 @@ def list_interactions(ctx, from_json, all_pages, page_size, access_request_id, l
 @cli_util.wrap_exceptions
 def reject_access_request(ctx, from_json, access_request_id, approver_comment, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -414,7 +413,7 @@ def reject_access_request(ctx, from_json, access_request_id, approver_comment, i
 @cli_util.wrap_exceptions
 def review_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, access_request_id, approver_comment, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -470,7 +469,7 @@ def review_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def revoke_access_request(ctx, from_json, access_request_id, approver_comment, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}

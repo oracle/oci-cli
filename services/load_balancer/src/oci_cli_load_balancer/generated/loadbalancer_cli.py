@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -251,7 +250,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def change_load_balancer_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, compartment_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -345,10 +344,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ip_address, port, load_balancer_id, backend_set_name, weight, max_connections, backup, drain, offline, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -451,7 +450,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, backend_max_connections, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -553,7 +552,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_name, load_balancer_id, passphrase, private_key, public_certificate, ca_certificate, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -637,7 +636,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, hostname, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -730,7 +729,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, name, load_balancer_id, hostname_names, path_route_set_name, ssl_configuration, connection_configuration, routing_policy_name, rule_set_names, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1046,7 +1045,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, path_routes, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1118,7 +1117,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, condition_language_version, rules, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1190,7 +1189,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, items, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1281,7 +1280,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, ciphers, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1355,13 +1354,13 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name, backend_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1430,10 +1429,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1499,10 +1498,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, certificate_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_name, six.string_types) and len(certificate_name.strip()) == 0:
+    if isinstance(certificate_name, str) and len(certificate_name.strip()) == 0:
         raise click.UsageError('Parameter --certificate-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1568,10 +1567,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1637,10 +1636,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, listener_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1703,7 +1702,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1770,10 +1769,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, path_route_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(path_route_set_name, six.string_types) and len(path_route_set_name.strip()) == 0:
+    if isinstance(path_route_set_name, str) and len(path_route_set_name.strip()) == 0:
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1841,10 +1840,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_routing_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, routing_policy_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+    if isinstance(routing_policy_name, str) and len(routing_policy_name.strip()) == 0:
         raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1912,10 +1911,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+    if isinstance(rule_set_name, str) and len(rule_set_name.strip()) == 0:
         raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1981,10 +1980,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2049,13 +2048,13 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2094,13 +2093,13 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backend_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2136,10 +2135,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2174,10 +2173,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2212,10 +2211,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2250,10 +2249,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_hostname(ctx, from_json, load_balancer_id, name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2285,7 +2284,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_load_balancer(ctx, from_json, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2316,7 +2315,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_load_balancer_health(ctx, from_json, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2350,10 +2349,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(path_route_set_name, six.string_types) and len(path_route_set_name.strip()) == 0:
+    if isinstance(path_route_set_name, str) and len(path_route_set_name.strip()) == 0:
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2388,10 +2387,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_routing_policy(ctx, from_json, load_balancer_id, routing_policy_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+    if isinstance(routing_policy_name, str) and len(routing_policy_name.strip()) == 0:
         raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2426,10 +2425,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+    if isinstance(rule_set_name, str) and len(rule_set_name.strip()) == 0:
         raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2464,10 +2463,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2492,7 +2491,7 @@ def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name, if_match):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2522,7 +2521,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_backend_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2557,10 +2556,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2593,7 +2592,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_certificates(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2625,7 +2624,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_hostnames(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2660,10 +2659,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2821,7 +2820,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2967,7 +2966,7 @@ def list_routing_policies(ctx, from_json, all_pages, page_size, load_balancer_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3021,7 +3020,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_rule_sets(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3105,7 +3104,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def list_ssl_cipher_suites(ctx, from_json, all_pages, load_balancer_id, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3140,7 +3139,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3219,13 +3218,13 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, weight, backup, drain, offline, load_balancer_id, backend_set_name, backend_name, max_connections, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3316,10 +3315,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, backend_max_connections, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
     if not force:
         if backends or health_checker or ssl_configuration or session_persistence_configuration or lb_cookie_session_persistence_configuration:
@@ -3438,10 +3437,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, is_force_plain_text, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3526,10 +3525,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name, hostname, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3625,10 +3624,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, default_backend_set_name, port, protocol, load_balancer_id, listener_name, hostname_names, path_route_set_name, routing_policy_name, ssl_configuration, connection_configuration, rule_set_names, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
     if not force:
         if hostname_names or ssl_configuration or connection_configuration or rule_set_names:
@@ -3770,7 +3769,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, ip_mode, ipv6_subnet_cidr, reserved_ips, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
         if reserved_ips or freeform_tags or defined_tags or security_attributes:
@@ -3880,7 +3879,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_load_balancer_shape(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, shape_name, shape_details, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
         if shape_details:
@@ -3963,7 +3962,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, network_security_group_ids, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids:
@@ -4042,10 +4041,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, path_routes, load_balancer_id, path_route_set_name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(path_route_set_name, six.string_types) and len(path_route_set_name.strip()) == 0:
+    if isinstance(path_route_set_name, str) and len(path_route_set_name.strip()) == 0:
         raise click.UsageError('Parameter --path-route-set-name cannot be whitespace or empty string')
     if not force:
         if path_routes:
@@ -4124,10 +4123,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_routing_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rules, load_balancer_id, routing_policy_name, condition_language_version, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(routing_policy_name, six.string_types) and len(routing_policy_name.strip()) == 0:
+    if isinstance(routing_policy_name, str) and len(routing_policy_name.strip()) == 0:
         raise click.UsageError('Parameter --routing-policy-name cannot be whitespace or empty string')
     if not force:
         if rules:
@@ -4208,10 +4207,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, rule_set_name, items, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(rule_set_name, six.string_types) and len(rule_set_name.strip()) == 0:
+    if isinstance(rule_set_name, str) and len(rule_set_name.strip()) == 0:
         raise click.UsageError('Parameter --rule-set-name cannot be whitespace or empty string')
     if not force:
         if items:
@@ -4303,10 +4302,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def update_ssl_cipher_suite(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ciphers, load_balancer_id, name, if_match):
 
-    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+    if isinstance(load_balancer_id, str) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
     if not force:
         if ciphers:

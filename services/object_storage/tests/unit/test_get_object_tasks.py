@@ -1,11 +1,6 @@
-# Copyright (c) 2016, 2026, Oracle and/or its affiliates.
-#
-# This software is dual-licensed to you under the Universal Permissive License
-# (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
-# 2.0 as shown at https://www.apache.org/licenses/LICENSE-2.0. You may choose
 # either license.
 
-import six
+import io
 import mock
 
 from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.get_object_tasks import (
@@ -52,7 +47,7 @@ def test_multipart_head_object_call_passes_version_id():
         client,
         WorkPoolTaskCallbacksContainer(),
         request_pool,
-        six.BytesIO(),
+        io.BytesIO(),
         namespace='namespace',
         bucket_name='bucket',
         object_name='object',

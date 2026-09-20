@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -44,7 +43,7 @@ logging_ingestion_root_group.add_command(log_entry_group)
 @cli_util.wrap_exceptions
 def put_logs(ctx, from_json, log_id, specversion, log_entry_batches, timestamp_opc_agent_processing, opc_agent_version):
 
-    if isinstance(log_id, six.string_types) and len(log_id.strip()) == 0:
+    if isinstance(log_id, str) and len(log_id.strip()) == 0:
         raise click.UsageError('Parameter --log-id cannot be whitespace or empty string')
 
     kwargs = {}

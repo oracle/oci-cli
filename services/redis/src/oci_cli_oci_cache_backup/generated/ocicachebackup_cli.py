@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ oci_cache_backup_root_group.add_command(oci_cache_backup_group)
 @cli_util.wrap_exceptions
 def change_oci_cache_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_backup_id, compartment_id, if_match):
 
-    if isinstance(oci_cache_backup_id, six.string_types) and len(oci_cache_backup_id.strip()) == 0:
+    if isinstance(oci_cache_backup_id, str) and len(oci_cache_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -191,7 +190,7 @@ def create_oci_cache_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_oci_cache_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_backup_id, if_match):
 
-    if isinstance(oci_cache_backup_id, six.string_types) and len(oci_cache_backup_id.strip()) == 0:
+    if isinstance(oci_cache_backup_id, str) and len(oci_cache_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -249,7 +248,7 @@ def delete_oci_cache_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def export_oci_cache_backup_to_object_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_backup_id, namespace_name, bucket_name, prefix, if_match):
 
-    if isinstance(oci_cache_backup_id, six.string_types) and len(oci_cache_backup_id.strip()) == 0:
+    if isinstance(oci_cache_backup_id, str) and len(oci_cache_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -309,7 +308,7 @@ def export_oci_cache_backup_to_object_storage(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def get_oci_cache_backup(ctx, from_json, oci_cache_backup_id):
 
-    if isinstance(oci_cache_backup_id, six.string_types) and len(oci_cache_backup_id.strip()) == 0:
+    if isinstance(oci_cache_backup_id, str) and len(oci_cache_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -406,7 +405,7 @@ def list_oci_cache_backups(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.wrap_exceptions
 def update_oci_cache_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_backup_id, display_name, description, retention_period_in_days, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oci_cache_backup_id, six.string_types) and len(oci_cache_backup_id.strip()) == 0:
+    if isinstance(oci_cache_backup_id, str) and len(oci_cache_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-backup-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -150,7 +149,7 @@ def create_offer_quote(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_offer_quote(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, offer_quote_id, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def delete_offer_quote(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_offer_quote(ctx, from_json, offer_quote_id):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ def get_offer_quote(ctx, from_json, offer_quote_id):
 @cli_util.wrap_exceptions
 def get_offer_quote_internal_detail(ctx, from_json, offer_quote_id):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -320,7 +319,7 @@ def list_offer_quotes(ctx, from_json, all_pages, page_size, reseller_compartment
 @cli_util.wrap_exceptions
 def respond_to_offer_quote(ctx, from_json, offer_quote_id, pricing, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -350,7 +349,7 @@ def respond_to_offer_quote(ctx, from_json, offer_quote_id, pricing, if_match):
 @cli_util.wrap_exceptions
 def send_offer_quote(ctx, from_json, offer_quote_id, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -393,7 +392,7 @@ This option is a JSON list with items of type ResourceBundle.  For documentation
 @cli_util.wrap_exceptions
 def update_offer_quote(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, offer_quote_id, display_name, isv_compartment_id, isv_publisher_id, description, buyer_compartment_ids, reseller_information, isv_information, resource_bundles, buyer_acceptance_deadline, buyer_offer_duration, freeform_tags, defined_tags, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
     if not force:
         if buyer_compartment_ids or reseller_information or isv_information or resource_bundles or freeform_tags or defined_tags:
@@ -487,7 +486,7 @@ def update_offer_quote(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def withdraw_offer_quote(ctx, from_json, offer_quote_id, reseller_compartment_id, isv_compartment_id, if_match):
 
-    if isinstance(offer_quote_id, six.string_types) and len(offer_quote_id.strip()) == 0:
+    if isinstance(offer_quote_id, str) and len(offer_quote_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-quote-id cannot be whitespace or empty string')
 
     kwargs = {}

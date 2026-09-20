@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -118,7 +117,7 @@ certs_mgmt_root_group.add_command(certificate_authority_summary_group)
 @cli_util.wrap_exceptions
 def cancel_certificate_authority_deletion(ctx, from_json, certificate_authority_id, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -144,10 +143,10 @@ def cancel_certificate_authority_deletion(ctx, from_json, certificate_authority_
 @cli_util.wrap_exceptions
 def cancel_certificate_authority_version_deletion(ctx, from_json, certificate_authority_id, certificate_authority_version_number, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_authority_version_number, six.string_types) and len(certificate_authority_version_number.strip()) == 0:
+    if isinstance(certificate_authority_version_number, str) and len(certificate_authority_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -173,7 +172,7 @@ def cancel_certificate_authority_version_deletion(ctx, from_json, certificate_au
 @cli_util.wrap_exceptions
 def cancel_certificate_deletion(ctx, from_json, certificate_id, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -199,10 +198,10 @@ def cancel_certificate_deletion(ctx, from_json, certificate_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_certificate_version_deletion(ctx, from_json, certificate_id, certificate_version_number, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_version_number, six.string_types) and len(certificate_version_number.strip()) == 0:
+    if isinstance(certificate_version_number, str) and len(certificate_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ When provided, if-match is checked against the ETag values of the secret. \n[Com
 @cli_util.wrap_exceptions
 def change_ca_bundle_compartment(ctx, from_json, ca_bundle_id, compartment_id, if_match):
 
-    if isinstance(ca_bundle_id, six.string_types) and len(ca_bundle_id.strip()) == 0:
+    if isinstance(ca_bundle_id, str) and len(ca_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --ca-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -264,7 +263,7 @@ When provided, If-Match is checked against the ETag values of the source. \n[Com
 @cli_util.wrap_exceptions
 def change_certificate_authority_compartment(ctx, from_json, certificate_authority_id, compartment_id, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -297,7 +296,7 @@ When provided, if-match is checked against the ETag values of the secret. \n[Com
 @cli_util.wrap_exceptions
 def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1204,7 +1203,7 @@ def create_certificate_authority_create_subordinate_ca_managed_internally_issued
 @cli_util.wrap_exceptions
 def delete_ca_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ca_bundle_id, if_match):
 
-    if isinstance(ca_bundle_id, six.string_types) and len(ca_bundle_id.strip()) == 0:
+    if isinstance(ca_bundle_id, str) and len(ca_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --ca-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1263,7 +1262,7 @@ def delete_ca_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_association(ctx, from_json, association_id):
 
-    if isinstance(association_id, six.string_types) and len(association_id.strip()) == 0:
+    if isinstance(association_id, str) and len(association_id.strip()) == 0:
         raise click.UsageError('Parameter --association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1285,7 +1284,7 @@ def get_association(ctx, from_json, association_id):
 @cli_util.wrap_exceptions
 def get_ca_bundle(ctx, from_json, ca_bundle_id):
 
-    if isinstance(ca_bundle_id, six.string_types) and len(ca_bundle_id.strip()) == 0:
+    if isinstance(ca_bundle_id, str) and len(ca_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --ca-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1307,7 +1306,7 @@ def get_ca_bundle(ctx, from_json, ca_bundle_id):
 @cli_util.wrap_exceptions
 def get_certificate(ctx, from_json, certificate_id):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1329,7 +1328,7 @@ def get_certificate(ctx, from_json, certificate_id):
 @cli_util.wrap_exceptions
 def get_certificate_authority(ctx, from_json, certificate_authority_id):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1352,10 +1351,10 @@ def get_certificate_authority(ctx, from_json, certificate_authority_id):
 @cli_util.wrap_exceptions
 def get_certificate_authority_version(ctx, from_json, certificate_authority_id, certificate_authority_version_number):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_authority_version_number, six.string_types) and len(certificate_authority_version_number.strip()) == 0:
+    if isinstance(certificate_authority_version_number, str) and len(certificate_authority_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1379,10 +1378,10 @@ def get_certificate_authority_version(ctx, from_json, certificate_authority_id, 
 @cli_util.wrap_exceptions
 def get_certificate_version(ctx, from_json, certificate_id, certificate_version_number):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_version_number, six.string_types) and len(certificate_version_number.strip()) == 0:
+    if isinstance(certificate_version_number, str) and len(certificate_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1610,7 +1609,7 @@ def list_certificate_authority_versions(ctx, from_json, all_pages, page_size, ce
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1670,7 +1669,7 @@ def list_certificate_versions(ctx, from_json, all_pages, page_size, certificate_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1788,10 +1787,10 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, life
 @cli_util.wrap_exceptions
 def revoke_certificate_authority_version(ctx, from_json, certificate_authority_id, certificate_authority_version_number, revocation_reason, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_authority_version_number, six.string_types) and len(certificate_authority_version_number.strip()) == 0:
+    if isinstance(certificate_authority_version_number, str) and len(certificate_authority_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1826,10 +1825,10 @@ def revoke_certificate_authority_version(ctx, from_json, certificate_authority_i
 @cli_util.wrap_exceptions
 def revoke_certificate_version(ctx, from_json, certificate_id, certificate_version_number, revocation_reason, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_version_number, six.string_types) and len(certificate_version_number.strip()) == 0:
+    if isinstance(certificate_version_number, str) and len(certificate_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1863,7 +1862,7 @@ def revoke_certificate_version(ctx, from_json, certificate_id, certificate_versi
 @cli_util.wrap_exceptions
 def schedule_certificate_authority_deletion(ctx, from_json, certificate_authority_id, time_of_deletion, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1897,10 +1896,10 @@ def schedule_certificate_authority_deletion(ctx, from_json, certificate_authorit
 @cli_util.wrap_exceptions
 def schedule_certificate_authority_version_deletion(ctx, from_json, certificate_authority_id, certificate_authority_version_number, time_of_deletion, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_authority_version_number, six.string_types) and len(certificate_authority_version_number.strip()) == 0:
+    if isinstance(certificate_authority_version_number, str) and len(certificate_authority_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1934,7 +1933,7 @@ def schedule_certificate_authority_version_deletion(ctx, from_json, certificate_
 @cli_util.wrap_exceptions
 def schedule_certificate_deletion(ctx, from_json, certificate_id, time_of_deletion, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1970,10 +1969,10 @@ You can subsequently use `GetCertificateVersion` to determine the current certif
 @cli_util.wrap_exceptions
 def schedule_certificate_version_deletion(ctx, from_json, certificate_id, certificate_version_number, time_of_deletion, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_version_number, six.string_types) and len(certificate_version_number.strip()) == 0:
+    if isinstance(certificate_version_number, str) and len(certificate_version_number.strip()) == 0:
         raise click.UsageError('Parameter --certificate-version-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2014,7 +2013,7 @@ def schedule_certificate_version_deletion(ctx, from_json, certificate_id, certif
 @cli_util.wrap_exceptions
 def update_ca_bundle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ca_bundle_id, description, ca_bundle_pem, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ca_bundle_id, six.string_types) and len(ca_bundle_id.strip()) == 0:
+    if isinstance(ca_bundle_id, str) and len(ca_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --ca-bundle-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2094,7 +2093,7 @@ This option is a JSON list with items of type CertificateRule.  For documentatio
 @cli_util.wrap_exceptions
 def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, description, current_version_number, certificate_config, freeform_tags, defined_tags, certificate_rules, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if certificate_config or freeform_tags or defined_tags or certificate_rules:
@@ -2185,7 +2184,7 @@ This option is a JSON list with items of type CertificateRule.  For documentatio
 @cli_util.wrap_exceptions
 def update_certificate_update_certificate_by_importing_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, certificate_config_cert_chain_pem, certificate_config_private_key_pem, certificate_config_certificate_pem, description, current_version_number, freeform_tags, defined_tags, certificate_rules, if_match, certificate_config_version_name, certificate_config_stage, certificate_config_private_key_pem_passphrase):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or certificate_rules:
@@ -2285,7 +2284,7 @@ This option is a JSON list with items of type CertificateRule.  For documentatio
 @cli_util.wrap_exceptions
 def update_certificate_update_certificate_issued_by_internal_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, description, current_version_number, freeform_tags, defined_tags, certificate_rules, if_match, certificate_config_version_name, certificate_config_stage, certificate_config_validity):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or certificate_rules:
@@ -2383,7 +2382,7 @@ This option is a JSON list with items of type CertificateRule.  For documentatio
 @cli_util.wrap_exceptions
 def update_certificate_update_certificate_managed_externally_issued_by_internal_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, certificate_config_csr_pem, description, current_version_number, freeform_tags, defined_tags, certificate_rules, if_match, certificate_config_version_name, certificate_config_stage, certificate_config_validity):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or certificate_rules:
@@ -2481,7 +2480,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.wrap_exceptions
 def update_certificate_authority(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_authority_config, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
     if not force:
         if certificate_authority_config or certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
@@ -2577,7 +2576,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.wrap_exceptions
 def update_certificate_authority_update_root_ca_managed_externally_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, certificate_authority_config_certificate_pem, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
     if not force:
         if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
@@ -2680,7 +2679,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.wrap_exceptions
 def update_certificate_authority_update_subordinate_ca_issued_by_internal_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
     if not force:
         if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
@@ -2785,7 +2784,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.wrap_exceptions
 def update_certificate_authority_update_root_ca_by_generating_internally_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage, certificate_authority_config_validity):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
     if not force:
         if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:
@@ -2890,7 +2889,7 @@ This option is a JSON list with items of type CertificateAuthorityRule.  For doc
 @cli_util.wrap_exceptions
 def update_certificate_authority_update_subordinate_ca_managed_internally_issued_by_external_ca_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_authority_id, certificate_authority_config_action_details, description, current_version_number, certificate_revocation_list_details, external_key_description, freeform_tags, defined_tags, certificate_authority_rules, if_match, certificate_authority_config_version_name, certificate_authority_config_stage):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
     if not force:
         if certificate_revocation_list_details or freeform_tags or defined_tags or certificate_authority_rules:

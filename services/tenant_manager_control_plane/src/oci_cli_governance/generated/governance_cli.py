@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,10 +45,10 @@ governance_root_group.add_command(organization_tenancy_group)
 @cli_util.wrap_exceptions
 def add_governance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, organization_id, organization_tenancy_id, if_match):
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -106,10 +105,10 @@ def add_governance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def remove_governance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, organization_id, organization_tenancy_id, if_match):
 
-    if isinstance(organization_id, six.string_types) and len(organization_id.strip()) == 0:
+    if isinstance(organization_id, str) and len(organization_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-id cannot be whitespace or empty string')
 
-    if isinstance(organization_tenancy_id, six.string_types) and len(organization_tenancy_id.strip()) == 0:
+    if isinstance(organization_tenancy_id, str) and len(organization_tenancy_id.strip()) == 0:
         raise click.UsageError('Parameter --organization-tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}

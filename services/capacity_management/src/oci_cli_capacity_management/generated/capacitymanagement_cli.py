@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -292,7 +291,7 @@ def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def create_occ_customer(ctx, from_json, tenancy_id, display_name, occ_customer_group_id, description, status):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -408,7 +407,7 @@ def create_occ_customer_group(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_availability_catalog_id, if_match):
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -472,7 +471,7 @@ def delete_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def delete_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_capacity_request_id, if_match):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -534,10 +533,10 @@ def delete_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, if_match):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
 
-    if isinstance(occ_customer_id, six.string_types) and len(occ_customer_id.strip()) == 0:
+    if isinstance(occ_customer_id, str) and len(occ_customer_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -567,7 +566,7 @@ def delete_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, 
 @cli_util.wrap_exceptions
 def delete_occ_customer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_customer_group_id, if_match):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -626,7 +625,7 @@ def delete_occ_customer_group(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_occ_availability_catalog(ctx, from_json, occ_availability_catalog_id):
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -650,7 +649,7 @@ def get_occ_availability_catalog(ctx, from_json, occ_availability_catalog_id):
 @cli_util.wrap_exceptions
 def get_occ_availability_catalog_content(ctx, from_json, file, occ_availability_catalog_id, if_match):
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -696,7 +695,7 @@ def get_occ_availability_catalog_content(ctx, from_json, file, occ_availability_
 @cli_util.wrap_exceptions
 def get_occ_capacity_request(ctx, from_json, occ_capacity_request_id):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -718,7 +717,7 @@ def get_occ_capacity_request(ctx, from_json, occ_capacity_request_id):
 @cli_util.wrap_exceptions
 def get_occ_customer_group(ctx, from_json, occ_customer_group_id):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -754,7 +753,7 @@ def list_internal_namespace_occ_overviews(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace, six.string_types) and len(namespace.strip()) == 0:
+    if isinstance(namespace, str) and len(namespace.strip()) == 0:
         raise click.UsageError('Parameter --namespace cannot be whitespace or empty string')
 
     kwargs = {}
@@ -958,7 +957,7 @@ def list_occ_availabilities(ctx, from_json, all_pages, page_size, occ_availabili
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1493,7 +1492,7 @@ def list_occ_overviews(ctx, from_json, all_pages, page_size, namespace, compartm
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace, six.string_types) and len(namespace.strip()) == 0:
+    if isinstance(namespace, str) and len(namespace.strip()) == 0:
         raise click.UsageError('Parameter --namespace cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1554,7 +1553,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_internal_occ_capacity_request(ctx, from_json, occ_capacity_request_id, items, if_match):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1589,7 +1588,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_occ_capacity_request(ctx, from_json, occ_capacity_request_id, items, if_match):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1621,7 +1620,7 @@ def patch_occ_capacity_request(ctx, from_json, occ_capacity_request_id, items, i
 @cli_util.wrap_exceptions
 def publish_occ_availability_catalog(ctx, from_json, occ_availability_catalog_id, if_match):
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1648,7 +1647,7 @@ def publish_occ_availability_catalog(ctx, from_json, occ_availability_catalog_id
 @cli_util.wrap_exceptions
 def update_internal_occ_capacity_request(ctx, from_json, occ_capacity_request_id, request_state, lifecycle_details, if_match):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1691,7 +1690,7 @@ def update_internal_occ_capacity_request(ctx, from_json, occ_capacity_request_id
 @cli_util.wrap_exceptions
 def update_occ_availability_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_availability_catalog_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(occ_availability_catalog_id, six.string_types) and len(occ_availability_catalog_id.strip()) == 0:
+    if isinstance(occ_availability_catalog_id, str) and len(occ_availability_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-availability-catalog-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1767,7 +1766,7 @@ def update_occ_availability_catalog(ctx, from_json, force, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def update_occ_capacity_request(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_capacity_request_id, display_name, freeform_tags, defined_tags, request_state, if_match):
 
-    if isinstance(occ_capacity_request_id, six.string_types) and len(occ_capacity_request_id.strip()) == 0:
+    if isinstance(occ_capacity_request_id, str) and len(occ_capacity_request_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-capacity-request-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1839,10 +1838,10 @@ def update_occ_capacity_request(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, display_name, description, status, if_match):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
 
-    if isinstance(occ_customer_id, six.string_types) and len(occ_customer_id.strip()) == 0:
+    if isinstance(occ_customer_id, str) and len(occ_customer_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1890,7 +1889,7 @@ def update_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, 
 @cli_util.wrap_exceptions
 def update_occ_customer_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_customer_group_id, display_name, description, freeform_tags, defined_tags, status, if_match):
 
-    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+    if isinstance(occ_customer_group_id, str) and len(occ_customer_group_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

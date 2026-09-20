@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -86,7 +85,7 @@ health_checks_root_group.add_command(http_probe_group)
 @cli_util.wrap_exceptions
 def change_http_monitor_compartment(ctx, from_json, monitor_id, compartment_id, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -117,7 +116,7 @@ def change_http_monitor_compartment(ctx, from_json, monitor_id, compartment_id, 
 @cli_util.wrap_exceptions
 def change_ping_monitor_compartment(ctx, from_json, monitor_id, compartment_id, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -368,7 +367,7 @@ def create_ping_monitor(ctx, from_json, compartment_id, targets, protocol, displ
 @cli_util.wrap_exceptions
 def delete_http_monitor(ctx, from_json, monitor_id, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -394,7 +393,7 @@ def delete_http_monitor(ctx, from_json, monitor_id, if_match):
 @cli_util.wrap_exceptions
 def delete_ping_monitor(ctx, from_json, monitor_id, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -419,7 +418,7 @@ def delete_ping_monitor(ctx, from_json, monitor_id, if_match):
 @cli_util.wrap_exceptions
 def get_http_monitor(ctx, from_json, monitor_id, if_none_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -444,7 +443,7 @@ def get_http_monitor(ctx, from_json, monitor_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_ping_monitor(ctx, from_json, monitor_id, if_none_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -595,7 +594,7 @@ def list_http_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(probe_configuration_id, six.string_types) and len(probe_configuration_id.strip()) == 0:
+    if isinstance(probe_configuration_id, str) and len(probe_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --probe-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -722,7 +721,7 @@ def list_ping_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(probe_configuration_id, six.string_types) and len(probe_configuration_id.strip()) == 0:
+    if isinstance(probe_configuration_id, str) and len(probe_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --probe-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -791,7 +790,7 @@ def list_ping_probe_results(ctx, from_json, all_pages, page_size, probe_configur
 @cli_util.wrap_exceptions
 def update_http_monitor(ctx, from_json, force, monitor_id, targets, vantage_point_names, port, timeout_in_seconds, protocol, method, path, headers, display_name, interval_in_seconds, is_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if targets or vantage_point_names or headers or freeform_tags or defined_tags:
@@ -874,7 +873,7 @@ def update_http_monitor(ctx, from_json, force, monitor_id, targets, vantage_poin
 @cli_util.wrap_exceptions
 def update_ping_monitor(ctx, from_json, force, monitor_id, targets, vantage_point_names, port, timeout_in_seconds, protocol, display_name, interval_in_seconds, is_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitor_id, six.string_types) and len(monitor_id.strip()) == 0:
+    if isinstance(monitor_id, str) and len(monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --monitor-id cannot be whitespace or empty string')
     if not force:
         if targets or vantage_point_names or freeform_tags or defined_tags:

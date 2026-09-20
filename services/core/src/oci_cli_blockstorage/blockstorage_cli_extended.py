@@ -6,7 +6,6 @@ from __future__ import print_function
 import click
 import json
 import oci
-import six
 import sys
 
 from services.core.src.oci_cli_blockstorage.generated import blockstorage_cli
@@ -196,7 +195,7 @@ def create_boot_volume_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, destination_region, display_name, kms_key_id):
 
-    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+    if isinstance(volume_backup_id, str) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -253,7 +252,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, destination_region, display_name, kms_key_id):
 
-    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+    if isinstance(boot_volume_backup_id, str) and len(boot_volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}

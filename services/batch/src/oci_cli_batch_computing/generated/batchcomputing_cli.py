@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -160,7 +159,7 @@ batch_root_group.add_command(batch_task_collection_group)
 @cli_util.wrap_exceptions
 def cancel_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_id, if_match):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -216,7 +215,7 @@ def cancel_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def change_batch_context_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, compartment_id, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -277,7 +276,7 @@ def change_batch_context_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_batch_job_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_id, compartment_id, if_match):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -338,7 +337,7 @@ def change_batch_job_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_batch_job_pool_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_pool_id, compartment_id, if_match):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -399,7 +398,7 @@ def change_batch_job_pool_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_batch_task_environment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_environment_id, compartment_id, if_match):
 
-    if isinstance(batch_task_environment_id, six.string_types) and len(batch_task_environment_id.strip()) == 0:
+    if isinstance(batch_task_environment_id, str) and len(batch_task_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -460,7 +459,7 @@ def change_batch_task_environment_compartment(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_batch_task_profile_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_profile_id, compartment_id, if_match):
 
-    if isinstance(batch_task_profile_id, six.string_types) and len(batch_task_profile_id.strip()) == 0:
+    if isinstance(batch_task_profile_id, str) and len(batch_task_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1292,7 +1291,7 @@ def create_batch_task_profile_create_cpu_architecture_task_profile_extended_info
 @cli_util.wrap_exceptions
 def delete_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1348,7 +1347,7 @@ def delete_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_pool_id, if_match):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1412,7 +1411,7 @@ def delete_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_batch_task_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_environment_id, if_match):
 
-    if isinstance(batch_task_environment_id, six.string_types) and len(batch_task_environment_id.strip()) == 0:
+    if isinstance(batch_task_environment_id, str) and len(batch_task_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1476,7 +1475,7 @@ def delete_batch_task_environment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_batch_task_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_profile_id, if_match):
 
-    if isinstance(batch_task_profile_id, six.string_types) and len(batch_task_profile_id.strip()) == 0:
+    if isinstance(batch_task_profile_id, str) and len(batch_task_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1535,7 +1534,7 @@ def delete_batch_task_profile(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_batch_context(ctx, from_json, batch_context_id):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1557,7 +1556,7 @@ def get_batch_context(ctx, from_json, batch_context_id):
 @cli_util.wrap_exceptions
 def get_batch_job(ctx, from_json, batch_job_id):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1579,7 +1578,7 @@ def get_batch_job(ctx, from_json, batch_job_id):
 @cli_util.wrap_exceptions
 def get_batch_job_pool(ctx, from_json, batch_job_pool_id):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1602,10 +1601,10 @@ def get_batch_job_pool(ctx, from_json, batch_job_pool_id):
 @cli_util.wrap_exceptions
 def get_batch_task(ctx, from_json, batch_job_id, task_name):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
-    if isinstance(task_name, six.string_types) and len(task_name.strip()) == 0:
+    if isinstance(task_name, str) and len(task_name.strip()) == 0:
         raise click.UsageError('Parameter --task-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1628,7 +1627,7 @@ def get_batch_task(ctx, from_json, batch_job_id, task_name):
 @cli_util.wrap_exceptions
 def get_batch_task_environment(ctx, from_json, batch_task_environment_id):
 
-    if isinstance(batch_task_environment_id, six.string_types) and len(batch_task_environment_id.strip()) == 0:
+    if isinstance(batch_task_environment_id, str) and len(batch_task_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1650,7 +1649,7 @@ def get_batch_task_environment(ctx, from_json, batch_task_environment_id):
 @cli_util.wrap_exceptions
 def get_batch_task_profile(ctx, from_json, batch_task_profile_id):
 
-    if isinstance(batch_task_profile_id, six.string_types) and len(batch_task_profile_id.strip()) == 0:
+    if isinstance(batch_task_profile_id, str) and len(batch_task_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1672,7 +1671,7 @@ def get_batch_task_profile(ctx, from_json, batch_task_profile_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1890,7 +1889,7 @@ def list_batch_job_tasks(ctx, from_json, all_pages, page_size, batch_job_id, lif
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2213,7 +2212,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2270,7 +2269,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2384,7 +2383,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def pause_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_id, if_match):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2443,7 +2442,7 @@ def pause_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def start_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2502,7 +2501,7 @@ def start_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def start_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_pool_id, if_match):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2561,7 +2560,7 @@ def start_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def stop_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2620,7 +2619,7 @@ def stop_batch_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_pool_id, if_match):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2679,7 +2678,7 @@ def stop_batch_job_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def unpause_batch_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_id, if_match):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2752,7 +2751,7 @@ This option is a JSON list with items of type JobPriorityConfiguration.  For doc
 @cli_util.wrap_exceptions
 def update_batch_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, logging_configuration, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or job_priority_configurations or entitlements or logging_configuration:
@@ -2850,7 +2849,7 @@ This option is a JSON list with items of type JobPriorityConfiguration.  For doc
 @cli_util.wrap_exceptions
 def update_batch_context_update_oci_logging_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_context_id, logging_configuration_is_job_task_events_propagation_enabled, display_name, description, freeform_tags, defined_tags, job_priority_configurations, entitlements, if_match):
 
-    if isinstance(batch_context_id, six.string_types) and len(batch_context_id.strip()) == 0:
+    if isinstance(batch_context_id, str) and len(batch_context_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-context-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or job_priority_configurations or entitlements:
@@ -2944,7 +2943,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_batch_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(batch_job_id, six.string_types) and len(batch_job_id.strip()) == 0:
+    if isinstance(batch_job_id, str) and len(batch_job_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3028,7 +3027,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_batch_job_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_job_pool_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(batch_job_pool_id, six.string_types) and len(batch_job_pool_id.strip()) == 0:
+    if isinstance(batch_job_pool_id, str) and len(batch_job_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-job-pool-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3112,7 +3111,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_batch_task_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_environment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(batch_task_environment_id, six.string_types) and len(batch_task_environment_id.strip()) == 0:
+    if isinstance(batch_task_environment_id, str) and len(batch_task_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3192,7 +3191,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_batch_task_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, batch_task_profile_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(batch_task_profile_id, six.string_types) and len(batch_task_profile_id.strip()) == 0:
+    if isinstance(batch_task_profile_id, str) and len(batch_task_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --batch-task-profile-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -86,7 +85,7 @@ weblogic_management_service_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_wls_domain_compartment(ctx, from_json, wls_domain_id, compartment_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -118,7 +117,7 @@ def change_wls_domain_compartment(ctx, from_json, wls_domain_id, compartment_id,
 @cli_util.wrap_exceptions
 def create_agreement_record(ctx, from_json, agreement_uuid, agreement_signature, wls_domain_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -153,7 +152,7 @@ def create_agreement_record(ctx, from_json, agreement_uuid, agreement_signature,
 @cli_util.wrap_exceptions
 def delete_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -229,7 +228,7 @@ def get_agreement(ctx, from_json, ):
 @cli_util.wrap_exceptions
 def get_managed_instance(ctx, from_json, managed_instance_id):
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -254,10 +253,10 @@ def get_managed_instance(ctx, from_json, managed_instance_id):
 @cli_util.wrap_exceptions
 def get_managed_instance_server(ctx, from_json, managed_instance_id, server_id):
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -280,7 +279,7 @@ def get_managed_instance_server(ctx, from_json, managed_instance_id, server_id):
 @cli_util.wrap_exceptions
 def get_wls_domain(ctx, from_json, wls_domain_id):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -303,10 +302,10 @@ def get_wls_domain(ctx, from_json, wls_domain_id):
 @cli_util.wrap_exceptions
 def get_wls_domain_credential(ctx, from_json, wls_domain_id, credential_type):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(credential_type, six.string_types) and len(credential_type.strip()) == 0:
+    if isinstance(credential_type, str) and len(credential_type.strip()) == 0:
         raise click.UsageError('Parameter --credential-type cannot be whitespace or empty string')
 
     kwargs = {}
@@ -332,10 +331,10 @@ def get_wls_domain_credential(ctx, from_json, wls_domain_id, credential_type):
 @cli_util.wrap_exceptions
 def get_wls_domain_server(ctx, from_json, wls_domain_id, server_id):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -364,13 +363,13 @@ def get_wls_domain_server(ctx, from_json, wls_domain_id, server_id):
 @cli_util.wrap_exceptions
 def get_wls_domain_server_backup(ctx, from_json, wls_domain_id, server_id, backup_id):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -400,13 +399,13 @@ def get_wls_domain_server_backup(ctx, from_json, wls_domain_id, server_id, backu
 @cli_util.wrap_exceptions
 def get_wls_domain_server_backup_content(ctx, from_json, wls_domain_id, server_id, backup_id):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -430,7 +429,7 @@ def get_wls_domain_server_backup_content(ctx, from_json, wls_domain_id, server_i
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -458,7 +457,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def install_latest_patches_on_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, is_force_servers_shutdown, must_include_domains_sharing_middleware, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -528,7 +527,7 @@ def list_agreement_records(ctx, from_json, all_pages, page_size, wls_domain_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -585,7 +584,7 @@ def list_applicable_patches(ctx, from_json, all_pages, page_size, wls_domain_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -644,7 +643,7 @@ def list_managed_instance_scan_results(ctx, from_json, all_pages, page_size, man
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -708,10 +707,10 @@ def list_managed_instance_server_installed_patches(ctx, from_json, all_pages, pa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -772,7 +771,7 @@ def list_managed_instance_servers(ctx, from_json, all_pages, page_size, managed_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -903,7 +902,7 @@ def list_required_policies(ctx, from_json, all_pages, ):
 @cli_util.wrap_exceptions
 def list_wls_domain_credentials(ctx, from_json, all_pages, wls_domain_id):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -935,7 +934,7 @@ def list_wls_domain_scan_results(ctx, from_json, all_pages, page_size, wls_domai
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -997,10 +996,10 @@ def list_wls_domain_server_backups(ctx, from_json, all_pages, page_size, wls_dom
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1063,10 +1062,10 @@ def list_wls_domain_server_installed_patches(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(server_id, six.string_types) and len(server_id.strip()) == 0:
+    if isinstance(server_id, str) and len(server_id.strip()) == 0:
         raise click.UsageError('Parameter --server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1127,7 +1126,7 @@ def list_wls_domain_servers(ctx, from_json, all_pages, page_size, wls_domain_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1257,7 +1256,7 @@ def list_wls_domains_sharing_middlewares(ctx, from_json, all_pages, page_size, w
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1314,7 +1313,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1371,7 +1370,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1486,7 +1485,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def restart_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, is_force_servers_shutdown, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1553,7 +1552,7 @@ This option is a JSON list with items of type ServerToRestore.  For documentatio
 @cli_util.wrap_exceptions
 def restore_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, is_force_servers_shutdown, must_include_domains_sharing_middleware, servers_to_restore, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1621,7 +1620,7 @@ def restore_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def scan_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, if_match):
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1676,7 +1675,7 @@ def scan_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def scan_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1729,7 +1728,7 @@ def scan_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def set_restart_order(ctx, from_json, wls_domain_id, servers, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1762,7 +1761,7 @@ def set_restart_order(ctx, from_json, wls_domain_id, servers, if_match):
 @cli_util.wrap_exceptions
 def start_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1818,7 +1817,7 @@ def start_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def stop_wls_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, is_force_servers_shutdown, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1898,7 +1897,7 @@ def summarize_resource_inventory(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def update_managed_instance(ctx, from_json, force, managed_instance_id, configuration, if_match):
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
     if not force:
         if configuration:
@@ -1945,7 +1944,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_wls_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, wls_domain_id, configuration, defined_tags, freeform_tags, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
     if not force:
         if configuration or defined_tags or freeform_tags:
@@ -2014,10 +2013,10 @@ def update_wls_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_wls_domain_credential(ctx, from_json, wls_domain_id, credential_type, strategy, user_secret_id, password_secret_id, if_match):
 
-    if isinstance(wls_domain_id, six.string_types) and len(wls_domain_id.strip()) == 0:
+    if isinstance(wls_domain_id, str) and len(wls_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --wls-domain-id cannot be whitespace or empty string')
 
-    if isinstance(credential_type, six.string_types) and len(credential_type.strip()) == 0:
+    if isinstance(credential_type, str) and len(credential_type.strip()) == 0:
         raise click.UsageError('Parameter --credential-type cannot be whitespace or empty string')
 
     kwargs = {}

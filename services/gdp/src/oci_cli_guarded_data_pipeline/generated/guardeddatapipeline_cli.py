@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -63,7 +62,7 @@ gdp_root_group.add_command(work_request_log_entry_group)
 @cli_util.wrap_exceptions
 def change_gdp_pipeline_compartment(ctx, from_json, gdp_pipeline_id, compartment_id, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -172,7 +171,7 @@ def create_gdp_pipeline(ctx, from_json, compartment_id, display_name, pipeline_t
 @cli_util.wrap_exceptions
 def delete_gdp_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gdp_pipeline_id, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ def delete_gdp_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_gdp_pipeline(ctx, from_json, gdp_pipeline_id):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -253,7 +252,7 @@ def get_gdp_pipeline(ctx, from_json, gdp_pipeline_id):
 @cli_util.wrap_exceptions
 def get_gdp_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -346,7 +345,7 @@ def list_gdp_work_request_errors(ctx, from_json, all_pages, page_size, work_requ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -403,7 +402,7 @@ def list_gdp_work_request_logs(ctx, from_json, all_pages, page_size, work_reques
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -516,7 +515,7 @@ def list_gdp_work_requests(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.wrap_exceptions
 def peer_gdp_pipeline(ctx, from_json, peering_gdp_pipeline_id, gdp_pipeline_id, peer_validation_nonce, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -549,7 +548,7 @@ def peer_gdp_pipeline(ctx, from_json, peering_gdp_pipeline_id, gdp_pipeline_id, 
 @cli_util.wrap_exceptions
 def rotate_gdp_pipeline_keys(ctx, from_json, gdp_pipeline_id, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -574,7 +573,7 @@ def rotate_gdp_pipeline_keys(ctx, from_json, gdp_pipeline_id, if_match):
 @cli_util.wrap_exceptions
 def start_gdp_pipeline(ctx, from_json, gdp_pipeline_id, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -599,7 +598,7 @@ def start_gdp_pipeline(ctx, from_json, gdp_pipeline_id, if_match):
 @cli_util.wrap_exceptions
 def stop_gdp_pipeline(ctx, from_json, gdp_pipeline_id, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -637,7 +636,7 @@ def stop_gdp_pipeline(ctx, from_json, gdp_pipeline_id, if_match):
 @cli_util.wrap_exceptions
 def update_gdp_pipeline(ctx, from_json, force, gdp_pipeline_id, display_name, description, service_log_group_id, file_types, authorization_details, is_file_override_in_destination_enabled, is_scanning_enabled, is_chunking_enabled, is_approval_needed, approval_key_vault_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(gdp_pipeline_id, six.string_types) and len(gdp_pipeline_id.strip()) == 0:
+    if isinstance(gdp_pipeline_id, str) and len(gdp_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --gdp-pipeline-id cannot be whitespace or empty string')
     if not force:
         if file_types or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -88,7 +87,7 @@ visual_builder_root_group.add_command(work_request_log_entry_collection_group)
 @cli_util.wrap_exceptions
 def change_vb_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, compartment_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -440,7 +439,7 @@ def create_vb_instance_public_endpoint_details(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def delete_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -491,7 +490,7 @@ def delete_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_vb_instance(ctx, from_json, vb_instance_id):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -513,7 +512,7 @@ def get_vb_instance(ctx, from_json, vb_instance_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -605,7 +604,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, compartment_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -660,7 +659,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, compartment_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -762,7 +761,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def reconfigure_private_endpoint_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -815,7 +814,7 @@ def reconfigure_private_endpoint_vb_instance(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def request_summarized_applications(ctx, from_json, vb_instance_id, idcs_open_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -850,7 +849,7 @@ def request_summarized_applications(ctx, from_json, vb_instance_id, idcs_open_id
 @cli_util.wrap_exceptions
 def start_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -905,7 +904,7 @@ def start_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def stop_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -972,7 +971,7 @@ This option is a JSON list with items of type UpdateCustomEndpointDetails.  For 
 @cli_util.wrap_exceptions
 def update_vb_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, network_endpoint_details, if_match):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints or network_endpoint_details:
@@ -1077,7 +1076,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @cli_util.wrap_exceptions
 def update_vb_instance_update_public_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints:
@@ -1186,7 +1185,7 @@ This option is a JSON list with items of type UpdateCustomEndpointDetails.  For 
 @cli_util.wrap_exceptions
 def update_vb_instance_update_private_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match, network_endpoint_details_subnet_id, network_endpoint_details_network_security_group_ids):
 
-    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+    if isinstance(vb_instance_id, str) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints:

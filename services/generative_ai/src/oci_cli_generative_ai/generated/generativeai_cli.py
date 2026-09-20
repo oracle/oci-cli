@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -303,7 +302,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def add_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact, hosted_deployment_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -378,7 +377,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def add_artifact_create_single_docker_artifact_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, freeform_tags, defined_tags, if_match, artifact_is_vulnerability_scan_required, artifact_container_uri, artifact_tag):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -456,7 +455,7 @@ def add_artifact_create_single_docker_artifact_details(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def cancel_vector_store_connector_file_sync(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_file_sync_id, if_match):
 
-    if isinstance(vector_store_connector_file_sync_id, six.string_types) and len(vector_store_connector_file_sync_id.strip()) == 0:
+    if isinstance(vector_store_connector_file_sync_id, str) and len(vector_store_connector_file_sync_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-file-sync-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -509,7 +508,7 @@ def cancel_vector_store_connector_file_sync(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_api_key_compartment(ctx, from_json, api_key_id, compartment_id, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -540,7 +539,7 @@ def change_api_key_compartment(ctx, from_json, api_key_id, compartment_id, if_ma
 @cli_util.wrap_exceptions
 def change_dedicated_ai_cluster_compartment(ctx, from_json, dedicated_ai_cluster_id, compartment_id, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -571,7 +570,7 @@ def change_dedicated_ai_cluster_compartment(ctx, from_json, dedicated_ai_cluster
 @cli_util.wrap_exceptions
 def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -605,7 +604,7 @@ def change_endpoint_compartment(ctx, from_json, endpoint_id, compartment_id, if_
 @cli_util.wrap_exceptions
 def change_generative_ai_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
+    if isinstance(generative_ai_private_endpoint_id, str) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -663,7 +662,7 @@ def change_generative_ai_private_endpoint_compartment(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def change_generative_ai_project_compartment(ctx, from_json, generative_ai_project_id, compartment_id, if_match):
 
-    if isinstance(generative_ai_project_id, six.string_types) and len(generative_ai_project_id.strip()) == 0:
+    if isinstance(generative_ai_project_id, str) and len(generative_ai_project_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -694,7 +693,7 @@ def change_generative_ai_project_compartment(ctx, from_json, generative_ai_proje
 @cli_util.wrap_exceptions
 def change_hosted_application_compartment(ctx, from_json, hosted_application_id, compartment_id, if_match):
 
-    if isinstance(hosted_application_id, six.string_types) and len(hosted_application_id.strip()) == 0:
+    if isinstance(hosted_application_id, str) and len(hosted_application_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -725,7 +724,7 @@ def change_hosted_application_compartment(ctx, from_json, hosted_application_id,
 @cli_util.wrap_exceptions
 def change_hosted_application_iam_compartment(ctx, from_json, hosted_application_iam_id, compartment_id, if_match):
 
-    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+    if isinstance(hosted_application_iam_id, str) and len(hosted_application_iam_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -756,7 +755,7 @@ def change_hosted_application_iam_compartment(ctx, from_json, hosted_application
 @cli_util.wrap_exceptions
 def change_hosted_application_storage_compartment(ctx, from_json, hosted_application_storage_id, compartment_id, if_match):
 
-    if isinstance(hosted_application_storage_id, six.string_types) and len(hosted_application_storage_id.strip()) == 0:
+    if isinstance(hosted_application_storage_id, str) and len(hosted_application_storage_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-storage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -787,7 +786,7 @@ def change_hosted_application_storage_compartment(ctx, from_json, hosted_applica
 @cli_util.wrap_exceptions
 def change_imported_model_compartment(ctx, from_json, imported_model_id, compartment_id, if_match):
 
-    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+    if isinstance(imported_model_id, str) and len(imported_model_id.strip()) == 0:
         raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -818,7 +817,7 @@ def change_imported_model_compartment(ctx, from_json, imported_model_id, compart
 @cli_util.wrap_exceptions
 def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -852,7 +851,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 @cli_util.wrap_exceptions
 def change_semantic_store_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, compartment_id, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3295,7 +3294,7 @@ def create_vector_store_connector_file_sync(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def delete_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3361,7 +3360,7 @@ You can only delete clusters without attached resources. Before you delete a hos
 @cli_util.wrap_exceptions
 def delete_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_ai_cluster_id, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3417,7 +3416,7 @@ def delete_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3473,7 +3472,7 @@ def delete_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, if_match):
 
-    if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
+    if isinstance(generative_ai_private_endpoint_id, str) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3529,7 +3528,7 @@ def delete_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def delete_generative_ai_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_project_id, if_match):
 
-    if isinstance(generative_ai_project_id, six.string_types) and len(generative_ai_project_id.strip()) == 0:
+    if isinstance(generative_ai_project_id, str) and len(generative_ai_project_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3585,7 +3584,7 @@ def delete_generative_ai_project(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, if_match):
 
-    if isinstance(hosted_application_id, six.string_types) and len(hosted_application_id.strip()) == 0:
+    if isinstance(hosted_application_id, str) and len(hosted_application_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3641,7 +3640,7 @@ def delete_hosted_application(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_hosted_application_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_iam_id, if_match):
 
-    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+    if isinstance(hosted_application_iam_id, str) and len(hosted_application_iam_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3697,7 +3696,7 @@ def delete_hosted_application_iam(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_hosted_application_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_storage_id, if_match):
 
-    if isinstance(hosted_application_storage_id, six.string_types) and len(hosted_application_storage_id.strip()) == 0:
+    if isinstance(hosted_application_storage_id, str) and len(hosted_application_storage_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-storage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3753,7 +3752,7 @@ def delete_hosted_application_storage(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, if_match):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3810,10 +3809,10 @@ def delete_hosted_deployment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_hosted_deployment_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, artifact_id, if_match):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3870,7 +3869,7 @@ def delete_hosted_deployment_artifact(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, imported_model_id, if_match):
 
-    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+    if isinstance(imported_model_id, str) and len(imported_model_id.strip()) == 0:
         raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3926,7 +3925,7 @@ def delete_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3982,7 +3981,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_semantic_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4038,7 +4037,7 @@ def delete_semantic_store(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_vector_store_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_id, if_match):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4089,7 +4088,7 @@ def delete_vector_store_connector(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def get_api_key(ctx, from_json, api_key_id):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4111,7 +4110,7 @@ def get_api_key(ctx, from_json, api_key_id):
 @cli_util.wrap_exceptions
 def get_dedicated_ai_cluster(ctx, from_json, dedicated_ai_cluster_id):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4133,7 +4132,7 @@ def get_dedicated_ai_cluster(ctx, from_json, dedicated_ai_cluster_id):
 @cli_util.wrap_exceptions
 def get_endpoint(ctx, from_json, endpoint_id):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4155,7 +4154,7 @@ def get_endpoint(ctx, from_json, endpoint_id):
 @cli_util.wrap_exceptions
 def get_generative_ai_private_endpoint(ctx, from_json, generative_ai_private_endpoint_id):
 
-    if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
+    if isinstance(generative_ai_private_endpoint_id, str) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4177,7 +4176,7 @@ def get_generative_ai_private_endpoint(ctx, from_json, generative_ai_private_end
 @cli_util.wrap_exceptions
 def get_generative_ai_project(ctx, from_json, generative_ai_project_id):
 
-    if isinstance(generative_ai_project_id, six.string_types) and len(generative_ai_project_id.strip()) == 0:
+    if isinstance(generative_ai_project_id, str) and len(generative_ai_project_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4199,7 +4198,7 @@ def get_generative_ai_project(ctx, from_json, generative_ai_project_id):
 @cli_util.wrap_exceptions
 def get_hosted_application(ctx, from_json, hosted_application_id):
 
-    if isinstance(hosted_application_id, six.string_types) and len(hosted_application_id.strip()) == 0:
+    if isinstance(hosted_application_id, str) and len(hosted_application_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4221,7 +4220,7 @@ def get_hosted_application(ctx, from_json, hosted_application_id):
 @cli_util.wrap_exceptions
 def get_hosted_application_iam(ctx, from_json, hosted_application_iam_id):
 
-    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+    if isinstance(hosted_application_iam_id, str) and len(hosted_application_iam_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4243,7 +4242,7 @@ def get_hosted_application_iam(ctx, from_json, hosted_application_iam_id):
 @cli_util.wrap_exceptions
 def get_hosted_application_storage(ctx, from_json, hosted_application_storage_id):
 
-    if isinstance(hosted_application_storage_id, six.string_types) and len(hosted_application_storage_id.strip()) == 0:
+    if isinstance(hosted_application_storage_id, str) and len(hosted_application_storage_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-storage-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4265,7 +4264,7 @@ def get_hosted_application_storage(ctx, from_json, hosted_application_storage_id
 @cli_util.wrap_exceptions
 def get_hosted_deployment(ctx, from_json, hosted_deployment_id):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4287,7 +4286,7 @@ def get_hosted_deployment(ctx, from_json, hosted_deployment_id):
 @cli_util.wrap_exceptions
 def get_imported_model(ctx, from_json, imported_model_id):
 
-    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+    if isinstance(imported_model_id, str) and len(imported_model_id.strip()) == 0:
         raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4309,7 +4308,7 @@ def get_imported_model(ctx, from_json, imported_model_id):
 @cli_util.wrap_exceptions
 def get_model(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4331,7 +4330,7 @@ def get_model(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_semantic_store(ctx, from_json, semantic_store_id):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4353,7 +4352,7 @@ def get_semantic_store(ctx, from_json, semantic_store_id):
 @cli_util.wrap_exceptions
 def get_vector_store_connector(ctx, from_json, vector_store_connector_id):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4375,7 +4374,7 @@ def get_vector_store_connector(ctx, from_json, vector_store_connector_id):
 @cli_util.wrap_exceptions
 def get_vector_store_connector_file_sync(ctx, from_json, vector_store_connector_file_sync_id):
 
-    if isinstance(vector_store_connector_file_sync_id, six.string_types) and len(vector_store_connector_file_sync_id.strip()) == 0:
+    if isinstance(vector_store_connector_file_sync_id, str) and len(vector_store_connector_file_sync_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-file-sync-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4397,7 +4396,7 @@ def get_vector_store_connector_file_sync(ctx, from_json, vector_store_connector_
 @cli_util.wrap_exceptions
 def get_vector_store_connector_stats(ctx, from_json, vector_store_connector_id):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4419,7 +4418,7 @@ def get_vector_store_connector_stats(ctx, from_json, vector_store_connector_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5233,7 +5232,7 @@ def list_vector_store_connector_file_sync_ingestion_logs(ctx, from_json, all_pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vector_store_connector_file_sync_id, six.string_types) and len(vector_store_connector_file_sync_id.strip()) == 0:
+    if isinstance(vector_store_connector_file_sync_id, str) and len(vector_store_connector_file_sync_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-file-sync-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5359,7 +5358,7 @@ def list_vector_store_connector_ingestion_logs(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5484,7 +5483,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5541,7 +5540,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5663,7 +5662,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def renew_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5733,7 +5732,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def set_api_key_state(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, key_name, state, freeform_tags, defined_tags, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5805,7 +5804,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_api_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, api_key_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5886,7 +5885,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dedicated_ai_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_ai_cluster_id, display_name, description, unit_count, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dedicated_ai_cluster_id, six.string_types) and len(dedicated_ai_cluster_id.strip()) == 0:
+    if isinstance(dedicated_ai_cluster_id, str) and len(dedicated_ai_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-ai-cluster-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5977,7 +5976,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, description, generative_ai_private_endpoint_id, content_moderation_config, prompt_injection_config, pii_detection_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
+    if isinstance(endpoint_id, str) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
     if not force:
         if content_moderation_config or prompt_injection_config or pii_detection_config or freeform_tags or defined_tags:
@@ -6077,7 +6076,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_private_endpoint_id, description, display_name, dns_prefix, nsg_ids, is_allow_on_demand, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(generative_ai_private_endpoint_id, six.string_types) and len(generative_ai_private_endpoint_id.strip()) == 0:
+    if isinstance(generative_ai_private_endpoint_id, str) and len(generative_ai_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags or security_attributes:
@@ -6176,7 +6175,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_generative_ai_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_project_id, description, display_name, conversation_config, long_term_memory_config, short_term_memory_optimization_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(generative_ai_project_id, six.string_types) and len(generative_ai_project_id.strip()) == 0:
+    if isinstance(generative_ai_project_id, str) and len(generative_ai_project_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-project-id cannot be whitespace or empty string')
     if not force:
         if conversation_config or long_term_memory_config or short_term_memory_optimization_config or freeform_tags or defined_tags:
@@ -6274,7 +6273,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_hosted_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_id, inbound_auth_config, display_name, description, scaling_config, environment_variables, freeform_tags, defined_tags, if_match):
 
-    if isinstance(hosted_application_id, six.string_types) and len(hosted_application_id.strip()) == 0:
+    if isinstance(hosted_application_id, str) and len(hosted_application_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-id cannot be whitespace or empty string')
     if not force:
         if inbound_auth_config or scaling_config or environment_variables or freeform_tags or defined_tags:
@@ -6371,7 +6370,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_hosted_application_iam(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_application_iam_id, display_name, description, scaling_config, environment_variables, freeform_tags, defined_tags, if_match):
 
-    if isinstance(hosted_application_iam_id, six.string_types) and len(hosted_application_iam_id.strip()) == 0:
+    if isinstance(hosted_application_iam_id, str) and len(hosted_application_iam_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-application-iam-id cannot be whitespace or empty string')
     if not force:
         if scaling_config or environment_variables or freeform_tags or defined_tags:
@@ -6460,7 +6459,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_hosted_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hosted_deployment_id, active_artifact, freeform_tags, defined_tags, if_match):
 
-    if isinstance(hosted_deployment_id, six.string_types) and len(hosted_deployment_id.strip()) == 0:
+    if isinstance(hosted_deployment_id, str) and len(hosted_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --hosted-deployment-id cannot be whitespace or empty string')
     if not force:
         if active_artifact or freeform_tags or defined_tags:
@@ -6541,7 +6540,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_imported_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, imported_model_id, display_name, description, vendor, version_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+    if isinstance(imported_model_id, str) and len(imported_model_id.strip()) == 0:
         raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6633,7 +6632,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, vendor, version_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6723,7 +6722,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, description, display_name, model_selection, is_user_defined_semantics_enabled, refresh_schedule, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if model_selection or refresh_schedule or schemas or freeform_tags or defined_tags:
@@ -6818,7 +6817,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_default_semantic_store_model_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, description, display_name, is_user_defined_semantics_enabled, refresh_schedule, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if refresh_schedule or schemas or freeform_tags or defined_tags:
@@ -6914,7 +6913,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_custom_semantic_store_model_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, model_selection_model_id, description, display_name, is_user_defined_semantics_enabled, refresh_schedule, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if refresh_schedule or schemas or freeform_tags or defined_tags:
@@ -7010,7 +7009,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_refresh_schedule_on_create_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, description, display_name, model_selection, is_user_defined_semantics_enabled, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if model_selection or schemas or freeform_tags or defined_tags:
@@ -7105,7 +7104,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_refresh_schedule_none_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, description, display_name, model_selection, is_user_defined_semantics_enabled, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if model_selection or schemas or freeform_tags or defined_tags:
@@ -7201,7 +7200,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_refresh_schedule_interval_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, refresh_schedule_value, description, display_name, model_selection, is_user_defined_semantics_enabled, schemas, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if model_selection or schemas or freeform_tags or defined_tags:
@@ -7298,7 +7297,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_semantic_store_create_schemas_database_tools_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, schemas_schemas, description, display_name, model_selection, is_user_defined_semantics_enabled, refresh_schedule, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
     if not force:
         if model_selection or refresh_schedule or freeform_tags or defined_tags:
@@ -7393,7 +7392,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_vector_store_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_id, description, display_name, schedule_config, configuration, freeform_tags, defined_tags, if_match):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
     if not force:
         if schedule_config or configuration or freeform_tags or defined_tags:
@@ -7488,7 +7487,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_vector_store_connector_schedule_cron_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_id, schedule_config_cron_expression, description, display_name, configuration, freeform_tags, defined_tags, if_match, schedule_config_state, schedule_config_time_start, schedule_config_time_end):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
     if not force:
         if configuration or freeform_tags or defined_tags:
@@ -7594,7 +7593,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_vector_store_connector_schedule_interval_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_id, schedule_config_frequency, schedule_config_interval, description, display_name, configuration, freeform_tags, defined_tags, if_match, schedule_config_state, schedule_config_time_start, schedule_config_time_end):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
     if not force:
         if configuration or freeform_tags or defined_tags:
@@ -7697,7 +7696,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_vector_store_connector_oci_object_storage_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vector_store_connector_id, configuration_storage_config_list, description, display_name, schedule_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(vector_store_connector_id, six.string_types) and len(vector_store_connector_id.strip()) == 0:
+    if isinstance(vector_store_connector_id, str) and len(vector_store_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --vector-store-connector-id cannot be whitespace or empty string')
     if not force:
         if schedule_config or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -294,7 +293,7 @@ def create_product_license(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_license_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, license_record_id, if_match):
 
-    if isinstance(license_record_id, six.string_types) and len(license_record_id.strip()) == 0:
+    if isinstance(license_record_id, str) and len(license_record_id.strip()) == 0:
         raise click.UsageError('Parameter --license-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -358,7 +357,7 @@ def delete_license_record(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_product_license(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, product_license_id, if_match):
 
-    if isinstance(product_license_id, six.string_types) and len(product_license_id.strip()) == 0:
+    if isinstance(product_license_id, str) and len(product_license_id.strip()) == 0:
         raise click.UsageError('Parameter --product-license-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -475,7 +474,7 @@ def get_license_metric(ctx, from_json, compartment_id, is_compartment_id_in_subt
 @cli_util.wrap_exceptions
 def get_license_record(ctx, from_json, license_record_id):
 
-    if isinstance(license_record_id, six.string_types) and len(license_record_id.strip()) == 0:
+    if isinstance(license_record_id, str) and len(license_record_id.strip()) == 0:
         raise click.UsageError('Parameter --license-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -497,7 +496,7 @@ def get_license_record(ctx, from_json, license_record_id):
 @cli_util.wrap_exceptions
 def get_product_license(ctx, from_json, product_license_id):
 
-    if isinstance(product_license_id, six.string_types) and len(product_license_id.strip()) == 0:
+    if isinstance(product_license_id, str) and len(product_license_id.strip()) == 0:
         raise click.UsageError('Parameter --product-license-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -875,7 +874,7 @@ def update_configuration(ctx, from_json, force, compartment_id, email_ids, if_ma
 @cli_util.wrap_exceptions
 def update_license_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, license_record_id, display_name, is_perpetual, is_unlimited, expiration_date, support_end_date, license_count, product_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(license_record_id, six.string_types) and len(license_record_id.strip()) == 0:
+    if isinstance(license_record_id, str) and len(license_record_id.strip()) == 0:
         raise click.UsageError('Parameter --license-record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -959,7 +958,7 @@ def update_license_record(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_product_license(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, product_license_id, images, freeform_tags, defined_tags, if_match):
 
-    if isinstance(product_license_id, six.string_types) and len(product_license_id.strip()) == 0:
+    if isinstance(product_license_id, str) and len(product_license_id.strip()) == 0:
         raise click.UsageError('Parameter --product-license-id cannot be whitespace or empty string')
     if not force:
         if images or freeform_tags or defined_tags:

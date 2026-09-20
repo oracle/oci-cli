@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -86,7 +85,7 @@ cluster_health_root_group.add_command(diagnosis_results_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -115,7 +114,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_diagnosis_store_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, diagnosis_store_id, compartment_id, if_match):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -253,7 +252,7 @@ def create_diagnosis_store(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_diagnosis_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, diagnosis_store_id, if_match):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -304,7 +303,7 @@ def delete_diagnosis_store(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_diagnosis_store(ctx, from_json, diagnosis_store_id):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -326,7 +325,7 @@ def get_diagnosis_store(ctx, from_json, diagnosis_store_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -419,7 +418,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -476,7 +475,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -587,7 +586,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def query_diagnosis_by_health_check_key(ctx, from_json, diagnosis_store_id, health_check_key):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -620,7 +619,7 @@ def query_diagnosis_by_health_check_key(ctx, from_json, diagnosis_store_id, heal
 @cli_util.wrap_exceptions
 def query_diagnosis_summary(ctx, from_json, diagnosis_store_id, instance_ids, test_type, time_test_run_interval_start, time_test_run_interval_end, limit, page):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -661,7 +660,7 @@ def query_diagnosis_summary(ctx, from_json, diagnosis_store_id, instance_ids, te
 @cli_util.wrap_exceptions
 def request_diagnosis(ctx, from_json, diagnosis_store_id, health_check_keys):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -702,7 +701,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_diagnosis_store(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, diagnosis_store_id, display_name, object_store_namespace, object_store_bucket, freeform_tags, defined_tags, if_match):
 
-    if isinstance(diagnosis_store_id, six.string_types) and len(diagnosis_store_id.strip()) == 0:
+    if isinstance(diagnosis_store_id, str) and len(diagnosis_store_id.strip()) == 0:
         raise click.UsageError('Parameter --diagnosis-store-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

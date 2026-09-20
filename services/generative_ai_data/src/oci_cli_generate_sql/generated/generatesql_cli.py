@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ The GetGenerateSqlFromNlJob endpoint is the source of truth for final job state 
 @cli_util.wrap_exceptions
 def generate_sql_from_nl(ctx, from_json, input_natural_language_query, semantic_store_id, description, display_name, model_id, completion_mode, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -105,10 +104,10 @@ def generate_sql_from_nl(ctx, from_json, input_natural_language_query, semantic_
 @cli_util.wrap_exceptions
 def get_generate_sql_from_nl_job(ctx, from_json, semantic_store_id, generate_sql_from_nl_job_id):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
-    if isinstance(generate_sql_from_nl_job_id, six.string_types) and len(generate_sql_from_nl_job_id.strip()) == 0:
+    if isinstance(generate_sql_from_nl_job_id, str) and len(generate_sql_from_nl_job_id.strip()) == 0:
         raise click.UsageError('Parameter --generate-sql-from-nl-job-id cannot be whitespace or empty string')
 
     kwargs = {}

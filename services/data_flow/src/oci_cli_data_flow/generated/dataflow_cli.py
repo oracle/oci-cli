@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -121,7 +120,7 @@ data_flow_root_group.add_command(sql_endpoint_group)
 @cli_util.wrap_exceptions
 def cascading_delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -174,7 +173,7 @@ def cascading_delete_application(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_application_compartment(ctx, from_json, application_id, compartment_id, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -205,7 +204,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 @cli_util.wrap_exceptions
 def change_pool_compartment(ctx, from_json, pool_id, compartment_id, if_match):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -239,7 +238,7 @@ def change_pool_compartment(ctx, from_json, pool_id, compartment_id, if_match):
 @cli_util.wrap_exceptions
 def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -297,7 +296,7 @@ def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -331,7 +330,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
 @cli_util.wrap_exceptions
 def change_sql_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, compartment_id, if_match):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -969,7 +968,7 @@ def create_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def create_statement(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, code, run_id):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1024,7 +1023,7 @@ def create_statement(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1088,7 +1087,7 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1152,7 +1151,7 @@ def delete_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1208,7 +1207,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, run_id, if_match):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1272,7 +1271,7 @@ def delete_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, if_match):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1326,10 +1325,10 @@ def delete_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_statement(ctx, from_json, run_id, statement_id, if_match):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
-    if isinstance(statement_id, six.string_types) and len(statement_id.strip()) == 0:
+    if isinstance(statement_id, str) and len(statement_id.strip()) == 0:
         raise click.UsageError('Parameter --statement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1354,7 +1353,7 @@ def delete_statement(ctx, from_json, run_id, statement_id, if_match):
 @cli_util.wrap_exceptions
 def get_application(ctx, from_json, application_id):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1376,7 +1375,7 @@ def get_application(ctx, from_json, application_id):
 @cli_util.wrap_exceptions
 def get_pool(ctx, from_json, pool_id):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1398,7 +1397,7 @@ def get_pool(ctx, from_json, pool_id):
 @cli_util.wrap_exceptions
 def get_private_endpoint(ctx, from_json, private_endpoint_id):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1420,7 +1419,7 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_run(ctx, from_json, run_id):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1444,10 +1443,10 @@ def get_run(ctx, from_json, run_id):
 @cli_util.wrap_exceptions
 def get_run_log(ctx, from_json, file, run_id, name):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1492,7 +1491,7 @@ def get_run_log(ctx, from_json, file, run_id, name):
 @cli_util.wrap_exceptions
 def get_sql_endpoint(ctx, from_json, sql_endpoint_id):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1515,10 +1514,10 @@ def get_sql_endpoint(ctx, from_json, sql_endpoint_id):
 @cli_util.wrap_exceptions
 def get_statement(ctx, from_json, run_id, statement_id):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
-    if isinstance(statement_id, six.string_types) and len(statement_id.strip()) == 0:
+    if isinstance(statement_id, str) and len(statement_id.strip()) == 0:
         raise click.UsageError('Parameter --statement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1541,7 +1540,7 @@ def get_statement(ctx, from_json, run_id, statement_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1768,7 +1767,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1959,7 +1958,7 @@ def list_statements(ctx, from_json, all_pages, page_size, run_id, lifecycle_stat
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2016,7 +2015,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2067,7 +2066,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2163,7 +2162,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
 @cli_util.wrap_exceptions
 def start_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2218,7 +2217,7 @@ def start_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def start_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, if_match):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2273,7 +2272,7 @@ def start_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, if_match):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2328,7 +2327,7 @@ def stop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @cli_util.wrap_exceptions
 def stop_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, if_match):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2412,7 +2411,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @cli_util.wrap_exceptions
 def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, application_log_config, archive_uri, arguments, configuration, defined_tags, description, display_name, driver_shape, driver_shape_config, execute, executor_shape, executor_shape_config, freeform_tags, logs_bucket_uri, metastore_id, num_executors, parameters, pool_id, private_endpoint_id, warehouse_bucket_uri, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
     if not force:
         if application_log_config or arguments or configuration or defined_tags or driver_shape_config or executor_shape_config or freeform_tags or parameters:
@@ -2561,7 +2560,7 @@ This option is a JSON list with items of type PoolSchedule.  For documentation o
 @cli_util.wrap_exceptions
 def update_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pool_id, display_name, description, configurations, schedules, idle_timeout_in_minutes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(pool_id, six.string_types) and len(pool_id.strip()) == 0:
+    if isinstance(pool_id, str) and len(pool_id.strip()) == 0:
         raise click.UsageError('Parameter --pool-id cannot be whitespace or empty string')
     if not force:
         if configurations or schedules or freeform_tags or defined_tags:
@@ -2659,7 +2658,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_endpoint_id, defined_tags, description, display_name, dns_zones, freeform_tags, max_host_count, nsg_ids, scan_details, security_attributes, if_match):
 
-    if isinstance(private_endpoint_id, six.string_types) and len(private_endpoint_id.strip()) == 0:
+    if isinstance(private_endpoint_id, str) and len(private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or dns_zones or freeform_tags or nsg_ids or scan_details or security_attributes:
@@ -2754,7 +2753,7 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, run_id, defined_tags, freeform_tags, max_duration_in_minutes, idle_timeout_in_minutes, if_match):
 
-    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+    if isinstance(run_id, str) and len(run_id.strip()) == 0:
         raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -2844,7 +2843,7 @@ def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_sql_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, defined_tags, freeform_tags, display_name, description, driver_shape, driver_shape_config, executor_shape, executor_shape_config, min_executor_count, max_executor_count, metastore_id, lake_id, log_group_id, log_compartment_id, log_display_name, log_retention_duration, log_operation, spark_advanced_configurations, if_match):
 
-    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+    if isinstance(sql_endpoint_id, str) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or driver_shape_config or executor_shape_config or spark_advanced_configurations:

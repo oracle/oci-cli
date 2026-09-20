@@ -10,7 +10,6 @@ import math
 import sys
 import time
 import click
-import six
 
 import oci
 from oci.object_storage import UploadManager, MultipartObjectAssembler
@@ -53,7 +52,7 @@ class RoverDiagAPI:
 
 
 def get_compute_image_helper(ctx, image_id):
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
     ctx_endpoint = ctx.obj['endpoint']
     ctx.obj['endpoint'] = None
@@ -71,7 +70,7 @@ def get_compute_image_helper(ctx, image_id):
 
 
 def export_compute_image_helper(ctx, image_id, destinationUri):
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
     export_details = {
         'destinationType': 'objectStorageUri',
@@ -218,7 +217,7 @@ def create_master_key_policy_rover_resource(resource_name, ctx, **kwargs):
 
 def setup_master_key_policy(ctx, **kwargs):
     # Validate master-key-id
-    if isinstance(kwargs['master_key_id'], six.string_types) and len(kwargs['master_key_id'].strip()) == 0:
+    if isinstance(kwargs['master_key_id'], str) and len(kwargs['master_key_id'].strip()) == 0:
         raise click.UsageError('Parameter master_key_id cannot be whitespace or empty string')
     config = oci.config.from_file(file_location=ctx.obj['config_file'], profile_name=ctx.obj['profile'])
     root_compartment = config['tenancy']
@@ -274,11 +273,11 @@ def setup_master_key_policy(ctx, **kwargs):
 
 def validate_policy_parameters(**kwargs):
     if 'policy_compartment_id' in kwargs and kwargs['policy_compartment_id']:
-        if isinstance(kwargs['policy_compartment_id'], six.string_types) and \
+        if isinstance(kwargs['policy_compartment_id'], str) and \
                 len(kwargs['policy_compartment_id'].strip()) == 0:
             raise click.UsageError('Parameter policy-compartment-id cannot be whitespace or empty string')
     if 'policy_name' in kwargs and kwargs['policy_name']:
-        if isinstance(kwargs['policy_name'], six.string_types) and len(kwargs['policy_name'].strip()) == 0:
+        if isinstance(kwargs['policy_name'], str) and len(kwargs['policy_name'].strip()) == 0:
             raise click.UsageError('Policy name cannot be whitespace or empty string')
 
 

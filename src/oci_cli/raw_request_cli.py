@@ -5,7 +5,6 @@
 import click
 import json
 import oci
-import six.moves
 
 from oci_cli.cli_root import cli
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ def _make_raw_request(ctx, target_uri, http_method, request_body, request_header
         raise click.UsageError('The table output format is not supported with this command')
 
     if ctx.obj['debug']:
-        six.moves.http_client.HTTPConnection.debuglevel = 1
+        http.client.HTTPConnection.debuglevel = 1
 
     jmespath_expression = cli_util.get_jmespath_expression_from_context(ctx)
 

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -122,7 +121,7 @@ datacc_root_group.add_command(vm_cluster_network_summary_group)
 @cli_util.wrap_exceptions
 def activate_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, activation_zip_file, infrastructure_id, if_match):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -183,7 +182,7 @@ def activate_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def change_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, infrastructure_id, compartment_id, if_match):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -244,7 +243,7 @@ def change_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_vm_cluster_network_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_network_id, compartment_id, if_match):
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -305,7 +304,7 @@ def change_vm_cluster_network_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_vm_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, compartment_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -748,7 +747,7 @@ def create_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, infrastructure_id, if_match, is_force_delete):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -806,7 +805,7 @@ def delete_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_network_id, if_match):
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -862,7 +861,7 @@ def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -914,7 +913,7 @@ def delete_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def download_infrastructure_config_file(ctx, from_json, file, infrastructure_id):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -959,7 +958,7 @@ def download_infrastructure_config_file(ctx, from_json, file, infrastructure_id)
 @cli_util.wrap_exceptions
 def download_infrastructure_validation_script(ctx, from_json, file, infrastructure_id):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1093,7 +1092,7 @@ def generate_recommended_vm_cluster_network(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def get_infrastructure(ctx, from_json, infrastructure_id):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1115,7 +1114,7 @@ def get_infrastructure(ctx, from_json, infrastructure_id):
 @cli_util.wrap_exceptions
 def get_infrastructure_scale_option(ctx, from_json, infrastructure_id):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1137,7 +1136,7 @@ def get_infrastructure_scale_option(ctx, from_json, infrastructure_id):
 @cli_util.wrap_exceptions
 def get_maintenance_execution(ctx, from_json, maintenance_execution_id):
 
-    if isinstance(maintenance_execution_id, six.string_types) and len(maintenance_execution_id.strip()) == 0:
+    if isinstance(maintenance_execution_id, str) and len(maintenance_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1159,7 +1158,7 @@ def get_maintenance_execution(ctx, from_json, maintenance_execution_id):
 @cli_util.wrap_exceptions
 def get_maintenance_run(ctx, from_json, maintenance_run_id):
 
-    if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
+    if isinstance(maintenance_run_id, str) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1181,7 +1180,7 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
 @cli_util.wrap_exceptions
 def get_vm_cluster_network(ctx, from_json, vm_cluster_network_id):
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1203,7 +1202,7 @@ def get_vm_cluster_network(ctx, from_json, vm_cluster_network_id):
 @cli_util.wrap_exceptions
 def get_vm_instance(ctx, from_json, vm_instance_id):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1225,7 +1224,7 @@ def get_vm_instance(ctx, from_json, vm_instance_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1615,7 +1614,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1669,7 +1668,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1770,7 +1769,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def migrate_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1827,7 +1826,7 @@ def migrate_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def reschedule_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, time_scheduled, reason, if_match):
 
-    if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
+    if isinstance(maintenance_run_id, str) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1890,7 +1889,7 @@ def reschedule_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def restart_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1946,7 +1945,7 @@ def restart_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def scale_infrastructure_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, infrastructure_id, ssd_configuration_requested, if_match):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2010,7 +2009,7 @@ def scale_infrastructure_storage(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def scale_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, memory_size_in_gbs, cpus_enabled, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2075,7 +2074,7 @@ def scale_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def start_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2130,7 +2129,7 @@ def start_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def stop_vm_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2213,7 +2212,7 @@ This option is a JSON list with items of type InfrastructureContact.  For docume
 @cli_util.wrap_exceptions
 def update_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, infrastructure_id, display_name, description, system_model, shape, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_networkcidr, data_disk_percentage, contacts, dns_servers, ntp_servers, client_bond_mode, backup_bond_mode, cps_bond_mode, client_bond_iface, backup_bond_iface, cps_bond_iface, acfs_size_in_gbs, corporate_proxy, vlan_id, maintenance_window, defined_tags, freeform_tags, if_match):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
     if not force:
         if contacts or dns_servers or ntp_servers or maintenance_window or defined_tags or freeform_tags:
@@ -2357,7 +2356,7 @@ def update_infrastructure(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_maintenance_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patching_mode, custom_action_timeout_in_mins, maintenance_run_id, is_custom_action_timeout_enabled, defined_tags, freeform_tags, if_match):
 
-    if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
+    if isinstance(maintenance_run_id, str) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -2445,7 +2444,7 @@ This option is a JSON list with items of type VmNetworkDetails.  For documentati
 @cli_util.wrap_exceptions
 def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_network_id, display_name, scans, listener_port, listener_port_ssl, dns_servers, ntp_servers, vm_networks, freeform_tags, defined_tags, if_match):
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
     if not force:
         if scans or dns_servers or ntp_servers or vm_networks or freeform_tags or defined_tags:
@@ -2541,7 +2540,7 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_vm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_instance_id, description, display_name, data_storage_size_in_gbs, defined_tags, freeform_tags, if_match):
 
-    if isinstance(vm_instance_id, six.string_types) and len(vm_instance_id.strip()) == 0:
+    if isinstance(vm_instance_id, str) and len(vm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -2620,7 +2619,7 @@ def update_vm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def validate_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, validation_zip_file, infrastructure_id, if_match):
 
-    if isinstance(infrastructure_id, six.string_types) and len(infrastructure_id.strip()) == 0:
+    if isinstance(infrastructure_id, str) and len(infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2680,7 +2679,7 @@ def validate_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def validate_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_network_id, if_match):
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}

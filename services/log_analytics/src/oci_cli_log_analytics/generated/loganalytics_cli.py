@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -267,10 +266,10 @@ log_analytics_root_group.add_command(binary_group)
 @cli_util.wrap_exceptions
 def add_entity_association(ctx, from_json, namespace_name, log_analytics_entity_id, association_entities, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -304,10 +303,10 @@ This option is a JSON list with items of type EventType.  For documentation on E
 @cli_util.wrap_exceptions
 def add_source_event_types(ctx, from_json, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -346,10 +345,10 @@ def add_source_event_types(ctx, from_json, namespace_name, source_name, items):
 @cli_util.wrap_exceptions
 def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, append_lookup_file_body, is_force, char_encoding, if_match, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -418,7 +417,7 @@ def append_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def assign_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, key_id, key_type, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -481,7 +480,7 @@ def assign_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def batch_get_basic_info(ctx, from_json, namespace_name, is_include_deleted, label_names, limit, page, sort_order, basic_label_sort_by):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -522,10 +521,10 @@ def batch_get_basic_info(ctx, from_json, namespace_name, is_include_deleted, lab
 @cli_util.wrap_exceptions
 def cancel_query_work_request(ctx, from_json, namespace_name, work_request_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -553,10 +552,10 @@ def cancel_query_work_request(ctx, from_json, namespace_name, work_request_id, i
 @cli_util.wrap_exceptions
 def change_ingest_time_rule_compartment(ctx, from_json, namespace_name, ingest_time_rule_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -589,10 +588,10 @@ def change_ingest_time_rule_compartment(ctx, from_json, namespace_name, ingest_t
 @cli_util.wrap_exceptions
 def change_log_analytics_em_bridge_compartment(ctx, from_json, namespace_name, log_analytics_em_bridge_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_em_bridge_id, six.string_types) and len(log_analytics_em_bridge_id.strip()) == 0:
+    if isinstance(log_analytics_em_bridge_id, str) and len(log_analytics_em_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-em-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -625,10 +624,10 @@ def change_log_analytics_em_bridge_compartment(ctx, from_json, namespace_name, l
 @cli_util.wrap_exceptions
 def change_log_analytics_entity_compartment(ctx, from_json, namespace_name, log_analytics_entity_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -661,10 +660,10 @@ def change_log_analytics_entity_compartment(ctx, from_json, namespace_name, log_
 @cli_util.wrap_exceptions
 def change_log_analytics_log_group_compartment(ctx, from_json, namespace_name, log_analytics_log_group_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_log_group_id, six.string_types) and len(log_analytics_log_group_id.strip()) == 0:
+    if isinstance(log_analytics_log_group_id, str) and len(log_analytics_log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -697,10 +696,10 @@ def change_log_analytics_log_group_compartment(ctx, from_json, namespace_name, l
 @cli_util.wrap_exceptions
 def change_log_analytics_object_collection_rule_compartment(ctx, from_json, namespace_name, log_analytics_object_collection_rule_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_object_collection_rule_id, six.string_types) and len(log_analytics_object_collection_rule_id.strip()) == 0:
+    if isinstance(log_analytics_object_collection_rule_id, str) and len(log_analytics_object_collection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-object-collection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -733,10 +732,10 @@ def change_log_analytics_object_collection_rule_compartment(ctx, from_json, name
 @cli_util.wrap_exceptions
 def change_lookup_compartment(ctx, from_json, namespace_name, lookup_name, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -769,10 +768,10 @@ def change_lookup_compartment(ctx, from_json, namespace_name, lookup_name, compa
 @cli_util.wrap_exceptions
 def change_scheduled_task_compartment(ctx, from_json, namespace_name, scheduled_task_id, compartment_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -805,10 +804,10 @@ def change_scheduled_task_compartment(ctx, from_json, namespace_name, scheduled_
 @cli_util.wrap_exceptions
 def clean(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_end):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -837,7 +836,7 @@ def clean(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_en
 @cli_util.wrap_exceptions
 def compare_content(ctx, from_json, namespace_name, content1, content2):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -879,7 +878,7 @@ def compare_content(ctx, from_json, namespace_name, content1, content2):
 @cli_util.wrap_exceptions
 def create_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, display_name, conditions, actions, description, freeform_tags, defined_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -956,7 +955,7 @@ This option is a JSON list with items of type IngestTimeRuleAdditionalFieldCondi
 @cli_util.wrap_exceptions
 def create_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, display_name, actions, conditions_field_name, conditions_field_operator, conditions_field_value, description, freeform_tags, defined_tags, conditions_additional_conditions):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1036,7 +1035,7 @@ def create_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def create_log_analytics_em_bridge(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, display_name, compartment_id, em_entities_compartment_id, bucket_name, description, freeform_tags, defined_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1114,7 +1113,7 @@ def create_log_analytics_em_bridge(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def create_log_analytics_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, entity_type_name, management_agent_id, cloud_resource_id, timezone_region, hostname, source_id, properties, freeform_tags, defined_tags, time_last_discovered, metadata):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1201,7 +1200,7 @@ This option is a JSON list with items of type EntityTypeProperty.  For documenta
 @cli_util.wrap_exceptions
 def create_log_analytics_entity_type(ctx, from_json, namespace_name, name, category, properties):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1239,7 +1238,7 @@ def create_log_analytics_entity_type(ctx, from_json, namespace_name, name, categ
 @cli_util.wrap_exceptions
 def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name, compartment_id, description, freeform_tags, defined_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1305,7 +1304,7 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
 @cli_util.wrap_exceptions
 def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, os_namespace, os_bucket_name, log_group_id, description, collection_type, poll_since, poll_till, log_source_name, entity_id, char_encoding, is_enabled, timezone, log_set, log_set_key, log_set_ext_regex, overrides, object_name_filters, log_type, is_force_historic_collection, stream_id, stream_cursor_type, stream_cursor_time, defined_tags, freeform_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1431,7 +1430,7 @@ def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def create_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, kind, compartment_id, display_name, description, freeform_tags, defined_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1507,7 +1506,7 @@ This option is a JSON list with items of type Schedule.  For documentation on Sc
 @cli_util.wrap_exceptions
 def create_scheduled_task_create_standard_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, task_type, action, display_name, description, freeform_tags, defined_tags, schedules):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1585,7 +1584,7 @@ def create_scheduled_task_create_standard_task_details(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def create_scheduled_task_create_acceleration_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, saved_search_id, display_name, description, freeform_tags, defined_tags):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1657,7 +1656,7 @@ This option is a JSON list with items of type DeleteLogAnalyticsAssociation.  Fo
 @cli_util.wrap_exceptions
 def delete_associations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1719,10 +1718,10 @@ def delete_associations(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_field(ctx, from_json, namespace_name, field_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(field_name, six.string_types) and len(field_name.strip()) == 0:
+    if isinstance(field_name, str) and len(field_name.strip()) == 0:
         raise click.UsageError('Parameter --field-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1750,10 +1749,10 @@ def delete_field(ctx, from_json, namespace_name, field_name, if_match):
 @cli_util.wrap_exceptions
 def delete_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1781,10 +1780,10 @@ def delete_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id,
 @cli_util.wrap_exceptions
 def delete_label(ctx, from_json, namespace_name, label_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(label_name, six.string_types) and len(label_name.strip()) == 0:
+    if isinstance(label_name, str) and len(label_name.strip()) == 0:
         raise click.UsageError('Parameter --label-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1813,10 +1812,10 @@ def delete_label(ctx, from_json, namespace_name, label_name, if_match):
 @cli_util.wrap_exceptions
 def delete_log_analytics_em_bridge(ctx, from_json, namespace_name, log_analytics_em_bridge_id, if_match, is_delete_entities):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_em_bridge_id, six.string_types) and len(log_analytics_em_bridge_id.strip()) == 0:
+    if isinstance(log_analytics_em_bridge_id, str) and len(log_analytics_em_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-em-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1847,10 +1846,10 @@ def delete_log_analytics_em_bridge(ctx, from_json, namespace_name, log_analytics
 @cli_util.wrap_exceptions
 def delete_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_entity_id, if_match, is_force_delete):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1880,10 +1879,10 @@ def delete_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_en
 @cli_util.wrap_exceptions
 def delete_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(entity_type_name, six.string_types) and len(entity_type_name.strip()) == 0:
+    if isinstance(entity_type_name, str) and len(entity_type_name.strip()) == 0:
         raise click.UsageError('Parameter --entity-type-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1911,10 +1910,10 @@ def delete_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type
 @cli_util.wrap_exceptions
 def delete_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics_log_group_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_log_group_id, six.string_types) and len(log_analytics_log_group_id.strip()) == 0:
+    if isinstance(log_analytics_log_group_id, str) and len(log_analytics_log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1942,10 +1941,10 @@ def delete_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics
 @cli_util.wrap_exceptions
 def delete_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log_analytics_object_collection_rule_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_object_collection_rule_id, six.string_types) and len(log_analytics_object_collection_rule_id.strip()) == 0:
+    if isinstance(log_analytics_object_collection_rule_id, str) and len(log_analytics_object_collection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-object-collection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1977,10 +1976,10 @@ def delete_log_analytics_object_collection_rule(ctx, from_json, namespace_name, 
 @cli_util.wrap_exceptions
 def delete_lookup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, is_force, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2037,10 +2036,10 @@ def delete_lookup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_parser(ctx, from_json, namespace_name, parser_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(parser_name, six.string_types) and len(parser_name.strip()) == 0:
+    if isinstance(parser_name, str) and len(parser_name.strip()) == 0:
         raise click.UsageError('Parameter --parser-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2068,10 +2067,10 @@ def delete_parser(ctx, from_json, namespace_name, parser_name, if_match):
 @cli_util.wrap_exceptions
 def delete_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2099,10 +2098,10 @@ def delete_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id, if_
 @cli_util.wrap_exceptions
 def delete_source(ctx, from_json, namespace_name, source_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2130,10 +2129,10 @@ def delete_source(ctx, from_json, namespace_name, source_name, if_match):
 @cli_util.wrap_exceptions
 def delete_upload(ctx, from_json, namespace_name, upload_reference, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2161,13 +2160,13 @@ def delete_upload(ctx, from_json, namespace_name, upload_reference, if_match):
 @cli_util.wrap_exceptions
 def delete_upload_file(ctx, from_json, namespace_name, upload_reference, file_reference):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
-    if isinstance(file_reference, six.string_types) and len(file_reference.strip()) == 0:
+    if isinstance(file_reference, str) and len(file_reference.strip()) == 0:
         raise click.UsageError('Parameter --file-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2194,13 +2193,13 @@ def delete_upload_file(ctx, from_json, namespace_name, upload_reference, file_re
 @cli_util.wrap_exceptions
 def delete_upload_warning(ctx, from_json, namespace_name, upload_reference, warning_reference):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
-    if isinstance(warning_reference, six.string_types) and len(warning_reference.strip()) == 0:
+    if isinstance(warning_reference, str) and len(warning_reference.strip()) == 0:
         raise click.UsageError('Parameter --warning-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2225,7 +2224,7 @@ def delete_upload_warning(ctx, from_json, namespace_name, upload_reference, warn
 @cli_util.wrap_exceptions
 def disable_archiving(ctx, from_json, namespace_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2256,10 +2255,10 @@ This option is a JSON list with items of type DisableAutoAssociationDetail.  For
 @cli_util.wrap_exceptions
 def disable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2321,10 +2320,10 @@ def disable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def disable_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2380,10 +2379,10 @@ This option is a JSON list with items of type EventType.  For documentation on E
 @cli_util.wrap_exceptions
 def disable_source_event_types(ctx, from_json, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2414,7 +2413,7 @@ def disable_source_event_types(ctx, from_json, namespace_name, source_name, item
 @cli_util.wrap_exceptions
 def enable_archiving(ctx, from_json, namespace_name, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2445,10 +2444,10 @@ This option is a JSON list with items of type EnableAutoAssociationDetail.  For 
 @cli_util.wrap_exceptions
 def enable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2510,10 +2509,10 @@ def enable_auto_association(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def enable_ingest_time_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2569,10 +2568,10 @@ This option is a JSON list with items of type EventType.  For documentation on E
 @cli_util.wrap_exceptions
 def enable_source_event_types(ctx, from_json, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2608,7 +2607,7 @@ def enable_source_event_types(ctx, from_json, namespace_name, source_name, items
 @cli_util.wrap_exceptions
 def estimate_purge_data_size(ctx, from_json, namespace_name, compartment_id, time_data_ended, compartment_id_in_subtree, purge_query_string, data_type, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2652,7 +2651,7 @@ def estimate_purge_data_size(ctx, from_json, namespace_name, compartment_id, tim
 @cli_util.wrap_exceptions
 def estimate_recall_data_size(ctx, from_json, namespace_name, time_data_started, time_data_ended, log_sets, is_recall_new_data_only, collection_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2692,7 +2691,7 @@ def estimate_recall_data_size(ctx, from_json, namespace_name, time_data_started,
 @cli_util.wrap_exceptions
 def estimate_release_data_size(ctx, from_json, namespace_name, time_data_started, time_data_ended, collection_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2727,7 +2726,7 @@ def estimate_release_data_size(ctx, from_json, namespace_name, time_data_started
 @cli_util.wrap_exceptions
 def export_custom_content(ctx, from_json, file, namespace_name, field_names, parser_names, source_names):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2801,7 +2800,7 @@ Queries that include certain commands such as head, tail or stats cannot be stre
 @cli_util.wrap_exceptions
 def export_query_result(ctx, from_json, file, namespace_name, compartment_id, query_string, sub_system, compartment_id_in_subtree, scope_filters, max_total_count, time_filter, query_timeout_in_seconds, should_include_columns, output_format, should_localize, should_use_acceleration):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2930,7 +2929,7 @@ This option is a JSON list with items of type DependentParser.  For documentatio
 @cli_util.wrap_exceptions
 def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, categories, is_position_aware, dependent_sources, dependent_parsers, parser_type):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3117,7 +3116,7 @@ This option is a JSON list with items of type DependentParser.  For documentatio
 @cli_util.wrap_exceptions
 def extract_structured_log_header_paths(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, mapped_parsers, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, parser_filter, is_parser_written_once, parser_functions, sources_count, sources, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_user_deleted, is_namespace_aware, categories, is_position_aware, dependent_sources, dependent_parsers, parser_type):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3258,7 +3257,7 @@ This option is a JSON list with items of type Filter.  For documentation on Filt
 @cli_util.wrap_exceptions
 def filter(ctx, from_json, namespace_name, query_string, sub_system, filters):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3290,7 +3289,7 @@ def filter(ctx, from_json, namespace_name, query_string, sub_system, filters):
 @cli_util.wrap_exceptions
 def get_association_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3314,10 +3313,10 @@ def get_association_summary(ctx, from_json, namespace_name, compartment_id):
 @cli_util.wrap_exceptions
 def get_category(ctx, from_json, namespace_name, category_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(category_name, six.string_types) and len(category_name.strip()) == 0:
+    if isinstance(category_name, str) and len(category_name.strip()) == 0:
         raise click.UsageError('Parameter --category-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3341,7 +3340,7 @@ def get_category(ctx, from_json, namespace_name, category_name):
 @cli_util.wrap_exceptions
 def get_column_names(ctx, from_json, namespace_name, sql_query):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3365,10 +3364,10 @@ def get_column_names(ctx, from_json, namespace_name, sql_query):
 @cli_util.wrap_exceptions
 def get_config_work_request(ctx, from_json, namespace_name, work_request_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3392,10 +3391,10 @@ def get_config_work_request(ctx, from_json, namespace_name, work_request_id):
 @cli_util.wrap_exceptions
 def get_field(ctx, from_json, namespace_name, field_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(field_name, six.string_types) and len(field_name.strip()) == 0:
+    if isinstance(field_name, str) and len(field_name.strip()) == 0:
         raise click.UsageError('Parameter --field-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3419,10 +3418,10 @@ def get_field(ctx, from_json, namespace_name, field_name):
 @cli_util.wrap_exceptions
 def get_field_usages(ctx, from_json, namespace_name, field_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(field_name, six.string_types) and len(field_name.strip()) == 0:
+    if isinstance(field_name, str) and len(field_name.strip()) == 0:
         raise click.UsageError('Parameter --field-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3446,7 +3445,7 @@ def get_field_usages(ctx, from_json, namespace_name, field_name):
 @cli_util.wrap_exceptions
 def get_fields_summary(ctx, from_json, namespace_name, is_show_detail):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3471,10 +3470,10 @@ def get_fields_summary(ctx, from_json, namespace_name, is_show_detail):
 @cli_util.wrap_exceptions
 def get_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3498,10 +3497,10 @@ def get_ingest_time_rule(ctx, from_json, namespace_name, ingest_time_rule_id):
 @cli_util.wrap_exceptions
 def get_label(ctx, from_json, namespace_name, label_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(label_name, six.string_types) and len(label_name.strip()) == 0:
+    if isinstance(label_name, str) and len(label_name.strip()) == 0:
         raise click.UsageError('Parameter --label-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3524,7 +3523,7 @@ def get_label(ctx, from_json, namespace_name, label_name):
 @cli_util.wrap_exceptions
 def get_label_summary(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3547,10 +3546,10 @@ def get_label_summary(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_log_analytics_em_bridge(ctx, from_json, namespace_name, log_analytics_em_bridge_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_em_bridge_id, six.string_types) and len(log_analytics_em_bridge_id.strip()) == 0:
+    if isinstance(log_analytics_em_bridge_id, str) and len(log_analytics_em_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-em-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3574,7 +3573,7 @@ def get_log_analytics_em_bridge(ctx, from_json, namespace_name, log_analytics_em
 @cli_util.wrap_exceptions
 def get_log_analytics_em_bridge_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3598,7 +3597,7 @@ def get_log_analytics_em_bridge_summary(ctx, from_json, namespace_name, compartm
 @cli_util.wrap_exceptions
 def get_log_analytics_entities_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3623,10 +3622,10 @@ def get_log_analytics_entities_summary(ctx, from_json, namespace_name, compartme
 @cli_util.wrap_exceptions
 def get_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_entity_id, is_show_associated_sources_count):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3652,10 +3651,10 @@ def get_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_entit
 @cli_util.wrap_exceptions
 def get_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(entity_type_name, six.string_types) and len(entity_type_name.strip()) == 0:
+    if isinstance(entity_type_name, str) and len(entity_type_name.strip()) == 0:
         raise click.UsageError('Parameter --entity-type-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3679,10 +3678,10 @@ def get_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type_na
 @cli_util.wrap_exceptions
 def get_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics_log_group_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_log_group_id, six.string_types) and len(log_analytics_log_group_id.strip()) == 0:
+    if isinstance(log_analytics_log_group_id, str) and len(log_analytics_log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3706,7 +3705,7 @@ def get_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics_lo
 @cli_util.wrap_exceptions
 def get_log_analytics_log_groups_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3730,10 +3729,10 @@ def get_log_analytics_log_groups_summary(ctx, from_json, namespace_name, compart
 @cli_util.wrap_exceptions
 def get_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log_analytics_object_collection_rule_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_object_collection_rule_id, six.string_types) and len(log_analytics_object_collection_rule_id.strip()) == 0:
+    if isinstance(log_analytics_object_collection_rule_id, str) and len(log_analytics_object_collection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-object-collection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3756,7 +3755,7 @@ def get_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log
 @cli_util.wrap_exceptions
 def get_log_sets_count(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3779,10 +3778,10 @@ def get_log_sets_count(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_lookup(ctx, from_json, namespace_name, lookup_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3806,7 +3805,7 @@ def get_lookup(ctx, from_json, namespace_name, lookup_name):
 @cli_util.wrap_exceptions
 def get_lookup_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3830,7 +3829,7 @@ def get_lookup_summary(ctx, from_json, namespace_name, compartment_id):
 @cli_util.wrap_exceptions
 def get_namespace(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3853,10 +3852,10 @@ def get_namespace(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_parser(ctx, from_json, namespace_name, parser_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(parser_name, six.string_types) and len(parser_name.strip()) == 0:
+    if isinstance(parser_name, str) and len(parser_name.strip()) == 0:
         raise click.UsageError('Parameter --parser-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3879,7 +3878,7 @@ def get_parser(ctx, from_json, namespace_name, parser_name):
 @cli_util.wrap_exceptions
 def get_parser_summary(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3905,7 +3904,7 @@ def get_parser_summary(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_preferences(ctx, from_json, namespace_name, sort_order, sort_by, limit, page):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3941,7 +3940,7 @@ def get_preferences(ctx, from_json, namespace_name, sort_order, sort_by, limit, 
 @cli_util.wrap_exceptions
 def get_query_result(ctx, from_json, namespace_name, work_request_id, page, limit, should_include_columns, should_include_fields, output_mode):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3975,10 +3974,10 @@ def get_query_result(ctx, from_json, namespace_name, work_request_id, page, limi
 @cli_util.wrap_exceptions
 def get_query_work_request(ctx, from_json, namespace_name, work_request_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4001,7 +4000,7 @@ def get_query_work_request(ctx, from_json, namespace_name, work_request_id):
 @cli_util.wrap_exceptions
 def get_recall_count(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4025,7 +4024,7 @@ def get_recall_count(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_recalled_data_size(ctx, from_json, namespace_name, time_data_started, time_data_ended):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4052,7 +4051,7 @@ def get_recalled_data_size(ctx, from_json, namespace_name, time_data_started, ti
 @cli_util.wrap_exceptions
 def get_rules_summary(ctx, from_json, namespace_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4076,10 +4075,10 @@ def get_rules_summary(ctx, from_json, namespace_name, compartment_id):
 @cli_util.wrap_exceptions
 def get_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4104,10 +4103,10 @@ def get_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id):
 @cli_util.wrap_exceptions
 def get_source(ctx, from_json, namespace_name, source_name, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4131,7 +4130,7 @@ def get_source(ctx, from_json, namespace_name, source_name, compartment_id):
 @cli_util.wrap_exceptions
 def get_source_summary(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4153,7 +4152,7 @@ def get_source_summary(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_storage(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4175,7 +4174,7 @@ def get_storage(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_storage_usage(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4198,10 +4197,10 @@ def get_storage_usage(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_storage_work_request(ctx, from_json, work_request_id, namespace_name):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4225,10 +4224,10 @@ def get_storage_work_request(ctx, from_json, work_request_id, namespace_name):
 @cli_util.wrap_exceptions
 def get_template(ctx, from_json, namespace_name, template_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(template_id, six.string_types) and len(template_id.strip()) == 0:
+    if isinstance(template_id, str) and len(template_id.strip()) == 0:
         raise click.UsageError('Parameter --template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4251,7 +4250,7 @@ def get_template(ctx, from_json, namespace_name, template_id):
 @cli_util.wrap_exceptions
 def get_unprocessed_data_bucket(ctx, from_json, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4274,10 +4273,10 @@ def get_unprocessed_data_bucket(ctx, from_json, namespace_name):
 @cli_util.wrap_exceptions
 def get_upload(ctx, from_json, namespace_name, upload_reference):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4301,10 +4300,10 @@ def get_upload(ctx, from_json, namespace_name, upload_reference):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, namespace_name, work_request_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4330,7 +4329,7 @@ def get_work_request(ctx, from_json, namespace_name, work_request_id):
 @cli_util.wrap_exceptions
 def import_custom_content(ctx, from_json, namespace_name, import_custom_content_file_body, is_overwrite, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4374,10 +4373,10 @@ def list_associable_entities(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4449,7 +4448,7 @@ def list_associated_entities(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4518,10 +4517,10 @@ def list_auto_associations(ctx, from_json, all_pages, page_size, namespace_name,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4584,7 +4583,7 @@ def list_categories(ctx, from_json, all_pages, page_size, namespace_name, catego
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4648,7 +4647,7 @@ def list_config_work_requests(ctx, from_json, all_pages, page_size, namespace_na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4714,7 +4713,7 @@ def list_effective_properties(ctx, from_json, all_pages, page_size, namespace_na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4777,7 +4776,7 @@ def list_effective_properties(ctx, from_json, all_pages, page_size, namespace_na
 @cli_util.wrap_exceptions
 def list_encryption_key_info(ctx, from_json, all_pages, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4810,10 +4809,10 @@ def list_entity_associations(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4882,7 +4881,7 @@ def list_entity_source_associations(ctx, from_json, all_pages, page_size, namesp
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4962,7 +4961,7 @@ def list_fields(ctx, from_json, all_pages, page_size, namespace_name, is_match_a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5041,7 +5040,7 @@ def list_ingest_time_rules(ctx, from_json, all_pages, page_size, namespace_name,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5109,7 +5108,7 @@ def list_label_priorities(ctx, from_json, all_pages, page_size, namespace_name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5163,7 +5162,7 @@ def list_label_source_details(ctx, from_json, all_pages, page_size, namespace_na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5228,7 +5227,7 @@ def list_labels(ctx, from_json, all_pages, page_size, namespace_name, label_name
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5302,7 +5301,7 @@ def list_log_analytics_em_bridges(ctx, from_json, all_pages, page_size, namespac
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5389,7 +5388,7 @@ def list_log_analytics_entities(ctx, from_json, all_pages, page_size, namespace_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5489,10 +5488,10 @@ def list_log_analytics_entity_topology(ctx, from_json, all_pages, page_size, nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5562,7 +5561,7 @@ def list_log_analytics_entity_types(ctx, from_json, all_pages, page_size, namesp
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5629,7 +5628,7 @@ def list_log_analytics_log_groups(ctx, from_json, all_pages, page_size, namespac
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5694,7 +5693,7 @@ def list_log_analytics_object_collection_rules(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5758,7 +5757,7 @@ def list_log_sets(ctx, from_json, all_pages, page_size, namespace_name, limit, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5822,7 +5821,7 @@ def list_lookups(ctx, from_json, all_pages, page_size, namespace_name, type, loo
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5894,7 +5893,7 @@ def list_meta_source_types(ctx, from_json, all_pages, page_size, namespace_name,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5976,7 +5975,7 @@ def list_overlapping_recalls(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6039,7 +6038,7 @@ def list_parser_actions(ctx, from_json, all_pages, page_size, namespace_name, na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6101,7 +6100,7 @@ def list_parser_functions(ctx, from_json, all_pages, page_size, namespace_name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6160,7 +6159,7 @@ def list_parser_meta_plugins(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6224,7 +6223,7 @@ def list_parsers(ctx, from_json, all_pages, page_size, namespace_name, is_match_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6299,7 +6298,7 @@ def list_properties_metadata(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6366,7 +6365,7 @@ def list_query_work_requests(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6430,7 +6429,7 @@ def list_recalled_data(ctx, from_json, all_pages, page_size, namespace_name, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6494,7 +6493,7 @@ def list_recalled_info(ctx, from_json, all_pages, page_size, namespace_name, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6561,7 +6560,7 @@ def list_resource_categories(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6631,7 +6630,7 @@ def list_rules(ctx, from_json, all_pages, page_size, namespace_name, compartment
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6706,7 +6705,7 @@ def list_scheduled_tasks(ctx, from_json, all_pages, page_size, namespace_name, t
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6785,7 +6784,7 @@ def list_source_associations(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6860,10 +6859,10 @@ def list_source_event_types(ctx, from_json, all_pages, page_size, namespace_name
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6930,10 +6929,10 @@ def list_source_extended_field_definitions(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6993,7 +6992,7 @@ def list_source_label_operators(ctx, from_json, all_pages, page_size, namespace_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7050,7 +7049,7 @@ def list_source_meta_functions(ctx, from_json, all_pages, page_size, namespace_n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7109,10 +7108,10 @@ def list_source_patterns(ctx, from_json, all_pages, page_size, namespace_name, s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7185,7 +7184,7 @@ def list_sources(ctx, from_json, all_pages, page_size, namespace_name, compartme
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7267,10 +7266,10 @@ def list_storage_work_request_errors(ctx, from_json, all_pages, page_size, compa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7340,7 +7339,7 @@ def list_storage_work_requests(ctx, from_json, all_pages, page_size, compartment
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7410,7 +7409,7 @@ def list_supported_char_encodings(ctx, from_json, all_pages, page_size, namespac
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7461,7 +7460,7 @@ def list_supported_timezones(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7520,7 +7519,7 @@ def list_templates(ctx, from_json, all_pages, page_size, namespace_name, compart
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7593,10 +7592,10 @@ def list_upload_files(ctx, from_json, all_pages, page_size, namespace_name, uplo
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7659,10 +7658,10 @@ def list_upload_warnings(ctx, from_json, all_pages, page_size, namespace_name, u
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(upload_reference, six.string_types) and len(upload_reference.strip()) == 0:
+    if isinstance(upload_reference, str) and len(upload_reference.strip()) == 0:
         raise click.UsageError('Parameter --upload-reference cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7721,7 +7720,7 @@ def list_uploads(ctx, from_json, all_pages, page_size, namespace_name, name, nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7795,7 +7794,7 @@ def list_warnings(ctx, from_json, all_pages, page_size, namespace_name, compartm
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7874,10 +7873,10 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, namespace_nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7932,10 +7931,10 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, namespace_name,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7990,7 +7989,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, namespace_name, com
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8040,7 +8039,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, namespace_name, com
 @cli_util.wrap_exceptions
 def offboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8092,7 +8091,7 @@ def offboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def onboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8143,7 +8142,7 @@ def onboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def parse_query(ctx, from_json, namespace_name, query_string, sub_system):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8176,10 +8175,10 @@ def parse_query(ctx, from_json, namespace_name, query_string, sub_system):
 @cli_util.wrap_exceptions
 def pause_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8236,7 +8235,7 @@ def pause_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def purge_storage_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, time_data_ended, compartment_id_in_subtree, purge_query_string, data_type, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8304,10 +8303,10 @@ def purge_storage_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def put_query_work_request_background(ctx, from_json, namespace_name, work_request_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8355,7 +8354,7 @@ This option is a JSON list with items of type ScopeFilter.  For documentation on
 @cli_util.wrap_exceptions
 def query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, query_string, sub_system, compartment_id_in_subtree, saved_search_id, max_total_count, time_filter, scope_filters, variables, query_timeout_in_seconds, should_run_async, async_mode, should_include_total_count, should_include_columns, should_include_fields, should_use_acceleration, page, limit):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8468,7 +8467,7 @@ def query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_second
 @cli_util.wrap_exceptions
 def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, time_data_ended, time_data_started, data_type, log_sets, query_parameterconflict, purpose, is_recall_new_data_only, is_use_recommended_data_set, collection_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8555,7 +8554,7 @@ def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def register_lookup(ctx, from_json, namespace_name, type, register_lookup_content_file_body, name, description, char_encoding, is_hidden, expect, compartment_id):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8604,7 +8603,7 @@ def register_lookup(ctx, from_json, namespace_name, type, register_lookup_conten
 @cli_util.wrap_exceptions
 def release_recalled_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, time_data_ended, time_data_started, data_type, collection_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8671,10 +8670,10 @@ def release_recalled_data(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def remove_entity_associations(ctx, from_json, namespace_name, log_analytics_entity_id, association_entities, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8707,7 +8706,7 @@ This option is a JSON list with items of type LogAnalyticsPreference.  For docum
 @cli_util.wrap_exceptions
 def remove_preferences(ctx, from_json, namespace_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8739,7 +8738,7 @@ This option is a JSON list with items of type LogAnalyticsResourceCategory.  For
 @cli_util.wrap_exceptions
 def remove_resource_categories(ctx, from_json, namespace_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8772,10 +8771,10 @@ This option is a JSON list with items of type EventType.  For documentation on E
 @cli_util.wrap_exceptions
 def remove_source_event_types(ctx, from_json, namespace_name, source_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(source_name, six.string_types) and len(source_name.strip()) == 0:
+    if isinstance(source_name, str) and len(source_name.strip()) == 0:
         raise click.UsageError('Parameter --source-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8810,10 +8809,10 @@ def remove_source_event_types(ctx, from_json, namespace_name, source_name, items
 @cli_util.wrap_exceptions
 def resume_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8864,10 +8863,10 @@ def resume_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def run(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_end):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8896,7 +8895,7 @@ def run(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_end)
 @cli_util.wrap_exceptions
 def set_unprocessed_data_bucket(ctx, from_json, namespace_name, bucket_name, is_enabled):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8925,7 +8924,7 @@ def set_unprocessed_data_bucket(ctx, from_json, namespace_name, bucket_name, is_
 @cli_util.wrap_exceptions
 def suggest(ctx, from_json, namespace_name, compartment_id, query_string, sub_system, compartment_id_in_subtree):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8959,7 +8958,7 @@ def suggest(ctx, from_json, namespace_name, compartment_id, query_string, sub_sy
 @cli_util.wrap_exceptions
 def suppress_warning(ctx, from_json, namespace_name, compartment_id, warning_references):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9023,7 +9022,7 @@ This option is a JSON list with items of type LogAnalyticsParserFunction.  For d
 @cli_util.wrap_exceptions
 def test_parser(ctx, from_json, namespace_name, content, description, display_name, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, time_updated, log_type_test_request_version, metadata, parser_ignoreline_characters, is_hidden, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, is_position_aware, scope, req_origin_module):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9139,7 +9138,7 @@ def test_parser(ctx, from_json, namespace_name, content, description, display_na
 @cli_util.wrap_exceptions
 def unsuppress_warning(ctx, from_json, namespace_name, compartment_id, warning_references):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9189,10 +9188,10 @@ This option is a JSON list with items of type IngestTimeRuleAction.  For documen
 @cli_util.wrap_exceptions
 def update_ingest_time_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, id, compartment_id, display_name, description, freeform_tags, defined_tags, time_created, time_updated, lifecycle_state, is_enabled, conditions, actions, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or conditions or actions:
@@ -9303,10 +9302,10 @@ This option is a JSON list with items of type IngestTimeRuleAdditionalFieldCondi
 @cli_util.wrap_exceptions
 def update_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, ingest_time_rule_id, id, compartment_id, display_name, conditions_field_name, conditions_field_operator, conditions_field_value, description, freeform_tags, defined_tags, time_created, time_updated, lifecycle_state, is_enabled, actions, if_match, conditions_additional_conditions):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(ingest_time_rule_id, six.string_types) and len(ingest_time_rule_id.strip()) == 0:
+    if isinstance(ingest_time_rule_id, str) and len(ingest_time_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --ingest-time-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or actions:
@@ -9409,10 +9408,10 @@ def update_ingest_time_rule_ingest_time_rule_field_condition(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_log_analytics_em_bridge(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_em_bridge_id, display_name, description, bucket_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_em_bridge_id, six.string_types) and len(log_analytics_em_bridge_id.strip()) == 0:
+    if isinstance(log_analytics_em_bridge_id, str) and len(log_analytics_em_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-em-bridge-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -9499,10 +9498,10 @@ def update_log_analytics_em_bridge(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_log_analytics_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_entity_id, name, management_agent_id, timezone_region, hostname, properties, freeform_tags, defined_tags, time_last_discovered, metadata, cloud_resource_id, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_entity_id, six.string_types) and len(log_analytics_entity_id.strip()) == 0:
+    if isinstance(log_analytics_entity_id, str) and len(log_analytics_entity_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-entity-id cannot be whitespace or empty string')
     if not force:
         if properties or freeform_tags or defined_tags or metadata:
@@ -9595,10 +9594,10 @@ This option is a JSON list with items of type EntityTypeProperty.  For documenta
 @cli_util.wrap_exceptions
 def update_log_analytics_entity_type(ctx, from_json, force, namespace_name, entity_type_name, category, properties, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(entity_type_name, six.string_types) and len(entity_type_name.strip()) == 0:
+    if isinstance(entity_type_name, str) and len(entity_type_name.strip()) == 0:
         raise click.UsageError('Parameter --entity-type-name cannot be whitespace or empty string')
     if not force:
         if properties:
@@ -9644,10 +9643,10 @@ def update_log_analytics_entity_type(ctx, from_json, force, namespace_name, enti
 @cli_util.wrap_exceptions
 def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_analytics_log_group_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_log_group_id, six.string_types) and len(log_analytics_log_group_id.strip()) == 0:
+    if isinstance(log_analytics_log_group_id, str) and len(log_analytics_log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-log-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -9715,10 +9714,10 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
 @cli_util.wrap_exceptions
 def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, log_analytics_object_collection_rule_id, description, log_group_id, log_source_name, entity_id, char_encoding, is_enabled, timezone, log_set, log_set_key, log_set_ext_regex, overrides, object_name_filters, stream_id, stream_cursor_type, stream_cursor_time, defined_tags, freeform_tags, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(log_analytics_object_collection_rule_id, six.string_types) and len(log_analytics_object_collection_rule_id.strip()) == 0:
+    if isinstance(log_analytics_object_collection_rule_id, str) and len(log_analytics_object_collection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --log-analytics-object-collection-rule-id cannot be whitespace or empty string')
     if not force:
         if overrides or object_name_filters or defined_tags or freeform_tags:
@@ -9839,10 +9838,10 @@ This option is a JSON list with items of type LogAnalyticsCategory.  For documen
 @cli_util.wrap_exceptions
 def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_match_value, description, fields, max_matches, categories, freeform_tags, defined_tags, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
     if not force:
         if fields or categories or freeform_tags or defined_tags:
@@ -9905,10 +9904,10 @@ def update_lookup(ctx, from_json, force, namespace_name, lookup_name, default_ma
 @cli_util.wrap_exceptions
 def update_lookup_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, lookup_name, update_lookup_file_body, is_force, char_encoding, if_match, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(lookup_name, six.string_types) and len(lookup_name.strip()) == 0:
+    if isinstance(lookup_name, str) and len(lookup_name.strip()) == 0:
         raise click.UsageError('Parameter --lookup-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9974,7 +9973,7 @@ This option is a JSON list with items of type LogAnalyticsPreference.  For docum
 @cli_util.wrap_exceptions
 def update_preferences(ctx, from_json, namespace_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10006,7 +10005,7 @@ This option is a JSON list with items of type LogAnalyticsResourceCategory.  For
 @cli_util.wrap_exceptions
 def update_resource_categories(ctx, from_json, namespace_name, items):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10049,10 +10048,10 @@ This option is a JSON list with items of type Schedule.  For documentation on Sc
 @cli_util.wrap_exceptions
 def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, kind, display_name, description, freeform_tags, defined_tags, schedules, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedules:
@@ -10138,10 +10137,10 @@ This option is a JSON list with items of type Schedule.  For documentation on Sc
 @cli_util.wrap_exceptions
 def update_scheduled_task_update_standard_task_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, scheduled_task_id, display_name, description, freeform_tags, defined_tags, schedules, action, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedules or action:
@@ -10220,7 +10219,7 @@ def update_scheduled_task_update_standard_task_details(ctx, from_json, force, wa
 @cli_util.wrap_exceptions
 def update_storage(ctx, from_json, force, namespace_name, archiving_configuration, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
     if not force:
         if archiving_configuration:
@@ -10260,7 +10259,7 @@ def update_storage(ctx, from_json, force, namespace_name, archiving_configuratio
 @cli_util.wrap_exceptions
 def upload_discovery_data(ctx, from_json, namespace_name, upload_discovery_data_details, opc_meta_properties, discovery_data_type, log_group_id, payload_type, content_type, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10306,7 +10305,7 @@ def upload_discovery_data(ctx, from_json, namespace_name, upload_discovery_data_
 @cli_util.wrap_exceptions
 def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_log_events_file_details, log_set, payload_type, content_type, opc_meta_properties, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10361,7 +10360,7 @@ def upload_log_events_file(ctx, from_json, namespace_name, log_group_id, upload_
 @cli_util.wrap_exceptions
 def upload_log_file(ctx, from_json, namespace_name, log_source_name, filename, opc_meta_loggrpid, upload_log_file_body, upload_name, entity_id, timezone, char_encoding, date_format, date_year, invalidate_cache, content_md5, content_type, log_set, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10419,7 +10418,7 @@ def upload_log_file(ctx, from_json, namespace_name, log_source_name, filename, o
 @cli_util.wrap_exceptions
 def upload_otlp_logs(ctx, from_json, namespace_name, opc_meta_loggrpid, upload_otlp_logs_details, log_set, content_type, opc_meta_properties, expect):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10463,7 +10462,7 @@ This option is a JSON list with items of type UpsertLogAnalyticsAssociation.  Fo
 @cli_util.wrap_exceptions
 def upsert_associations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, compartment_id, items, is_from_republish):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10531,7 +10530,7 @@ def upsert_associations(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def upsert_field(ctx, from_json, namespace_name, data_type, is_multi_valued, description, display_name, name, is_keep_duplicates, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10591,7 +10590,7 @@ This option is a JSON list with items of type LogAnalyticsLabelAlias.  For docum
 @cli_util.wrap_exceptions
 def upsert_label(ctx, from_json, namespace_name, aliases, suggest_type, description, display_name, edit_version, impact, is_system, name, priority, recommendation, type, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10686,7 +10685,7 @@ This option is a JSON list with items of type LogAnalyticsCategory.  For documen
 @cli_util.wrap_exceptions
 def upsert_parser(ctx, from_json, namespace_name, content, description, display_name, edit_version, encoding, example_content, field_maps, footer_content, header_content, name, is_default, is_single_line_content, is_system, language, log_type_test_request_version, parser_ignoreline_characters, parser_sequence, parser_timezone, is_parser_written_once, parser_functions, should_tokenize_original_text, field_delimiter, field_qualifier, type, is_namespace_aware, categories, is_position_aware, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10866,7 +10865,7 @@ This option is a JSON list with items of type LogAnalyticsProperty.  For documen
 @cli_util.wrap_exceptions
 def upsert_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, categories, endpoints, source_properties, create_like_source_id, is_incremental, is_ignore_warning, if_match):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11001,7 +11000,7 @@ This option is a JSON list with items of type UpsertLogAnalyticsAssociation.  Fo
 @cli_util.wrap_exceptions
 def validate_association_parameters(ctx, from_json, namespace_name, compartment_id, items, limit, page, sort_order, sort_by):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11042,7 +11041,7 @@ def validate_association_parameters(ctx, from_json, namespace_name, compartment_
 @cli_util.wrap_exceptions
 def validate_endpoint(ctx, from_json, namespace_name, endpoint_type):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11071,7 +11070,7 @@ def validate_endpoint(ctx, from_json, namespace_name, endpoint_type):
 @cli_util.wrap_exceptions
 def validate_endpoint_log_list_type_endpoint(ctx, from_json, namespace_name, list_endpoint, log_endpoints):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11102,7 +11101,7 @@ def validate_endpoint_log_list_type_endpoint(ctx, from_json, namespace_name, lis
 @cli_util.wrap_exceptions
 def validate_endpoint_log_type_endpoint(ctx, from_json, namespace_name, log_endpoint):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11133,7 +11132,7 @@ def validate_endpoint_log_type_endpoint(ctx, from_json, namespace_name, log_endp
 @cli_util.wrap_exceptions
 def validate_file(ctx, from_json, namespace_name, object_location, filename):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11162,7 +11161,7 @@ This option is a JSON list with items of type LogAnalyticsProperty.  For documen
 @cli_util.wrap_exceptions
 def validate_label_condition(ctx, from_json, namespace_name, condition_string, condition_block, field_values):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11267,7 +11266,7 @@ This option is a JSON list with items of type LogAnalyticsProperty.  For documen
 @cli_util.wrap_exceptions
 def validate_source(ctx, from_json, namespace_name, label_conditions, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, rule_id, type_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, categories, endpoints, source_properties, create_like_source_id, is_incremental, is_ignore_warning):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11472,7 +11471,7 @@ This option is a JSON list with items of type LogAnalyticsProperty.  For documen
 @cli_util.wrap_exceptions
 def validate_source_extended_field_details(ctx, from_json, namespace_name, label_conditions, association_count, association_entity, data_filter_definitions, database_credential, extended_field_definitions, is_for_cloud, labels, metric_definitions, metrics, oob_parsers, parameters, pattern_count, patterns, description, display_name, edit_version, functions, source_id, name, is_secure_content, is_system, parsers, is_auto_association_enabled, is_auto_association_override, rule_id, type_name, type_display_name, warning_config, metadata_fields, label_definitions, entity_types, is_timezone_override, user_parsers, time_updated, event_types, categories, endpoints, source_properties, lifecycle_state):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11621,7 +11620,7 @@ def validate_source_extended_field_details(ctx, from_json, namespace_name, label
 @cli_util.wrap_exceptions
 def validate_source_mapping(ctx, from_json, namespace_name, object_location, filename, log_source_name):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11648,10 +11647,10 @@ def validate_source_mapping(ctx, from_json, namespace_name, object_location, fil
 @cli_util.wrap_exceptions
 def verify(ctx, from_json, namespace_name, scheduled_task_id, should_include_results):
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
-    if isinstance(scheduled_task_id, six.string_types) and len(scheduled_task_id.strip()) == 0:
+    if isinstance(scheduled_task_id, str) and len(scheduled_task_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-task-id cannot be whitespace or empty string')
 
     kwargs = {}

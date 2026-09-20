@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ blue_green_deployments_root_group.add_command(blue_green_deployment_group)
 @cli_util.wrap_exceptions
 def change_blue_green_deployment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blue_green_deployment_id, compartment_id, if_match):
 
-    if isinstance(blue_green_deployment_id, six.string_types) and len(blue_green_deployment_id.strip()) == 0:
+    if isinstance(blue_green_deployment_id, str) and len(blue_green_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --blue-green-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,7 +186,7 @@ def create_blue_green_deployment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_blue_green_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blue_green_deployment_id, if_match):
 
-    if isinstance(blue_green_deployment_id, six.string_types) and len(blue_green_deployment_id.strip()) == 0:
+    if isinstance(blue_green_deployment_id, str) and len(blue_green_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --blue-green-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -241,7 +240,7 @@ def delete_blue_green_deployment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def get_blue_green_deployment(ctx, from_json, blue_green_deployment_id, if_none_match):
 
-    if isinstance(blue_green_deployment_id, six.string_types) and len(blue_green_deployment_id.strip()) == 0:
+    if isinstance(blue_green_deployment_id, str) and len(blue_green_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --blue-green-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -344,7 +343,7 @@ When `waitTimeInSeconds` is omitted from the request body, the default wait time
 @cli_util.wrap_exceptions
 def switchover_blue_green_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blue_green_deployment_id, wait_time_in_seconds, if_match):
 
-    if isinstance(blue_green_deployment_id, six.string_types) and len(blue_green_deployment_id.strip()) == 0:
+    if isinstance(blue_green_deployment_id, str) and len(blue_green_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --blue-green-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -412,7 +411,7 @@ def switchover_blue_green_deployment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_blue_green_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blue_green_deployment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(blue_green_deployment_id, six.string_types) and len(blue_green_deployment_id.strip()) == 0:
+    if isinstance(blue_green_deployment_id, str) and len(blue_green_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --blue-green-deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

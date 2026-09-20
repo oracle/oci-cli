@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -71,7 +70,7 @@ rover_node_root_group.add_command(rover_node_get_rpt_group)
 @cli_util.wrap_exceptions
 def change_rover_node_compartment(ctx, from_json, rover_node_id, compartment_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -286,7 +285,7 @@ def create_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -345,7 +344,7 @@ def delete_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def get_rover_node(ctx, from_json, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -367,7 +366,7 @@ def get_rover_node(ctx, from_json, rover_node_id):
 @cli_util.wrap_exceptions
 def get_rover_node_certificate(ctx, from_json, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -389,7 +388,7 @@ def get_rover_node_certificate(ctx, from_json, rover_node_id):
 @cli_util.wrap_exceptions
 def get_rover_node_encryption_key(ctx, from_json, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -412,7 +411,7 @@ def get_rover_node_encryption_key(ctx, from_json, rover_node_id):
 @cli_util.wrap_exceptions
 def get_rover_node_get_rpt(ctx, from_json, rover_node_id, jwt):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -502,7 +501,7 @@ def list_rover_nodes(ctx, from_json, all_pages, page_size, compartment_id, displ
 @cli_util.wrap_exceptions
 def rover_node_action_retrieve_ca_bundle(ctx, from_json, rover_node_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -529,7 +528,7 @@ def rover_node_action_retrieve_ca_bundle(ctx, from_json, rover_node_id, if_match
 @cli_util.wrap_exceptions
 def rover_node_action_set_key(ctx, from_json, rover_node_id, jwt, public_key, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -564,7 +563,7 @@ def rover_node_action_set_key(ctx, from_json, rover_node_id, jwt, public_key, if
 @cli_util.wrap_exceptions
 def rover_node_generate_certificate(ctx, from_json, csr, time_cert_validity_end, rover_node_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -597,7 +596,7 @@ def rover_node_generate_certificate(ctx, from_json, csr, time_cert_validity_end,
 @cli_util.wrap_exceptions
 def rover_node_renew_certificate(ctx, from_json, csr, time_cert_validity_end, rover_node_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -631,7 +630,7 @@ def rover_node_renew_certificate(ctx, from_json, csr, time_cert_validity_end, ro
 @cli_util.wrap_exceptions
 def rover_node_replace_certificate_authority(ctx, from_json, certificate_authority_id, rover_node_id, cert_key_algorithm, cert_signature_algorithm, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -667,7 +666,7 @@ def rover_node_replace_certificate_authority(ctx, from_json, certificate_authori
 @cli_util.wrap_exceptions
 def rover_node_retrieve_leaf_certificate(ctx, from_json, rover_node_id, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -730,7 +729,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.wrap_exceptions
 def update_rover_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_node_id, display_name, shape, serial_number, customer_shipping_address, node_workloads, super_user_password, unlock_passphrase, point_of_contact, point_of_contact_phone_number, oracle_shipping_tracking_url, shipping_preference, shipping_vendor, time_pickup_expected, lifecycle_state, enclosure_type, lifecycle_state_details, time_return_window_starts, time_return_window_ends, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, public_key, certificate_authority_id, time_cert_validity_end, common_name, cert_compartment_id, cert_key_algorithm, cert_signature_algorithm, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
     if not force:
         if customer_shipping_address or node_workloads or freeform_tags or defined_tags or system_tags:

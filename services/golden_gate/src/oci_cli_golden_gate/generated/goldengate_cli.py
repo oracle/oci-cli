@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -200,7 +199,7 @@ goldengate_root_group.add_command(deployment_group)
 @cli_util.wrap_exceptions
 def add_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, message, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ def add_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def add_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, type, message, if_match):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -322,7 +321,7 @@ def add_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def add_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -389,7 +388,7 @@ def add_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def add_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, message, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -450,7 +449,7 @@ def add_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def cancel_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -513,7 +512,7 @@ def cancel_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def cancel_deployment_backup_default_cancel_deployment_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -577,7 +576,7 @@ def cancel_deployment_backup_default_cancel_deployment_backup_details(ctx, from_
 @cli_util.wrap_exceptions
 def cancel_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, type, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -633,7 +632,7 @@ def cancel_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def cancel_deployment_upgrade_default_cancel_deployment_upgrade_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -688,7 +687,7 @@ def cancel_deployment_upgrade_default_cancel_deployment_upgrade_details(ctx, fro
 @cli_util.wrap_exceptions
 def cancel_snooze_deployment_upgrade(ctx, from_json, deployment_upgrade_id, type, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -718,7 +717,7 @@ def cancel_snooze_deployment_upgrade(ctx, from_json, deployment_upgrade_id, type
 @cli_util.wrap_exceptions
 def cancel_snooze_deployment_upgrade_default_cancel_snooze_deployment_upgrade_details(ctx, from_json, deployment_upgrade_id, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -754,7 +753,7 @@ def cancel_snooze_deployment_upgrade_default_cancel_snooze_deployment_upgrade_de
 @cli_util.wrap_exceptions
 def change_connection_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -818,7 +817,7 @@ def change_connection_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_connection_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, subscription_id, is_default, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -884,7 +883,7 @@ def change_connection_subscription(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def change_database_registration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_registration_id, compartment_id, if_match):
 
-    if isinstance(database_registration_id, six.string_types) and len(database_registration_id.strip()) == 0:
+    if isinstance(database_registration_id, str) and len(database_registration_id.strip()) == 0:
         raise click.UsageError('Parameter --database-registration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -943,7 +942,7 @@ def change_database_registration_compartment(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def change_deployment_backup_compartment(ctx, from_json, deployment_backup_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -980,7 +979,7 @@ def change_deployment_backup_compartment(ctx, from_json, deployment_backup_id, c
 @cli_util.wrap_exceptions
 def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1044,7 +1043,7 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_deployment_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, subscription_id, is_default, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1111,7 +1110,7 @@ def change_deployment_subscription(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def change_pipeline_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1352,7 +1351,7 @@ def clone_pipeline_default_clone_pipeline_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def collect_deployment_diagnostic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, namespace_name, bucket_name, diagnostic_name_prefix, time_diagnostic_start, time_diagnostic_end, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1423,7 +1422,7 @@ def collect_deployment_diagnostic(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def collect_pipeline_diagnostic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, namespace_name, bucket_name, diagnostic_name_prefix, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1495,7 +1494,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.wrap_exceptions
 def copy_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, namespace_name, bucket_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1564,7 +1563,7 @@ def copy_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key, certificate_content, deployment_id, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7470,10 +7469,10 @@ def create_pipeline_create_zero_etl_pipeline_details(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, certificate_key, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_key, six.string_types) and len(certificate_key.strip()) == 0:
+    if isinstance(certificate_key, str) and len(certificate_key.strip()) == 0:
         raise click.UsageError('Parameter --certificate-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7533,7 +7532,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7592,7 +7591,7 @@ def delete_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_connection_assignment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_assignment_id, if_match, is_lock_override):
 
-    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+    if isinstance(connection_assignment_id, str) and len(connection_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7650,7 +7649,7 @@ def delete_connection_assignment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_database_registration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_registration_id, if_match):
 
-    if isinstance(database_registration_id, six.string_types) and len(database_registration_id.strip()) == 0:
+    if isinstance(database_registration_id, str) and len(database_registration_id.strip()) == 0:
         raise click.UsageError('Parameter --database-registration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7707,7 +7706,7 @@ def delete_database_registration(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7766,7 +7765,7 @@ def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7825,7 +7824,7 @@ def delete_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7880,7 +7879,7 @@ def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def deployment_wallet_exists(ctx, from_json, deployment_id, type, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7910,7 +7909,7 @@ def deployment_wallet_exists(ctx, from_json, deployment_id, type, if_match):
 @cli_util.wrap_exceptions
 def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_json, deployment_id, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7949,7 +7948,7 @@ def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_
 @cli_util.wrap_exceptions
 def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, master_encryption_key_id, secret_name, secret_compartment_id, description, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8019,7 +8018,7 @@ def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def generate_disaster_recovery_precheck_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8078,7 +8077,7 @@ def generate_disaster_recovery_precheck_report(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def generate_library_url(ctx, from_json, deployment_id, library_type, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8108,7 +8107,7 @@ def generate_library_url(ctx, from_json, deployment_id, library_type, if_match):
 @cli_util.wrap_exceptions
 def generate_library_url_generate_log_reader_component_library_url_details(ctx, from_json, deployment_id, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8139,10 +8138,10 @@ def generate_library_url_generate_log_reader_component_library_url_details(ctx, 
 @cli_util.wrap_exceptions
 def get_certificate(ctx, from_json, deployment_id, certificate_key):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
-    if isinstance(certificate_key, six.string_types) and len(certificate_key.strip()) == 0:
+    if isinstance(certificate_key, str) and len(certificate_key.strip()) == 0:
         raise click.UsageError('Parameter --certificate-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8166,7 +8165,7 @@ def get_certificate(ctx, from_json, deployment_id, certificate_key):
 @cli_util.wrap_exceptions
 def get_connection(ctx, from_json, connection_id, view):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8190,7 +8189,7 @@ def get_connection(ctx, from_json, connection_id, view):
 @cli_util.wrap_exceptions
 def get_connection_assignment(ctx, from_json, connection_assignment_id):
 
-    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+    if isinstance(connection_assignment_id, str) and len(connection_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8212,7 +8211,7 @@ def get_connection_assignment(ctx, from_json, connection_assignment_id):
 @cli_util.wrap_exceptions
 def get_database_registration(ctx, from_json, database_registration_id):
 
-    if isinstance(database_registration_id, six.string_types) and len(database_registration_id.strip()) == 0:
+    if isinstance(database_registration_id, str) and len(database_registration_id.strip()) == 0:
         raise click.UsageError('Parameter --database-registration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8234,7 +8233,7 @@ def get_database_registration(ctx, from_json, database_registration_id):
 @cli_util.wrap_exceptions
 def get_deployment(ctx, from_json, deployment_id):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8256,7 +8255,7 @@ def get_deployment(ctx, from_json, deployment_id):
 @cli_util.wrap_exceptions
 def get_deployment_backup(ctx, from_json, deployment_backup_id):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8278,7 +8277,7 @@ def get_deployment_backup(ctx, from_json, deployment_backup_id):
 @cli_util.wrap_exceptions
 def get_deployment_upgrade(ctx, from_json, deployment_upgrade_id):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8302,7 +8301,7 @@ def get_deployment_upgrade(ctx, from_json, deployment_upgrade_id):
 @cli_util.wrap_exceptions
 def get_disaster_recovery_precheck_report(ctx, from_json, deployment_id, availability_domain, fault_domain):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8326,7 +8325,7 @@ def get_disaster_recovery_precheck_report(ctx, from_json, deployment_id, availab
 @cli_util.wrap_exceptions
 def get_pipeline(ctx, from_json, pipeline_id):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8348,7 +8347,7 @@ def get_pipeline(ctx, from_json, pipeline_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8381,7 +8380,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, new_wallet_secret_id, wallet_backup_secret_name, wallet_backup_secret_compartment_id, master_encryption_key_id, description, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8510,7 +8509,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, deployment_id, lifec
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8898,7 +8897,7 @@ def list_deployment_peers(ctx, from_json, all_pages, page_size, deployment_id, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9146,7 +9145,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9323,7 +9322,7 @@ def list_messages(ctx, from_json, all_pages, page_size, deployment_id, limit, pa
 @cli_util.wrap_exceptions
 def list_pipeline_initialization_steps(ctx, from_json, all_pages, pipeline_id):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9354,7 +9353,7 @@ def list_pipeline_running_processes(ctx, from_json, all_pages, page_size, pipeli
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9414,7 +9413,7 @@ def list_pipeline_schema_tables(ctx, from_json, all_pages, page_size, pipeline_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9480,7 +9479,7 @@ def list_pipeline_schemas(ctx, from_json, all_pages, page_size, pipeline_id, dis
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9784,7 +9783,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9835,7 +9834,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9936,7 +9935,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def migrate_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10002,7 +10001,7 @@ def migrate_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def migrate_connection_secret_migrate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, secret_compartment_id, vault_id, key_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10070,7 +10069,7 @@ def migrate_connection_secret_migrate_connection_details(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def pause_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, type, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10133,7 +10132,7 @@ def pause_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def pause_pipeline_default_pause_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10198,7 +10197,7 @@ def pause_pipeline_default_pause_pipeline_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def refresh_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10261,7 +10260,7 @@ def refresh_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def refresh_connection_default_refresh_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10325,7 +10324,7 @@ def refresh_connection_default_refresh_connection_details(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def remove_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, if_match):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10382,7 +10381,7 @@ def remove_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def remove_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, type, if_match):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10440,7 +10439,7 @@ def remove_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def remove_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10502,7 +10501,7 @@ def remove_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def remove_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10559,7 +10558,7 @@ def remove_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def reschedule_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, type, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10616,7 +10615,7 @@ def reschedule_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def reschedule_deployment_upgrade_reschedule_deployment_upgrade_to_date_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, time_schedule, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10676,7 +10675,7 @@ def reschedule_deployment_upgrade_reschedule_deployment_upgrade_to_date_details(
 @cli_util.wrap_exceptions
 def restore_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10739,7 +10738,7 @@ def restore_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def restore_deployment_default_restore_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10804,7 +10803,7 @@ def restore_deployment_default_restore_deployment_details(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def rollback_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10867,7 +10866,7 @@ def rollback_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def rollback_deployment_upgrade_default_rollback_deployment_upgrade_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, if_match, is_lock_override):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10928,7 +10927,7 @@ def rollback_deployment_upgrade_default_rollback_deployment_upgrade_details(ctx,
 @cli_util.wrap_exceptions
 def snooze_deployment_upgrade(ctx, from_json, deployment_upgrade_id, type, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10958,7 +10957,7 @@ def snooze_deployment_upgrade(ctx, from_json, deployment_upgrade_id, type, if_ma
 @cli_util.wrap_exceptions
 def snooze_deployment_upgrade_default_snooze_deployment_upgrade_details(ctx, from_json, deployment_upgrade_id, if_match):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10994,7 +10993,7 @@ def snooze_deployment_upgrade_default_snooze_deployment_upgrade_details(ctx, fro
 @cli_util.wrap_exceptions
 def start_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11057,7 +11056,7 @@ def start_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def start_deployment_default_start_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11122,7 +11121,7 @@ def start_deployment_default_start_deployment_details(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def start_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, type, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11185,7 +11184,7 @@ def start_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def start_pipeline_default_start_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11250,7 +11249,7 @@ def start_pipeline_default_start_pipeline_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def stop_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11313,7 +11312,7 @@ def stop_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11378,7 +11377,7 @@ def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def stop_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, type, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11441,7 +11440,7 @@ def stop_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def stop_pipeline_default_stop_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11507,7 +11506,7 @@ def stop_pipeline_default_stop_pipeline_details(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def switchover_deployment_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, mode, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11569,7 +11568,7 @@ def switchover_deployment_peer(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def test_connection_assignment(ctx, from_json, connection_assignment_id, type, if_match):
 
-    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+    if isinstance(connection_assignment_id, str) and len(connection_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11599,7 +11598,7 @@ def test_connection_assignment(ctx, from_json, connection_assignment_id, type, i
 @cli_util.wrap_exceptions
 def test_connection_assignment_default_test_connection_assignment_details(ctx, from_json, connection_assignment_id, if_match):
 
-    if isinstance(connection_assignment_id, six.string_types) and len(connection_assignment_id.strip()) == 0:
+    if isinstance(connection_assignment_id, str) and len(connection_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11631,7 +11630,7 @@ def test_connection_assignment_default_test_connection_assignment_details(ctx, f
 @cli_util.wrap_exceptions
 def test_pipeline_connection(ctx, from_json, pipeline_id, type, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11662,7 +11661,7 @@ def test_pipeline_connection(ctx, from_json, pipeline_id, type, if_match):
 @cli_util.wrap_exceptions
 def test_pipeline_connection_default_test_pipeline_connection_details(ctx, from_json, pipeline_id, connection_id, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11735,7 +11734,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -11880,7 +11879,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_elasticsearch_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, servers, security_protocol, authentication_type, username, password, password_secret_id, fingerprint, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12041,7 +12040,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_google_big_query_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12203,7 +12202,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_oracle_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, username, password, password_secret_id, connection_string, authentication_mode, wallet, wallet_secret_id, session_mode, private_ip, database_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12374,7 +12373,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_amazon_redshift_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_url, username, password, password_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12532,7 +12531,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_oci_object_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, public_key_fingerprint, should_use_resource_principal, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12711,7 +12710,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_redis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, servers, security_protocol, authentication_type, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, redis_cluster_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -12904,7 +12903,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_mongo_db_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_string, username, password, password_secret_id, database_id, security_protocol, tls_ca_file, tls_certificate_key_file, tls_certificate_key_file_secret_id, tls_certificate_key_file_password, tls_certificate_key_file_password_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -13077,7 +13076,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_google_cloud_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, endpoint_parameterconflict, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -13233,7 +13232,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_oracle_ai_data_platform_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_url, tenancy_id, region_parameterconflict, user_id, private_key_file_secret_id, private_key_passphrase_secret_id, private_key_file, private_key_passphrase, public_key_fingerprint, should_use_resource_principal, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -13403,7 +13402,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_ai_model_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, model_key, max_input_chars, auth_details, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or auth_details:
@@ -13554,7 +13553,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_microsoft_fabric_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -13726,7 +13725,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_postgresql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, db_system_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or additional_attributes:
@@ -13926,7 +13925,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_microsoft_sqlserver_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_ca, should_validate_server_certificate, private_ip, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or additional_attributes:
@@ -14105,7 +14104,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_snowflake_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_url, authentication_type, username, password, password_secret_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -14270,7 +14269,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_hdfs_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, core_site_xml, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -14418,7 +14417,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_databricks_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, authentication_type, connection_url, password, password_secret_id, client_id, client_secret, client_secret_secret_id, storage_credential_name, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -14601,7 +14600,7 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @cli_util.wrap_exceptions
 def update_connection_update_kafka_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, stream_pool_id, cluster_id, bootstrap_servers, security_protocol, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, consumer_properties, producer_properties, should_use_resource_principal, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or bootstrap_servers:
@@ -14810,7 +14809,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_azure_data_lake_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, authentication_type, account_name, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, azure_authority_host, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -14988,7 +14987,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, access_key_id, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -15167,7 +15166,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_java_message_service_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, should_use_jndi, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, jndi_security_credentials_secret_id, connection_url, connection_factory, username, password, password_secret_id, security_protocol, authentication_type, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -15388,7 +15387,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_golden_gate_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, deployment_id, host, port, username, password, password_secret_id, private_ip, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -15548,7 +15547,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_google_pub_sub_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -15700,7 +15699,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_oracle_nosql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, public_key_fingerprint, should_use_resource_principal, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -15882,7 +15881,7 @@ For deprecated connections created with this field in the past, either the priva
 @cli_util.wrap_exceptions
 def update_connection_update_kafka_schema_registry_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, url, authentication_type, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -16074,7 +16073,7 @@ Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\"
 @cli_util.wrap_exceptions
 def update_connection_update_amazon_s3_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, access_key_id, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -16246,7 +16245,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.wrap_exceptions
 def update_connection_update_mysql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, username, password, password_secret_id, host, port, database_name, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, additional_attributes, db_system_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or additional_attributes:
@@ -16454,7 +16453,7 @@ Note: When provided, 'sslClientKeystash' field must not be provided.""")
 @cli_util.wrap_exceptions
 def update_connection_update_db2_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_client_keystoredb, ssl_client_keystoredb_secret_id, ssl_client_keystash, ssl_client_keystash_secret_id, ssl_server_certificate, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or additional_attributes:
@@ -16632,7 +16631,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_iceberg_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, catalog, storage, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes or catalog or storage:
@@ -16778,7 +16777,7 @@ For multiple hosts, provide a comma separated list. Example: `\"server1.example.
 @cli_util.wrap_exceptions
 def update_connection_update_generic_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, host, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -16922,7 +16921,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_connection_update_azure_synapse_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, connection_string, username, password, password_secret_id, if_match, is_lock_override):
 
-    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+    if isinstance(connection_id, str) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -17050,7 +17049,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.wrap_exceptions
 def update_database_registration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_registration_id, display_name, description, freeform_tags, defined_tags, fqdn, username, password, connection_string, session_mode, wallet, alias_name, if_match):
 
-    if isinstance(database_registration_id, six.string_types) and len(database_registration_id.strip()) == 0:
+    if isinstance(database_registration_id, str) and len(database_registration_id.strip()) == 0:
         raise click.UsageError('Parameter --database-registration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -17181,7 +17180,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, license_model, is_byol_cpu_core_count_limit_enabled, byol_cpu_core_count_limit, environment_type, description, freeform_tags, defined_tags, nsg_ids, subnet_id, load_balancer_subnet_id, is_public, fqdn, cpu_core_count, is_auto_scaling_enabled, placements, security_attributes, ogg_data, maintenance_window, maintenance_configuration, backup_schedule, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or placements or security_attributes or ogg_data or maintenance_window or maintenance_configuration or backup_schedule:
@@ -17317,7 +17316,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.wrap_exceptions
 def update_deployment_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_backup_id, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(deployment_backup_id, six.string_types) and len(deployment_backup_id.strip()) == 0:
+    if isinstance(deployment_backup_id, str) and len(deployment_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-backup-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -17399,7 +17398,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.wrap_exceptions
 def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, recipe_type, display_name, description, license_model, freeform_tags, defined_tags, subnet_id, cpu_core_count, is_auto_scaling_enabled, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -17509,7 +17508,7 @@ This option is a JSON list with items of type MappingRule.  For documentation on
 @cli_util.wrap_exceptions
 def update_pipeline_update_zero_etl_pipeline_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, license_model, freeform_tags, defined_tags, subnet_id, cpu_core_count, is_auto_scaling_enabled, process_options, mapping_rules, if_match, is_lock_override):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or process_options or mapping_rules:
@@ -17608,7 +17607,7 @@ def update_pipeline_update_zero_etl_pipeline_details(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def upgrade_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17672,7 +17671,7 @@ def upgrade_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def upgrade_deployment_upgrade_deployment_specific_release_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, ogg_version, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17737,7 +17736,7 @@ def upgrade_deployment_upgrade_deployment_specific_release_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def upgrade_deployment_upgrade_deployment_current_release_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17802,7 +17801,7 @@ def upgrade_deployment_upgrade_deployment_current_release_details(ctx, from_json
 @cli_util.wrap_exceptions
 def upgrade_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, type, if_match, is_lock_override):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17865,7 +17864,7 @@ def upgrade_deployment_upgrade(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def upgrade_deployment_upgrade_default_upgrade_deployment_upgrade_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_upgrade_id, if_match, is_lock_override):
 
-    if isinstance(deployment_upgrade_id, six.string_types) and len(deployment_upgrade_id.strip()) == 0:
+    if isinstance(deployment_upgrade_id, str) and len(deployment_upgrade_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-upgrade-id cannot be whitespace or empty string')
 
     kwargs = {}

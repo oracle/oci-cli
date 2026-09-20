@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -117,7 +116,7 @@ monitoring_root_group.add_command(alarm_suppression_group)
 @cli_util.wrap_exceptions
 def change_alarm_compartment(ctx, from_json, alarm_id, compartment_id, if_match):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -641,7 +640,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 @cli_util.wrap_exceptions
 def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, if_match):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -709,7 +708,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 @cli_util.wrap_exceptions
 def delete_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_suppression_id, if_match):
 
-    if isinstance(alarm_suppression_id, six.string_types) and len(alarm_suppression_id.strip()) == 0:
+    if isinstance(alarm_suppression_id, str) and len(alarm_suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-suppression-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -770,7 +769,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 @cli_util.wrap_exceptions
 def get_alarm(ctx, from_json, alarm_id):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -809,7 +808,7 @@ Example: `2023-01-02T01:00:00.789Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @cli_util.wrap_exceptions
 def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, timestamp_greater_than_or_equal_to, timestamp_less_than):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -845,7 +844,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 @cli_util.wrap_exceptions
 def get_alarm_suppression(ctx, from_json, alarm_suppression_id):
 
-    if isinstance(alarm_suppression_id, six.string_types) and len(alarm_suppression_id.strip()) == 0:
+    if isinstance(alarm_suppression_id, str) and len(alarm_suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-suppression-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1284,7 +1283,7 @@ This call is subject to a Monitoring limit that applies to the total number of r
 @cli_util.wrap_exceptions
 def remove_alarm_suppression(ctx, from_json, alarm_id, if_match):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1322,7 +1321,7 @@ Example: 500""")
 @cli_util.wrap_exceptions
 def retrieve_dimension_states(ctx, from_json, alarm_id, page, limit, dimension_filters, status):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1381,7 +1380,7 @@ Example: `2023-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @cli_util.wrap_exceptions
 def summarize_alarm_suppression_history(ctx, from_json, alarm_id, page, limit, dimensions, time_suppress_from_greater_than_or_equal_to, time_suppress_from_less_than):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1574,7 +1573,7 @@ This option is a JSON list with items of type AlarmOverride.  For documentation 
 @cli_util.wrap_exceptions
 def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, is_notifications_per_metric_dimension_enabled, message_format, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, overrides, rule_name, notification_version, notification_title, evaluation_slack_duration, alarm_summary, if_match):
 
-    if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
+    if isinstance(alarm_id, str) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
     if not force:
         if destinations or suppression or freeform_tags or defined_tags or overrides:

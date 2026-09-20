@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -45,7 +44,7 @@ recipient_invitation_root_group.add_command(recipient_invitation_group)
 @cli_util.wrap_exceptions
 def accept_recipient_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recipient_invitation_id, if_match):
 
-    if isinstance(recipient_invitation_id, six.string_types) and len(recipient_invitation_id.strip()) == 0:
+    if isinstance(recipient_invitation_id, str) and len(recipient_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --recipient-invitation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -96,7 +95,7 @@ def accept_recipient_invitation(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_recipient_invitation(ctx, from_json, recipient_invitation_id):
 
-    if isinstance(recipient_invitation_id, six.string_types) and len(recipient_invitation_id.strip()) == 0:
+    if isinstance(recipient_invitation_id, str) and len(recipient_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --recipient-invitation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -122,7 +121,7 @@ def get_recipient_invitation(ctx, from_json, recipient_invitation_id):
 @cli_util.wrap_exceptions
 def ignore_recipient_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recipient_invitation_id, if_match):
 
-    if isinstance(recipient_invitation_id, six.string_types) and len(recipient_invitation_id.strip()) == 0:
+    if isinstance(recipient_invitation_id, str) and len(recipient_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --recipient-invitation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -216,7 +215,7 @@ def list_recipient_invitations(ctx, from_json, all_pages, compartment_id, sender
 @cli_util.wrap_exceptions
 def update_recipient_invitation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recipient_invitation_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(recipient_invitation_id, six.string_types) and len(recipient_invitation_id.strip()) == 0:
+    if isinstance(recipient_invitation_id, str) and len(recipient_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --recipient-invitation-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

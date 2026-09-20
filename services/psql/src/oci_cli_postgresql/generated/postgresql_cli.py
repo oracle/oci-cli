@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -154,7 +153,7 @@ psql_root_group.add_command(backup_collection_group)
 @cli_util.wrap_exceptions
 def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, regions, retention_period, kms_key_ids, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -222,7 +221,7 @@ def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -280,7 +279,7 @@ def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def change_configuration_compartment(ctx, from_json, configuration_id, compartment_id, if_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def change_configuration_compartment(ctx, from_json, configuration_id, compartme
 @cli_util.wrap_exceptions
 def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, compartment_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -375,7 +374,7 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_role_to_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, primary_db_system_id, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -436,7 +435,7 @@ def change_role_to_replica(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def change_role_to_standalone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, change_mode, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1660,7 +1659,7 @@ def create_db_system_enabled_insight_details(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1716,7 +1715,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, if_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1780,7 +1779,7 @@ def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1837,7 +1836,7 @@ def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def failover_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, ad, db_instance_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1898,7 +1897,7 @@ def failover_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_backup(ctx, from_json, backup_id):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1920,7 +1919,7 @@ def get_backup(ctx, from_json, backup_id):
 @cli_util.wrap_exceptions
 def get_configuration(ctx, from_json, configuration_id):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1942,7 +1941,7 @@ def get_configuration(ctx, from_json, configuration_id):
 @cli_util.wrap_exceptions
 def get_connection_details(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1965,7 +1964,7 @@ def get_connection_details(ctx, from_json, db_system_id):
 @cli_util.wrap_exceptions
 def get_db_system(ctx, from_json, db_system_id, excluded_fields):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1989,7 +1988,7 @@ def get_db_system(ctx, from_json, db_system_id, excluded_fields):
 @cli_util.wrap_exceptions
 def get_default_configuration(ctx, from_json, default_configuration_id):
 
-    if isinstance(default_configuration_id, six.string_types) and len(default_configuration_id.strip()) == 0:
+    if isinstance(default_configuration_id, str) and len(default_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --default-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2011,7 +2010,7 @@ def get_default_configuration(ctx, from_json, default_configuration_id):
 @cli_util.wrap_exceptions
 def get_pitr_details(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2033,7 +2032,7 @@ def get_pitr_details(ctx, from_json, db_system_id):
 @cli_util.wrap_exceptions
 def get_primary_db_instance(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2055,7 +2054,7 @@ def get_primary_db_instance(ctx, from_json, db_system_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2235,7 +2234,7 @@ def list_db_system_replicas(ctx, from_json, all_pages, page_size, db_system_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2524,7 +2523,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2581,7 +2580,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2698,7 +2697,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, items, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2761,7 +2760,7 @@ def patch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def reset_master_user_password(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, password_details, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2822,7 +2821,7 @@ def reset_master_user_password(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def reset_master_user_password_plain_text_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, password_details_password, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2887,7 +2886,7 @@ def reset_master_user_password_plain_text_password_details(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def reset_master_user_password_vault_secret_password_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, password_details_secret_id, password_details_secret_version, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2953,7 +2952,7 @@ def reset_master_user_password_vault_secret_password_details(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def restart_db_instance_in_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_instance_id, restart_type, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3019,7 +3018,7 @@ Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @cli_util.wrap_exceptions
 def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, backup_id, ad, time_to_restore, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3091,7 +3090,7 @@ def restore_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def start_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, instance_ocpu_count, instance_memory_size_in_gbs, shape, config_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3162,7 +3161,7 @@ def start_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def stop_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3218,7 +3217,7 @@ def stop_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def switch_over(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replica_db_system_id, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3284,7 +3283,7 @@ def switch_over(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, display_name, description, retention_period, freeform_tags, defined_tags, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3364,7 +3363,7 @@ def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, display_name, description, freeform_tags, defined_tags, compatible_shapes, if_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or compatible_shapes:
@@ -3453,7 +3452,7 @@ def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, replication_config, network_details, kerberos_auth_details, odsp_insight_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_configuration_params or management_policy or storage_details or replication_config or network_details or kerberos_auth_details or odsp_insight_details or freeform_tags or defined_tags:
@@ -3572,7 +3571,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_db_system_disabled_kerberos_auth_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, replication_config, network_details, odsp_insight_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_configuration_params or management_policy or storage_details or replication_config or network_details or odsp_insight_details or freeform_tags or defined_tags:
@@ -3695,7 +3694,7 @@ This option is a JSON list with items of type KerberosCredential.  For documenta
 @cli_util.wrap_exceptions
 def update_db_system_enabled_kerberos_auth_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, kerberos_auth_details_credentials, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, replication_config, network_details, odsp_insight_details, freeform_tags, defined_tags, if_match, kerberos_auth_details_backup_credentials):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_configuration_params or management_policy or storage_details or replication_config or network_details or odsp_insight_details or freeform_tags or defined_tags:
@@ -3818,7 +3817,7 @@ def update_db_system_enabled_kerberos_auth_details(ctx, from_json, force, wait_f
 @cli_util.wrap_exceptions
 def update_db_system_disabled_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, replication_config, network_details, kerberos_auth_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_configuration_params or management_policy or storage_details or replication_config or network_details or kerberos_auth_details or freeform_tags or defined_tags:
@@ -3938,7 +3937,7 @@ def update_db_system_disabled_insight_details(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_db_system_enabled_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, odsp_insight_details_odsp_insight_list, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, replication_config, network_details, kerberos_auth_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_configuration_params or management_policy or storage_details or replication_config or network_details or kerberos_auth_details or freeform_tags or defined_tags:
@@ -4047,10 +4046,10 @@ def update_db_system_enabled_insight_details(ctx, from_json, force, wait_for_sta
 @cli_util.wrap_exceptions
 def update_db_system_db_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_instance_id, display_name, description, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
-    if isinstance(db_instance_id, six.string_types) and len(db_instance_id.strip()) == 0:
+    if isinstance(db_instance_id, str) and len(db_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --db-instance-id cannot be whitespace or empty string')
 
     kwargs = {}

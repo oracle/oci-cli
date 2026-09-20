@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -51,7 +50,7 @@ event_root_group.add_command(event_group)
 @cli_util.wrap_exceptions
 def change_event_compartment(ctx, from_json, compartment_id, event_id, if_match):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -85,7 +84,7 @@ def change_event_compartment(ctx, from_json, compartment_id, event_id, if_match)
 @cli_util.wrap_exceptions
 def delete_event(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, event_id, if_match):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -138,7 +137,7 @@ def delete_event(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_event_content(ctx, from_json, event_id, if_match):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -162,7 +161,7 @@ def delete_event_content(ctx, from_json, event_id, if_match):
 @cli_util.wrap_exceptions
 def get_event(ctx, from_json, event_id):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -185,7 +184,7 @@ def get_event(ctx, from_json, event_id):
 @cli_util.wrap_exceptions
 def get_event_content(ctx, from_json, file, event_id):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -233,7 +232,7 @@ def get_event_content(ctx, from_json, file, event_id):
 @cli_util.wrap_exceptions
 def import_event_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, event_id, if_match):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -378,7 +377,7 @@ def list_events(ctx, from_json, all_pages, page_size, event_summary, event_summa
 @cli_util.wrap_exceptions
 def update_event(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, event_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(event_id, six.string_types) and len(event_id.strip()) == 0:
+    if isinstance(event_id, str) and len(event_id.strip()) == 0:
         raise click.UsageError('Parameter --event-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

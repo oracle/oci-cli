@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -76,7 +75,7 @@ software_source_root_group.add_command(package_group_group)
 @cli_util.wrap_exceptions
 def add_packages_to_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, is_continue_on_missing_packages, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -160,7 +159,7 @@ def change_availability_of_software_sources(ctx, from_json, software_source_avai
 @cli_util.wrap_exceptions
 def change_software_source_compartment(ctx, from_json, software_source_id, compartment_id, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -763,7 +762,7 @@ def create_software_source_create_third_party_software_source_details(ctx, from_
 @cli_util.wrap_exceptions
 def delete_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -823,7 +822,7 @@ def delete_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_erratum(ctx, from_json, compartment_id, name):
 
-    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+    if isinstance(name, str) and len(name.strip()) == 0:
         raise click.UsageError('Parameter --name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -848,10 +847,10 @@ def get_erratum(ctx, from_json, compartment_id, name):
 @cli_util.wrap_exceptions
 def get_module_stream(ctx, from_json, software_source_id, module_name, stream_name):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
-    if isinstance(module_name, six.string_types) and len(module_name.strip()) == 0:
+    if isinstance(module_name, str) and len(module_name.strip()) == 0:
         raise click.UsageError('Parameter --module-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -878,10 +877,10 @@ def get_module_stream(ctx, from_json, software_source_id, module_name, stream_na
 @cli_util.wrap_exceptions
 def get_module_stream_profile(ctx, from_json, software_source_id, profile_name, module_name, stream_name):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
-    if isinstance(profile_name, six.string_types) and len(profile_name.strip()) == 0:
+    if isinstance(profile_name, str) and len(profile_name.strip()) == 0:
         raise click.UsageError('Parameter --profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -907,10 +906,10 @@ def get_module_stream_profile(ctx, from_json, software_source_id, profile_name, 
 @cli_util.wrap_exceptions
 def get_package_group(ctx, from_json, software_source_id, package_group_id):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
-    if isinstance(package_group_id, six.string_types) and len(package_group_id.strip()) == 0:
+    if isinstance(package_group_id, str) and len(package_group_id.strip()) == 0:
         raise click.UsageError('Parameter --package-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -934,10 +933,10 @@ def get_package_group(ctx, from_json, software_source_id, package_group_id):
 @cli_util.wrap_exceptions
 def get_software_package(ctx, from_json, software_source_id, software_package_name):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
-    if isinstance(software_package_name, six.string_types) and len(software_package_name.strip()) == 0:
+    if isinstance(software_package_name, str) and len(software_package_name.strip()) == 0:
         raise click.UsageError('Parameter --software-package-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -960,7 +959,7 @@ def get_software_package(ctx, from_json, software_source_id, software_package_na
 @cli_util.wrap_exceptions
 def get_software_package_by_name(ctx, from_json, software_package_name):
 
-    if isinstance(software_package_name, six.string_types) and len(software_package_name.strip()) == 0:
+    if isinstance(software_package_name, str) and len(software_package_name.strip()) == 0:
         raise click.UsageError('Parameter --software-package-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -982,7 +981,7 @@ def get_software_package_by_name(ctx, from_json, software_package_name):
 @cli_util.wrap_exceptions
 def get_software_source(ctx, from_json, software_source_id):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1005,7 +1004,7 @@ def get_software_source(ctx, from_json, software_source_id):
 @cli_util.wrap_exceptions
 def get_software_source_manifest(ctx, from_json, file, software_source_id):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1137,7 +1136,7 @@ def list_available_software_packages(ctx, from_json, all_pages, page_size, softw
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1432,7 +1431,7 @@ def list_module_stream_profiles(ctx, from_json, all_pages, page_size, software_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1503,7 +1502,7 @@ def list_module_streams(ctx, from_json, all_pages, page_size, software_source_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1576,7 +1575,7 @@ def list_package_groups(ctx, from_json, all_pages, page_size, software_source_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1655,7 +1654,7 @@ def list_software_package_software_sources(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_package_name, six.string_types) and len(software_package_name.strip()) == 0:
+    if isinstance(software_package_name, str) and len(software_package_name.strip()) == 0:
         raise click.UsageError('Parameter --software-package-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1740,7 +1739,7 @@ def list_software_packages(ctx, from_json, all_pages, page_size, software_source
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1927,7 +1926,7 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.wrap_exceptions
 def remove_packages_from_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1988,7 +1987,7 @@ def remove_packages_from_software_source(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def replace_packages_in_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2188,7 +2187,7 @@ def search_software_source_package_groups(ctx, from_json, software_source_ids, s
 @cli_util.wrap_exceptions
 def software_source_generate_metadata(ctx, from_json, software_source_id, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2223,7 +2222,7 @@ def software_source_generate_metadata(ctx, from_json, software_source_id, if_mat
 @cli_util.wrap_exceptions
 def update_software_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, software_source_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2317,7 +2316,7 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @cli_util.wrap_exceptions
 def update_software_source_update_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, vendor_software_sources, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_latest_content_only, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or vendor_software_sources or custom_software_source_filter:
@@ -2424,7 +2423,7 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def update_software_source_update_private_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, url, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2528,7 +2527,7 @@ def update_software_source_update_private_software_source_details(ctx, from_json
 @cli_util.wrap_exceptions
 def update_software_source_update_versioned_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2614,7 +2613,7 @@ def update_software_source_update_versioned_custom_software_source_details(ctx, 
 @cli_util.wrap_exceptions
 def update_software_source_update_vendor_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2706,7 +2705,7 @@ def update_software_source_update_vendor_software_source_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def update_software_source_update_third_party_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, url, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2805,7 +2804,7 @@ def update_software_source_update_third_party_software_source_details(ctx, from_
 @cli_util.wrap_exceptions
 def update_software_source_manifest(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, update_software_source_manifest_details, software_source_id, if_match):
 
-    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+    if isinstance(software_source_id, str) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
 
     kwargs = {}

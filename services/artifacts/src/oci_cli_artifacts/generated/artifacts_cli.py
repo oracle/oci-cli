@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -99,7 +98,7 @@ Example: `ocid1.containerrepo.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def change_container_repository_compartment(ctx, from_json, repository_id, compartment_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -132,7 +131,7 @@ Example: `ocid1.artifactrepository.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def change_repository_compartment(ctx, from_json, repository_id, compartment_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -471,7 +470,7 @@ Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def delete_container_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -537,7 +536,7 @@ Example: `ocid1.containersignature.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def delete_container_image_signature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_signature_id, if_match):
 
-    if isinstance(image_signature_id, six.string_types) and len(image_signature_id.strip()) == 0:
+    if isinstance(image_signature_id, str) and len(image_signature_id.strip()) == 0:
         raise click.UsageError('Parameter --image-signature-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -603,7 +602,7 @@ Example: `ocid1.containerrepo.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def delete_container_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -669,7 +668,7 @@ Example: `ocid1.genericartifact.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def delete_generic_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -738,13 +737,13 @@ Example: `1.1.2` or `1.2-beta-2`""")
 @cli_util.wrap_exceptions
 def delete_generic_artifact_by_path(ctx, from_json, repository_id, artifact_path, version_parameterconflict, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_path, six.string_types) and len(artifact_path.strip()) == 0:
+    if isinstance(artifact_path, str) and len(artifact_path.strip()) == 0:
         raise click.UsageError('Parameter --artifact-path cannot be whitespace or empty string')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -777,7 +776,7 @@ Example: `ocid1.artifactrepository.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -857,7 +856,7 @@ Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_container_image(ctx, from_json, image_id):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -881,7 +880,7 @@ Example: `ocid1.containersignature.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_container_image_signature(ctx, from_json, image_signature_id):
 
-    if isinstance(image_signature_id, six.string_types) and len(image_signature_id.strip()) == 0:
+    if isinstance(image_signature_id, str) and len(image_signature_id.strip()) == 0:
         raise click.UsageError('Parameter --image-signature-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -905,7 +904,7 @@ Example: `ocid1.containerrepo.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_container_repository(ctx, from_json, repository_id):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -929,7 +928,7 @@ Example: `ocid1.genericartifact.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_generic_artifact(ctx, from_json, artifact_id):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -959,13 +958,13 @@ Example: `1.1.2` or `1.2-beta-2`""")
 @cli_util.wrap_exceptions
 def get_generic_artifact_by_path(ctx, from_json, repository_id, artifact_path, version_parameterconflict):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_path, six.string_types) and len(artifact_path.strip()) == 0:
+    if isinstance(artifact_path, str) and len(artifact_path.strip()) == 0:
         raise click.UsageError('Parameter --artifact-path cannot be whitespace or empty string')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -991,7 +990,7 @@ Example: `ocid1.artifactrepository.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_repository(ctx, from_json, repository_id):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1450,7 +1449,7 @@ Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def remove_container_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, version_parameterconflict, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1509,7 +1508,7 @@ Example: `ocid1.containerimage.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def restore_container_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, version_parameterconflict, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1606,7 +1605,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_container_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1680,7 +1679,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_container_image_signature(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, image_signature_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(image_signature_id, six.string_types) and len(image_signature_id.strip()) == 0:
+    if isinstance(image_signature_id, str) and len(image_signature_id.strip()) == 0:
         raise click.UsageError('Parameter --image-signature-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1757,7 +1756,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_container_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, is_immutable, is_public, readme, freeform_tags, defined_tags, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
     if not force:
         if readme or freeform_tags or defined_tags:
@@ -1840,7 +1839,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_generic_artifact(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1917,13 +1916,13 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_generic_artifact_by_path(ctx, from_json, force, repository_id, artifact_path, version_parameterconflict, freeform_tags, defined_tags, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_path, six.string_types) and len(artifact_path.strip()) == 0:
+    if isinstance(artifact_path, str) and len(artifact_path.strip()) == 0:
         raise click.UsageError('Parameter --artifact-path cannot be whitespace or empty string')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1979,7 +1978,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, repository_type, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2062,7 +2061,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_repository_update_generic_repository_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

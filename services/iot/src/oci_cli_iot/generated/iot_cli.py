@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -106,7 +105,7 @@ iot_root_group.add_command(digital_twin_instance_group)
 @cli_util.wrap_exceptions
 def activate_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_flow_runtime_id, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -162,7 +161,7 @@ def activate_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def change_iot_domain_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, compartment_id, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -224,7 +223,7 @@ def change_iot_domain_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_iot_domain_data_retention_period(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, type, data_retention_period_in_days, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -286,7 +285,7 @@ def change_iot_domain_data_retention_period(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_iot_domain_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_group_id, compartment_id, if_match):
 
-    if isinstance(iot_domain_group_id, six.string_types) and len(iot_domain_group_id.strip()) == 0:
+    if isinstance(iot_domain_group_id, str) and len(iot_domain_group_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -347,7 +346,7 @@ def change_iot_domain_group_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_iot_flow_runtime_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_flow_runtime_id, compartment_id, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -408,7 +407,7 @@ def change_iot_flow_runtime_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def configure_iot_domain_data_access(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, type, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -469,7 +468,7 @@ def configure_iot_domain_data_access(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def configure_iot_domain_data_access_apex_data_access_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, db_workspace_admin_initial_password, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -532,7 +531,7 @@ def configure_iot_domain_data_access_apex_data_access_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def configure_iot_domain_data_access_direct_data_access_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, db_allow_listed_identity_group_names, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -595,7 +594,7 @@ def configure_iot_domain_data_access_direct_data_access_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def configure_iot_domain_data_access_ords_data_access_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, db_allowed_identity_domain_host, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -658,7 +657,7 @@ def configure_iot_domain_data_access_ords_data_access_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def configure_iot_domain_group_data_access(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_group_id, db_allow_listed_vcn_ids, if_match):
 
-    if isinstance(iot_domain_group_id, six.string_types) and len(iot_domain_group_id.strip()) == 0:
+    if isinstance(iot_domain_group_id, str) and len(iot_domain_group_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1291,7 +1290,7 @@ def create_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def deactivate_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_flow_runtime_id, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1347,7 +1346,7 @@ def deactivate_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_digital_twin_adapter(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_adapter_id, if_match):
 
-    if isinstance(digital_twin_adapter_id, six.string_types) and len(digital_twin_adapter_id.strip()) == 0:
+    if isinstance(digital_twin_adapter_id, str) and len(digital_twin_adapter_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-adapter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1411,7 +1410,7 @@ def delete_digital_twin_adapter(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_digital_twin_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, if_match):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1475,7 +1474,7 @@ def delete_digital_twin_instance(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_digital_twin_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_model_id, if_match):
 
-    if isinstance(digital_twin_model_id, six.string_types) and len(digital_twin_model_id.strip()) == 0:
+    if isinstance(digital_twin_model_id, str) and len(digital_twin_model_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1539,7 +1538,7 @@ def delete_digital_twin_model(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_digital_twin_relationship(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_relationship_id, if_match):
 
-    if isinstance(digital_twin_relationship_id, six.string_types) and len(digital_twin_relationship_id.strip()) == 0:
+    if isinstance(digital_twin_relationship_id, str) and len(digital_twin_relationship_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-relationship-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1603,7 +1602,7 @@ def delete_digital_twin_relationship(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_iot_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1659,7 +1658,7 @@ def delete_iot_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_iot_domain_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_group_id, if_match):
 
-    if isinstance(iot_domain_group_id, six.string_types) and len(iot_domain_group_id.strip()) == 0:
+    if isinstance(iot_domain_group_id, str) and len(iot_domain_group_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1715,7 +1714,7 @@ def delete_iot_domain_group(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_flow_runtime_id, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1766,7 +1765,7 @@ def delete_iot_flow_runtime(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def get_digital_twin_adapter(ctx, from_json, digital_twin_adapter_id):
 
-    if isinstance(digital_twin_adapter_id, six.string_types) and len(digital_twin_adapter_id.strip()) == 0:
+    if isinstance(digital_twin_adapter_id, str) and len(digital_twin_adapter_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-adapter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1788,7 +1787,7 @@ def get_digital_twin_adapter(ctx, from_json, digital_twin_adapter_id):
 @cli_util.wrap_exceptions
 def get_digital_twin_instance(ctx, from_json, digital_twin_instance_id):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1811,7 +1810,7 @@ def get_digital_twin_instance(ctx, from_json, digital_twin_instance_id):
 @cli_util.wrap_exceptions
 def get_digital_twin_instance_content(ctx, from_json, digital_twin_instance_id, should_include_metadata):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1835,7 +1834,7 @@ def get_digital_twin_instance_content(ctx, from_json, digital_twin_instance_id, 
 @cli_util.wrap_exceptions
 def get_digital_twin_model(ctx, from_json, digital_twin_model_id):
 
-    if isinstance(digital_twin_model_id, six.string_types) and len(digital_twin_model_id.strip()) == 0:
+    if isinstance(digital_twin_model_id, str) and len(digital_twin_model_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1857,7 +1856,7 @@ def get_digital_twin_model(ctx, from_json, digital_twin_model_id):
 @cli_util.wrap_exceptions
 def get_digital_twin_model_spec(ctx, from_json, digital_twin_model_id):
 
-    if isinstance(digital_twin_model_id, six.string_types) and len(digital_twin_model_id.strip()) == 0:
+    if isinstance(digital_twin_model_id, str) and len(digital_twin_model_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1879,7 +1878,7 @@ def get_digital_twin_model_spec(ctx, from_json, digital_twin_model_id):
 @cli_util.wrap_exceptions
 def get_digital_twin_relationship(ctx, from_json, digital_twin_relationship_id):
 
-    if isinstance(digital_twin_relationship_id, six.string_types) and len(digital_twin_relationship_id.strip()) == 0:
+    if isinstance(digital_twin_relationship_id, str) and len(digital_twin_relationship_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-relationship-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1901,7 +1900,7 @@ def get_digital_twin_relationship(ctx, from_json, digital_twin_relationship_id):
 @cli_util.wrap_exceptions
 def get_iot_domain(ctx, from_json, iot_domain_id):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1923,7 +1922,7 @@ def get_iot_domain(ctx, from_json, iot_domain_id):
 @cli_util.wrap_exceptions
 def get_iot_domain_group(ctx, from_json, iot_domain_group_id):
 
-    if isinstance(iot_domain_group_id, six.string_types) and len(iot_domain_group_id.strip()) == 0:
+    if isinstance(iot_domain_group_id, str) and len(iot_domain_group_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1945,7 +1944,7 @@ def get_iot_domain_group(ctx, from_json, iot_domain_group_id):
 @cli_util.wrap_exceptions
 def get_iot_flow_runtime(ctx, from_json, iot_flow_runtime_id):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1967,7 +1966,7 @@ def get_iot_flow_runtime(ctx, from_json, iot_flow_runtime_id):
 @cli_util.wrap_exceptions
 def get_iot_flow_runtime_flows(ctx, from_json, iot_flow_runtime_id):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1989,7 +1988,7 @@ def get_iot_flow_runtime_flows(ctx, from_json, iot_flow_runtime_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2016,7 +2015,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def invoke_raw_command(ctx, from_json, digital_twin_instance_id, request_endpoint, request_data_format, request_duration, response_duration, response_endpoint):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2059,7 +2058,7 @@ def invoke_raw_command(ctx, from_json, digital_twin_instance_id, request_endpoin
 @cli_util.wrap_exceptions
 def invoke_raw_command_invoke_raw_binary_command_details(ctx, from_json, digital_twin_instance_id, request_endpoint, request_duration, response_duration, response_endpoint, request_data_content_type, request_data):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2109,7 +2108,7 @@ def invoke_raw_command_invoke_raw_binary_command_details(ctx, from_json, digital
 @cli_util.wrap_exceptions
 def invoke_raw_command_invoke_raw_text_command_details(ctx, from_json, digital_twin_instance_id, request_endpoint, request_duration, response_duration, response_endpoint, request_data_content_type, request_data):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2159,7 +2158,7 @@ def invoke_raw_command_invoke_raw_text_command_details(ctx, from_json, digital_t
 @cli_util.wrap_exceptions
 def invoke_raw_command_invoke_raw_json_command_details(ctx, from_json, digital_twin_instance_id, request_endpoint, request_duration, response_duration, response_endpoint, request_data_content_type, request_data):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2689,7 +2688,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2746,7 +2745,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2874,7 +2873,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_digital_twin_adapter(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_adapter_id, display_name, description, inbound_envelope, inbound_routes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(digital_twin_adapter_id, six.string_types) and len(digital_twin_adapter_id.strip()) == 0:
+    if isinstance(digital_twin_adapter_id, str) and len(digital_twin_adapter_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-adapter-id cannot be whitespace or empty string')
     if not force:
         if inbound_envelope or inbound_routes or freeform_tags or defined_tags:
@@ -2967,7 +2966,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, connectivity_type, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, gateways, freeform_tags, defined_tags, if_match):
 
-    if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
+    if isinstance(digital_twin_instance_id, str) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
     if not force:
         if gateways or freeform_tags or defined_tags:
@@ -3068,7 +3067,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_digital_twin_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_model_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(digital_twin_model_id, six.string_types) and len(digital_twin_model_id.strip()) == 0:
+    if isinstance(digital_twin_model_id, str) and len(digital_twin_model_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3149,7 +3148,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_digital_twin_relationship(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_relationship_id, display_name, description, content, freeform_tags, defined_tags, if_match):
 
-    if isinstance(digital_twin_relationship_id, six.string_types) and len(digital_twin_relationship_id.strip()) == 0:
+    if isinstance(digital_twin_relationship_id, str) and len(digital_twin_relationship_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-relationship-id cannot be whitespace or empty string')
     if not force:
         if content or freeform_tags or defined_tags:
@@ -3232,7 +3231,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_iot_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(iot_domain_id, six.string_types) and len(iot_domain_id.strip()) == 0:
+    if isinstance(iot_domain_id, str) and len(iot_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3316,7 +3315,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_iot_domain_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_domain_group_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(iot_domain_group_id, six.string_types) and len(iot_domain_group_id.strip()) == 0:
+    if isinstance(iot_domain_group_id, str) and len(iot_domain_group_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-domain-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3403,7 +3402,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_iot_flow_runtime(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, iot_flow_runtime_id, display_name, description, scale, network_config, log_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
     if not force:
         if network_config or log_config or freeform_tags or defined_tags:
@@ -3485,7 +3484,7 @@ def update_iot_flow_runtime(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_iot_flow_runtime_flows(ctx, from_json, iot_flow_runtime_id, flows_document, if_match):
 
-    if isinstance(iot_flow_runtime_id, six.string_types) and len(iot_flow_runtime_id.strip()) == 0:
+    if isinstance(iot_flow_runtime_id, str) and len(iot_flow_runtime_id.strip()) == 0:
         raise click.UsageError('Parameter --iot-flow-runtime-id cannot be whitespace or empty string')
 
     kwargs = {}

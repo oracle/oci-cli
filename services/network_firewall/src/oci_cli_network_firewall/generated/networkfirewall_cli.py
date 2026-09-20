@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -164,7 +163,7 @@ network_firewall_root_group.add_command(security_rule_group)
 @cli_util.wrap_exceptions
 def apply_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, firewalls, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -227,7 +226,7 @@ def apply_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def bulk_upload_address_lists(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_address_lists_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -288,7 +287,7 @@ def bulk_upload_address_lists(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def bulk_upload_application_groups(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_application_groups_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -349,7 +348,7 @@ def bulk_upload_application_groups(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def bulk_upload_applications(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_applications_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -410,7 +409,7 @@ def bulk_upload_applications(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def bulk_upload_decryption_profiles(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_decryption_profiles_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -471,7 +470,7 @@ def bulk_upload_decryption_profiles(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def bulk_upload_decryption_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_decryption_rules_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -532,7 +531,7 @@ def bulk_upload_decryption_rules(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def bulk_upload_mapped_secrets(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_mapped_secrets_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -593,7 +592,7 @@ def bulk_upload_mapped_secrets(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def bulk_upload_nat_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_nat_rules_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -654,7 +653,7 @@ def bulk_upload_nat_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def bulk_upload_security_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_security_rules_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -715,7 +714,7 @@ def bulk_upload_security_rules(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def bulk_upload_service_lists(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_service_lists_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -776,7 +775,7 @@ def bulk_upload_service_lists(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def bulk_upload_services(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_services_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -837,7 +836,7 @@ def bulk_upload_services(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def bulk_upload_tunnel_inspection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_tunnel_inspection_rules_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -898,7 +897,7 @@ def bulk_upload_tunnel_inspection_rules(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def bulk_upload_url_lists(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_url_lists_details, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -956,7 +955,7 @@ def bulk_upload_url_lists(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -985,7 +984,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_network_firewall_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, compartment_id, if_match):
 
-    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+    if isinstance(network_firewall_id, str) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1043,7 +1042,7 @@ def change_network_firewall_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_policy_id, compartment_id, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1081,7 +1080,7 @@ def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_
 @cli_util.wrap_exceptions
 def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, compartment_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1155,7 +1154,7 @@ def clone_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, addresses, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1190,7 +1189,7 @@ def create_address_list(ctx, from_json, network_firewall_policy_id, name, type, 
 @cli_util.wrap_exceptions
 def create_application(ctx, from_json, network_firewall_policy_id, name, type, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1227,7 +1226,7 @@ def create_application(ctx, from_json, network_firewall_policy_id, name, type, d
 @cli_util.wrap_exceptions
 def create_application_create_icmp_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, description, icmp_code):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1267,7 +1266,7 @@ def create_application_create_icmp_application_details(ctx, from_json, network_f
 @cli_util.wrap_exceptions
 def create_application_create_icmp6_application_details(ctx, from_json, network_firewall_policy_id, name, icmp_type, description, icmp_code):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1306,7 +1305,7 @@ def create_application_create_icmp6_application_details(ctx, from_json, network_
 @cli_util.wrap_exceptions
 def create_application_group(ctx, from_json, network_firewall_policy_id, name, apps, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1342,7 +1341,7 @@ def create_application_group(ctx, from_json, network_firewall_policy_id, name, a
 @cli_util.wrap_exceptions
 def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, name, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1378,7 +1377,7 @@ def create_decryption_profile(ctx, from_json, network_firewall_policy_id, type, 
 @cli_util.wrap_exceptions
 def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, name, description, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1430,7 +1429,7 @@ def create_decryption_profile_create_ssl_inbound_inspection_profile_details(ctx,
 @cli_util.wrap_exceptions
 def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, name, description, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1499,7 +1498,7 @@ def create_decryption_profile_create_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.wrap_exceptions
 def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, description, decryption_profile, secret, secrets, position):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1549,7 +1548,7 @@ def create_decryption_rule(ctx, from_json, network_firewall_policy_id, name, con
 @cli_util.wrap_exceptions
 def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, source, type, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1588,7 +1587,7 @@ def create_mapped_secret(ctx, from_json, network_firewall_policy_id, name, sourc
 @cli_util.wrap_exceptions
 def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, name, type, vault_secret_id, version_number, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1629,7 +1628,7 @@ def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, netw
 @cli_util.wrap_exceptions
 def create_nat_rule(ctx, from_json, network_firewall_policy_id, name, type, description, position):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1670,7 +1669,7 @@ def create_nat_rule(ctx, from_json, network_firewall_policy_id, name, type, desc
 @cli_util.wrap_exceptions
 def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_policy_id, name, condition, action, description, position):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1885,7 +1884,7 @@ def create_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condition, action, inspection, position, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1926,7 +1925,7 @@ def create_security_rule(ctx, from_json, network_firewall_policy_id, name, condi
 @cli_util.wrap_exceptions
 def create_service(ctx, from_json, network_firewall_policy_id, name, type, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1962,7 +1961,7 @@ def create_service(ctx, from_json, network_firewall_policy_id, name, type, descr
 @cli_util.wrap_exceptions
 def create_service_create_udp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1998,7 +1997,7 @@ def create_service_create_udp_service_details(ctx, from_json, network_firewall_p
 @cli_util.wrap_exceptions
 def create_service_create_tcp_service_details(ctx, from_json, network_firewall_policy_id, name, port_ranges, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2034,7 +2033,7 @@ def create_service_create_tcp_service_details(ctx, from_json, network_firewall_p
 @cli_util.wrap_exceptions
 def create_service_list(ctx, from_json, network_firewall_policy_id, name, services, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2074,7 +2073,7 @@ def create_service_list(ctx, from_json, network_firewall_policy_id, name, servic
 @cli_util.wrap_exceptions
 def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, name, protocol, action, position, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2119,7 +2118,7 @@ def create_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, na
 @cli_util.wrap_exceptions
 def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from_json, network_firewall_policy_id, name, condition, action, position, description, profile_parameterconflict):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2164,7 +2163,7 @@ def create_tunnel_inspection_rule_create_vxlan_inspection_rule_details(ctx, from
 @cli_util.wrap_exceptions
 def create_url_list(ctx, from_json, network_firewall_policy_id, name, urls, description):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2198,10 +2197,10 @@ def create_url_list(ctx, from_json, network_firewall_policy_id, name, urls, desc
 @cli_util.wrap_exceptions
 def delete_address_list(ctx, from_json, network_firewall_policy_id, address_list_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(address_list_name, six.string_types) and len(address_list_name.strip()) == 0:
+    if isinstance(address_list_name, str) and len(address_list_name.strip()) == 0:
         raise click.UsageError('Parameter --address-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2229,10 +2228,10 @@ def delete_address_list(ctx, from_json, network_firewall_policy_id, address_list
 @cli_util.wrap_exceptions
 def delete_application(ctx, from_json, network_firewall_policy_id, application_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_name, six.string_types) and len(application_name.strip()) == 0:
+    if isinstance(application_name, str) and len(application_name.strip()) == 0:
         raise click.UsageError('Parameter --application-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2260,10 +2259,10 @@ def delete_application(ctx, from_json, network_firewall_policy_id, application_n
 @cli_util.wrap_exceptions
 def delete_application_group(ctx, from_json, network_firewall_policy_id, application_group_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_group_name, six.string_types) and len(application_group_name.strip()) == 0:
+    if isinstance(application_group_name, str) and len(application_group_name.strip()) == 0:
         raise click.UsageError('Parameter --application-group-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2291,10 +2290,10 @@ def delete_application_group(ctx, from_json, network_firewall_policy_id, applica
 @cli_util.wrap_exceptions
 def delete_decryption_profile(ctx, from_json, network_firewall_policy_id, decryption_profile_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_profile_name, six.string_types) and len(decryption_profile_name.strip()) == 0:
+    if isinstance(decryption_profile_name, str) and len(decryption_profile_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2322,10 +2321,10 @@ def delete_decryption_profile(ctx, from_json, network_firewall_policy_id, decryp
 @cli_util.wrap_exceptions
 def delete_decryption_rule(ctx, from_json, network_firewall_policy_id, decryption_rule_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_rule_name, six.string_types) and len(decryption_rule_name.strip()) == 0:
+    if isinstance(decryption_rule_name, str) and len(decryption_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2353,10 +2352,10 @@ def delete_decryption_rule(ctx, from_json, network_firewall_policy_id, decryptio
 @cli_util.wrap_exceptions
 def delete_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(mapped_secret_name, six.string_types) and len(mapped_secret_name.strip()) == 0:
+    if isinstance(mapped_secret_name, str) and len(mapped_secret_name.strip()) == 0:
         raise click.UsageError('Parameter --mapped-secret-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2384,10 +2383,10 @@ def delete_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
 @cli_util.wrap_exceptions
 def delete_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+    if isinstance(nat_rule_name, str) and len(nat_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2417,7 +2416,7 @@ def delete_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name, i
 @cli_util.wrap_exceptions
 def delete_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, if_match):
 
-    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+    if isinstance(network_firewall_id, str) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2473,7 +2472,7 @@ def delete_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2527,10 +2526,10 @@ def delete_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_security_rule(ctx, from_json, network_firewall_policy_id, security_rule_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(security_rule_name, six.string_types) and len(security_rule_name.strip()) == 0:
+    if isinstance(security_rule_name, str) and len(security_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --security-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2558,10 +2557,10 @@ def delete_security_rule(ctx, from_json, network_firewall_policy_id, security_ru
 @cli_util.wrap_exceptions
 def delete_service(ctx, from_json, network_firewall_policy_id, service_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2589,10 +2588,10 @@ def delete_service(ctx, from_json, network_firewall_policy_id, service_name, if_
 @cli_util.wrap_exceptions
 def delete_service_list(ctx, from_json, network_firewall_policy_id, service_list_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_list_name, six.string_types) and len(service_list_name.strip()) == 0:
+    if isinstance(service_list_name, str) and len(service_list_name.strip()) == 0:
         raise click.UsageError('Parameter --service-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2620,10 +2619,10 @@ def delete_service_list(ctx, from_json, network_firewall_policy_id, service_list
 @cli_util.wrap_exceptions
 def delete_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, tunnel_inspection_rule_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_inspection_rule_name, six.string_types) and len(tunnel_inspection_rule_name.strip()) == 0:
+    if isinstance(tunnel_inspection_rule_name, str) and len(tunnel_inspection_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-inspection-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2651,10 +2650,10 @@ def delete_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, tu
 @cli_util.wrap_exceptions
 def delete_url_list(ctx, from_json, network_firewall_policy_id, url_list_name, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(url_list_name, six.string_types) and len(url_list_name.strip()) == 0:
+    if isinstance(url_list_name, str) and len(url_list_name.strip()) == 0:
         raise click.UsageError('Parameter --url-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2680,10 +2679,10 @@ def delete_url_list(ctx, from_json, network_firewall_policy_id, url_list_name, i
 @cli_util.wrap_exceptions
 def get_address_list(ctx, from_json, network_firewall_policy_id, address_list_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(address_list_name, six.string_types) and len(address_list_name.strip()) == 0:
+    if isinstance(address_list_name, str) and len(address_list_name.strip()) == 0:
         raise click.UsageError('Parameter --address-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2709,10 +2708,10 @@ def get_address_list(ctx, from_json, network_firewall_policy_id, address_list_na
 @cli_util.wrap_exceptions
 def get_application(ctx, from_json, network_firewall_policy_id, application_name, limit, page):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_name, six.string_types) and len(application_name.strip()) == 0:
+    if isinstance(application_name, str) and len(application_name.strip()) == 0:
         raise click.UsageError('Parameter --application-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2740,10 +2739,10 @@ def get_application(ctx, from_json, network_firewall_policy_id, application_name
 @cli_util.wrap_exceptions
 def get_application_group(ctx, from_json, network_firewall_policy_id, application_group_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_group_name, six.string_types) and len(application_group_name.strip()) == 0:
+    if isinstance(application_group_name, str) and len(application_group_name.strip()) == 0:
         raise click.UsageError('Parameter --application-group-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2767,10 +2766,10 @@ def get_application_group(ctx, from_json, network_firewall_policy_id, applicatio
 @cli_util.wrap_exceptions
 def get_decryption_profile(ctx, from_json, network_firewall_policy_id, decryption_profile_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_profile_name, six.string_types) and len(decryption_profile_name.strip()) == 0:
+    if isinstance(decryption_profile_name, str) and len(decryption_profile_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2796,10 +2795,10 @@ def get_decryption_profile(ctx, from_json, network_firewall_policy_id, decryptio
 @cli_util.wrap_exceptions
 def get_decryption_rule(ctx, from_json, network_firewall_policy_id, decryption_rule_name, limit, page):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_rule_name, six.string_types) and len(decryption_rule_name.strip()) == 0:
+    if isinstance(decryption_rule_name, str) and len(decryption_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2829,10 +2828,10 @@ def get_decryption_rule(ctx, from_json, network_firewall_policy_id, decryption_r
 @cli_util.wrap_exceptions
 def get_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_name, limit, page):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(mapped_secret_name, six.string_types) and len(mapped_secret_name.strip()) == 0:
+    if isinstance(mapped_secret_name, str) and len(mapped_secret_name.strip()) == 0:
         raise click.UsageError('Parameter --mapped-secret-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2860,10 +2859,10 @@ def get_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_
 @cli_util.wrap_exceptions
 def get_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+    if isinstance(nat_rule_name, str) and len(nat_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2886,7 +2885,7 @@ def get_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name):
 @cli_util.wrap_exceptions
 def get_network_firewall(ctx, from_json, network_firewall_id):
 
-    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+    if isinstance(network_firewall_id, str) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2908,7 +2907,7 @@ def get_network_firewall(ctx, from_json, network_firewall_id):
 @cli_util.wrap_exceptions
 def get_network_firewall_health_status(ctx, from_json, network_firewall_id):
 
-    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+    if isinstance(network_firewall_id, str) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2930,7 +2929,7 @@ def get_network_firewall_health_status(ctx, from_json, network_firewall_id):
 @cli_util.wrap_exceptions
 def get_network_firewall_policy(ctx, from_json, network_firewall_policy_id):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2953,10 +2952,10 @@ def get_network_firewall_policy(ctx, from_json, network_firewall_policy_id):
 @cli_util.wrap_exceptions
 def get_security_rule(ctx, from_json, network_firewall_policy_id, security_rule_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(security_rule_name, six.string_types) and len(security_rule_name.strip()) == 0:
+    if isinstance(security_rule_name, str) and len(security_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --security-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2982,10 +2981,10 @@ def get_security_rule(ctx, from_json, network_firewall_policy_id, security_rule_
 @cli_util.wrap_exceptions
 def get_service(ctx, from_json, network_firewall_policy_id, service_name, limit, page):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3013,10 +3012,10 @@ def get_service(ctx, from_json, network_firewall_policy_id, service_name, limit,
 @cli_util.wrap_exceptions
 def get_service_list(ctx, from_json, network_firewall_policy_id, service_list_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_list_name, six.string_types) and len(service_list_name.strip()) == 0:
+    if isinstance(service_list_name, str) and len(service_list_name.strip()) == 0:
         raise click.UsageError('Parameter --service-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3040,10 +3039,10 @@ def get_service_list(ctx, from_json, network_firewall_policy_id, service_list_na
 @cli_util.wrap_exceptions
 def get_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, tunnel_inspection_rule_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_inspection_rule_name, six.string_types) and len(tunnel_inspection_rule_name.strip()) == 0:
+    if isinstance(tunnel_inspection_rule_name, str) and len(tunnel_inspection_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-inspection-rule-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3067,10 +3066,10 @@ def get_tunnel_inspection_rule(ctx, from_json, network_firewall_policy_id, tunne
 @cli_util.wrap_exceptions
 def get_url_list(ctx, from_json, network_firewall_policy_id, url_list_name):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(url_list_name, six.string_types) and len(url_list_name.strip()) == 0:
+    if isinstance(url_list_name, str) and len(url_list_name.strip()) == 0:
         raise click.UsageError('Parameter --url-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3093,7 +3092,7 @@ def get_url_list(ctx, from_json, network_firewall_policy_id, url_list_name):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3125,7 +3124,7 @@ def list_address_lists(ctx, from_json, all_pages, page_size, network_firewall_po
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3185,7 +3184,7 @@ def list_application_groups(ctx, from_json, all_pages, page_size, network_firewa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3245,7 +3244,7 @@ def list_applications(ctx, from_json, all_pages, page_size, network_firewall_pol
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3305,7 +3304,7 @@ def list_decryption_profiles(ctx, from_json, all_pages, page_size, network_firew
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3366,7 +3365,7 @@ def list_decryption_rules(ctx, from_json, all_pages, page_size, network_firewall
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3428,7 +3427,7 @@ def list_mapped_secrets(ctx, from_json, all_pages, page_size, network_firewall_p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3489,7 +3488,7 @@ def list_nat_rules(ctx, from_json, all_pages, page_size, network_firewall_policy
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3686,7 +3685,7 @@ def list_security_rules(ctx, from_json, all_pages, page_size, network_firewall_p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3748,7 +3747,7 @@ def list_service_lists(ctx, from_json, all_pages, page_size, network_firewall_po
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3808,7 +3807,7 @@ def list_services(ctx, from_json, all_pages, page_size, network_firewall_policy_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3869,7 +3868,7 @@ def list_tunnel_inspection_rules(ctx, from_json, all_pages, page_size, network_f
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3931,7 +3930,7 @@ def list_url_lists(ctx, from_json, all_pages, page_size, network_firewall_policy
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3990,7 +3989,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4047,7 +4046,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4162,7 +4161,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def migrate_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4217,10 +4216,10 @@ def migrate_network_firewall_policy(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_address_list(ctx, from_json, network_firewall_policy_id, address_list_name, type, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(address_list_name, six.string_types) and len(address_list_name.strip()) == 0:
+    if isinstance(address_list_name, str) and len(address_list_name.strip()) == 0:
         raise click.UsageError('Parameter --address-list-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4258,10 +4257,10 @@ def update_address_list(ctx, from_json, network_firewall_policy_id, address_list
 @cli_util.wrap_exceptions
 def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(address_list_name, six.string_types) and len(address_list_name.strip()) == 0:
+    if isinstance(address_list_name, str) and len(address_list_name.strip()) == 0:
         raise click.UsageError('Parameter --address-list-name cannot be whitespace or empty string')
     if not force:
         if addresses:
@@ -4305,10 +4304,10 @@ def update_address_list_update_fqdn_address_list_details(ctx, from_json, force, 
 @cli_util.wrap_exceptions
 def update_address_list_update_ip_address_list_details(ctx, from_json, force, network_firewall_policy_id, address_list_name, addresses, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(address_list_name, six.string_types) and len(address_list_name.strip()) == 0:
+    if isinstance(address_list_name, str) and len(address_list_name.strip()) == 0:
         raise click.UsageError('Parameter --address-list-name cannot be whitespace or empty string')
     if not force:
         if addresses:
@@ -4351,10 +4350,10 @@ def update_address_list_update_ip_address_list_details(ctx, from_json, force, ne
 @cli_util.wrap_exceptions
 def update_application(ctx, from_json, network_firewall_policy_id, application_name, type, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_name, six.string_types) and len(application_name.strip()) == 0:
+    if isinstance(application_name, str) and len(application_name.strip()) == 0:
         raise click.UsageError('Parameter --application-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4392,10 +4391,10 @@ def update_application(ctx, from_json, network_firewall_policy_id, application_n
 @cli_util.wrap_exceptions
 def update_application_update_icmp6_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, description, icmp_code, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_name, six.string_types) and len(application_name.strip()) == 0:
+    if isinstance(application_name, str) and len(application_name.strip()) == 0:
         raise click.UsageError('Parameter --application-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4438,10 +4437,10 @@ def update_application_update_icmp6_application_details(ctx, from_json, network_
 @cli_util.wrap_exceptions
 def update_application_update_icmp_application_details(ctx, from_json, network_firewall_policy_id, application_name, icmp_type, description, icmp_code, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_name, six.string_types) and len(application_name.strip()) == 0:
+    if isinstance(application_name, str) and len(application_name.strip()) == 0:
         raise click.UsageError('Parameter --application-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4484,10 +4483,10 @@ def update_application_update_icmp_application_details(ctx, from_json, network_f
 @cli_util.wrap_exceptions
 def update_application_group(ctx, from_json, force, network_firewall_policy_id, application_group_name, apps, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(application_group_name, six.string_types) and len(application_group_name.strip()) == 0:
+    if isinstance(application_group_name, str) and len(application_group_name.strip()) == 0:
         raise click.UsageError('Parameter --application-group-name cannot be whitespace or empty string')
     if not force:
         if apps:
@@ -4530,10 +4529,10 @@ def update_application_group(ctx, from_json, force, network_firewall_policy_id, 
 @cli_util.wrap_exceptions
 def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryption_profile_name, type, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_profile_name, six.string_types) and len(decryption_profile_name.strip()) == 0:
+    if isinstance(decryption_profile_name, str) and len(decryption_profile_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4572,10 +4571,10 @@ def update_decryption_profile(ctx, from_json, network_firewall_policy_id, decryp
 @cli_util.wrap_exceptions
 def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, description, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_out_of_capacity_blocked, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_profile_name, six.string_types) and len(decryption_profile_name.strip()) == 0:
+    if isinstance(decryption_profile_name, str) and len(decryption_profile_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4630,10 +4629,10 @@ def update_decryption_profile_update_ssl_inbound_inspection_profile_details(ctx,
 @cli_util.wrap_exceptions
 def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from_json, network_firewall_policy_id, decryption_profile_name, description, is_expired_certificate_blocked, is_untrusted_issuer_blocked, is_revocation_status_timeout_blocked, is_unsupported_version_blocked, is_unsupported_cipher_blocked, is_unknown_revocation_status_blocked, are_certificate_extensions_restricted, is_auto_include_alt_name, is_out_of_capacity_blocked, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_profile_name, six.string_types) and len(decryption_profile_name.strip()) == 0:
+    if isinstance(decryption_profile_name, str) and len(decryption_profile_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-profile-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4706,10 +4705,10 @@ def update_decryption_profile_update_ssl_forward_proxy_profile_details(ctx, from
 @cli_util.wrap_exceptions
 def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, decryption_rule_name, condition, action, description, decryption_profile, secret, secrets, position, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(decryption_rule_name, six.string_types) and len(decryption_rule_name.strip()) == 0:
+    if isinstance(decryption_rule_name, str) and len(decryption_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --decryption-rule-name cannot be whitespace or empty string')
     if not force:
         if condition or secrets or position:
@@ -4766,10 +4765,10 @@ def update_decryption_rule(ctx, from_json, force, network_firewall_policy_id, de
 @cli_util.wrap_exceptions
 def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_name, source, type, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(mapped_secret_name, six.string_types) and len(mapped_secret_name.strip()) == 0:
+    if isinstance(mapped_secret_name, str) and len(mapped_secret_name.strip()) == 0:
         raise click.UsageError('Parameter --mapped-secret-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4811,10 +4810,10 @@ def update_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
 @cli_util.wrap_exceptions
 def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, network_firewall_policy_id, mapped_secret_name, type, vault_secret_id, version_number, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(mapped_secret_name, six.string_types) and len(mapped_secret_name.strip()) == 0:
+    if isinstance(mapped_secret_name, str) and len(mapped_secret_name.strip()) == 0:
         raise click.UsageError('Parameter --mapped-secret-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4859,10 +4858,10 @@ def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, netw
 @cli_util.wrap_exceptions
 def update_nat_rule(ctx, from_json, force, network_firewall_policy_id, nat_rule_name, type, description, position, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+    if isinstance(nat_rule_name, str) and len(nat_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
     if not force:
         if position:
@@ -4911,10 +4910,10 @@ def update_nat_rule(ctx, from_json, force, network_firewall_policy_id, nat_rule_
 @cli_util.wrap_exceptions
 def update_nat_rule_update_nat_v4_rule_details(ctx, from_json, force, network_firewall_policy_id, nat_rule_name, condition, action, description, position, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+    if isinstance(nat_rule_name, str) and len(nat_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
     if not force:
         if position or condition:
@@ -4972,7 +4971,7 @@ Example: {\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"e
 @cli_util.wrap_exceptions
 def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, shape, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
+    if isinstance(network_firewall_id, str) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids or nat_configuration or freeform_tags or defined_tags or security_attributes:
@@ -5064,7 +5063,7 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5147,10 +5146,10 @@ def update_network_firewall_policy(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_security_rule(ctx, from_json, force, network_firewall_policy_id, security_rule_name, condition, action, inspection, position, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(security_rule_name, six.string_types) and len(security_rule_name.strip()) == 0:
+    if isinstance(security_rule_name, str) and len(security_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --security-rule-name cannot be whitespace or empty string')
     if not force:
         if condition or position:
@@ -5198,10 +5197,10 @@ def update_security_rule(ctx, from_json, force, network_firewall_policy_id, secu
 @cli_util.wrap_exceptions
 def update_service(ctx, from_json, network_firewall_policy_id, service_name, type, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5239,10 +5238,10 @@ def update_service(ctx, from_json, network_firewall_policy_id, service_name, typ
 @cli_util.wrap_exceptions
 def update_service_update_tcp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
     if not force:
         if port_ranges:
@@ -5286,10 +5285,10 @@ def update_service_update_tcp_service_details(ctx, from_json, force, network_fir
 @cli_util.wrap_exceptions
 def update_service_update_udp_service_details(ctx, from_json, force, network_firewall_policy_id, service_name, port_ranges, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
+    if isinstance(service_name, str) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
     if not force:
         if port_ranges:
@@ -5333,10 +5332,10 @@ def update_service_update_udp_service_details(ctx, from_json, force, network_fir
 @cli_util.wrap_exceptions
 def update_service_list(ctx, from_json, force, network_firewall_policy_id, service_list_name, services, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(service_list_name, six.string_types) and len(service_list_name.strip()) == 0:
+    if isinstance(service_list_name, str) and len(service_list_name.strip()) == 0:
         raise click.UsageError('Parameter --service-list-name cannot be whitespace or empty string')
     if not force:
         if services:
@@ -5384,10 +5383,10 @@ def update_service_list(ctx, from_json, force, network_firewall_policy_id, servi
 @cli_util.wrap_exceptions
 def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, protocol, action, position, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_inspection_rule_name, six.string_types) and len(tunnel_inspection_rule_name.strip()) == 0:
+    if isinstance(tunnel_inspection_rule_name, str) and len(tunnel_inspection_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-inspection-rule-name cannot be whitespace or empty string')
     if not force:
         if position:
@@ -5440,10 +5439,10 @@ def update_tunnel_inspection_rule(ctx, from_json, force, network_firewall_policy
 @cli_util.wrap_exceptions
 def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from_json, force, network_firewall_policy_id, tunnel_inspection_rule_name, condition, action, position, description, profile_parameterconflict, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(tunnel_inspection_rule_name, six.string_types) and len(tunnel_inspection_rule_name.strip()) == 0:
+    if isinstance(tunnel_inspection_rule_name, str) and len(tunnel_inspection_rule_name.strip()) == 0:
         raise click.UsageError('Parameter --tunnel-inspection-rule-name cannot be whitespace or empty string')
     if not force:
         if position or condition or profile_parameterconflict:
@@ -5496,10 +5495,10 @@ def update_tunnel_inspection_rule_update_vxlan_inspection_rule_details(ctx, from
 @cli_util.wrap_exceptions
 def update_url_list(ctx, from_json, force, network_firewall_policy_id, url_list_name, urls, description, if_match):
 
-    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+    if isinstance(network_firewall_policy_id, str) and len(network_firewall_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
 
-    if isinstance(url_list_name, six.string_types) and len(url_list_name.strip()) == 0:
+    if isinstance(url_list_name, str) and len(url_list_name.strip()) == 0:
         raise click.UsageError('Parameter --url-list-name cannot be whitespace or empty string')
     if not force:
         if urls:

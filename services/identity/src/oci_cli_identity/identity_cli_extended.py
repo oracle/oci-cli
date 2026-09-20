@@ -4,7 +4,6 @@
 
 from __future__ import print_function
 import click
-import six
 import sys
 from services.identity.src.oci_cli_identity.generated import identity_cli
 from oci_cli import cli_exceptions
@@ -57,9 +56,9 @@ def set_iam_default_tenancy_help():
     if not cli_root.cli.commands.get('iam', None):
         return
     iam_command = cli_root.cli.commands.get('iam')
-    for _, entitycommand in six.iteritems(iam_command.commands):
+    for _, entitycommand in iam_command.commands.items():
         if entitycommand.name in iam_tenancy_defaults.keys():
-            for _, subcommand in six.iteritems(entitycommand.commands):
+            for _, subcommand in entitycommand.commands.items():
                 for param in subcommand.params:
                     if subcommand.name in iam_tenancy_defaults[entitycommand.name]:
                         if param.name == 'compartment_id' or param.name == 'tenancy_id':
@@ -374,10 +373,10 @@ def retire_tag(ctx, **kwargs):
     tag_namespace_id = kwargs['tag_namespace_id']
     tag_name = kwargs['tag_name']
 
-    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+    if isinstance(tag_namespace_id, str) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(tag_name, six.string_types) and len(tag_name.strip()) == 0:
+    if isinstance(tag_name, str) and len(tag_name.strip()) == 0:
         raise click.UsageError('Parameter --tag-name cannot be whitespace or empty string')
 
     service_kwargs = {}
@@ -405,10 +404,10 @@ def reactivate_tag(ctx, **kwargs):
     tag_namespace_id = kwargs['tag_namespace_id']
     tag_name = kwargs['tag_name']
 
-    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+    if isinstance(tag_namespace_id, str) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(tag_name, six.string_types) and len(tag_name.strip()) == 0:
+    if isinstance(tag_name, str) and len(tag_name.strip()) == 0:
         raise click.UsageError('Parameter --tag-name cannot be whitespace or empty string')
 
     service_kwargs = {}
@@ -435,7 +434,7 @@ def update_tag_namespace_description(ctx, **kwargs):
     freeform_tags = kwargs.get('freeform_tags')
     defined_tags = kwargs.get('defined_tags')
 
-    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+    if isinstance(tag_namespace_id, str) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     if not kwargs.get('force'):

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,7 +48,7 @@ Use the [WorkRequest] operations to track the addition of the block volume to th
 @cli_util.wrap_exceptions
 def add_block_volume_to_datastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_id, block_volume_id, if_match):
 
-    if isinstance(datastore_id, six.string_types) and len(datastore_id.strip()) == 0:
+    if isinstance(datastore_id, str) and len(datastore_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -107,7 +106,7 @@ def add_block_volume_to_datastore(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_datastore_compartment(ctx, from_json, datastore_id, compartment_id, if_match):
 
-    if isinstance(datastore_id, six.string_types) and len(datastore_id.strip()) == 0:
+    if isinstance(datastore_id, str) and len(datastore_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -220,7 +219,7 @@ Use the [WorkRequest] operations to track the deletion of the Datastore. \n[Comm
 @cli_util.wrap_exceptions
 def delete_datastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_id, if_match):
 
-    if isinstance(datastore_id, six.string_types) and len(datastore_id.strip()) == 0:
+    if isinstance(datastore_id, str) and len(datastore_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -271,7 +270,7 @@ def delete_datastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_datastore(ctx, from_json, datastore_id):
 
-    if isinstance(datastore_id, six.string_types) and len(datastore_id.strip()) == 0:
+    if isinstance(datastore_id, str) and len(datastore_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -375,7 +374,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_datastore(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, datastore_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(datastore_id, six.string_types) and len(datastore_id.strip()) == 0:
+    if isinstance(datastore_id, str) and len(datastore_id.strip()) == 0:
         raise click.UsageError('Parameter --datastore-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

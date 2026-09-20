@@ -41,7 +41,6 @@ requires = [
     'jmespath>=0.10.0,<=1.0.1',
     'python-dateutil>=2.5.3,<3.0.0',
     'pytz>=2016.10,<=2026.2',
-    'six>=1.15.0,<2.0.0',
     'terminaltables==3.1.10',
     'pyOpenSSL>=17.5.0,<22.0.0; python_version <= "3.7"',
     'pyOpenSSL>=26.2.0,<27.0.0; python_version >= "3.8"',

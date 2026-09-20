@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -70,7 +69,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def activate_subscription(ctx, from_json, subscription_id, product_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,10 +52,10 @@ enrichment_job_root_group.add_command(enrichment_job_collection_group)
 @cli_util.wrap_exceptions
 def cancel_enrichment_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, semantic_store_id, enrichment_job_id, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
-    if isinstance(enrichment_job_id, six.string_types) and len(enrichment_job_id.strip()) == 0:
+    if isinstance(enrichment_job_id, str) and len(enrichment_job_id.strip()) == 0:
         raise click.UsageError('Parameter --enrichment-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -111,7 +110,7 @@ def cancel_enrichment_job(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def generate_enrichment_job(ctx, from_json, enrichment_job_configuration, semantic_store_id, description, display_name, enrichment_job_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -163,7 +162,7 @@ def generate_enrichment_job(ctx, from_json, enrichment_job_configuration, semant
 @cli_util.wrap_exceptions
 def generate_enrichment_job_delta_refresh_enrichment_job_configuration(ctx, from_json, semantic_store_id, enrichment_job_configuration_schema_name, description, display_name, enrichment_job_type, freeform_tags, defined_tags, if_match, enrichment_job_configuration_delta_refresh_schedule):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -221,7 +220,7 @@ def generate_enrichment_job_delta_refresh_enrichment_job_configuration(ctx, from
 @cli_util.wrap_exceptions
 def generate_enrichment_job_partial_build_enrichment_job_configuration(ctx, from_json, semantic_store_id, enrichment_job_configuration_schema_name, enrichment_job_configuration_database_objects, description, display_name, enrichment_job_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -276,7 +275,7 @@ def generate_enrichment_job_partial_build_enrichment_job_configuration(ctx, from
 @cli_util.wrap_exceptions
 def generate_enrichment_job_full_build_enrichment_job_configuration(ctx, from_json, semantic_store_id, enrichment_job_configuration_schema_name, description, display_name, enrichment_job_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -324,10 +323,10 @@ def generate_enrichment_job_full_build_enrichment_job_configuration(ctx, from_js
 @cli_util.wrap_exceptions
 def get_enrichment_job(ctx, from_json, semantic_store_id, enrichment_job_id):
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
-    if isinstance(enrichment_job_id, six.string_types) and len(enrichment_job_id.strip()) == 0:
+    if isinstance(enrichment_job_id, str) and len(enrichment_job_id.strip()) == 0:
         raise click.UsageError('Parameter --enrichment-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -362,7 +361,7 @@ def list_enrichment_jobs(ctx, from_json, all_pages, page_size, semantic_store_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(semantic_store_id, six.string_types) and len(semantic_store_id.strip()) == 0:
+    if isinstance(semantic_store_id, str) and len(semantic_store_id.strip()) == 0:
         raise click.UsageError('Parameter --semantic-store-id cannot be whitespace or empty string')
 
     kwargs = {}

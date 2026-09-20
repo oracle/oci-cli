@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -59,7 +58,7 @@ waa_service_cli.waa_service_group.add_command(web_app_acceleration_group)
 @cli_util.wrap_exceptions
 def change_web_app_acceleration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_id, compartment_id, if_match):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -120,7 +119,7 @@ def change_web_app_acceleration_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_web_app_acceleration_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_policy_id, compartment_id, if_match):
 
-    if isinstance(web_app_acceleration_policy_id, six.string_types) and len(web_app_acceleration_policy_id.strip()) == 0:
+    if isinstance(web_app_acceleration_policy_id, str) and len(web_app_acceleration_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -406,7 +405,7 @@ def create_web_app_acceleration_policy(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_web_app_acceleration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_id, if_match):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -462,7 +461,7 @@ def delete_web_app_acceleration(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_web_app_acceleration_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_policy_id, if_match):
 
-    if isinstance(web_app_acceleration_policy_id, six.string_types) and len(web_app_acceleration_policy_id.strip()) == 0:
+    if isinstance(web_app_acceleration_policy_id, str) and len(web_app_acceleration_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -513,7 +512,7 @@ def delete_web_app_acceleration_policy(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def get_web_app_acceleration(ctx, from_json, web_app_acceleration_id):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -535,7 +534,7 @@ def get_web_app_acceleration(ctx, from_json, web_app_acceleration_id):
 @cli_util.wrap_exceptions
 def get_web_app_acceleration_policy(ctx, from_json, web_app_acceleration_policy_id):
 
-    if isinstance(web_app_acceleration_policy_id, six.string_types) and len(web_app_acceleration_policy_id.strip()) == 0:
+    if isinstance(web_app_acceleration_policy_id, str) and len(web_app_acceleration_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -690,7 +689,7 @@ def list_web_app_accelerations(ctx, from_json, all_pages, page_size, compartment
 @cli_util.wrap_exceptions
 def purge_web_app_acceleration_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_id, purge_type):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -747,7 +746,7 @@ def purge_web_app_acceleration_cache(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def purge_web_app_acceleration_cache_purge_entire_web_app_acceleration_cache_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_id):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -812,7 +811,7 @@ def purge_web_app_acceleration_cache_purge_entire_web_app_acceleration_cache_det
 @cli_util.wrap_exceptions
 def update_web_app_acceleration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_id, display_name, web_app_acceleration_policy_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(web_app_acceleration_id, six.string_types) and len(web_app_acceleration_id.strip()) == 0:
+    if isinstance(web_app_acceleration_id, str) and len(web_app_acceleration_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -897,7 +896,7 @@ def update_web_app_acceleration(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_web_app_acceleration_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, web_app_acceleration_policy_id, display_name, response_caching_policy, response_compression_policy, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(web_app_acceleration_policy_id, six.string_types) and len(web_app_acceleration_policy_id.strip()) == 0:
+    if isinstance(web_app_acceleration_policy_id, str) and len(web_app_acceleration_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --web-app-acceleration-policy-id cannot be whitespace or empty string')
     if not force:
         if response_caching_policy or response_compression_policy or freeform_tags or defined_tags or system_tags:

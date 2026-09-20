@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -167,7 +166,7 @@ For example, \"The current `postponed` status of the resource action will end an
 @cli_util.wrap_exceptions
 def bulk_apply_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recommendation_id, status, resource_action_ids, actions, time_status_end):
 
-    if isinstance(recommendation_id, six.string_types) and len(recommendation_id.strip()) == 0:
+    if isinstance(recommendation_id, str) and len(recommendation_id.strip()) == 0:
         raise click.UsageError('Parameter --recommendation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -318,7 +317,7 @@ def create_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -439,7 +438,7 @@ def filter_resource_actions(ctx, from_json, compartment_id, compartment_id_in_su
 @cli_util.wrap_exceptions
 def get_category(ctx, from_json, category_id):
 
-    if isinstance(category_id, six.string_types) and len(category_id.strip()) == 0:
+    if isinstance(category_id, str) and len(category_id.strip()) == 0:
         raise click.UsageError('Parameter --category-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -461,7 +460,7 @@ def get_category(ctx, from_json, category_id):
 @cli_util.wrap_exceptions
 def get_enrollment_status(ctx, from_json, enrollment_status_id):
 
-    if isinstance(enrollment_status_id, six.string_types) and len(enrollment_status_id.strip()) == 0:
+    if isinstance(enrollment_status_id, str) and len(enrollment_status_id.strip()) == 0:
         raise click.UsageError('Parameter --enrollment-status-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -483,7 +482,7 @@ def get_enrollment_status(ctx, from_json, enrollment_status_id):
 @cli_util.wrap_exceptions
 def get_profile(ctx, from_json, profile_id):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -505,7 +504,7 @@ def get_profile(ctx, from_json, profile_id):
 @cli_util.wrap_exceptions
 def get_recommendation(ctx, from_json, recommendation_id):
 
-    if isinstance(recommendation_id, six.string_types) and len(recommendation_id.strip()) == 0:
+    if isinstance(recommendation_id, str) and len(recommendation_id.strip()) == 0:
         raise click.UsageError('Parameter --recommendation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -528,7 +527,7 @@ def get_recommendation(ctx, from_json, recommendation_id):
 @cli_util.wrap_exceptions
 def get_resource_action(ctx, from_json, resource_action_id, include_resource_metadata):
 
-    if isinstance(resource_action_id, six.string_types) and len(resource_action_id.strip()) == 0:
+    if isinstance(resource_action_id, str) and len(resource_action_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -552,7 +551,7 @@ def get_resource_action(ctx, from_json, resource_action_id, include_resource_met
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1238,7 +1237,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1289,7 +1288,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1386,7 +1385,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def update_enrollment_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, enrollment_status_id, status, if_match):
 
-    if isinstance(enrollment_status_id, six.string_types) and len(enrollment_status_id.strip()) == 0:
+    if isinstance(enrollment_status_id, str) and len(enrollment_status_id.strip()) == 0:
         raise click.UsageError('Parameter --enrollment-status-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1456,7 +1455,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.wrap_exceptions
 def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, description, aggregation_interval_in_days, defined_tags, freeform_tags, system_tags, levels_configuration, target_compartments, target_tags, name, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or system_tags or levels_configuration or target_compartments or target_tags:
@@ -1548,7 +1547,7 @@ For example, \"The current `postponed` status of the recommendation will end and
 @cli_util.wrap_exceptions
 def update_recommendation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recommendation_id, status, time_status_end, if_match):
 
-    if isinstance(recommendation_id, six.string_types) and len(recommendation_id.strip()) == 0:
+    if isinstance(recommendation_id, str) and len(recommendation_id.strip()) == 0:
         raise click.UsageError('Parameter --recommendation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1613,7 +1612,7 @@ For example, \"The current `postponed` status of the resource action will end an
 @cli_util.wrap_exceptions
 def update_resource_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resource_action_id, status, time_status_end, if_match):
 
-    if isinstance(resource_action_id, six.string_types) and len(resource_action_id.strip()) == 0:
+    if isinstance(resource_action_id, str) and len(resource_action_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-action-id cannot be whitespace or empty string')
 
     kwargs = {}

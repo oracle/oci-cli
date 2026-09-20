@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -693,7 +692,7 @@ db_root_group.add_command(system_version_minor_version_collection_group)
 @cli_util.wrap_exceptions
 def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, activation_file):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -750,7 +749,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def add_dbnode_snapshots_for_exadb_vm_cluster(ctx, from_json, name, source_dbnode_ids, exadb_vm_cluster_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -800,7 +799,7 @@ def add_dbnode_snapshots_for_exadb_vm_cluster(ctx, from_json, name, source_dbnod
 @cli_util.wrap_exceptions
 def add_standby_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_autonomous_container_database_backup_config, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_display_name, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_db_unique_name, protection_mode, standby_maintenance_buffer_in_days, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -885,7 +884,7 @@ def add_standby_autonomous_container_database(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def add_storage_capacity_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, if_match):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -936,7 +935,7 @@ def add_storage_capacity_cloud_exadata_infrastructure(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def add_storage_capacity_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -988,7 +987,7 @@ def add_storage_capacity_exadata_infrastructure(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def add_virtual_machine_to_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_servers, cloud_vm_cluster_id, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1045,7 +1044,7 @@ def add_virtual_machine_to_cloud_vm_cluster(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def add_virtual_machine_to_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_servers, vm_cluster_id, if_match):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1103,7 +1102,7 @@ def add_virtual_machine_to_vm_cluster(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def autonomous_database_manual_refresh(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, time_refresh_cutoff, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1163,7 +1162,7 @@ def autonomous_database_manual_refresh(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def cancel_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1229,7 +1228,7 @@ def cancel_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def cancel_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, time_scheduled_of_new_window, window_duration_in_mins_of_new_window, is_enforced_duration_of_new_window, if_match):
 
-    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+    if isinstance(execution_window_id, str) and len(execution_window_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1289,7 +1288,7 @@ def cancel_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def cascading_delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_plan_id, if_match):
 
-    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+    if isinstance(scheduling_plan_id, str) and len(scheduling_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1353,7 +1352,7 @@ def cascading_delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_autonomous_container_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_container_database_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1423,7 +1422,7 @@ def change_autonomous_container_database_compartment(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def change_autonomous_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_id, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1494,7 +1493,7 @@ def change_autonomous_database_compartment(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def change_autonomous_database_software_image_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_database_software_image_id, if_match):
 
-    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+    if isinstance(autonomous_database_software_image_id, str) and len(autonomous_database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1565,7 +1564,7 @@ def change_autonomous_database_software_image_compartment(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def change_autonomous_database_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, subscription_id, is_default, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1641,7 +1640,7 @@ def change_autonomous_database_subscription(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_exadata_infrastructure_id, if_match):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1710,7 +1709,7 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def change_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, autonomous_vm_cluster_id, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1779,7 +1778,7 @@ def change_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def change_backup_destination_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, backup_destination_id, if_match):
 
-    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+    if isinstance(backup_destination_id, str) and len(backup_destination_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1848,7 +1847,7 @@ def change_backup_destination_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_basecc_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, basecc_vm_cluster_id, if_match):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1917,7 +1916,7 @@ def change_basecc_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_cloud_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cloud_autonomous_vm_cluster_id, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1987,7 +1986,7 @@ def change_cloud_autonomous_vm_cluster_compartment(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def change_cloud_autonomous_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, subscription_id, is_default, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2062,7 +2061,7 @@ def change_cloud_autonomous_vm_cluster_subscription(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def change_cloud_db_system_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, subscription_id, is_default, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2136,7 +2135,7 @@ def change_cloud_db_system_subscription(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_cloud_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cloud_exadata_infrastructure_id, if_match):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2206,7 +2205,7 @@ def change_cloud_exadata_infrastructure_compartment(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def change_cloud_exadata_infrastructure_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, subscription_id, is_default, if_match):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2280,7 +2279,7 @@ def change_cloud_exadata_infrastructure_subscription(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def change_cloud_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cloud_vm_cluster_id, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2350,7 +2349,7 @@ def change_cloud_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_cloud_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, subscription_id, is_default, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2424,7 +2423,7 @@ def change_cloud_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_database_software_image_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_software_image_id, if_match):
 
-    if isinstance(database_software_image_id, six.string_types) and len(database_software_image_id.strip()) == 0:
+    if isinstance(database_software_image_id, str) and len(database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2495,7 +2494,7 @@ def change_database_software_image_compartment(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_dataguard_role(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, role, autonomous_container_database_dataguard_association_id, autonomous_container_database_id, connection_strings_type, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2556,7 +2555,7 @@ def change_dataguard_role(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2629,7 +2628,7 @@ def change_db_system_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, disaster_recovery_type, time_snapshot_standby_enabled_till, is_snapshot_standby, is_replicate_automatic_backups, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2699,7 +2698,7 @@ def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def change_encryption_key_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, provider_type, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2768,7 +2767,7 @@ def change_encryption_key_location(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def change_encryption_key_location_external_hsm_encryption_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, hsm_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2839,7 +2838,7 @@ def change_encryption_key_location_external_hsm_encryption_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def change_encryption_key_location_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, google_cloud_provider_encryption_key_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2910,7 +2909,7 @@ def change_encryption_key_location_google_cloud_provider_encryption_key_details(
 @cli_util.wrap_exceptions
 def change_encryption_key_location_azure_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, azure_encryption_key_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2981,7 +2980,7 @@ def change_encryption_key_location_azure_encryption_key_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, aws_encryption_key_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3052,7 +3051,7 @@ def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def change_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, exadata_infrastructure_id, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3121,7 +3120,7 @@ def change_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def change_exadb_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, exadb_vm_cluster_id, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3191,7 +3190,7 @@ def change_exadb_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_exadb_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, subscription_id, is_default, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3265,7 +3264,7 @@ def change_exadb_vm_cluster_subscription(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_exascale_db_storage_vault_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, exascale_db_storage_vault_id, if_match):
 
-    if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
+    if isinstance(exascale_db_storage_vault_id, str) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3335,7 +3334,7 @@ def change_exascale_db_storage_vault_compartment(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def change_exascale_db_storage_vault_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exascale_db_storage_vault_id, subscription_id, is_default, if_match):
 
-    if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
+    if isinstance(exascale_db_storage_vault_id, str) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3409,7 +3408,7 @@ def change_exascale_db_storage_vault_subscription(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def change_external_container_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, external_container_database_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3478,7 +3477,7 @@ def change_external_container_database_compartment(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def change_external_non_container_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, external_non_container_database_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3547,7 +3546,7 @@ def change_external_non_container_database_compartment(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def change_external_pluggable_database_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, external_pluggable_database_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3616,7 +3615,7 @@ def change_external_pluggable_database_compartment(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def change_key_store_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_store_id, if_match):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3685,7 +3684,7 @@ def change_key_store_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_key_store_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, key_store_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3754,7 +3753,7 @@ def change_key_store_type(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def change_oneoff_patch_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, oneoff_patch_id, if_match):
 
-    if isinstance(oneoff_patch_id, six.string_types) and len(oneoff_patch_id.strip()) == 0:
+    if isinstance(oneoff_patch_id, str) and len(oneoff_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --oneoff-patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3823,7 +3822,7 @@ def change_oneoff_patch_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_scheduling_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_plan_id, if_match):
 
-    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+    if isinstance(scheduling_plan_id, str) and len(scheduling_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3892,7 +3891,7 @@ def change_scheduling_plan_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def change_scheduling_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_policy_id, if_match):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3961,7 +3960,7 @@ def change_scheduling_policy_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vm_cluster_id, if_match):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4029,7 +4028,7 @@ def change_vm_cluster_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def check_external_database_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_database_connector_id, if_match):
 
-    if isinstance(external_database_connector_id, six.string_types) and len(external_database_connector_id.strip()) == 0:
+    if isinstance(external_database_connector_id, str) and len(external_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4097,7 +4096,7 @@ def check_external_database_connector_connection_status(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_backup_handle, spf_backup_handle, sql_patches, data_size, redo_size, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4150,7 +4149,7 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
 @cli_util.wrap_exceptions
 def configure_autonomous_database_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, kms_key_id, vault_id, is_using_oracle_managed_keys, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4230,7 +4229,7 @@ def configure_autonomous_database_vault_key(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def configure_exascale_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, total_storage_in_gbs, total_vm_storage_in_gbs, if_match):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4291,7 +4290,7 @@ def configure_exascale_cloud_exadata_infrastructure(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def configure_exascale_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, total_storage_in_gbs, total_vm_storage_in_gbs, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4358,7 +4357,7 @@ def configure_exascale_exadata_infrastructure(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def configure_saas_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, password, secret_id, secret_version_number, duration, is_enabled, access_type, time_saas_admin_user_enabled, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4436,7 +4435,7 @@ def configure_saas_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def confirm_key_store_details_are_correct(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_store_id, if_match):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4501,7 +4500,7 @@ def confirm_key_store_details_are_correct(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def convert_standby_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, role, autonomous_container_database_id, connection_strings_type, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4571,7 +4570,7 @@ This field is only applicable if the requested database role is snapshot standby
 @cli_util.wrap_exceptions
 def convert_standby_database_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, standby_conversion_type, snapshot_duration_in_days, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4633,7 +4632,7 @@ def convert_standby_database_type(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def convert_to_pdb(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, convert_to_pdb_target_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4699,7 +4698,7 @@ def convert_to_pdb(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, convert_to_pdb_target_details_cdb_name, convert_to_pdb_target_details_cdb_admin_password, convert_to_pdb_target_details_non_cdb_tde_wallet_password, if_match, convert_to_pdb_target_details_pdb_admin_password, convert_to_pdb_target_details_cdb_tde_wallet_password, convert_to_pdb_target_details_additional_cdb_params):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4773,7 +4772,7 @@ def convert_to_pdb_pdb_conversion_to_new_database_details(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def convert_to_regular_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, should_create_pdb_backup, container_database_admin_password, tde_wallet_password, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4844,7 +4843,7 @@ This operation should be performed on respective standby database. \n[Command Re
 @cli_util.wrap_exceptions
 def convert_to_standalone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6705,7 +6704,7 @@ def create_autonomous_container_database_aws_encryption_key_details(ctx, from_js
 @cli_util.wrap_exceptions
 def create_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, peer_autonomous_container_database_display_name, protection_mode, peer_autonomous_container_database_compartment_id, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_db_unique_name, peer_autonomous_container_database_backup_config, is_automatic_failover_enabled, fast_start_fail_over_lag_limit_in_seconds, standby_maintenance_buffer_in_days):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13435,7 +13434,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, public_key, db_node_id, freeform_tags, defined_tags):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13498,7 +13497,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_node_id, freeform_tags, defined_tags):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13588,7 +13587,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13730,7 +13729,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, cpu_core_count, storage_volume_performance_mode, compute_model, compute_count, node_count, subnet_id, nsg_ids, backup_network_nsg_ids, hostname, domain, time_zone, fault_domains, private_ip, private_ip_v6, license_model, db_system_freeform_tags, db_system_defined_tags, db_system_security_attributes, database_freeform_tags, database_defined_tags, data_collection_options, cluster_placement_group_id, subscription_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13911,7 +13910,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_vm_cluster_id, peer_db_home_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14020,7 +14019,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_db_system_id, peer_db_home_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14127,7 +14126,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_external_hsm_encryption_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_hsm_password, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14227,7 +14226,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_google_cloud_provider_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14327,7 +14326,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_azure_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_azure_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14427,7 +14426,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_aws_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17462,7 +17461,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_scheduling_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, window_preference, compartment_id, freeform_tags, defined_tags):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17694,7 +17693,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, compartment_id, display_name, scans, vm_networks, dns, ntp, dr_scans, freeform_tags, defined_tags):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17769,7 +17768,7 @@ def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, action, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17821,7 +17820,7 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, advanced_cluster_file_system_id, if_match):
 
-    if isinstance(advanced_cluster_file_system_id, six.string_types) and len(advanced_cluster_file_system_id.strip()) == 0:
+    if isinstance(advanced_cluster_file_system_id, str) and len(advanced_cluster_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --advanced-cluster-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17878,7 +17877,7 @@ def delete_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, application_vip_id, if_match):
 
-    if isinstance(application_vip_id, six.string_types) and len(application_vip_id.strip()) == 0:
+    if isinstance(application_vip_id, str) and len(application_vip_id.strip()) == 0:
         raise click.UsageError('Parameter --application-vip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17937,7 +17936,7 @@ def delete_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, must_delete_associated_long_term_backups, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17999,7 +17998,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_backup_id, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_backup_id, six.string_types) and len(autonomous_database_backup_id.strip()) == 0:
+    if isinstance(autonomous_database_backup_id, str) and len(autonomous_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18058,7 +18057,7 @@ def delete_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_autonomous_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_software_image_id, if_match):
 
-    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+    if isinstance(autonomous_database_software_image_id, str) and len(autonomous_database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18115,7 +18114,7 @@ def delete_autonomous_database_software_image(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def delete_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18172,7 +18171,7 @@ def delete_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18228,7 +18227,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_destination_id, if_match):
 
-    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+    if isinstance(backup_destination_id, str) and len(backup_destination_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18292,7 +18291,7 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_basecc_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, basecc_vm_cluster_id, if_match):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18349,7 +18348,7 @@ def delete_basecc_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18407,7 +18406,7 @@ def delete_cloud_autonomous_vm_cluster(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, if_match, is_delete_vm_clusters):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18466,7 +18465,7 @@ def delete_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18524,10 +18523,10 @@ def delete_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_connection_id, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_connection_id, six.string_types) and len(console_connection_id.strip()) == 0:
+    if isinstance(console_connection_id, str) and len(console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18585,10 +18584,10 @@ def delete_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_history_id, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+    if isinstance(console_history_id, str) and len(console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18653,7 +18652,7 @@ This parameter is used in multiple APIs. Refer to the API description for detail
 @cli_util.wrap_exceptions
 def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match, perform_final_backup):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18712,7 +18711,7 @@ def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_software_image_id, if_match):
 
-    if isinstance(database_software_image_id, six.string_types) and len(database_software_image_id.strip()) == 0:
+    if isinstance(database_software_image_id, str) and len(database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18775,7 +18774,7 @@ This parameter is used in multiple APIs. Refer to the API description for detail
 @cli_util.wrap_exceptions
 def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, if_match, perform_final_backup):
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18833,7 +18832,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dbnode_snapshot_id, if_match):
 
-    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+    if isinstance(dbnode_snapshot_id, str) and len(dbnode_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18890,7 +18889,7 @@ def delete_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18947,7 +18946,7 @@ def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19004,7 +19003,7 @@ def delete_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exascale_db_storage_vault_id, if_match):
 
-    if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
+    if isinstance(exascale_db_storage_vault_id, str) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19061,7 +19060,7 @@ def delete_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_execution_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, if_match):
 
-    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+    if isinstance(execution_action_id, str) and len(execution_action_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19118,7 +19117,7 @@ def delete_execution_action(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, if_match):
 
-    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+    if isinstance(execution_window_id, str) and len(execution_window_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19182,7 +19181,7 @@ def delete_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_external_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19239,7 +19238,7 @@ def delete_external_container_database(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_external_database_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_database_connector_id, if_match):
 
-    if isinstance(external_database_connector_id, six.string_types) and len(external_database_connector_id.strip()) == 0:
+    if isinstance(external_database_connector_id, str) and len(external_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19296,7 +19295,7 @@ def delete_external_database_connector(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_external_non_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19353,7 +19352,7 @@ def delete_external_non_container_database(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_external_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19467,7 +19466,7 @@ def delete_gi_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_key_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_store_id, if_match):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19531,7 +19530,7 @@ def delete_key_store(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_oneoff_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oneoff_patch_id, if_match):
 
-    if isinstance(oneoff_patch_id, six.string_types) and len(oneoff_patch_id.strip()) == 0:
+    if isinstance(oneoff_patch_id, str) and len(oneoff_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --oneoff-patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19588,7 +19587,7 @@ def delete_oneoff_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19645,7 +19644,7 @@ def delete_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_snapshot_id, if_match):
 
-    if isinstance(pluggable_database_snapshot_id, six.string_types) and len(pluggable_database_snapshot_id.strip()) == 0:
+    if isinstance(pluggable_database_snapshot_id, str) and len(pluggable_database_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19702,7 +19701,7 @@ def delete_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_action_id, if_match):
 
-    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+    if isinstance(scheduled_action_id, str) and len(scheduled_action_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19759,7 +19758,7 @@ def delete_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_plan_id, if_match):
 
-    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+    if isinstance(scheduling_plan_id, str) and len(scheduling_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19816,7 +19815,7 @@ def delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_scheduling_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, if_match):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19878,10 +19877,10 @@ def delete_scheduling_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_window_id, if_match):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
-    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+    if isinstance(scheduling_window_id, str) and len(scheduling_window_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19911,7 +19910,7 @@ def delete_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_wi
 @cli_util.wrap_exceptions
 def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, if_match):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19969,10 +19968,10 @@ def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20030,7 +20029,7 @@ def delete_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def deregister_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, pdb_admin_password, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20098,7 +20097,7 @@ def deregister_autonomous_database_data_safe(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def disable_autonomous_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20161,7 +20160,7 @@ def disable_autonomous_database_management(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def disable_autonomous_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20224,7 +20223,7 @@ def disable_autonomous_database_operations_insights(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def disable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20275,7 +20274,7 @@ def disable_database_management(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def disable_external_container_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20338,7 +20337,7 @@ def disable_external_container_database_database_management(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def disable_external_container_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20401,7 +20400,7 @@ def disable_external_container_database_stack_monitoring(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def disable_external_non_container_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20464,7 +20463,7 @@ def disable_external_non_container_database_database_management(ctx, from_json, 
 @cli_util.wrap_exceptions
 def disable_external_non_container_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20527,7 +20526,7 @@ def disable_external_non_container_database_operations_insights(ctx, from_json, 
 @cli_util.wrap_exceptions
 def disable_external_non_container_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20590,7 +20589,7 @@ def disable_external_non_container_database_stack_monitoring(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def disable_external_pluggable_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20653,7 +20652,7 @@ def disable_external_pluggable_database_database_management(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def disable_external_pluggable_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20716,7 +20715,7 @@ def disable_external_pluggable_database_operations_insights(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def disable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20779,7 +20778,7 @@ def disable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def disable_pluggable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20829,7 +20828,7 @@ def disable_pluggable_database_management(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def download_db_connection_bundle(ctx, from_json, file, db_connection_bundle_id, password, if_match):
 
-    if isinstance(db_connection_bundle_id, six.string_types) and len(db_connection_bundle_id.strip()) == 0:
+    if isinstance(db_connection_bundle_id, str) and len(db_connection_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --db-connection-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20881,7 +20880,7 @@ def download_db_connection_bundle(ctx, from_json, file, db_connection_bundle_id,
 @cli_util.wrap_exceptions
 def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_infrastructure_id):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20926,7 +20925,7 @@ def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_in
 @cli_util.wrap_exceptions
 def download_oneoff_patch(ctx, from_json, oneoff_patch_id, if_match):
 
-    if isinstance(oneoff_patch_id, six.string_types) and len(oneoff_patch_id.strip()) == 0:
+    if isinstance(oneoff_patch_id, str) and len(oneoff_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --oneoff-patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20952,10 +20951,10 @@ def download_oneoff_patch(ctx, from_json, oneoff_patch_id, if_match):
 @cli_util.wrap_exceptions
 def download_validation_report(ctx, from_json, file, exadata_infrastructure_id, vm_cluster_network_id):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21002,10 +21001,10 @@ def download_validation_report(ctx, from_json, file, exadata_infrastructure_id, 
 @cli_util.wrap_exceptions
 def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infrastructure_id, vm_cluster_network_id):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21057,7 +21056,7 @@ def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infras
 @cli_util.wrap_exceptions
 def edit_autonomous_container_database_dataguard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, is_automatic_failover_enabled, protection_mode, fast_start_fail_over_lag_limit_in_seconds, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21121,7 +21120,7 @@ def edit_autonomous_container_database_dataguard(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def enable_autonomous_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21184,7 +21183,7 @@ def enable_autonomous_database_management(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def enable_autonomous_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21255,7 +21254,7 @@ def enable_autonomous_database_operations_insights(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def enable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, service_name, management_type, protocol, port, ssl_secret_id, role, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21330,7 +21329,7 @@ def enable_database_management(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def enable_external_container_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, license_model, external_database_connector_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21400,7 +21399,7 @@ def enable_external_container_database_database_management(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def enable_external_container_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21470,7 +21469,7 @@ def enable_external_container_database_stack_monitoring(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, license_model, external_database_connector_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21540,7 +21539,7 @@ def enable_external_non_container_database_database_management(ctx, from_json, w
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21609,7 +21608,7 @@ def enable_external_non_container_database_operations_insights(ctx, from_json, w
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21678,7 +21677,7 @@ def enable_external_non_container_database_stack_monitoring(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21747,7 +21746,7 @@ def enable_external_pluggable_database_database_management(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_operations_insights(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21816,7 +21815,7 @@ def enable_external_pluggable_database_operations_insights(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, external_database_connector_id, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21891,7 +21890,7 @@ def enable_external_pluggable_database_stack_monitoring(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def enable_pluggable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, credential_details, private_end_point_id, service_name, protocol, port, ssl_secret_id, role, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21963,7 +21962,7 @@ def enable_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def execute_db_system_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action, db_system_id, db_node_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22036,7 +22035,7 @@ def execute_db_system_os_patch(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def fail_over_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, peer_db_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22091,7 +22090,7 @@ def fail_over_autonomous_database(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def failover_autonomous_container_database_dataguard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22145,10 +22144,10 @@ A failover can result in data loss, depending on the protection mode in effect a
 @cli_util.wrap_exceptions
 def failover_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22206,7 +22205,7 @@ This operation should be performed on respective standby database. \n[Command Re
 @cli_util.wrap_exceptions
 def failover_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22266,10 +22265,10 @@ A failover might result in data loss depending on the protection mode in effect 
 @cli_util.wrap_exceptions
 def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22330,7 +22329,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_database_id, password, generate_type, is_regional, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22401,7 +22400,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, compartment_id, display_name, networks, db_servers, scan_listener_port_tcp, scan_listener_port_tcp_ssl, dr_scan_listener_port_tcp, dr_scan_listener_port_tcp_ssl, dns, ntp, freeform_tags, defined_tags):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22457,7 +22456,7 @@ def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructu
 @cli_util.wrap_exceptions
 def get_advanced_cluster_file_system(ctx, from_json, advanced_cluster_file_system_id):
 
-    if isinstance(advanced_cluster_file_system_id, six.string_types) and len(advanced_cluster_file_system_id.strip()) == 0:
+    if isinstance(advanced_cluster_file_system_id, str) and len(advanced_cluster_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --advanced-cluster-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22479,7 +22478,7 @@ def get_advanced_cluster_file_system(ctx, from_json, advanced_cluster_file_syste
 @cli_util.wrap_exceptions
 def get_application_vip(ctx, from_json, application_vip_id):
 
-    if isinstance(application_vip_id, six.string_types) and len(application_vip_id.strip()) == 0:
+    if isinstance(application_vip_id, str) and len(application_vip_id.strip()) == 0:
         raise click.UsageError('Parameter --application-vip-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22501,7 +22500,7 @@ def get_application_vip(ctx, from_json, application_vip_id):
 @cli_util.wrap_exceptions
 def get_autonomous_container_database(ctx, from_json, autonomous_container_database_id):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22522,7 +22521,7 @@ def get_autonomous_container_database(ctx, from_json, autonomous_container_datab
 @cli_util.wrap_exceptions
 def get_autonomous_container_database_backup(ctx, from_json, autonomous_container_database_backup_id):
 
-    if isinstance(autonomous_container_database_backup_id, six.string_types) and len(autonomous_container_database_backup_id.strip()) == 0:
+    if isinstance(autonomous_container_database_backup_id, str) and len(autonomous_container_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22545,10 +22544,10 @@ def get_autonomous_container_database_backup(ctx, from_json, autonomous_containe
 @cli_util.wrap_exceptions
 def get_autonomous_container_database_dataguard_association(ctx, from_json, autonomous_container_database_id, autonomous_container_database_dataguard_association_id):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22570,7 +22569,7 @@ def get_autonomous_container_database_dataguard_association(ctx, from_json, auto
 @cli_util.wrap_exceptions
 def get_autonomous_container_database_resource_usage(ctx, from_json, autonomous_container_database_id):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22592,7 +22591,7 @@ def get_autonomous_container_database_resource_usage(ctx, from_json, autonomous_
 @cli_util.wrap_exceptions
 def get_autonomous_database(ctx, from_json, autonomous_database_id):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22614,7 +22613,7 @@ def get_autonomous_database(ctx, from_json, autonomous_database_id):
 @cli_util.wrap_exceptions
 def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id):
 
-    if isinstance(autonomous_database_backup_id, six.string_types) and len(autonomous_database_backup_id.strip()) == 0:
+    if isinstance(autonomous_database_backup_id, str) and len(autonomous_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22637,10 +22636,10 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
 @cli_util.wrap_exceptions
 def get_autonomous_database_dataguard_association(ctx, from_json, autonomous_database_id, autonomous_database_dataguard_association_id):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_database_dataguard_association_id, six.string_types) and len(autonomous_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_database_dataguard_association_id, str) and len(autonomous_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22680,7 +22679,7 @@ def get_autonomous_database_regional_wallet(ctx, from_json, ):
 @cli_util.wrap_exceptions
 def get_autonomous_database_software_image(ctx, from_json, autonomous_database_software_image_id):
 
-    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+    if isinstance(autonomous_database_software_image_id, str) and len(autonomous_database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22702,7 +22701,7 @@ def get_autonomous_database_software_image(ctx, from_json, autonomous_database_s
 @cli_util.wrap_exceptions
 def get_autonomous_database_wallet(ctx, from_json, autonomous_database_id):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22724,7 +22723,7 @@ def get_autonomous_database_wallet(ctx, from_json, autonomous_database_id):
 @cli_util.wrap_exceptions
 def get_autonomous_exadata_infrastructure(ctx, from_json, autonomous_exadata_infrastructure_id):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22745,7 +22744,7 @@ def get_autonomous_exadata_infrastructure(ctx, from_json, autonomous_exadata_inf
 @cli_util.wrap_exceptions
 def get_autonomous_patch(ctx, from_json, autonomous_patch_id):
 
-    if isinstance(autonomous_patch_id, six.string_types) and len(autonomous_patch_id.strip()) == 0:
+    if isinstance(autonomous_patch_id, str) and len(autonomous_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22766,7 +22765,7 @@ def get_autonomous_patch(ctx, from_json, autonomous_patch_id):
 @cli_util.wrap_exceptions
 def get_autonomous_virtual_machine(ctx, from_json, autonomous_virtual_machine_id):
 
-    if isinstance(autonomous_virtual_machine_id, six.string_types) and len(autonomous_virtual_machine_id.strip()) == 0:
+    if isinstance(autonomous_virtual_machine_id, str) and len(autonomous_virtual_machine_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-virtual-machine-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22788,7 +22787,7 @@ def get_autonomous_virtual_machine(ctx, from_json, autonomous_virtual_machine_id
 @cli_util.wrap_exceptions
 def get_autonomous_vm_cluster(ctx, from_json, autonomous_vm_cluster_id):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22810,7 +22809,7 @@ def get_autonomous_vm_cluster(ctx, from_json, autonomous_vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_autonomous_vm_cluster_resource_usage(ctx, from_json, autonomous_vm_cluster_id):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22832,7 +22831,7 @@ def get_autonomous_vm_cluster_resource_usage(ctx, from_json, autonomous_vm_clust
 @cli_util.wrap_exceptions
 def get_backup(ctx, from_json, backup_id):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22853,7 +22852,7 @@ def get_backup(ctx, from_json, backup_id):
 @cli_util.wrap_exceptions
 def get_backup_destination(ctx, from_json, backup_destination_id):
 
-    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+    if isinstance(backup_destination_id, str) and len(backup_destination_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22875,7 +22874,7 @@ def get_backup_destination(ctx, from_json, backup_destination_id):
 @cli_util.wrap_exceptions
 def get_basecc_vm_cluster(ctx, from_json, basecc_vm_cluster_id):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22898,10 +22897,10 @@ def get_basecc_vm_cluster(ctx, from_json, basecc_vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_basecc_vm_cluster_update(ctx, from_json, basecc_vm_cluster_id, update_id):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_id, six.string_types) and len(update_id.strip()) == 0:
+    if isinstance(update_id, str) and len(update_id.strip()) == 0:
         raise click.UsageError('Parameter --update-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22925,10 +22924,10 @@ def get_basecc_vm_cluster_update(ctx, from_json, basecc_vm_cluster_id, update_id
 @cli_util.wrap_exceptions
 def get_basecc_vm_cluster_update_history_entry(ctx, from_json, basecc_vm_cluster_id, update_history_entry_id):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_history_entry_id, six.string_types) and len(update_history_entry_id.strip()) == 0:
+    if isinstance(update_history_entry_id, str) and len(update_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --update-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22951,7 +22950,7 @@ def get_basecc_vm_cluster_update_history_entry(ctx, from_json, basecc_vm_cluster
 @cli_util.wrap_exceptions
 def get_cloud_autonomous_vm_cluster(ctx, from_json, cloud_autonomous_vm_cluster_id):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22973,7 +22972,7 @@ def get_cloud_autonomous_vm_cluster(ctx, from_json, cloud_autonomous_vm_cluster_
 @cli_util.wrap_exceptions
 def get_cloud_autonomous_vm_cluster_resource_usage(ctx, from_json, cloud_autonomous_vm_cluster_id):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22995,7 +22994,7 @@ def get_cloud_autonomous_vm_cluster_resource_usage(ctx, from_json, cloud_autonom
 @cli_util.wrap_exceptions
 def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructure_id):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23018,7 +23017,7 @@ def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructur
 @cli_util.wrap_exceptions
 def get_cloud_exadata_infrastructure_unallocated_resources(ctx, from_json, cloud_exadata_infrastructure_id, db_servers):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23042,7 +23041,7 @@ def get_cloud_exadata_infrastructure_unallocated_resources(ctx, from_json, cloud
 @cli_util.wrap_exceptions
 def get_cloud_vm_cluster(ctx, from_json, cloud_vm_cluster_id):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23064,7 +23063,7 @@ def get_cloud_vm_cluster(ctx, from_json, cloud_vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_cloud_vm_cluster_iorm_config(ctx, from_json, cloud_vm_cluster_id):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23087,10 +23086,10 @@ def get_cloud_vm_cluster_iorm_config(ctx, from_json, cloud_vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_cloud_vm_cluster_update(ctx, from_json, cloud_vm_cluster_id, update_id):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_id, six.string_types) and len(update_id.strip()) == 0:
+    if isinstance(update_id, str) and len(update_id.strip()) == 0:
         raise click.UsageError('Parameter --update-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23114,10 +23113,10 @@ def get_cloud_vm_cluster_update(ctx, from_json, cloud_vm_cluster_id, update_id):
 @cli_util.wrap_exceptions
 def get_cloud_vm_cluster_update_history_entry(ctx, from_json, cloud_vm_cluster_id, update_history_entry_id):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_history_entry_id, six.string_types) and len(update_history_entry_id.strip()) == 0:
+    if isinstance(update_history_entry_id, str) and len(update_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --update-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23141,10 +23140,10 @@ def get_cloud_vm_cluster_update_history_entry(ctx, from_json, cloud_vm_cluster_i
 @cli_util.wrap_exceptions
 def get_console_connection(ctx, from_json, db_node_id, console_connection_id):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_connection_id, six.string_types) and len(console_connection_id.strip()) == 0:
+    if isinstance(console_connection_id, str) and len(console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23167,10 +23166,10 @@ def get_console_connection(ctx, from_json, db_node_id, console_connection_id):
 @cli_util.wrap_exceptions
 def get_console_history(ctx, from_json, db_node_id, console_history_id):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+    if isinstance(console_history_id, str) and len(console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23195,10 +23194,10 @@ def get_console_history(ctx, from_json, db_node_id, console_history_id):
 @cli_util.wrap_exceptions
 def get_console_history_content(ctx, from_json, file, db_node_id, console_history_id):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+    if isinstance(console_history_id, str) and len(console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23244,10 +23243,10 @@ def get_console_history_content(ctx, from_json, file, db_node_id, console_histor
 @cli_util.wrap_exceptions
 def get_data_guard_association(ctx, from_json, database_id, data_guard_association_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23269,7 +23268,7 @@ def get_data_guard_association(ctx, from_json, database_id, data_guard_associati
 @cli_util.wrap_exceptions
 def get_database(ctx, from_json, database_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23290,7 +23289,7 @@ def get_database(ctx, from_json, database_id):
 @cli_util.wrap_exceptions
 def get_database_software_image(ctx, from_json, database_software_image_id):
 
-    if isinstance(database_software_image_id, six.string_types) and len(database_software_image_id.strip()) == 0:
+    if isinstance(database_software_image_id, str) and len(database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --database-software-image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23312,10 +23311,10 @@ def get_database_software_image(ctx, from_json, database_software_image_id):
 @cli_util.wrap_exceptions
 def get_database_upgrade_history_entry(ctx, from_json, database_id, upgrade_history_entry_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(upgrade_history_entry_id, six.string_types) and len(upgrade_history_entry_id.strip()) == 0:
+    if isinstance(upgrade_history_entry_id, str) and len(upgrade_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --upgrade-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23338,7 +23337,7 @@ def get_database_upgrade_history_entry(ctx, from_json, database_id, upgrade_hist
 @cli_util.wrap_exceptions
 def get_db_connection_bundle(ctx, from_json, db_connection_bundle_id):
 
-    if isinstance(db_connection_bundle_id, six.string_types) and len(db_connection_bundle_id.strip()) == 0:
+    if isinstance(db_connection_bundle_id, str) and len(db_connection_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --db-connection-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23360,7 +23359,7 @@ def get_db_connection_bundle(ctx, from_json, db_connection_bundle_id):
 @cli_util.wrap_exceptions
 def get_db_home(ctx, from_json, db_home_id):
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23382,10 +23381,10 @@ def get_db_home(ctx, from_json, db_home_id):
 @cli_util.wrap_exceptions
 def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23408,10 +23407,10 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 @cli_util.wrap_exceptions
 def get_db_home_patch_history_entry(ctx, from_json, db_home_id, patch_history_entry_id):
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
-    if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
+    if isinstance(patch_history_entry_id, str) and len(patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23433,7 +23432,7 @@ def get_db_home_patch_history_entry(ctx, from_json, db_home_id, patch_history_en
 @cli_util.wrap_exceptions
 def get_db_node(ctx, from_json, db_node_id):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23455,7 +23454,7 @@ def get_db_node(ctx, from_json, db_node_id):
 @cli_util.wrap_exceptions
 def get_db_server(ctx, from_json, exadata_infrastructure_id, db_server_id):
 
-    if isinstance(db_server_id, six.string_types) and len(db_server_id.strip()) == 0:
+    if isinstance(db_server_id, str) and len(db_server_id.strip()) == 0:
         raise click.UsageError('Parameter --db-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23482,7 +23481,7 @@ For Exadata Cloud Service instances, support for this API will end on May 15th, 
 @cli_util.wrap_exceptions
 def get_db_system(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23504,10 +23503,10 @@ def get_db_system(ctx, from_json, db_system_id):
 @cli_util.wrap_exceptions
 def get_db_system_os_patch_history_entry(ctx, from_json, db_system_id, os_patch_history_entry_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
-    if isinstance(os_patch_history_entry_id, six.string_types) and len(os_patch_history_entry_id.strip()) == 0:
+    if isinstance(os_patch_history_entry_id, str) and len(os_patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --os-patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23531,10 +23530,10 @@ def get_db_system_os_patch_history_entry(ctx, from_json, db_system_id, os_patch_
 @cli_util.wrap_exceptions
 def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23557,10 +23556,10 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
 @cli_util.wrap_exceptions
 def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_history_entry_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
-    if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
+    if isinstance(patch_history_entry_id, str) and len(patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23583,10 +23582,10 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
 @cli_util.wrap_exceptions
 def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_history_entry_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
-    if isinstance(upgrade_history_entry_id, six.string_types) and len(upgrade_history_entry_id.strip()) == 0:
+    if isinstance(upgrade_history_entry_id, str) and len(upgrade_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --upgrade-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23609,7 +23608,7 @@ def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_hi
 @cli_util.wrap_exceptions
 def get_dbnode_snapshot(ctx, from_json, dbnode_snapshot_id):
 
-    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+    if isinstance(dbnode_snapshot_id, str) and len(dbnode_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23632,7 +23631,7 @@ def get_dbnode_snapshot(ctx, from_json, dbnode_snapshot_id):
 @cli_util.wrap_exceptions
 def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id, excluded_fields):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23656,7 +23655,7 @@ def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id, exclud
 @cli_util.wrap_exceptions
 def get_exadata_infrastructure_ocpus(ctx, from_json, autonomous_exadata_infrastructure_id):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23679,7 +23678,7 @@ def get_exadata_infrastructure_ocpus(ctx, from_json, autonomous_exadata_infrastr
 @cli_util.wrap_exceptions
 def get_exadata_infrastructure_un_allocated_resources(ctx, from_json, exadata_infrastructure_id, db_servers):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23709,7 +23708,7 @@ The [GetCloudVmClusterIormConfig] API is used for this operation with Exadata sy
 @cli_util.wrap_exceptions
 def get_exadata_iorm_config(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23731,7 +23730,7 @@ def get_exadata_iorm_config(ctx, from_json, db_system_id):
 @cli_util.wrap_exceptions
 def get_exadb_vm_cluster(ctx, from_json, exadb_vm_cluster_id):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23754,10 +23753,10 @@ def get_exadb_vm_cluster(ctx, from_json, exadb_vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_exadb_vm_cluster_update(ctx, from_json, exadb_vm_cluster_id, update_id):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_id, six.string_types) and len(update_id.strip()) == 0:
+    if isinstance(update_id, str) and len(update_id.strip()) == 0:
         raise click.UsageError('Parameter --update-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23781,10 +23780,10 @@ def get_exadb_vm_cluster_update(ctx, from_json, exadb_vm_cluster_id, update_id):
 @cli_util.wrap_exceptions
 def get_exadb_vm_cluster_update_history_entry(ctx, from_json, exadb_vm_cluster_id, update_history_entry_id):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_history_entry_id, six.string_types) and len(update_history_entry_id.strip()) == 0:
+    if isinstance(update_history_entry_id, str) and len(update_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --update-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23807,7 +23806,7 @@ def get_exadb_vm_cluster_update_history_entry(ctx, from_json, exadb_vm_cluster_i
 @cli_util.wrap_exceptions
 def get_exascale_db_storage_vault(ctx, from_json, exascale_db_storage_vault_id):
 
-    if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
+    if isinstance(exascale_db_storage_vault_id, str) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23829,7 +23828,7 @@ def get_exascale_db_storage_vault(ctx, from_json, exascale_db_storage_vault_id):
 @cli_util.wrap_exceptions
 def get_execution_action(ctx, from_json, execution_action_id):
 
-    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+    if isinstance(execution_action_id, str) and len(execution_action_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23851,7 +23850,7 @@ def get_execution_action(ctx, from_json, execution_action_id):
 @cli_util.wrap_exceptions
 def get_execution_window(ctx, from_json, execution_window_id):
 
-    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+    if isinstance(execution_window_id, str) and len(execution_window_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23875,7 +23874,7 @@ def get_execution_window(ctx, from_json, execution_window_id):
 @cli_util.wrap_exceptions
 def get_external_backup_job(ctx, from_json, backup_id):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23896,7 +23895,7 @@ def get_external_backup_job(ctx, from_json, backup_id):
 @cli_util.wrap_exceptions
 def get_external_container_database(ctx, from_json, external_container_database_id):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23918,7 +23917,7 @@ def get_external_container_database(ctx, from_json, external_container_database_
 @cli_util.wrap_exceptions
 def get_external_database_connector(ctx, from_json, external_database_connector_id):
 
-    if isinstance(external_database_connector_id, six.string_types) and len(external_database_connector_id.strip()) == 0:
+    if isinstance(external_database_connector_id, str) and len(external_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23940,7 +23939,7 @@ def get_external_database_connector(ctx, from_json, external_database_connector_
 @cli_util.wrap_exceptions
 def get_external_non_container_database(ctx, from_json, external_non_container_database_id):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -23962,7 +23961,7 @@ def get_external_non_container_database(ctx, from_json, external_non_container_d
 @cli_util.wrap_exceptions
 def get_external_pluggable_database(ctx, from_json, external_pluggable_database_id):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24031,7 +24030,7 @@ def get_infrastructure_target_versions(ctx, from_json, compartment_id, target_re
 @cli_util.wrap_exceptions
 def get_key_store(ctx, from_json, key_store_id):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24053,7 +24052,7 @@ def get_key_store(ctx, from_json, key_store_id):
 @cli_util.wrap_exceptions
 def get_maintenance_run(ctx, from_json, maintenance_run_id):
 
-    if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
+    if isinstance(maintenance_run_id, str) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24074,7 +24073,7 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
 @cli_util.wrap_exceptions
 def get_maintenance_run_history(ctx, from_json, maintenance_run_history_id):
 
-    if isinstance(maintenance_run_history_id, six.string_types) and len(maintenance_run_history_id.strip()) == 0:
+    if isinstance(maintenance_run_history_id, str) and len(maintenance_run_history_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24095,7 +24094,7 @@ def get_maintenance_run_history(ctx, from_json, maintenance_run_history_id):
 @cli_util.wrap_exceptions
 def get_oneoff_patch(ctx, from_json, oneoff_patch_id):
 
-    if isinstance(oneoff_patch_id, six.string_types) and len(oneoff_patch_id.strip()) == 0:
+    if isinstance(oneoff_patch_id, str) and len(oneoff_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --oneoff-patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24118,10 +24117,10 @@ def get_oneoff_patch(ctx, from_json, oneoff_patch_id):
 @cli_util.wrap_exceptions
 def get_pdb_conversion_history_entry(ctx, from_json, database_id, pdb_conversion_history_entry_id):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(pdb_conversion_history_entry_id, six.string_types) and len(pdb_conversion_history_entry_id.strip()) == 0:
+    if isinstance(pdb_conversion_history_entry_id, str) and len(pdb_conversion_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --pdb-conversion-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24144,7 +24143,7 @@ def get_pdb_conversion_history_entry(ctx, from_json, database_id, pdb_conversion
 @cli_util.wrap_exceptions
 def get_pluggable_database(ctx, from_json, pluggable_database_id):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24165,7 +24164,7 @@ def get_pluggable_database(ctx, from_json, pluggable_database_id):
 @cli_util.wrap_exceptions
 def get_pluggable_database_snapshot(ctx, from_json, pluggable_database_snapshot_id):
 
-    if isinstance(pluggable_database_snapshot_id, six.string_types) and len(pluggable_database_snapshot_id.strip()) == 0:
+    if isinstance(pluggable_database_snapshot_id, str) and len(pluggable_database_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24187,7 +24186,7 @@ def get_pluggable_database_snapshot(ctx, from_json, pluggable_database_snapshot_
 @cli_util.wrap_exceptions
 def get_scheduled_action(ctx, from_json, scheduled_action_id):
 
-    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+    if isinstance(scheduled_action_id, str) and len(scheduled_action_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24209,7 +24208,7 @@ def get_scheduled_action(ctx, from_json, scheduled_action_id):
 @cli_util.wrap_exceptions
 def get_scheduling_plan(ctx, from_json, scheduling_plan_id):
 
-    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+    if isinstance(scheduling_plan_id, str) and len(scheduling_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24231,7 +24230,7 @@ def get_scheduling_plan(ctx, from_json, scheduling_plan_id):
 @cli_util.wrap_exceptions
 def get_scheduling_policy(ctx, from_json, scheduling_policy_id):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24254,10 +24253,10 @@ def get_scheduling_policy(ctx, from_json, scheduling_policy_id):
 @cli_util.wrap_exceptions
 def get_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_window_id):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
-    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+    if isinstance(scheduling_window_id, str) and len(scheduling_window_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24280,7 +24279,7 @@ def get_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_windo
 @cli_util.wrap_exceptions
 def get_vm_cluster(ctx, from_json, vm_cluster_id):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24303,10 +24302,10 @@ def get_vm_cluster(ctx, from_json, vm_cluster_id):
 @cli_util.wrap_exceptions
 def get_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster_network_id):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24330,10 +24329,10 @@ def get_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster
 @cli_util.wrap_exceptions
 def get_vm_cluster_patch(ctx, from_json, vm_cluster_id, patch_id):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24356,10 +24355,10 @@ def get_vm_cluster_patch(ctx, from_json, vm_cluster_id, patch_id):
 @cli_util.wrap_exceptions
 def get_vm_cluster_patch_history_entry(ctx, from_json, vm_cluster_id, patch_history_entry_id):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(patch_history_entry_id, six.string_types) and len(patch_history_entry_id.strip()) == 0:
+    if isinstance(patch_history_entry_id, str) and len(patch_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24382,10 +24381,10 @@ def get_vm_cluster_patch_history_entry(ctx, from_json, vm_cluster_id, patch_hist
 @cli_util.wrap_exceptions
 def get_vm_cluster_update(ctx, from_json, vm_cluster_id, update_id):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_id, six.string_types) and len(update_id.strip()) == 0:
+    if isinstance(update_id, str) and len(update_id.strip()) == 0:
         raise click.UsageError('Parameter --update-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24409,10 +24408,10 @@ def get_vm_cluster_update(ctx, from_json, vm_cluster_id, update_id):
 @cli_util.wrap_exceptions
 def get_vm_cluster_update_history_entry(ctx, from_json, vm_cluster_id, update_history_entry_id):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(update_history_entry_id, six.string_types) and len(update_history_entry_id.strip()) == 0:
+    if isinstance(update_history_entry_id, str) and len(update_history_entry_id.strip()) == 0:
         raise click.UsageError('Parameter --update-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -24441,7 +24440,7 @@ def get_vm_cluster_update_history_entry(ctx, from_json, vm_cluster_id, update_hi
 @cli_util.wrap_exceptions
 def import_transportable_tablespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, tts_bundle_url, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26087,7 +26086,7 @@ def list_autonomous_container_database_dataguard_associations(ctx, from_json, al
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26387,7 +26386,7 @@ def list_autonomous_database_clones(ctx, from_json, all_pages, page_size, compar
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26451,7 +26450,7 @@ def list_autonomous_database_dataguard_associations(ctx, from_json, all_pages, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26501,7 +26500,7 @@ def list_autonomous_database_peers(ctx, from_json, all_pages, page_size, autonom
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -26552,7 +26551,7 @@ def list_autonomous_database_refreshable_clones(ctx, from_json, all_pages, page_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27098,7 +27097,7 @@ def list_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_pages, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27214,7 +27213,7 @@ def list_available_maintenance_windows(ctx, from_json, all_pages, page_size, aut
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27388,7 +27387,7 @@ def list_basecc_vm_cluster_update_history_entries(ctx, from_json, all_pages, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27445,7 +27444,7 @@ def list_basecc_vm_cluster_updates(ctx, from_json, all_pages, page_size, basecc_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27572,7 +27571,7 @@ def list_cloud_autonomous_vm_cluster_acd_resource_usage(ctx, from_json, all_page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27757,7 +27756,7 @@ def list_cloud_vm_cluster_update_history_entries(ctx, from_json, all_pages, page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27811,7 +27810,7 @@ def list_cloud_vm_cluster_updates(ctx, from_json, all_pages, page_size, cloud_vm
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27924,7 +27923,7 @@ def list_cloud_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.wrap_exceptions
 def list_console_connections(ctx, from_json, all_pages, db_node_id):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -27956,7 +27955,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, db_node_id, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28017,7 +28016,7 @@ def list_container_database_patches(ctx, from_json, all_pages, page_size, autono
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28072,7 +28071,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28200,7 +28199,7 @@ def list_database_upgrade_history_entries(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28396,7 +28395,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28446,7 +28445,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28724,7 +28723,7 @@ def list_db_system_os_patch_history_entries(ctx, from_json, all_pages, page_size
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28783,7 +28782,7 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28833,7 +28832,7 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -28969,7 +28968,7 @@ def list_db_system_upgrade_history_entries(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -29028,7 +29027,7 @@ def list_db_system_upgrades(ctx, from_json, all_pages, page_size, db_system_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -29283,7 +29282,7 @@ def list_estimate_cost_savings(ctx, from_json, all_pages, page_size, is_cpu_auto
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -29401,7 +29400,7 @@ def list_exadb_vm_cluster_update_history_entries(ctx, from_json, all_pages, page
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -29456,7 +29455,7 @@ def list_exadb_vm_cluster_updates(ctx, from_json, all_pages, page_size, exadb_vm
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -30163,7 +30162,7 @@ def list_gi_version_minor_versions(ctx, from_json, all_pages, page_size, version
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -30608,7 +30607,7 @@ def list_pdb_conversion_history_entries(ctx, from_json, all_pages, page_size, da
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -30795,7 +30794,7 @@ def list_recommended_scheduled_actions(ctx, from_json, all_pages, page_size, sch
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -30852,7 +30851,7 @@ def list_resource_pool_members(ctx, from_json, all_pages, page_size, autonomous_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31112,7 +31111,7 @@ def list_scheduling_windows(ctx, from_json, all_pages, page_size, scheduling_pol
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31179,7 +31178,7 @@ def list_system_version_minor_versions(ctx, from_json, all_pages, page_size, maj
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(major_version, six.string_types) and len(major_version.strip()) == 0:
+    if isinstance(major_version, str) and len(major_version.strip()) == 0:
         raise click.UsageError('Parameter --major-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31313,7 +31312,7 @@ def list_vm_cluster_networks(ctx, from_json, all_pages, page_size, exadata_infra
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31375,7 +31374,7 @@ def list_vm_cluster_patch_history_entries(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31425,7 +31424,7 @@ def list_vm_cluster_patches(ctx, from_json, all_pages, page_size, vm_cluster_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31477,7 +31476,7 @@ def list_vm_cluster_update_history_entries(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31534,7 +31533,7 @@ def list_vm_cluster_updates(ctx, from_json, all_pages, page_size, vm_cluster_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31656,7 +31655,7 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
 @cli_util.wrap_exceptions
 def local_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloned_pdb_name, pluggable_database_id, pdb_admin_password, target_tde_wallet_password, should_pdb_admin_account_be_locked, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31722,10 +31721,10 @@ def local_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def migrate_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31780,10 +31779,10 @@ This operation should always be performed on primary. \n[Command Reference](migr
 @cli_util.wrap_exceptions
 def migrate_data_guard_association_to_multi_data_guards(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31832,7 +31831,7 @@ def migrate_data_guard_association_to_multi_data_guards(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def migrate_exadata_db_system_resource_model(ctx, from_json, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31865,7 +31864,7 @@ def migrate_exadata_db_system_resource_model(ctx, from_json, db_system_id, if_ma
 @cli_util.wrap_exceptions
 def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, kms_key_id, kms_key_version_id, vault_id, tde_wallet_password, admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -31941,7 +31940,7 @@ def migrate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, credential_details, private_end_point_id, management_type, service_name, protocol, port, ssl_secret_id, role, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32027,7 +32026,7 @@ def modify_database_management(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def modify_pluggable_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, credential_details, private_end_point_id, service_name, protocol, port, ssl_secret_id, role, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32103,7 +32102,7 @@ def modify_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def mount_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, advanced_cluster_file_system_id, if_match):
 
-    if isinstance(advanced_cluster_file_system_id, six.string_types) and len(advanced_cluster_file_system_id.strip()) == 0:
+    if isinstance(advanced_cluster_file_system_id, str) and len(advanced_cluster_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --advanced-cluster-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32155,7 +32154,7 @@ def mount_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def mount_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, dbnode_snapshot_id, if_match):
 
-    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+    if isinstance(dbnode_snapshot_id, str) and len(dbnode_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32218,7 +32217,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def move_execution_action_member(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, source_execution_action_id, execution_action_member_id, execution_action_member_count, freeform_tags, defined_tags, if_match):
 
-    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+    if isinstance(execution_action_id, str) and len(execution_action_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32288,7 +32287,7 @@ def move_execution_action_member(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def refresh_data_guard_health_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32339,7 +32338,7 @@ def refresh_data_guard_health_status(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def refresh_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32391,7 +32390,7 @@ def refresh_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def register_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, pdb_admin_password, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32460,7 +32459,7 @@ def register_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def register_cloud_autonomous_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32529,7 +32528,7 @@ def register_cloud_autonomous_vm_cluster_pkcs(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def register_cloud_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32598,7 +32597,7 @@ def register_cloud_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def register_exadb_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32666,7 +32665,7 @@ def register_exadb_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def reinstate_autonomous_container_database_dataguard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32718,10 +32717,10 @@ def reinstate_autonomous_container_database_dataguard(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def reinstate_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32778,7 +32777,7 @@ This operation should be performed on disabled standby database. \n[Command Refe
 @cli_util.wrap_exceptions
 def reinstate_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, source_database_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32837,10 +32836,10 @@ def reinstate_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32902,7 +32901,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_container_database_id, source_container_db_admin_password, cloned_pdb_name, pluggable_database_id, pdb_admin_password, target_tde_wallet_password, should_pdb_admin_account_be_locked, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -32970,7 +32969,7 @@ def remote_clone_pluggable_database(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def remove_virtual_machine_from_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_servers, cloud_vm_cluster_id, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33027,7 +33026,7 @@ def remove_virtual_machine_from_cloud_vm_cluster(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def remove_virtual_machine_from_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_nodes, exadb_vm_cluster_id, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33084,7 +33083,7 @@ def remove_virtual_machine_from_exadb_vm_cluster(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def remove_virtual_machine_from_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_servers, vm_cluster_id, if_match):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33147,7 +33146,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def reorder_execution_actions(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, execution_action_order_list, freeform_tags, defined_tags, if_match):
 
-    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+    if isinstance(execution_window_id, str) and len(execution_window_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33213,7 +33212,7 @@ def reorder_execution_actions(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def reorder_scheduled_actions(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_window_id, scheduled_action_id_orders, scheduling_plan_id, if_match):
 
-    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+    if isinstance(scheduling_plan_id, str) and len(scheduling_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33270,7 +33269,7 @@ def reorder_scheduled_actions(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def reschedule_managed_db_software_update(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33324,10 +33323,10 @@ def reschedule_managed_db_software_update(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def resize_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, action, vm_networks, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33412,7 +33411,7 @@ def resource_pool_shapes(ctx, from_json, if_match, limit, page):
 @cli_util.wrap_exceptions
 def restart_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match, is_force_restart):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33473,7 +33472,7 @@ def restart_autonomous_container_database(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def restart_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, is_online_restart, is_force_restart, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33534,7 +33533,7 @@ def restart_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def restart_autonomous_vm_cluster_ords(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33597,7 +33596,7 @@ def restart_autonomous_vm_cluster_ords(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def restart_cloud_autonomous_vm_cluster_ords(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33664,7 +33663,7 @@ def restart_cloud_autonomous_vm_cluster_ords(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, timestamp, database_scn, latest, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33733,7 +33732,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_scn, timestamp, latest, pluggable_database_name, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33800,7 +33799,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match, key_version_id):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33859,7 +33858,7 @@ def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, key_version_id):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -33921,7 +33920,7 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def rotate_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_generation_type, autonomous_vm_cluster_id, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34002,7 +34001,7 @@ def rotate_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_generation_type, autonomous_vm_cluster_id, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34083,7 +34082,7 @@ def rotate_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, certificate_generation_type, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34164,7 +34163,7 @@ def rotate_cloud_autonomous_vm_cluster_ords_certs(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, certificate_generation_type, certificate_id, certificate_authority_id, ca_bundle_id, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34241,7 +34240,7 @@ def rotate_cloud_autonomous_vm_cluster_ssl_certs(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def rotate_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_exadata_infrastructure_id, if_match):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34304,7 +34303,7 @@ def rotate_ords_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def rotate_pluggable_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34367,7 +34366,7 @@ def rotate_pluggable_database_encryption_key(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def rotate_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_exadata_infrastructure_id, if_match):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34430,7 +34429,7 @@ def rotate_ssl_certs(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def rotate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34484,7 +34483,7 @@ def rotate_vault_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def run_data_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, pluggable_databases, data_patch_options, action, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34544,7 +34543,7 @@ def run_data_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def saas_admin_user_status(ctx, from_json, autonomous_database_id):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34570,7 +34569,7 @@ def saas_admin_user_status(ctx, from_json, autonomous_database_id):
 @cli_util.wrap_exceptions
 def scan_external_container_database_pluggable_databases(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, external_database_connector_id):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34633,7 +34632,7 @@ def scan_external_container_database_pluggable_databases(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def set_db_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, provider, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34690,7 +34689,7 @@ def set_db_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def set_db_key_version_oci_provider_set_key_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, kms_key_version_id, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34749,7 +34748,7 @@ def set_db_key_version_oci_provider_set_key_version_details(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def set_pdb_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, provider, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34806,7 +34805,7 @@ def set_pdb_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def set_pdb_key_version_oci_provider_set_key_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, kms_key_version_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34865,7 +34864,7 @@ def set_pdb_key_version_oci_provider_set_key_version_details(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def shrink_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34918,7 +34917,7 @@ def shrink_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -34970,7 +34969,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def start_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35023,7 +35022,7 @@ def start_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, is_force_stop, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35083,7 +35082,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def stop_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35141,7 +35140,7 @@ This operation should be performed on respective standby database. \n[Command Re
 @cli_util.wrap_exceptions
 def switch_over_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35197,7 +35196,7 @@ def switch_over_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def switchover_autonomous_container_database_dataguard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35251,10 +35250,10 @@ A switchover incurs no data loss. \n[Command Reference](switchoverAutonomousCont
 @cli_util.wrap_exceptions
 def switchover_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35307,7 +35306,7 @@ def switchover_autonomous_container_database_dataguard_association(ctx, from_jso
 @cli_util.wrap_exceptions
 def switchover_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, peer_db_id, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35366,10 +35365,10 @@ A switchover guarantees no data loss. \n[Command Reference](switchoverDataGuardA
 @cli_util.wrap_exceptions
 def switchover_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35426,7 +35425,7 @@ def switchover_data_guard_association(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35482,7 +35481,7 @@ def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def terminate_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_exadata_infrastructure_id, if_match):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35542,7 +35541,7 @@ For Exadata Cloud Service instances, support for this API will end on May 15th, 
 @cli_util.wrap_exceptions
 def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35597,7 +35596,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def unmount_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, advanced_cluster_file_system_id, if_match):
 
-    if isinstance(advanced_cluster_file_system_id, six.string_types) and len(advanced_cluster_file_system_id.strip()) == 0:
+    if isinstance(advanced_cluster_file_system_id, str) and len(advanced_cluster_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --advanced-cluster-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35649,7 +35648,7 @@ def unmount_advanced_cluster_file_system(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def unmount_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, dbnode_snapshot_id, if_match):
 
-    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+    if isinstance(dbnode_snapshot_id, str) and len(dbnode_snapshot_id.strip()) == 0:
         raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35706,7 +35705,7 @@ def unmount_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def unregister_cloud_autonomous_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35775,7 +35774,7 @@ def unregister_cloud_autonomous_vm_cluster_pkcs(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def unregister_cloud_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35844,7 +35843,7 @@ def unregister_cloud_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def unregister_exadb_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, tde_key_store_type, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -35919,7 +35918,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_advanced_cluster_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, advanced_cluster_file_system_id, storage_in_gbs, vm_cluster_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(advanced_cluster_file_system_id, six.string_types) and len(advanced_cluster_file_system_id.strip()) == 0:
+    if isinstance(advanced_cluster_file_system_id, str) and len(advanced_cluster_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --advanced-cluster-file-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -36010,7 +36009,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, customer_contacts, okv_end_point_group_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
     if not force:
         if customer_contacts or maintenance_window_details or freeform_tags or defined_tags or backup_config:
@@ -36117,10 +36116,10 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_autonomous_container_database_dataguard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, autonomous_container_database_dataguard_association_id, is_automatic_failover_enabled, protection_mode, fast_start_fail_over_lag_limit_in_seconds, if_match):
 
-    if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
+    if isinstance(autonomous_container_database_id, str) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
-    if isinstance(autonomous_container_database_dataguard_association_id, six.string_types) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
+    if isinstance(autonomous_container_database_dataguard_association_id, str) and len(autonomous_container_database_dataguard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-dataguard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -36357,7 +36356,7 @@ To disconnect a cross region standby, also provide the OCID of the standby datab
 @cli_util.wrap_exceptions
 def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, availability_domain, time_scheduled_ad_update, is_disable_ad_update_schedule, is_schedule_ad_update_to_earliest, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, autonomous_database_maintenance_window, time_maintenance_pause_until, scheduled_maintenance_window, time_scheduled_maintenance_window_update, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, vanity_url_details, secret_id, secret_version_number, encryption_key, is_disconnect_peer, local_adg_resource_pool_leader_id, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
     if not force:
         if long_term_backup_schedule or freeform_tags or defined_tags or security_attributes or whitelisted_ips or standby_whitelisted_ips or nsg_ids or customer_contacts or resource_pool_summary or autonomous_database_maintenance_window or scheduled_maintenance_window or scheduled_operations or db_tools_details or vanity_url_details or encryption_key:
@@ -36624,7 +36623,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_backup_id, retention_period_in_days, if_match, opc_dry_run):
 
-    if isinstance(autonomous_database_backup_id, six.string_types) and len(autonomous_database_backup_id.strip()) == 0:
+    if isinstance(autonomous_database_backup_id, str) and len(autonomous_database_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -36759,7 +36758,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_autonomous_database_software_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_software_image_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(autonomous_database_software_image_id, six.string_types) and len(autonomous_database_software_image_id.strip()) == 0:
+    if isinstance(autonomous_database_software_image_id, str) and len(autonomous_database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-software-image-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -36826,7 +36825,7 @@ def update_autonomous_database_software_image(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_autonomous_database_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, should_rotate, grace_period, opc_dry_run):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -36907,7 +36906,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_exadata_infrastructure_id, display_name, maintenance_window_details, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(autonomous_exadata_infrastructure_id, six.string_types) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(autonomous_exadata_infrastructure_id, str) and len(autonomous_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
         if maintenance_window_details or nsg_ids or freeform_tags or defined_tags:
@@ -36995,7 +36994,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled, distribution_algorithm, if_match):
 
-    if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(autonomous_vm_cluster_id, str) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if maintenance_window_details or freeform_tags or defined_tags:
@@ -37092,7 +37091,7 @@ def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, retention_period_in_days, retention_period_in_years, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -37164,7 +37163,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_destination_id, vpc_users, connection_string, local_mount_point_path, nfs_mount_type, nfs_server, nfs_server_export, freeform_tags, defined_tags, if_match):
 
-    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+    if isinstance(backup_destination_id, str) and len(backup_destination_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
     if not force:
         if vpc_users or nfs_server or freeform_tags or defined_tags:
@@ -37263,7 +37262,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_basecc_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, basecc_vm_cluster_id, cpu_core_count, memory_size_in_gbs, data_storage_size_in_gbs, reco_storage_size_in_gbs, license_model, ssh_public_keys, display_name, additional_vm_storage_size_in_gbs, update_details, freeform_tags, defined_tags, data_collection_options, cloud_automation_update_details, if_match):
 
-    if isinstance(basecc_vm_cluster_id, six.string_types) and len(basecc_vm_cluster_id.strip()) == 0:
+    if isinstance(basecc_vm_cluster_id, str) and len(basecc_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --basecc-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if ssh_public_keys or update_details or freeform_tags or defined_tags or data_collection_options or cloud_automation_update_details:
@@ -37383,7 +37382,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, license_model, nsg_ids, freeform_tags, defined_tags, cluster_time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled_vm_cluster, distribution_algorithm, security_attributes, if_match, opc_dry_run):
 
-    if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_autonomous_vm_cluster_id, str) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if maintenance_window_details or nsg_ids or freeform_tags or defined_tags or security_attributes:
@@ -37505,7 +37504,7 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.wrap_exceptions
 def update_cloud_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, display_name, maintenance_window, maintenance_version_preferences, compute_count, storage_count, freeform_tags, defined_tags, customer_contacts, if_match):
 
-    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(cloud_exadata_infrastructure_id, str) and len(cloud_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
         if maintenance_window or maintenance_version_preferences or freeform_tags or defined_tags or customer_contacts:
@@ -37632,7 +37631,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @cli_util.wrap_exceptions
 def update_cloud_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_vm_cluster_id, display_name, cpu_core_count, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, license_model, ssh_public_keys, update_details, nsg_ids, backup_network_nsg_ids, compute_nodes, storage_size_in_gbs, freeform_tags, defined_tags, security_attributes, data_collection_options, file_system_configuration_details, cloud_automation_update_details, vm_backup_storage_type, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, is_local_backup_enabled, is_sparse_diskgroup_enabled, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if ssh_public_keys or update_details or nsg_ids or backup_network_nsg_ids or compute_nodes or freeform_tags or defined_tags or security_attributes or data_collection_options or file_system_configuration_details or cloud_automation_update_details:
@@ -37768,7 +37767,7 @@ This option is a JSON list with items of type DbIormConfigUpdateDetail.  For doc
 @cli_util.wrap_exceptions
 def update_cloud_vm_cluster_iorm_config(ctx, from_json, force, cloud_vm_cluster_id, objective, db_plans, if_match):
 
-    if isinstance(cloud_vm_cluster_id, six.string_types) and len(cloud_vm_cluster_id.strip()) == 0:
+    if isinstance(cloud_vm_cluster_id, str) and len(cloud_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if db_plans:
@@ -37816,10 +37815,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_console_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_connection_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_connection_id, six.string_types) and len(console_connection_id.strip()) == 0:
+    if isinstance(console_connection_id, str) and len(console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --console-connection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -37892,10 +37891,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_console_history(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, console_history_id, freeform_tags, defined_tags, display_name, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
-    if isinstance(console_history_id, six.string_types) and len(console_history_id.strip()) == 0:
+    if isinstance(console_history_id, str) and len(console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --console-history-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -37976,7 +37975,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def update_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -38062,10 +38061,10 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, data_guard_association_id, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
-    if isinstance(data_guard_association_id, six.string_types) and len(data_guard_association_id.strip()) == 0:
+    if isinstance(data_guard_association_id, str) and len(data_guard_association_id.strip()) == 0:
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -38159,7 +38158,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.wrap_exceptions
 def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, new_admin_password, old_tde_wallet_password, new_tde_wallet_password, storage_size_details, freeform_tags, defined_tags, managed_software_update_details, patch_options, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, auto_failover_configuration, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     if not force:
         if db_backup_config or storage_size_details or freeform_tags or defined_tags or managed_software_update_details or patch_options or auto_failover_configuration:
@@ -38268,7 +38267,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_database_software_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_software_image_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_software_image_id, six.string_types) and len(database_software_image_id.strip()) == 0:
+    if isinstance(database_software_image_id, str) and len(database_software_image_id.strip()) == 0:
         raise click.UsageError('Parameter --database-software-image-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -38342,7 +38341,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, db_version, one_off_patches, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_home_id, six.string_types) and len(db_home_id.strip()) == 0:
+    if isinstance(db_home_id, str) and len(db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
     if not force:
         if db_version or one_off_patches or freeform_tags or defined_tags:
@@ -38417,7 +38416,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_node_id, six.string_types) and len(db_node_id.strip()) == 0:
+    if isinstance(db_node_id, str) and len(db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -38508,7 +38507,7 @@ To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 @cli_util.wrap_exceptions
 def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, version_parameterconflict, ssh_public_keys, data_storage_size_in_gbs, reco_storage_size_in_gbs, freeform_tags, defined_tags, security_attributes, shape, nsg_ids, backup_network_nsg_ids, license_model, maintenance_window_details, data_collection_options, compute_model, compute_count, if_match, opc_dry_run):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if version_parameterconflict or ssh_public_keys or freeform_tags or defined_tags or security_attributes or nsg_ids or backup_network_nsg_ids or maintenance_window_details or data_collection_options:
@@ -38643,7 +38642,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, contacts, maintenance_window, maintenance_version_preferences, additional_storage_count, is_multi_rack_deployment, multi_rack_configuration_file, additional_compute_count, additional_compute_system_model, dns_server, ntp_server, time_zone, is_cps_offline_report_enabled, network_bonding_mode_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
         if contacts or maintenance_window or maintenance_version_preferences or dns_server or ntp_server or network_bonding_mode_details or freeform_tags or defined_tags:
@@ -38779,7 +38778,7 @@ This option is a JSON list with items of type DbIormConfigUpdateDetail.  For doc
 @cli_util.wrap_exceptions
 def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, objective, db_plans, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if db_plans:
@@ -38865,7 +38864,7 @@ The grid image ID can be obtained using the API /20160918/giVersions/{majorVersi
 @cli_util.wrap_exceptions
 def update_exadb_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, display_name, total_e_cpu_count, enabled_e_cpu_count, vm_file_system_storage, node_count, license_model, ssh_public_keys, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, grid_image_id, update_action, if_match):
 
-    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+    if isinstance(exadb_vm_cluster_id, str) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if vm_file_system_storage or ssh_public_keys or nsg_ids or backup_network_nsg_ids or freeform_tags or defined_tags or security_attributes or data_collection_options:
@@ -38983,7 +38982,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_exascale_db_storage_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exascale_db_storage_vault_id, display_name, description, high_capacity_database_storage, additional_flash_cache_in_percent, freeform_tags, defined_tags, is_autoscale_enabled, autoscale_limit_in_gbs, if_match):
 
-    if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
+    if isinstance(exascale_db_storage_vault_id, str) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
     if not force:
         if high_capacity_database_storage or freeform_tags or defined_tags:
@@ -39076,7 +39075,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_execution_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, execution_window_id, action_params, action_members, freeform_tags, defined_tags, if_match):
 
-    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+    if isinstance(execution_action_id, str) and len(execution_action_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
     if not force:
         if action_params or action_members or freeform_tags or defined_tags:
@@ -39158,7 +39157,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_execution_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, time_scheduled, window_duration_in_mins, is_enforced_duration, freeform_tags, defined_tags, if_match):
 
-    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+    if isinstance(execution_window_id, str) and len(execution_window_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39238,7 +39237,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_external_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39311,7 +39310,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_external_database_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_database_connector_id, freeform_tags, defined_tags, display_name, connector_type, if_match):
 
-    if isinstance(external_database_connector_id, six.string_types) and len(external_database_connector_id.strip()) == 0:
+    if isinstance(external_database_connector_id, str) and len(external_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-database-connector-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39390,7 +39389,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_external_database_connector_update_external_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_database_connector_id, freeform_tags, defined_tags, display_name, connection_string, connection_credentials, if_match):
 
-    if isinstance(external_database_connector_id, six.string_types) and len(external_database_connector_id.strip()) == 0:
+    if isinstance(external_database_connector_id, str) and len(external_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-database-connector-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or connection_string or connection_credentials:
@@ -39472,7 +39471,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_external_non_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39544,7 +39543,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_external_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39690,7 +39689,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_key_store(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, key_store_id, type_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
     if not force:
         if type_details or freeform_tags or defined_tags:
@@ -39767,7 +39766,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, key_store_id, type_details_connection_ips, type_details_admin_username, type_details_vault_id, type_details_secret_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(key_store_id, six.string_types) and len(key_store_id.strip()) == 0:
+    if isinstance(key_store_id, str) and len(key_store_id.strip()) == 0:
         raise click.UsageError('Parameter --key-store-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -39852,7 +39851,7 @@ def update_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @cli_util.wrap_exceptions
 def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, is_enabled, time_scheduled, is_patch_now_enabled, patch_id, patching_mode, is_custom_action_timeout_enabled, custom_action_timeout_in_mins, current_custom_action_timeout_in_mins, is_resume_patching, target_db_server_version, target_storage_server_version, if_match):
 
-    if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
+    if isinstance(maintenance_run_id, str) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -39944,7 +39943,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_oneoff_patch(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oneoff_patch_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oneoff_patch_id, six.string_types) and len(oneoff_patch_id.strip()) == 0:
+    if isinstance(oneoff_patch_id, str) and len(oneoff_patch_id.strip()) == 0:
         raise click.UsageError('Parameter --oneoff-patch-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -40014,7 +40013,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -40084,7 +40083,7 @@ This option is a JSON list with items of type ActionMember.  For documentation o
 @cli_util.wrap_exceptions
 def update_scheduled_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_action_id, action_params, action_members, scheduling_window_id, if_match):
 
-    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+    if isinstance(scheduled_action_id, str) and len(scheduled_action_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
     if not force:
         if action_params or action_members:
@@ -40160,7 +40159,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_scheduling_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, display_name, cadence, cadence_start_month, freeform_tags, defined_tags, if_match):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
     if not force:
         if cadence_start_month or freeform_tags or defined_tags:
@@ -40241,10 +40240,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_scheduling_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, scheduling_window_id, window_preference, freeform_tags, defined_tags, if_match):
 
-    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+    if isinstance(scheduling_policy_id, str) and len(scheduling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
 
-    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+    if isinstance(scheduling_window_id, str) and len(scheduling_window_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
     if not force:
         if window_preference or freeform_tags or defined_tags:
@@ -40339,7 +40338,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @cli_util.wrap_exceptions
 def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, is_local_backup_enabled, is_sparse_diskgroup_enabled, license_model, ssh_public_keys, version_parameterconflict, update_details, freeform_tags, defined_tags, data_collection_options, file_system_configuration_details, cloud_automation_update_details, vm_backup_storage_type, if_match):
 
-    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+    if isinstance(vm_cluster_id, str) and len(vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
     if not force:
         if ssh_public_keys or version_parameterconflict or update_details or freeform_tags or defined_tags or data_collection_options or file_system_configuration_details or cloud_automation_update_details:
@@ -40478,10 +40477,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, scans, dns, ntp, vm_networks, dr_scans, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
     if not force:
         if scans or dns or ntp or vm_networks or dr_scans or freeform_tags or defined_tags:
@@ -40564,7 +40563,7 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -40626,7 +40625,7 @@ def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_home_id, if_match, database_upgrade_source_details_options):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -40692,7 +40691,7 @@ def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_database_software_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_database_software_image_id, if_match, database_upgrade_source_details_options):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -40760,7 +40759,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_version, if_match, database_upgrade_source_details_options):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -40828,7 +40827,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, action, snapshot_retention_period_in_days, new_gi_version, new_os_version, is_snapshot_retention_days_force_updated, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -40896,10 +40895,10 @@ def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def validate_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id):
 
-    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+    if isinstance(exadata_infrastructure_id, str) and len(exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
 
-    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+    if isinstance(vm_cluster_network_id, str) and len(vm_cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}

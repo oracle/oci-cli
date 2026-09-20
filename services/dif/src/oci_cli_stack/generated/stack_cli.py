@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -100,7 +99,7 @@ This option is a JSON list with items of type OkeDetail.  For documentation on O
 @cli_util.wrap_exceptions
 def add_service(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, adb, ggcs, dataflow, objectstorage, genai, aidataplatform, omk, oke, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -183,7 +182,7 @@ def add_service(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -212,7 +211,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, compartment_id, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -396,7 +395,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -469,7 +468,7 @@ This option is a JSON list with items of type OkeArtifactsDetail.  For documenta
 @cli_util.wrap_exceptions
 def deploy_artifacts(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, stack_templates, services, subnet_id, adb, ggcs, dataflow, omk, oke, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -544,7 +543,7 @@ def deploy_artifacts(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def get_stack(ctx, from_json, stack_id):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -566,7 +565,7 @@ def get_stack(ctx, from_json, stack_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -659,7 +658,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -716,7 +715,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -855,7 +854,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, notification_email, stack_templates, services, adb, ggcs, dataflow, objectstorage, genai, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
     if not force:
         if stack_templates or services or adb or ggcs or dataflow or objectstorage or genai or freeform_tags or defined_tags:

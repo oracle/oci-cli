@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -89,7 +88,7 @@ Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_type
 @cli_util.wrap_exceptions
 def change_oracle_db_azure_blob_container_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_blob_container_id, compartment_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(oracle_db_azure_blob_container_id, six.string_types) and len(oracle_db_azure_blob_container_id.strip()) == 0:
+    if isinstance(oracle_db_azure_blob_container_id, str) and len(oracle_db_azure_blob_container_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-blob-container-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -243,7 +242,7 @@ def create_oracle_db_azure_blob_container(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def delete_oracle_db_azure_blob_container(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_blob_container_id, if_match):
 
-    if isinstance(oracle_db_azure_blob_container_id, six.string_types) and len(oracle_db_azure_blob_container_id.strip()) == 0:
+    if isinstance(oracle_db_azure_blob_container_id, str) and len(oracle_db_azure_blob_container_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-blob-container-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -297,7 +296,7 @@ def delete_oracle_db_azure_blob_container(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def get_oracle_db_azure_blob_container(ctx, from_json, oracle_db_azure_blob_container_id, limit, page, sort_order):
 
-    if isinstance(oracle_db_azure_blob_container_id, six.string_types) and len(oracle_db_azure_blob_container_id.strip()) == 0:
+    if isinstance(oracle_db_azure_blob_container_id, str) and len(oracle_db_azure_blob_container_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-blob-container-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -411,7 +410,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_oracle_db_azure_blob_container(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_blob_container_id, compartment_id, display_name, private_endpoint_ip_address, private_endpoint_dns_alias, azure_storage_account_name, azure_storage_container_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_azure_blob_container_id, six.string_types) and len(oracle_db_azure_blob_container_id.strip()) == 0:
+    if isinstance(oracle_db_azure_blob_container_id, str) and len(oracle_db_azure_blob_container_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-blob-container-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

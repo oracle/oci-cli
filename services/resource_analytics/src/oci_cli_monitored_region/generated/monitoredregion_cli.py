@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -110,7 +109,7 @@ def create_monitored_region(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_monitored_region(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_region_id, if_match):
 
-    if isinstance(monitored_region_id, six.string_types) and len(monitored_region_id.strip()) == 0:
+    if isinstance(monitored_region_id, str) and len(monitored_region_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-region-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -161,7 +160,7 @@ def delete_monitored_region(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def get_monitored_region(ctx, from_json, monitored_region_id):
 
-    if isinstance(monitored_region_id, six.string_types) and len(monitored_region_id.strip()) == 0:
+    if isinstance(monitored_region_id, str) and len(monitored_region_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-region-id cannot be whitespace or empty string')
 
     kwargs = {}

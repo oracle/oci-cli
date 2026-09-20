@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -257,7 +256,7 @@ Use the `GET /waasPolicies/{waasPolicyId}/wafConfig/recommendations` method to v
 @cli_util.wrap_exceptions
 def accept_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, protection_rule_keys, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -311,7 +310,7 @@ def accept_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -337,7 +336,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_address_list_compartment(ctx, from_json, address_list_id, compartment_id, if_match):
 
-    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+    if isinstance(address_list_id, str) and len(address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -368,7 +367,7 @@ def change_address_list_compartment(ctx, from_json, address_list_id, compartment
 @cli_util.wrap_exceptions
 def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -399,7 +398,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
 @cli_util.wrap_exceptions
 def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_rule_id, compartment_id, if_match):
 
-    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+    if isinstance(custom_protection_rule_id, str) and len(custom_protection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -430,7 +429,7 @@ def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_
 @cli_util.wrap_exceptions
 def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_id, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -802,7 +801,7 @@ def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, address_list_id, if_match):
 
-    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+    if isinstance(address_list_id, str) and len(address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -866,7 +865,7 @@ def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -930,7 +929,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, custom_protection_rule_id, if_match):
 
-    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+    if isinstance(custom_protection_rule_id, str) and len(custom_protection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -994,7 +993,7 @@ def delete_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1045,7 +1044,7 @@ def delete_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_address_list(ctx, from_json, address_list_id):
 
-    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+    if isinstance(address_list_id, str) and len(address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1067,7 +1066,7 @@ def get_address_list(ctx, from_json, address_list_id):
 @cli_util.wrap_exceptions
 def get_certificate(ctx, from_json, certificate_id):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1089,7 +1088,7 @@ def get_certificate(ctx, from_json, certificate_id):
 @cli_util.wrap_exceptions
 def get_custom_protection_rule(ctx, from_json, custom_protection_rule_id):
 
-    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+    if isinstance(custom_protection_rule_id, str) and len(custom_protection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1111,7 +1110,7 @@ def get_custom_protection_rule(ctx, from_json, custom_protection_rule_id):
 @cli_util.wrap_exceptions
 def get_device_fingerprint_challenge(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1133,7 +1132,7 @@ def get_device_fingerprint_challenge(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_human_interaction_challenge(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1155,7 +1154,7 @@ def get_human_interaction_challenge(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_js_challenge(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1177,7 +1176,7 @@ def get_js_challenge(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_policy_config(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1200,10 +1199,10 @@ def get_policy_config(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_protection_rule(ctx, from_json, waas_policy_id, protection_rule_key):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
-    if isinstance(protection_rule_key, six.string_types) and len(protection_rule_key.strip()) == 0:
+    if isinstance(protection_rule_key, str) and len(protection_rule_key.strip()) == 0:
         raise click.UsageError('Parameter --protection-rule-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1226,7 +1225,7 @@ def get_protection_rule(ctx, from_json, waas_policy_id, protection_rule_key):
 @cli_util.wrap_exceptions
 def get_protection_settings(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1248,7 +1247,7 @@ def get_protection_settings(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_waas_policy(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1270,7 +1269,7 @@ def get_waas_policy(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_waf_address_rate_limiting(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1292,7 +1291,7 @@ def get_waf_address_rate_limiting(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_waf_config(ctx, from_json, waas_policy_id):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1314,7 +1313,7 @@ def get_waf_config(ctx, from_json, waas_policy_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1343,7 +1342,7 @@ def list_access_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1463,7 +1462,7 @@ def list_caching_rules(ctx, from_json, all_pages, page_size, waas_policy_id, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1516,7 +1515,7 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1757,7 +1756,7 @@ def list_good_bots(ctx, from_json, all_pages, page_size, waas_policy_id, limit, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1810,7 +1809,7 @@ def list_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1868,7 +1867,7 @@ def list_recommendations(ctx, from_json, all_pages, page_size, waas_policy_id, r
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1921,7 +1920,7 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2043,7 +2042,7 @@ def list_waas_policy_custom_protection_rules(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2101,7 +2100,7 @@ def list_waf_blocked_requests(ctx, from_json, all_pages, page_size, waas_policy_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2177,7 +2176,7 @@ def list_waf_logs(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2268,7 +2267,7 @@ def list_waf_requests(ctx, from_json, all_pages, page_size, waas_policy_id, time
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2325,7 +2324,7 @@ def list_waf_traffic(ctx, from_json, all_pages, page_size, waas_policy_id, time_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2380,7 +2379,7 @@ def list_whitelists(ctx, from_json, all_pages, page_size, waas_policy_id, limit,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2487,7 +2486,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
 @cli_util.wrap_exceptions
 def purge_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, if_match, resources):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2558,7 +2557,7 @@ Any existing access rules that are not specified with a `key` in the list of acc
 @cli_util.wrap_exceptions
 def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, access_rules, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2623,7 +2622,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, address_list_id, if_match, display_name, addresses, freeform_tags, defined_tags):
 
-    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+    if isinstance(address_list_id, str) and len(address_list_id.strip()) == 0:
         raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
     if not force:
         if addresses or freeform_tags or defined_tags:
@@ -2701,7 +2700,7 @@ The order the caching rules are specified in is important. The rules are process
 @cli_util.wrap_exceptions
 def update_caching_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, caching_rules_details, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2764,7 +2763,7 @@ Query parameters are allowed in CAPTCHA URL. \n[Command Reference](updateCaptcha
 @cli_util.wrap_exceptions
 def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, captchas, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2828,7 +2827,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match, display_name, freeform_tags, defined_tags):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2922,7 +2921,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_custom_protection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, custom_protection_rule_id, display_name, description, template, freeform_tags, defined_tags, if_match):
 
-    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+    if isinstance(custom_protection_rule_id, str) and len(custom_protection_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3009,7 +3008,7 @@ DFC collects attributes to generate a hashed signature about a client - if a fin
 @cli_util.wrap_exceptions
 def update_device_fingerprint_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, is_enabled, action, failure_threshold, action_expiration_in_seconds, failure_threshold_expiration_in_seconds, max_address_count, max_address_count_expiration_in_seconds, challenge_settings, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if challenge_settings:
@@ -3097,7 +3096,7 @@ Good bots allows you to manage access for bots from known providers, such as Goo
 @cli_util.wrap_exceptions
 def update_good_bots(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, good_bots, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3164,7 +3163,7 @@ def update_good_bots(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def update_human_interaction_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, is_enabled, action, failure_threshold, action_expiration_in_seconds, failure_threshold_expiration_in_seconds, interaction_threshold, recording_period_in_seconds, set_http_header, challenge_settings, is_nat_enabled, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if set_http_header or challenge_settings:
@@ -3267,7 +3266,7 @@ This option is a JSON list with items of type AccessRuleCriteria.  For documenta
 @cli_util.wrap_exceptions
 def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, is_enabled, action, failure_threshold, action_expiration_in_seconds, set_http_header, challenge_settings, are_redirects_challenged, criteria, is_nat_enabled, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if set_http_header or challenge_settings or criteria:
@@ -3394,7 +3393,7 @@ In the case of multiple headers with the same name, only the first header will b
 @cli_util.wrap_exceptions
 def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, load_balancing_method, websocket_path_prefixes, is_sni_enabled, health_checks, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if tls_protocols or load_balancing_method or websocket_path_prefixes or health_checks:
@@ -3537,7 +3536,7 @@ In the case of multiple headers with the same name, only the first header will b
 @cli_util.wrap_exceptions
 def update_policy_config_round_robin_load_balancing_method(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, websocket_path_prefixes, is_sni_enabled, health_checks, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if tls_protocols or websocket_path_prefixes or health_checks:
@@ -3683,7 +3682,7 @@ In the case of multiple headers with the same name, only the first header will b
 @cli_util.wrap_exceptions
 def update_policy_config_sticky_cookie_load_balancing_method(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, websocket_path_prefixes, is_sni_enabled, health_checks, if_match, load_balancing_method_name, load_balancing_method_domain, load_balancing_method_expiration_time_in_seconds):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if tls_protocols or websocket_path_prefixes or health_checks:
@@ -3835,7 +3834,7 @@ In the case of multiple headers with the same name, only the first header will b
 @cli_util.wrap_exceptions
 def update_policy_config_ip_hash_load_balancing_method(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, websocket_path_prefixes, is_sni_enabled, health_checks, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if tls_protocols or websocket_path_prefixes or health_checks:
@@ -3941,7 +3940,7 @@ def update_policy_config_ip_hash_load_balancing_method(ctx, from_json, force, wa
 @cli_util.wrap_exceptions
 def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, protection_rules, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4021,7 +4020,7 @@ Use `GET /waasPolicies/{waasPolicyId}/wafRecommendations` to view WAF recommenda
 @cli_util.wrap_exceptions
 def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, block_action, block_response_code, block_error_page_message, block_error_page_code, block_error_page_description, max_argument_count, max_name_length_per_argument, max_total_name_length_of_arguments, recommendations_period_in_days, is_response_inspected, max_response_size_in_ki_b, allowed_http_methods, media_types, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if allowed_http_methods or media_types:
@@ -4124,7 +4123,7 @@ def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, threat_feeds, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4197,7 +4196,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, display_name, additional_domains, origins, origin_groups, policy_config, waf_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if additional_domains or origins or origin_groups or policy_config or waf_config or freeform_tags or defined_tags:
@@ -4285,7 +4284,7 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, update_custom_protection_rules_details, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4345,7 +4344,7 @@ def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_waf_address_rate_limiting(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, is_enabled, allowed_rate_per_address, max_delayed_count_per_address, block_response_code, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4450,7 +4449,7 @@ This option is a JSON list with items of type Whitelist.  For documentation on W
 @cli_util.wrap_exceptions
 def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, access_rules, address_rate_limiting, captchas, device_fingerprint_challenge, good_bots, human_interaction_challenge, js_challenge, origin, caching_rules, custom_protection_rules, origin_groups, protection_rules, protection_settings, threat_feeds, whitelists, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if access_rules or address_rate_limiting or captchas or device_fingerprint_challenge or good_bots or human_interaction_challenge or js_challenge or caching_rules or custom_protection_rules or origin_groups or protection_rules or protection_settings or threat_feeds or whitelists:
@@ -4567,7 +4566,7 @@ Whitelists can be deleted by removing the existing whitelist object from the lis
 @cli_util.wrap_exceptions
 def update_whitelists(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, whitelists, if_match):
 
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
 
     kwargs = {}

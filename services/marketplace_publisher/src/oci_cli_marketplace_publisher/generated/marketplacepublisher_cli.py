@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -289,7 +288,7 @@ marketplace_publisher_root_group.add_command(listing_revision_package_group)
 @cli_util.wrap_exceptions
 def activate_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, term_version_id, if_match):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -338,7 +337,7 @@ def activate_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -366,7 +365,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def cascading_delete_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, if_match):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -421,7 +420,7 @@ def cascading_delete_listing(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def cascading_delete_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -477,7 +476,7 @@ def cascading_delete_listing_revision(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_artifact_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -538,7 +537,7 @@ def change_artifact_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def change_listing_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, compartment_id, if_match):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -600,7 +599,7 @@ def change_listing_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def change_listing_revision_to_new_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -652,7 +651,7 @@ def change_listing_revision_to_new_status(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_term_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, term_id, compartment_id, if_match):
 
-    if isinstance(term_id, six.string_types) and len(term_id.strip()) == 0:
+    if isinstance(term_id, str) and len(term_id.strip()) == 0:
         raise click.UsageError('Parameter --term-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -714,7 +713,7 @@ def change_term_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def clone_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2508,7 +2507,7 @@ def create_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2564,7 +2563,7 @@ def delete_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, if_match):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2628,7 +2627,7 @@ def delete_listing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2692,7 +2691,7 @@ def delete_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_listing_revision_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2756,7 +2755,7 @@ def delete_listing_revision_attachment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_listing_revision_note(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_note_id, if_match):
 
-    if isinstance(listing_revision_note_id, six.string_types) and len(listing_revision_note_id.strip()) == 0:
+    if isinstance(listing_revision_note_id, str) and len(listing_revision_note_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-note-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2820,7 +2819,7 @@ def delete_listing_revision_note(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_listing_revision_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_package_id, if_match):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2884,7 +2883,7 @@ def delete_listing_revision_package(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def delete_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, term_id, if_match):
 
-    if isinstance(term_id, six.string_types) and len(term_id.strip()) == 0:
+    if isinstance(term_id, str) and len(term_id.strip()) == 0:
         raise click.UsageError('Parameter --term-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2948,7 +2947,7 @@ def delete_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, term_version_id, if_match):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3007,7 +3006,7 @@ def delete_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_artifact(ctx, from_json, artifact_id):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3030,7 +3029,7 @@ def get_artifact(ctx, from_json, artifact_id):
 @cli_util.wrap_exceptions
 def get_category(ctx, from_json, category_code, compartment_id):
 
-    if isinstance(category_code, six.string_types) and len(category_code.strip()) == 0:
+    if isinstance(category_code, str) and len(category_code.strip()) == 0:
         raise click.UsageError('Parameter --category-code cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3053,7 +3052,7 @@ def get_category(ctx, from_json, category_code, compartment_id):
 @cli_util.wrap_exceptions
 def get_lead(ctx, from_json, lead_id):
 
-    if isinstance(lead_id, six.string_types) and len(lead_id.strip()) == 0:
+    if isinstance(lead_id, str) and len(lead_id.strip()) == 0:
         raise click.UsageError('Parameter --lead-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3075,7 +3074,7 @@ def get_lead(ctx, from_json, lead_id):
 @cli_util.wrap_exceptions
 def get_listing(ctx, from_json, listing_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3097,7 +3096,7 @@ def get_listing(ctx, from_json, listing_id):
 @cli_util.wrap_exceptions
 def get_listing_revision(ctx, from_json, listing_revision_id):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3119,7 +3118,7 @@ def get_listing_revision(ctx, from_json, listing_revision_id):
 @cli_util.wrap_exceptions
 def get_listing_revision_attachment(ctx, from_json, listing_revision_attachment_id):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3142,7 +3141,7 @@ def get_listing_revision_attachment(ctx, from_json, listing_revision_attachment_
 @cli_util.wrap_exceptions
 def get_listing_revision_attachment_content(ctx, from_json, file, listing_revision_attachment_id):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3187,7 +3186,7 @@ def get_listing_revision_attachment_content(ctx, from_json, file, listing_revisi
 @cli_util.wrap_exceptions
 def get_listing_revision_icon_content(ctx, from_json, file, listing_revision_id):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3231,7 +3230,7 @@ def get_listing_revision_icon_content(ctx, from_json, file, listing_revision_id)
 @cli_util.wrap_exceptions
 def get_listing_revision_note(ctx, from_json, listing_revision_note_id):
 
-    if isinstance(listing_revision_note_id, six.string_types) and len(listing_revision_note_id.strip()) == 0:
+    if isinstance(listing_revision_note_id, str) and len(listing_revision_note_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-note-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3253,7 +3252,7 @@ def get_listing_revision_note(ctx, from_json, listing_revision_note_id):
 @cli_util.wrap_exceptions
 def get_listing_revision_package(ctx, from_json, listing_revision_package_id):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3275,7 +3274,7 @@ def get_listing_revision_package(ctx, from_json, listing_revision_package_id):
 @cli_util.wrap_exceptions
 def get_market(ctx, from_json, market_code):
 
-    if isinstance(market_code, six.string_types) and len(market_code.strip()) == 0:
+    if isinstance(market_code, str) and len(market_code.strip()) == 0:
         raise click.UsageError('Parameter --market-code cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3297,7 +3296,7 @@ def get_market(ctx, from_json, market_code):
 @cli_util.wrap_exceptions
 def get_product(ctx, from_json, product_code):
 
-    if isinstance(product_code, six.string_types) and len(product_code.strip()) == 0:
+    if isinstance(product_code, str) and len(product_code.strip()) == 0:
         raise click.UsageError('Parameter --product-code cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3319,7 +3318,7 @@ def get_product(ctx, from_json, product_code):
 @cli_util.wrap_exceptions
 def get_publisher(ctx, from_json, publisher_id):
 
-    if isinstance(publisher_id, six.string_types) and len(publisher_id.strip()) == 0:
+    if isinstance(publisher_id, str) and len(publisher_id.strip()) == 0:
         raise click.UsageError('Parameter --publisher-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3341,7 +3340,7 @@ def get_publisher(ctx, from_json, publisher_id):
 @cli_util.wrap_exceptions
 def get_support_doc(ctx, from_json, support_doc_code):
 
-    if isinstance(support_doc_code, six.string_types) and len(support_doc_code.strip()) == 0:
+    if isinstance(support_doc_code, str) and len(support_doc_code.strip()) == 0:
         raise click.UsageError('Parameter --support-doc-code cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3364,7 +3363,7 @@ def get_support_doc(ctx, from_json, support_doc_code):
 @cli_util.wrap_exceptions
 def get_support_doc_content(ctx, from_json, file, support_doc_code):
 
-    if isinstance(support_doc_code, six.string_types) and len(support_doc_code.strip()) == 0:
+    if isinstance(support_doc_code, str) and len(support_doc_code.strip()) == 0:
         raise click.UsageError('Parameter --support-doc-code cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3408,7 +3407,7 @@ def get_support_doc_content(ctx, from_json, file, support_doc_code):
 @cli_util.wrap_exceptions
 def get_term(ctx, from_json, term_id):
 
-    if isinstance(term_id, six.string_types) and len(term_id.strip()) == 0:
+    if isinstance(term_id, str) and len(term_id.strip()) == 0:
         raise click.UsageError('Parameter --term-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3430,7 +3429,7 @@ def get_term(ctx, from_json, term_id):
 @cli_util.wrap_exceptions
 def get_term_version(ctx, from_json, term_version_id):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3453,7 +3452,7 @@ def get_term_version(ctx, from_json, term_version_id):
 @cli_util.wrap_exceptions
 def get_term_version_content(ctx, from_json, file, term_version_id):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3497,7 +3496,7 @@ def get_term_version_content(ctx, from_json, file, term_version_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4666,7 +4665,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4723,7 +4722,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4838,7 +4837,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def mark_listing_revision_package_as_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_package_id, if_match):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4893,7 +4892,7 @@ def mark_listing_revision_package_as_default(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def publish_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4949,7 +4948,7 @@ def publish_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def publish_listing_revision_as_private(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, allowed_tenancies, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5011,7 +5010,7 @@ def publish_listing_revision_as_private(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def publish_listing_revision_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_package_id, if_match):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5069,7 +5068,7 @@ def publish_listing_revision_package(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def submit_listing_revision_for_review(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, note_details, are_internal_tenancy_launch_allowed, should_auto_publish_on_approval, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5133,7 +5132,7 @@ def submit_listing_revision_for_review(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def un_publish_listing_revision_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_package_id, if_match):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5194,7 +5193,7 @@ def un_publish_listing_revision_package(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_artifact(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, display_name, artifact_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5279,7 +5278,7 @@ def update_artifact(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_artifact_update_kubernetes_image_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, display_name, freeform_tags, defined_tags, helm_chart, container_image_artifact_ids, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or helm_chart or container_image_artifact_ids:
@@ -5368,7 +5367,7 @@ def update_artifact_update_kubernetes_image_artifact_details(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_artifact_update_stack_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, display_name, freeform_tags, defined_tags, stack, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or stack:
@@ -5454,7 +5453,7 @@ def update_artifact_update_stack_artifact_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_artifact_update_container_image_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, display_name, freeform_tags, defined_tags, container_image, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or container_image:
@@ -5540,7 +5539,7 @@ def update_artifact_update_container_image_artifact_details(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_artifact_update_machine_image_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, compartment_id, display_name, freeform_tags, defined_tags, machine_image, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or machine_image:
@@ -5623,7 +5622,7 @@ def update_artifact_update_machine_image_artifact_details(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def update_listing(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5709,7 +5708,7 @@ This option is a JSON list with items of type NamedLink.  For documentation on N
 @cli_util.wrap_exceptions
 def update_listing_revision(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, listing_type, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
     if not force:
         if content_language or supportedlanguages or support_contacts or support_links or freeform_tags or defined_tags:
@@ -5838,7 +5837,7 @@ This option is a JSON list with items of type GeoLocation.  For documentation on
 @cli_util.wrap_exceptions
 def update_listing_revision_update_service_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, contact_us, product_codes, industries, trained_professionals, vanity_url, geo_locations, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
     if not force:
         if content_language or supportedlanguages or support_contacts or support_links or freeform_tags or defined_tags or product_codes or industries or trained_professionals or geo_locations:
@@ -5989,7 +5988,7 @@ This option is a JSON list with items of type PricingPlan.  For documentation on
 @cli_util.wrap_exceptions
 def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, pricing_plans, is_rover_exportable, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
     if not force:
         if content_language or supportedlanguages or support_contacts or support_links or freeform_tags or defined_tags or version_details or products or recommended_service_provider_listing_ids or pricing_plans:
@@ -6148,7 +6147,7 @@ This option is a JSON list with items of type ListingProduct.  For documentation
 @cli_util.wrap_exceptions
 def update_listing_revision_update_lead_gen_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, demo_url, self_paced_training_url, recommended_service_provider_listing_ids, vanity_url, download_info, pricing_plans, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
     if not force:
         if content_language or supportedlanguages or support_contacts or support_links or freeform_tags or defined_tags or version_details or products or recommended_service_provider_listing_ids or download_info:
@@ -6284,7 +6283,7 @@ def update_listing_revision_update_lead_gen_listing_revision_details(ctx, from_j
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, attachment_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6363,7 +6362,7 @@ def update_listing_revision_attachment(ctx, from_json, force, wait_for_state, ma
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_screen_shot_attachment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6444,7 +6443,7 @@ def update_listing_revision_attachment_update_screen_shot_attachment_details(ctx
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_customer_success_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, customer_name, display_name, description, freeform_tags, defined_tags, url, product_codes, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or product_codes:
@@ -6531,7 +6530,7 @@ def update_listing_revision_attachment_update_customer_success_attachment(ctx, f
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_review_support_document_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, document_name, template_code, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6612,7 +6611,7 @@ def update_listing_revision_attachment_update_review_support_document_attachment
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_related_document_attachment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, freeform_tags, defined_tags, document_category, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6696,7 +6695,7 @@ def update_listing_revision_attachment_update_related_document_attachment_detail
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_supported_service_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, service_name, type, display_name, description, freeform_tags, defined_tags, url, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6779,7 +6778,7 @@ def update_listing_revision_attachment_update_supported_service_attachment(ctx, 
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_update_video_attachment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6853,7 +6852,7 @@ def update_listing_revision_attachment_update_video_attachment_details(ctx, from
 @cli_util.wrap_exceptions
 def update_listing_revision_attachment_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, update_listing_revision_attachment_content, if_match):
 
-    if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
+    if isinstance(listing_revision_attachment_id, str) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6910,7 +6909,7 @@ def update_listing_revision_attachment_content(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_listing_revision_icon_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, update_listing_revision_icon_content, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6969,7 +6968,7 @@ def update_listing_revision_icon_content(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_listing_revision_note(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_note_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_note_id, six.string_types) and len(listing_revision_note_id.strip()) == 0:
+    if isinstance(listing_revision_note_id, str) and len(listing_revision_note_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-note-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -7044,7 +7043,7 @@ def update_listing_revision_note(ctx, from_json, force, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_listing_revision_package(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_package_id, package_version, display_name, description, artifact_id, term_id, is_default, are_security_upgrades_provided, freeform_tags, defined_tags, if_match):
 
-    if isinstance(listing_revision_package_id, six.string_types) and len(listing_revision_package_id.strip()) == 0:
+    if isinstance(listing_revision_package_id, str) and len(listing_revision_package_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-package-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -7133,7 +7132,7 @@ def update_listing_revision_package(ctx, from_json, force, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def update_term(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, term_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(term_id, six.string_types) and len(term_id.strip()) == 0:
+    if isinstance(term_id, str) and len(term_id.strip()) == 0:
         raise click.UsageError('Parameter --term-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -7202,7 +7201,7 @@ def update_term(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def update_term_version(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, term_version_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -7272,7 +7271,7 @@ def update_term_version(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_term_version_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, term_version_id, update_term_version_content, if_match, display_name):
 
-    if isinstance(term_version_id, six.string_types) and len(term_version_id.strip()) == 0:
+    if isinstance(term_version_id, str) and len(term_version_id.strip()) == 0:
         raise click.UsageError('Parameter --term-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7330,7 +7329,7 @@ def update_term_version_content(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def validate_and_publish_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, artifact_id, if_match):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7385,7 +7384,7 @@ def validate_and_publish_artifact(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def withdraw_listing_revision(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, if_match):
 
-    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+    if isinstance(listing_revision_id, str) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
 
     kwargs = {}

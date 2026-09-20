@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -223,7 +222,7 @@ def create_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_cost_alert_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscription_id, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -287,7 +286,7 @@ def delete_cost_alert_subscription(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cost_anomaly_monitor_id, if_match):
 
-    if isinstance(cost_anomaly_monitor_id, six.string_types) and len(cost_anomaly_monitor_id.strip()) == 0:
+    if isinstance(cost_anomaly_monitor_id, str) and len(cost_anomaly_monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -350,7 +349,7 @@ def delete_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def disable_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cost_anomaly_monitor_id, if_match):
 
-    if isinstance(cost_anomaly_monitor_id, six.string_types) and len(cost_anomaly_monitor_id.strip()) == 0:
+    if isinstance(cost_anomaly_monitor_id, str) and len(cost_anomaly_monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def disable_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def enable_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cost_anomaly_monitor_id, if_match):
 
-    if isinstance(cost_anomaly_monitor_id, six.string_types) and len(cost_anomaly_monitor_id.strip()) == 0:
+    if isinstance(cost_anomaly_monitor_id, str) and len(cost_anomaly_monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -448,7 +447,7 @@ def enable_cost_anomaly_monitor(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_cost_alert_subscription(ctx, from_json, subscription_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -470,7 +469,7 @@ def get_cost_alert_subscription(ctx, from_json, subscription_id):
 @cli_util.wrap_exceptions
 def get_cost_anomaly_event(ctx, from_json, cost_anomaly_event_id):
 
-    if isinstance(cost_anomaly_event_id, six.string_types) and len(cost_anomaly_event_id.strip()) == 0:
+    if isinstance(cost_anomaly_event_id, str) and len(cost_anomaly_event_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -492,7 +491,7 @@ def get_cost_anomaly_event(ctx, from_json, cost_anomaly_event_id):
 @cli_util.wrap_exceptions
 def get_cost_anomaly_monitor(ctx, from_json, cost_anomaly_monitor_id):
 
-    if isinstance(cost_anomaly_monitor_id, six.string_types) and len(cost_anomaly_monitor_id.strip()) == 0:
+    if isinstance(cost_anomaly_monitor_id, str) and len(cost_anomaly_monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-monitor-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -786,7 +785,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_cost_alert_subscription(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subscription_id, description, channels, defined_tags, freeform_tags, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -865,7 +864,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_cost_anomaly_event(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cost_anomaly_event_id, feedback_response, defined_tags, freeform_tags, if_match):
 
-    if isinstance(cost_anomaly_event_id, six.string_types) and len(cost_anomaly_event_id.strip()) == 0:
+    if isinstance(cost_anomaly_event_id, str) and len(cost_anomaly_event_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-event-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -942,7 +941,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_cost_anomaly_monitor(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cost_anomaly_monitor_id, description, cost_alert_subscription_map, defined_tags, freeform_tags, if_match):
 
-    if isinstance(cost_anomaly_monitor_id, six.string_types) and len(cost_anomaly_monitor_id.strip()) == 0:
+    if isinstance(cost_anomaly_monitor_id, str) and len(cost_anomaly_monitor_id.strip()) == 0:
         raise click.UsageError('Parameter --cost-anomaly-monitor-id cannot be whitespace or empty string')
     if not force:
         if cost_alert_subscription_map or defined_tags or freeform_tags:

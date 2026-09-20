@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -124,7 +123,7 @@ Zones in the default view are not moved. VCN-dedicated resolvers are initially c
 @cli_util.wrap_exceptions
 def change_resolver_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, compartment_id, if_match, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -196,7 +195,7 @@ def change_resolver_compartment(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def change_steering_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, compartment_id, if_match, scope):
 
-    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+    if isinstance(steering_policy_id, str) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,7 +264,7 @@ def change_steering_policy_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_match, scope):
 
-    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+    if isinstance(tsig_key_id, str) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -304,7 +303,7 @@ To change the compartment of a protected view, change the compartment of its cor
 @cli_util.wrap_exceptions
 def change_view_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, view_id, compartment_id, if_match, scope):
 
-    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+    if isinstance(view_id, str) and len(view_id.strip()) == 0:
         raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -380,7 +379,7 @@ Protected zones cannot have their compartment changed. When the zone name is pro
 @cli_util.wrap_exceptions
 def change_zone_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_id, compartment_id, if_match, scope):
 
-    if isinstance(zone_id, six.string_types) and len(zone_id.strip()) == 0:
+    if isinstance(zone_id, str) and len(zone_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -458,7 +457,7 @@ def change_zone_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, endpoint_type, forwarding_address, listening_address, freeform_tags, defined_tags, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -541,7 +540,7 @@ def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, subnet_id, forwarding_address, listening_address, freeform_tags, defined_tags, nsg_ids, security_attributes, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1263,10 +1262,10 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1309,10 +1308,10 @@ Note that attempting to delete a resolver endpoint in the DELETED lifecycle stat
 @cli_util.wrap_exceptions
 def delete_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, if_match, if_unmodified_since, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
-    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+    if isinstance(resolver_endpoint_name, str) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1381,13 +1380,13 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_unmodified_since, compartment_id, scope, view_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
-    if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
+    if isinstance(rtype, str) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1430,7 +1429,7 @@ A `204` response indicates that the delete has been successful. Deletion will fa
 @cli_util.wrap_exceptions
 def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, if_match, if_unmodified_since, scope):
 
-    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+    if isinstance(steering_policy_id, str) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1493,7 +1492,7 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, if_match, if_unmodified_since, scope):
 
-    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+    if isinstance(steering_policy_attachment_id, str) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1556,7 +1555,7 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, if_match, if_unmodified_since, scope):
 
-    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+    if isinstance(tsig_key_id, str) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1621,7 +1620,7 @@ Note that attempting to delete a view in the DELETED lifecycleState will result 
 @cli_util.wrap_exceptions
 def delete_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, view_id, if_match, if_unmodified_since, scope):
 
-    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+    if isinstance(view_id, str) and len(view_id.strip()) == 0:
         raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1690,7 +1689,7 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1771,10 +1770,10 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1844,7 +1843,7 @@ Note that attempting to get a resolver in the DELETED lifecycleState will result
 @cli_util.wrap_exceptions
 def get_resolver(ctx, from_json, resolver_id, if_modified_since, if_none_match, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1878,10 +1877,10 @@ Note that attempting to get a resolver endpoint in the DELETED lifecycle state w
 @cli_util.wrap_exceptions
 def get_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name, if_modified_since, if_none_match, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
-    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+    if isinstance(resolver_endpoint_name, str) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1929,13 +1928,13 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
-    if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
+    if isinstance(rtype, str) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2000,7 +1999,7 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
 @cli_util.wrap_exceptions
 def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_modified_since, scope):
 
-    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+    if isinstance(steering_policy_id, str) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2031,7 +2030,7 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
 @cli_util.wrap_exceptions
 def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id, if_none_match, if_modified_since, scope):
 
-    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+    if isinstance(steering_policy_attachment_id, str) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2062,7 +2061,7 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
 @cli_util.wrap_exceptions
 def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since, scope):
 
-    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+    if isinstance(tsig_key_id, str) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2095,7 +2094,7 @@ Note that attempting to get a view in the DELETED lifecycleState will result in 
 @cli_util.wrap_exceptions
 def get_view(ctx, from_json, view_id, if_modified_since, if_none_match, scope):
 
-    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+    if isinstance(view_id, str) and len(view_id.strip()) == 0:
         raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2132,7 +2131,7 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2169,7 +2168,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 @cli_util.wrap_exceptions
 def get_zone_content(ctx, from_json, file, zone_name_or_id, if_none_match, if_modified_since, scope, view_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2243,7 +2242,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2321,7 +2320,7 @@ def list_resolver_endpoints(ctx, from_json, all_pages, page_size, resolver_id, n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2874,10 +2873,10 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2931,13 +2930,13 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
-    if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
+    if isinstance(rtype, str) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2990,7 +2989,7 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3042,7 +3041,7 @@ For more information, see [DNSSEC]. \n[Command Reference](promoteZoneDnssecKeyVe
 @cli_util.wrap_exceptions
 def promote_zone_dnssec_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_id, dnssec_key_version_uuid, if_match, if_unmodified_since, scope):
 
-    if isinstance(zone_id, six.string_types) and len(zone_id.strip()) == 0:
+    if isinstance(zone_id, str) and len(zone_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3119,7 +3118,7 @@ For more information, see the [DNSSEC] documentation. \n[Command Reference](stag
 @cli_util.wrap_exceptions
 def stage_zone_dnssec_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_id, predecessor_dnssec_key_version_uuid, if_match, if_unmodified_since, scope):
 
-    if isinstance(zone_id, six.string_types) and len(zone_id.strip()) == 0:
+    if isinstance(zone_id, str) and len(zone_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3201,10 +3200,10 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
     if not force:
         if items:
@@ -3268,7 +3267,7 @@ This option is a JSON list with items of type ResolverRuleDetails.  For document
 @cli_util.wrap_exceptions
 def update_resolver(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, display_name, freeform_tags, defined_tags, attached_views, rules, if_match, if_unmodified_since, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or attached_views or rules:
@@ -3353,10 +3352,10 @@ def update_resolver(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_resolver_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, endpoint_type, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
-    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+    if isinstance(resolver_endpoint_name, str) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3437,10 +3436,10 @@ def update_resolver_endpoint(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, freeform_tags, defined_tags, nsg_ids, security_attributes, if_match, if_unmodified_since, scope):
 
-    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+    if isinstance(resolver_id, str) and len(resolver_id.strip()) == 0:
         raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
 
-    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+    if isinstance(resolver_endpoint_name, str) and len(resolver_endpoint_name.strip()) == 0:
         raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or security_attributes:
@@ -3529,13 +3528,13 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
 
-    if isinstance(domain, six.string_types) and len(domain.strip()) == 0:
+    if isinstance(domain, str) and len(domain.strip()) == 0:
         raise click.UsageError('Parameter --domain cannot be whitespace or empty string')
 
-    if isinstance(rtype, six.string_types) and len(rtype.strip()) == 0:
+    if isinstance(rtype, str) and len(rtype.strip()) == 0:
         raise click.UsageError('Parameter --rtype cannot be whitespace or empty string')
     if not force:
         if items:
@@ -3627,7 +3626,7 @@ This option is a JSON list with items of type SteeringPolicyRule.  For documenta
 @cli_util.wrap_exceptions
 def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, display_name, ttl, health_check_monitor_id, template, freeform_tags, defined_tags, answers, rules, if_match, if_unmodified_since, scope):
 
-    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+    if isinstance(steering_policy_id, str) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or answers or rules:
@@ -3717,7 +3716,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, display_name, if_match, if_unmodified_since, scope):
 
-    if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
+    if isinstance(steering_policy_attachment_id, str) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3788,7 +3787,7 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
 
-    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+    if isinstance(tsig_key_id, str) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3867,7 +3866,7 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_view(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, view_id, display_name, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
 
-    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+    if isinstance(view_id, str) and len(view_id.strip()) == 0:
         raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3974,7 +3973,7 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, resolution_mode, dnssec_state, external_masters, external_downstreams, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or external_masters or external_downstreams:
@@ -4068,7 +4067,7 @@ This parameter is deprecated and should be omitted.""")
 @cli_util.wrap_exceptions
 def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
-    if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
+    if isinstance(zone_name_or_id, str) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
     if not force:
         if items:

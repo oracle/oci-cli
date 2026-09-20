@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ functions_invoke_root_group.add_command(function_group)
 @cli_util.wrap_exceptions
 def invoke_function(ctx, from_json, file, function_id, invoke_function_body, fn_intent, fn_invoke_type, is_dry_run):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
 
     kwargs = {}

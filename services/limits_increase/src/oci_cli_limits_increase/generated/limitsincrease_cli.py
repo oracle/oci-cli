@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -67,7 +66,7 @@ limits_increase_root_group.add_command(limits_increase_question_collection_group
 @cli_util.wrap_exceptions
 def cancel_limits_increase_item_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, limits_increase_item_request_id, if_match):
 
-    if isinstance(limits_increase_item_request_id, six.string_types) and len(limits_increase_item_request_id.strip()) == 0:
+    if isinstance(limits_increase_item_request_id, str) and len(limits_increase_item_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-item-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -118,7 +117,7 @@ def cancel_limits_increase_item_request(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def cancel_limits_increase_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, limits_increase_request_id, if_match):
 
-    if isinstance(limits_increase_request_id, six.string_types) and len(limits_increase_request_id.strip()) == 0:
+    if isinstance(limits_increase_request_id, str) and len(limits_increase_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -237,7 +236,7 @@ def create_limits_increase_request(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_limits_increase_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, limits_increase_request_id, if_match):
 
-    if isinstance(limits_increase_request_id, six.string_types) and len(limits_increase_request_id.strip()) == 0:
+    if isinstance(limits_increase_request_id, str) and len(limits_increase_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -296,7 +295,7 @@ def delete_limits_increase_request(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_limits_increase_item_request(ctx, from_json, limits_increase_item_request_id):
 
-    if isinstance(limits_increase_item_request_id, six.string_types) and len(limits_increase_item_request_id.strip()) == 0:
+    if isinstance(limits_increase_item_request_id, str) and len(limits_increase_item_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-item-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -318,7 +317,7 @@ def get_limits_increase_item_request(ctx, from_json, limits_increase_item_reques
 @cli_util.wrap_exceptions
 def get_limits_increase_request(ctx, from_json, limits_increase_request_id):
 
-    if isinstance(limits_increase_request_id, six.string_types) and len(limits_increase_request_id.strip()) == 0:
+    if isinstance(limits_increase_request_id, str) and len(limits_increase_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_limits_increase_request(ctx, from_json, limits_increase_request_id, items, if_match):
 
-    if isinstance(limits_increase_request_id, six.string_types) and len(limits_increase_request_id.strip()) == 0:
+    if isinstance(limits_increase_request_id, str) and len(limits_increase_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -565,7 +564,7 @@ def patch_limits_increase_request(ctx, from_json, limits_increase_request_id, it
 @cli_util.wrap_exceptions
 def update_limits_increase_request(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, limits_increase_request_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(limits_increase_request_id, six.string_types) and len(limits_increase_request_id.strip()) == 0:
+    if isinstance(limits_increase_request_id, str) and len(limits_increase_request_id.strip()) == 0:
         raise click.UsageError('Parameter --limits-increase-request-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

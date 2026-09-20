@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -125,7 +124,7 @@ dbtools_root_group.add_command(database_tools_sql_report_group)
 @cli_util.wrap_exceptions
 def add_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -194,7 +193,7 @@ def add_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def add_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -263,7 +262,7 @@ def add_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def add_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -332,7 +331,7 @@ def add_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def add_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def add_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def add_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -470,7 +469,7 @@ def add_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def add_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_private_endpoint_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -539,7 +538,7 @@ def add_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def add_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -604,7 +603,7 @@ def add_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def cascading_delete_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, if_match):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -661,7 +660,7 @@ def cascading_delete_database_tools_mcp_server(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_database_tools_connection_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -722,7 +721,7 @@ def change_database_tools_connection_compartment(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def change_database_tools_database_api_gateway_config_compartment(ctx, from_json, database_api_gateway_config_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -759,7 +758,7 @@ def change_database_tools_database_api_gateway_config_compartment(ctx, from_json
 @cli_util.wrap_exceptions
 def change_database_tools_identity_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -823,7 +822,7 @@ def change_database_tools_identity_compartment(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_database_tools_mcp_server_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -884,7 +883,7 @@ def change_database_tools_mcp_server_compartment(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def change_database_tools_mcp_toolset_compartment(ctx, from_json, mcp_toolset_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -921,7 +920,7 @@ def change_database_tools_mcp_toolset_compartment(ctx, from_json, mcp_toolset_id
 @cli_util.wrap_exceptions
 def change_database_tools_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_private_endpoint_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -982,7 +981,7 @@ def change_database_tools_private_endpoint_compartment(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def change_database_tools_sql_report_compartment(ctx, from_json, sql_report_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2732,7 +2731,7 @@ def create_database_tools_sql_report_create_database_tools_sql_report_oracle_dat
 @cli_util.wrap_exceptions
 def delete_database_tools_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2791,7 +2790,7 @@ def delete_database_tools_connection(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_database_tools_database_api_gateway_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, if_match, is_lock_override):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2858,7 +2857,7 @@ def delete_database_tools_database_api_gateway_config(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def delete_database_tools_identity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2917,7 +2916,7 @@ def delete_database_tools_identity(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, if_match, is_lock_override):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2976,7 +2975,7 @@ def delete_database_tools_mcp_server(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_database_tools_mcp_toolset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3035,7 +3034,7 @@ def delete_database_tools_mcp_toolset(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_database_tools_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_private_endpoint_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3094,7 +3093,7 @@ def delete_database_tools_private_endpoint(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_database_tools_sql_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, if_match, is_lock_override):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3155,7 +3154,7 @@ def delete_database_tools_sql_report(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def get_database_tools_connection(ctx, from_json, database_tools_connection_id):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3177,7 +3176,7 @@ def get_database_tools_connection(ctx, from_json, database_tools_connection_id):
 @cli_util.wrap_exceptions
 def get_database_tools_database_api_gateway_config(ctx, from_json, database_api_gateway_config_id):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3199,7 +3198,7 @@ def get_database_tools_database_api_gateway_config(ctx, from_json, database_api_
 @cli_util.wrap_exceptions
 def get_database_tools_endpoint_service(ctx, from_json, database_tools_endpoint_service_id):
 
-    if isinstance(database_tools_endpoint_service_id, six.string_types) and len(database_tools_endpoint_service_id.strip()) == 0:
+    if isinstance(database_tools_endpoint_service_id, str) and len(database_tools_endpoint_service_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-endpoint-service-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3221,7 +3220,7 @@ def get_database_tools_endpoint_service(ctx, from_json, database_tools_endpoint_
 @cli_util.wrap_exceptions
 def get_database_tools_identity(ctx, from_json, database_tools_identity_id):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3243,7 +3242,7 @@ def get_database_tools_identity(ctx, from_json, database_tools_identity_id):
 @cli_util.wrap_exceptions
 def get_database_tools_mcp_server(ctx, from_json, mcp_server_id):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3265,7 +3264,7 @@ def get_database_tools_mcp_server(ctx, from_json, mcp_server_id):
 @cli_util.wrap_exceptions
 def get_database_tools_mcp_toolset(ctx, from_json, mcp_toolset_id):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3287,7 +3286,7 @@ def get_database_tools_mcp_toolset(ctx, from_json, mcp_toolset_id):
 @cli_util.wrap_exceptions
 def get_database_tools_private_endpoint(ctx, from_json, database_tools_private_endpoint_id):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3309,7 +3308,7 @@ def get_database_tools_private_endpoint(ctx, from_json, database_tools_private_e
 @cli_util.wrap_exceptions
 def get_database_tools_sql_report(ctx, from_json, sql_report_id):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3331,7 +3330,7 @@ def get_database_tools_sql_report(ctx, from_json, sql_report_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3916,7 +3915,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3973,7 +3972,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4083,7 +4082,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def refresh_database_tools_identity_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, type, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4143,7 +4142,7 @@ def refresh_database_tools_identity_credential(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4208,7 +4207,7 @@ def refresh_database_tools_identity_credential_refresh_database_tools_identity_o
 @cli_util.wrap_exceptions
 def remove_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4277,7 +4276,7 @@ def remove_database_tools_connection_lock(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def remove_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4346,7 +4345,7 @@ def remove_database_tools_database_api_gateway_config_lock(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def remove_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4415,7 +4414,7 @@ def remove_database_tools_identity_lock(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def remove_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4484,7 +4483,7 @@ def remove_database_tools_mcp_server_lock(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def remove_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4553,7 +4552,7 @@ def remove_database_tools_mcp_toolset_lock(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def remove_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_private_endpoint_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4622,7 +4621,7 @@ def remove_database_tools_private_endpoint_lock(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def remove_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4693,7 +4692,7 @@ def remove_database_tools_sql_report_lock(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_database_tools_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, type, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -4780,7 +4779,7 @@ This option is a JSON list with items of type DatabaseToolsKeyStoreGenericJdbcDe
 @cli_util.wrap_exceptions
 def update_database_tools_connection_update_database_tools_connection_generic_jdbc_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, display_name, defined_tags, freeform_tags, url, user_name, user_password, advanced_properties, key_stores, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or user_password or advanced_properties or key_stores:
@@ -4885,7 +4884,7 @@ This option is a JSON list with items of type DatabaseToolsKeyStorePostgresqlDet
 @cli_util.wrap_exceptions
 def update_database_tools_connection_update_database_tools_connection_postgresql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, display_name, defined_tags, freeform_tags, related_resource, connection_string, user_name, user_password, advanced_properties, key_stores, private_endpoint_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or related_resource or user_password or advanced_properties or key_stores:
@@ -4996,7 +4995,7 @@ This option is a JSON list with items of type DatabaseToolsKeyStoreMySqlDetails.
 @cli_util.wrap_exceptions
 def update_database_tools_connection_update_database_tools_connection_my_sql_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, display_name, defined_tags, freeform_tags, related_resource, connection_string, user_name, user_password, advanced_properties, key_stores, private_endpoint_id, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or related_resource or user_password or advanced_properties or key_stores:
@@ -5108,7 +5107,7 @@ This option is a JSON list with items of type DatabaseToolsKeyStoreDetails.  For
 @cli_util.wrap_exceptions
 def update_database_tools_connection_update_database_tools_connection_oracle_database_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_connection_id, display_name, defined_tags, freeform_tags, related_resource, connection_string, user_name, user_password, advanced_properties, key_stores, private_endpoint_id, proxy_client, if_match, is_lock_override):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or related_resource or user_password or advanced_properties or key_stores or proxy_client:
@@ -5214,7 +5213,7 @@ def update_database_tools_connection_update_database_tools_connection_oracle_dat
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, type, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -5290,7 +5289,7 @@ def update_database_tools_database_api_gateway_config(ctx, from_json, force, wai
 @cli_util.wrap_exceptions
 def update_database_tools_database_api_gateway_config_update_database_tools_database_api_gateway_config_default_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_api_gateway_config_id, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(database_api_gateway_config_id, six.string_types) and len(database_api_gateway_config_id.strip()) == 0:
+    if isinstance(database_api_gateway_config_id, str) and len(database_api_gateway_config_id.strip()) == 0:
         raise click.UsageError('Parameter --database-api-gateway-config-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -5368,7 +5367,7 @@ def update_database_tools_database_api_gateway_config_update_database_tools_data
 @cli_util.wrap_exceptions
 def update_database_tools_identity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, type, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -5448,7 +5447,7 @@ def update_database_tools_identity(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_identity_id, display_name, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -5536,7 +5535,7 @@ This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole. 
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_server(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, type, display_name, description, custom_roles, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
     if not force:
         if custom_roles or defined_tags or freeform_tags:
@@ -5635,7 +5634,7 @@ This option is a JSON list with items of type DatabaseToolsMcpServerCustomRole. 
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_server_update_database_tools_mcp_server_details_default(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_server_id, display_name, description, custom_roles, access_token_expiry_in_seconds, refresh_token_expiry_in_seconds, defined_tags, freeform_tags, storage, if_match, is_lock_override):
 
-    if isinstance(mcp_server_id, six.string_types) and len(mcp_server_id.strip()) == 0:
+    if isinstance(mcp_server_id, str) and len(mcp_server_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-server-id cannot be whitespace or empty string')
     if not force:
         if custom_roles or defined_tags or freeform_tags or storage:
@@ -5734,7 +5733,7 @@ def update_database_tools_mcp_server_update_database_tools_mcp_server_details_de
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_toolset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, type, toolset_version, display_name, description, defined_tags, freeform_tags, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -5831,7 +5830,7 @@ To use ASYNCHRONOUS execution, the MCP Server must have the storage property con
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_customizable_reporting_tools_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, reports, tools, default_execution_type, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or reports or tools:
@@ -5935,7 +5934,7 @@ To use ASYNCHRONOUS execution, the MCP Server must have the storage property con
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_built_in_sql_tools_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, tools, default_execution_type, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or tools:
@@ -6040,7 +6039,7 @@ To use ASYNCHRONOUS execution, the MCP Server must have the storage property con
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_custom_sql_tool_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, tool_description, tool_name, source, variables, allowed_roles, default_execution_type, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or source or variables or allowed_roles:
@@ -6154,7 +6153,7 @@ To use ASYNCHRONOUS execution, the MCP Server must have the storage property con
 @cli_util.wrap_exceptions
 def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_sql_assistant_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mcp_toolset_id, toolset_version, display_name, description, defined_tags, freeform_tags, generative_ai_semantic_store_id, tools, default_execution_type, if_match, is_lock_override):
 
-    if isinstance(mcp_toolset_id, six.string_types) and len(mcp_toolset_id.strip()) == 0:
+    if isinstance(mcp_toolset_id, str) and len(mcp_toolset_id.strip()) == 0:
         raise click.UsageError('Parameter --mcp-toolset-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or tools:
@@ -6252,7 +6251,7 @@ def update_database_tools_mcp_toolset_update_database_tools_mcp_toolset_gen_ai_s
 @cli_util.wrap_exceptions
 def update_database_tools_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_tools_private_endpoint_id, defined_tags, freeform_tags, display_name, description, nsg_ids, if_match, is_lock_override):
 
-    if isinstance(database_tools_private_endpoint_id, six.string_types) and len(database_tools_private_endpoint_id.strip()) == 0:
+    if isinstance(database_tools_private_endpoint_id, str) and len(database_tools_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or nsg_ids:
@@ -6348,7 +6347,7 @@ This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For
 @cli_util.wrap_exceptions
 def update_database_tools_sql_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, type, display_name, defined_tags, freeform_tags, source, description, purpose, instructions, variables, columns, if_match, is_lock_override):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or variables or columns:
@@ -6452,7 +6451,7 @@ This option is a JSON list with items of type DatabaseToolsSqlReportColumn.  For
 @cli_util.wrap_exceptions
 def update_database_tools_sql_report_update_database_tools_sql_report_details_oracle_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_report_id, display_name, defined_tags, freeform_tags, source, description, purpose, instructions, variables, columns, if_match, is_lock_override):
 
-    if isinstance(sql_report_id, six.string_types) and len(sql_report_id.strip()) == 0:
+    if isinstance(sql_report_id, str) and len(sql_report_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-report-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or variables or columns:
@@ -6540,7 +6539,7 @@ def update_database_tools_sql_report_update_database_tools_sql_report_details_or
 @cli_util.wrap_exceptions
 def validate_database_tools_connection(ctx, from_json, database_tools_connection_id, type, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6570,7 +6569,7 @@ def validate_database_tools_connection(ctx, from_json, database_tools_connection
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_postgresql_details(ctx, from_json, database_tools_connection_id, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6601,7 +6600,7 @@ def validate_database_tools_connection_validate_database_tools_connection_postgr
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_oracle_database_details(ctx, from_json, database_tools_connection_id, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6632,7 +6631,7 @@ def validate_database_tools_connection_validate_database_tools_connection_oracle
 @cli_util.wrap_exceptions
 def validate_database_tools_connection_validate_database_tools_connection_my_sql_details(ctx, from_json, database_tools_connection_id, if_match):
 
-    if isinstance(database_tools_connection_id, six.string_types) and len(database_tools_connection_id.strip()) == 0:
+    if isinstance(database_tools_connection_id, str) and len(database_tools_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6664,7 +6663,7 @@ def validate_database_tools_connection_validate_database_tools_connection_my_sql
 @cli_util.wrap_exceptions
 def validate_database_tools_identity_credential(ctx, from_json, database_tools_identity_id, type, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6694,7 +6693,7 @@ def validate_database_tools_identity_credential(ctx, from_json, database_tools_i
 @cli_util.wrap_exceptions
 def validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details(ctx, from_json, database_tools_identity_id, if_match):
 
-    if isinstance(database_tools_identity_id, six.string_types) and len(database_tools_identity_id.strip()) == 0:
+    if isinstance(database_tools_identity_id, str) and len(database_tools_identity_id.strip()) == 0:
         raise click.UsageError('Parameter --database-tools-identity-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -50,7 +49,7 @@ commitment_root_group.add_command(commitment_group)
 @cli_util.wrap_exceptions
 def get_commitment(ctx, from_json, commitment_id, x_one_gateway_subscription_id, x_one_origin_region):
 
-    if isinstance(commitment_id, six.string_types) and len(commitment_id.strip()) == 0:
+    if isinstance(commitment_id, str) and len(commitment_id.strip()) == 0:
         raise click.UsageError('Parameter --commitment-id cannot be whitespace or empty string')
 
     kwargs = {}
