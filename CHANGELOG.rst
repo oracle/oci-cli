@@ -6,6 +6,82 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.94.0 - 2026-09-22
+-------------------
+Added
+~~~~~
+* Support for Crypto Posture Assessment lifecycle, reporting, and analysis operations in Data Safe service.
+
+  * ``oci data-safe crypto-assessment``
+
+* Support for Recurrence Maintenance Windows through new ``maintenance-window-schedule`` fields in APM Availability Monitoring service.
+
+  * ``oci apm-synthetics monitor``
+
+* Marketplace Publisher
+
+  * Support for Administrator Artifact, Administrator Publisher, Customer Instance Report Export, and Marketplace Administrator operations.
+
+    * ``oci marketplace-publisher administrator-artifact``
+    * ``oci marketplace-publisher administrator-publisher``
+    * ``oci marketplace-publisher customer-instance-report-export``
+    * ``oci marketplace-publisher marketplace-administrator``
+    * ``oci marketplace-publisher publisher create``
+    * ``oci marketplace-publisher listing-revision update-listing-revision-banner-content``
+
+  * Support for new optional parameters ``--instance-ocid``, ``--listing-id``, ``--package-version``, ``--realm``, ``--region-parameterconflict``, ``--shape``, ``--status``, ``--tenant-admin-domain``, ``--time-instance-creation-from-date``, ``--time-instance-creation-to-date``, ``--time-instance-termination-from-date`` and ``--time-instance-termination-to-date`` for listing customer instance report records.
+
+    * ``oci marketplace-publisher customer-instance-report-record-collection list-customer-instance-report-records``
+
+  * Support for new optional parameters for listing revision and listing revision attachment commands.
+
+    * ``oci marketplace-publisher listing-revision create-listing-revision-create-oci-listing-revision-details --demo-url --partner-registration-url --self-paced-training-url --term-id``
+    * ``oci marketplace-publisher listing-revision update-listing-revision-update-oci-listing-revision-details --demo-url --partner-registration-url --self-paced-training-url --term-id``
+    * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-customer-success-attachment --source-type``
+    * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-related-document-attachment-details --is-oracle-users-only --source-type --source-url``
+    * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-review-support-document-attachment --source-type``
+    * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-screen-shot-attachment-details --source-type``
+    * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-supported-service-attachment --source-type``
+
+* Functions service
+
+  * Support for source-specific function creation and update commands.
+
+    * ``oci fn function``
+
+  * Support for Functions Runtime resources.
+
+    * ``oci fn runtime``
+    * ``oci fn runtime-version``
+
+* Support for Bring Your Own Reservations for several create and update operations via ``capacityReservationIds`` in Data Science service
+
+    * ``oci data-science compute-target``
+    * ``oci data-science job``
+    * ``oci data-science job-run``
+    * ``oci data-science model-deployment``
+    * ``oci data-science notebook-session``
+    * ``oci data-science project``
+    * ``oci data-science work-request``
+
+* Support for Routing Profiles and Model Discovery in Generative AI service.
+
+  * ``oci generative-ai routing-profile``
+  * ``oci generative-ai routing-profile-collection``
+  * ``oci generative-ai model-discovery-collection``
+
+Changed
+~~~~~~~
+* [BREAKING] CLI group renamed from ``oci distributed-database-v26`` to ``oci distributed-database`` for Globally Distributed Database service
+
+* ``--credentials`` is now an optional parameter for reactivating a previously deactivated target database in Data Safe service
+
+  * ``oci data-safe target-database activate``
+
+* [BREAKING] Removed required parameter ``--date-range`` for listing customer instance report records in Marketplace Publisher service
+
+  * ``oci marketplace-publisher customer-instance-report-record-collection list-customer-instance-report-records``
+
 3.93.0 - 2026-09-15
 -------------------
 Added

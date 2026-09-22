@@ -558,6 +558,12 @@ def unified_audit_policy_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.crypto_assessment_group.command_name', 'crypto-assessment'), cls=CommandGroupWithAlias, help="""A crypto assessment that provides insight into database cryptographic posture. The assessment evaluates data and network encryption, certificates, key management, backups, and quantum-readiness settings for a target database.""")
+@cli_util.help_option_group
+def crypto_assessment_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.report_summary_group.command_name', 'report-summary'), cls=CommandGroupWithAlias, help="""Description of report.""")
 @cli_util.help_option_group
 def report_summary_group():
@@ -659,13 +665,14 @@ data_safe_root_group.add_command(report_group)
 data_safe_root_group.add_command(security_policy_entry_state_collection_group)
 data_safe_root_group.add_command(unified_audit_policy_definition_group)
 data_safe_root_group.add_command(unified_audit_policy_collection_group)
+data_safe_root_group.add_command(crypto_assessment_group)
 data_safe_root_group.add_command(report_summary_group)
 data_safe_root_group.add_command(target_alert_policy_association_summary_group)
 
 
 @target_database_group.command(name=cli_util.override('data_safe.activate_target_database.command_name', 'activate'), help=u"""Reactivates a previously deactivated Data Safe target database. \n[Command Reference](activateTargetDatabase)""")
-@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -675,7 +682,7 @@ data_safe_root_group.add_command(target_alert_policy_association_summary_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'credentials': {'module': 'data_safe', 'class': 'Credentials'}})
 @cli_util.wrap_exceptions
-def activate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, credentials, target_database_id, if_match):
+def activate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, credentials, if_match):
 
     if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
         raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
@@ -686,7 +693,9 @@ def activate_target_database(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.activate_target_database(
@@ -1974,6 +1983,67 @@ def change_audit_profile_compartment(ctx, from_json, wait_for_state, max_wait_se
     result = client.change_audit_profile_compartment(
         audit_profile_id=audit_profile_id,
         change_audit_profile_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.change_crypto_assessment_compartment.command_name', 'change-compartment'), help=u"""Moves the specified saved crypto assessment into a different compartment. Only `SAVED` crypto assessments are supported. \n[Command Reference](changeCryptoAssessmentCompartment)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the crypto assessment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_crypto_assessment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, crypto_assessment_id, compartment_id, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_crypto_assessment_compartment(
+        crypto_assessment_id=crypto_assessment_id,
+        change_crypto_assessment_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -7484,6 +7554,62 @@ def delete_audit_trail(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@crypto_assessment_group.command(name=cli_util.override('data_safe.delete_crypto_assessment.command_name', 'delete'), help=u"""Deletes the specified saved crypto assessment. Only assessments of type `SAVED` can be deleted. Attempts to delete a `LATEST` assessment return `400 InvalidParameter`. \n[Command Reference](deleteCryptoAssessment)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_crypto_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, crypto_assessment_id, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_crypto_assessment(
+        crypto_assessment_id=crypto_assessment_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.delete_data_safe_private_endpoint.command_name', 'delete'), help=u"""Deletes the specified Data Safe private endpoint. \n[Command Reference](deleteDataSafePrivateEndpoint)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -9259,6 +9385,60 @@ def discover_audit_trails(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@crypto_assessment_group.command(name=cli_util.override('data_safe.download_crypto_assessment_report.command_name', 'download-crypto-assessment-report'), help=u"""Downloads the report of the specified crypto assessment. To download the crypto assessment report, it needs to be generated first. Please use GenerateCryptoAssessmentReport to generate a downloadable report in the preferred format (PDF, XLS). \n[Command Reference](downloadCryptoAssessmentReport)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the crypto assessment report.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_crypto_assessment_report(ctx, from_json, file, crypto_assessment_id, format, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['format'] = format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.download_crypto_assessment_report(
+        crypto_assessment_id=crypto_assessment_id,
+        download_crypto_assessment_report_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.download_discovery_report.command_name', 'download-discovery-report'), help=u"""Downloads an already-generated discovery report. Note that the GenerateDiscoveryReportForDownload operation is a prerequisite for the DownloadDiscoveryReport operation. Use GenerateDiscoveryReportForDownload to generate a discovery report file and then use DownloadDiscoveryReport to download the generated file. By default, it downloads report for all the columns in a sensitive data model. Use the discoveryJobId attribute to download report for a specific discovery job. \n[Command Reference](downloadDiscoveryReport)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -9801,6 +9981,67 @@ def enable_data_safe_configuration(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
+@crypto_assessment_group.command(name=cli_util.override('data_safe.generate_crypto_assessment_report.command_name', 'generate-crypto-assessment-report'), help=u"""Generates the report of the specified crypto assessment. Supported output formats are PDF and XLS. \n[Command Reference](generateCryptoAssessmentReport)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the crypto assessment report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_crypto_assessment_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, crypto_assessment_id, format, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['format'] = format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.generate_crypto_assessment_report(
+        crypto_assessment_id=crypto_assessment_id,
+        generate_crypto_assessment_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @sensitive_data_model_group.command(name=cli_util.override('data_safe.generate_discovery_report_for_download.command_name', 'generate-discovery-report-for-download'), help=u"""Generates a downloadable discovery report. It's a prerequisite for the DownloadDiscoveryReport operation. Use this endpoint to generate a discovery report file and then use DownloadDiscoveryReport to download the generated file. By default, it generates report for all the columns in a sensitive data model. Use the discoveryJobId attribute to generate report for a specific discovery job. \n[Command Reference](generateDiscoveryReportForDownload)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
 @cli_util.option('--report-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the report.""")
@@ -10070,7 +10311,7 @@ def generate_masking_report_for_download(ctx, from_json, wait_for_state, max_wai
 
 
 @on_prem_connector_group.command(name=cli_util.override('data_safe.generate_on_prem_connector_configuration.command_name', 'generate-on-prem-connector-configuration'), help=u"""Creates and downloads the configuration of the specified on-premises connector. \n[Command Reference](generateOnPremConnectorConfiguration)""")
-@cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet included as part of the configuration. The password must be between 12 and 30 characters long and must contain atleast 1 uppercase, 1 lowercase, 1 numeric, and 1 special character.""")
+@cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet included as part of the configuration. The password must be between 15 and 30 characters long and must contain atleast 1 uppercase, 1 lowercase, 1 numeric, and 1 special character.""")
 @cli_util.option('--on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10700,6 +10941,62 @@ def get_compatible_formats_for_sensitive_types(ctx, from_json, compartment_id, c
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_compatible_formats_for_sensitive_types(
         compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.get_crypto_assessment.command_name', 'get'), help=u"""Gets the details of the specified crypto assessment. \n[Command Reference](getCryptoAssessment)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'CryptoAssessment'})
+@cli_util.wrap_exceptions
+def get_crypto_assessment(ctx, from_json, crypto_assessment_id):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_crypto_assessment(
+        crypto_assessment_id=crypto_assessment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.get_crypto_assessment_sqlnet_parameters.command_name', 'get-crypto-assessment-sqlnet-parameters'), help=u"""Gets SQLNET.ORA parameter values and quantum-readiness evaluation for the specified crypto assessment. \n[Command Reference](getCryptoAssessmentSqlnetParameters)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--parameter', help=u"""A filter to return only the SQLNET parameter with the specified name.""")
+@cli_util.option('--quantum-readiness', type=custom_types.CliCaseInsensitiveChoice(["RESISTANT", "NOT_RESISTANT", "NOT_AVAILABLE", "NOT_APPLICABLE", "NOT_SUPPORTED"]), help=u"""Filters SQLNET parameters by quantum-readiness category.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentSqlnetParameters'})
+@cli_util.wrap_exceptions
+def get_crypto_assessment_sqlnet_parameters(ctx, from_json, crypto_assessment_id, parameter, quantum_readiness, limit, page):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if parameter is not None:
+        kwargs['parameter'] = parameter
+    if quantum_readiness is not None:
+        kwargs['quantum_readiness'] = quantum_readiness
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_crypto_assessment_sqlnet_parameters(
+        crypto_assessment_id=crypto_assessment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -11837,7 +12134,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
-**Example:** | query=(timeCreated ge \"2021-06-04T01:00:26.000Z\") and (targetNames eq \"target_1\") query=(featureDetails.userName eq \"user\") and (targetNames eq \"target_1\") Supported fields: severity status alertType targetIds targetNames operationTime lifecycleState displayName timeCreated timeUpdated featureDetails.* (* can be any field in nestedStrMap in Feature Attributes in Alert Summary. For example - userName,object,clientHostname,osUserName,clientIPs,clientId,commandText,commandParam,clientProgram,objectType,targetOwner)""")
+**Example:** | (timeCreated ge \"2021-06-04T01:00:26.000Z\") and (targetNames eq \"target_1\") (featureDetails.userName eq \"user\") and (targetNames eq \"target_1\") Supported fields: severity status alertType targetIds targetNames operationTime lifecycleState displayName timeCreated timeUpdated featureDetails.* (* can be any field in nestedStrMap in Feature Attributes in Alert Summary. For example - userName,object,clientHostname,osUserName,clientIPs,clientId,commandText,commandParam,clientProgram,objectType,targetOwner)""")
 @cli_util.option('--summary-field', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId", "open", "closed", "critical", "high", "medium", "low", "alertcount", "alertPolicyRuleKey", "alertPolicyRuleName", "throttled"]), multiple=True, help=u"""Specifies a subset of summarized fields to be returned in the response.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId", "alertPolicyRuleKey", "alertPolicyRuleName"]), multiple=True, help=u"""A groupBy can only be used in combination with summaryField parameter. A groupBy value has to be a subset of the values mentioned in summaryField parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -12053,7 +12350,7 @@ def list_alert_policy_rules(ctx, from_json, all_pages, page_size, alert_policy_i
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. If no value is specified timeCreated is default.""")
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
-**Example:** | query=(timeCreated ge \"2021-06-04T01:00:26.000Z\") and (targetNames eq \"target_1\") query=(featureDetails.userName eq \"user\") and (targetNames eq \"target_1\") Supported fields: severity status alertType targetIds targetNames operationTime lifecycleState displayName timeCreated timeUpdated featureDetails.* (* can be any field in nestedStrMap in Feature Attributes in Alert Summary. For example - userName,object,clientHostname,osUserName,clientIPs,clientId,commandText,commandParam,clientProgram,objectType,targetOwner)""")
+**Example:** | (timeCreated ge \"2021-06-04T01:00:26.000Z\") and (targetNames eq \"target_1\") (featureDetails.userName eq \"user\") and (targetNames eq \"target_1\") Supported fields: severity status alertType targetIds targetNames operationTime lifecycleState displayName timeCreated timeUpdated featureDetails.* (* can be any field in nestedStrMap in Feature Attributes in Alert Summary. For example - userName,object,clientHostname,osUserName,clientIPs,clientId,commandText,commandParam,clientProgram,objectType,targetOwner)""")
 @cli_util.option('--field', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName", "alertType", "targetIds", "targetNames", "severity", "status", "operationTime", "operation", "operationStatus", "timeCreated", "timeUpdated", "policyId", "lifecycleState"]), multiple=True, help=u"""Specifies a subset of fields to be returned in the response.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -13260,6 +13557,748 @@ def list_columns(ctx, from_json, all_pages, page_size, target_database_id, limit
     else:
         result = client.list_columns(
             target_database_id=target_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_backup_sets.command_name', 'list-crypto-assessment-backup-sets'), help=u"""Gets backup set summaries across targets in a compartment. Use assessmentId to narrow results to one crypto assessment. \n[Command Reference](listCryptoAssessmentBackupSets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""A filter to return only inventory rows associated with the specified target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--backup-set-key', help=u"""Filters backup set summary rows to an exact matching backupSetKey.""")
+@cli_util.option('--is-encrypted', type=click.BOOL, help=u"""Filters backup set summary rows by whether the backup set is encrypted.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["setStamp", "backupSetKey", "sizeInGBs", "timeCreated"]), help=u"""The field used to sort backup set results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentBackupSetCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_backup_sets(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, assessment_id, assessment_type, target_id, target_ids, backup_set_key, is_encrypted, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if backup_set_key is not None:
+        kwargs['backup_set_key'] = backup_set_key
+    if is_encrypted is not None:
+        kwargs['is_encrypted'] = is_encrypted
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_backup_sets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_backup_sets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_backup_sets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_cbom_items.command_name', 'list-crypto-assessment-cbom-items'), help=u"""Lists the CBOM items for the specified crypto assessment. \n[Command Reference](listCryptoAssessmentCbomItems)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentCbomItemCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_cbom_items(ctx, from_json, all_pages, crypto_assessment_id):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.list_crypto_assessment_cbom_items(
+        crypto_assessment_id=crypto_assessment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_certificates.command_name', 'list-crypto-assessment-certificates'), help=u"""Lists certificates discovered across targets in a compartment, including target, wallet location, issuer, subject, validity window, expiry bucket, public key type, and status so expiring or weak certificates can be identified and prioritized. \n[Command Reference](listCryptoAssessmentCertificates)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""A filter to return only inventory rows associated with the specified target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--certificate-type', type=custom_types.CliCaseInsensitiveChoice(["SERVER", "USER", "TRUSTED"]), multiple=True, help=u"""A filter to return only certificates of any of the specified types.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["VALID", "EXPIRING_SOON", "EXPIRED", "INVALID", "IN_USE"]), multiple=True, help=u"""A filter to return only certificates with any of the specified statuses.""")
+@cli_util.option('--public-key-type', multiple=True, help=u"""A filter to return only certificates with any of the specified public key types. Stored values are normalized forms such as RSA2048, RSA4096, or EC256.""")
+@cli_util.option('--signature-algorithm', multiple=True, help=u"""A filter to return only certificates whose signature algorithm contains any of the specified values. For example, use SHA1 to match SHA1-based certificate signatures.""")
+@cli_util.option('--expiry-bucket', help=u"""A filter to return only certificates in the specified expiry bucket. Supported values are 0_15, 15_30, 30_60, 60_90, and 90_PLUS.""")
+@cli_util.option('--days-to-expiry', type=click.INT, help=u"""A filter to return certificates whose validTill timestamp is on or before the current time plus the specified number of days. Negative values are allowed and filter certificates that expired on or before that many days ago.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeValidUntil", "subject"]), help=u"""The field used to sort certificate results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'public-key-type': {'module': 'data_safe', 'class': 'list[string]'}, 'signature-algorithm': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'public-key-type': {'module': 'data_safe', 'class': 'list[string]'}, 'signature-algorithm': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentCertificateCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_certificates(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, assessment_id, assessment_type, target_id, target_ids, certificate_type, status, public_key_type, signature_algorithm, expiry_bucket, days_to_expiry, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if certificate_type is not None and len(certificate_type) > 0:
+        kwargs['certificate_type'] = certificate_type
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
+    if public_key_type is not None and len(public_key_type) > 0:
+        kwargs['public_key_type'] = public_key_type
+    if signature_algorithm is not None and len(signature_algorithm) > 0:
+        kwargs['signature_algorithm'] = signature_algorithm
+    if expiry_bucket is not None:
+        kwargs['expiry_bucket'] = expiry_bucket
+    if days_to_expiry is not None:
+        kwargs['days_to_expiry'] = days_to_expiry
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_certificates,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_certificates,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_certificates(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_finding_analytics.command_name', 'list-crypto-assessment-finding-analytics'), help=u"""Lists findings in a compartment with the number of affected targets. \n[Command Reference](listCryptoAssessmentFindingAnalytics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["NETWORK_ENCRYPTION", "DATA_ENCRYPTION", "CERTIFICATES_AND_KEY_MANAGEMENT", "BACKUP_AND_EXPORT_ENCRYPTION", "POST_QUANTUM_READINESS", "NOT_SUPPORTED"]), help=u"""A filter to return only findings in the specified category key.""")
+@cli_util.option('--finding-key', multiple=True, help=u"""A filter to return only findings with any of the specified finding keys.""")
+@cli_util.option('--is-quantum-readiness-check', type=click.BOOL, help=u"""A filter to return only findings that are or are not part of quantum-readiness checks.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["targetCount", "priority"]), help=u"""The field used to sort finding analytics results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'finding-key': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'finding-key': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentFindingAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, category, finding_key, is_quantum_readiness_check, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if category is not None:
+        kwargs['category'] = category
+    if finding_key is not None and len(finding_key) > 0:
+        kwargs['finding_key'] = finding_key
+    if is_quantum_readiness_check is not None:
+        kwargs['is_quantum_readiness_check'] = is_quantum_readiness_check
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_finding_analytics,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_finding_analytics,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_finding_analytics(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_finding_targets.command_name', 'list-crypto-assessment-finding-targets'), help=u"""For a selected finding, lists targets where it occurs in assessments. \n[Command Reference](listCryptoAssessmentFindingTargets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--finding-key', required=True, multiple=True, help=u"""The finding keys for which target occurrences are listed.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""Filters results to targets with an exact matching target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PASS", "FAIL", "ERROR", "EVALUATE", "NOT_AVAILABLE", "NOT_APPLICABLE", "NOT_SUPPORTED"]), help=u"""A filter to return only finding target rows with the specified status.""")
+@cli_util.option('--is-quantum-readiness-check', type=click.BOOL, help=u"""A filter to return only findings that are or are not part of quantum-readiness checks.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "databaseVersion"]), help=u"""The field used to sort finding target results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'finding-key': {'module': 'data_safe', 'class': 'list[string]'}, 'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'finding-key': {'module': 'data_safe', 'class': 'list[string]'}, 'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentFindingTargetCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_finding_targets(ctx, from_json, all_pages, page_size, compartment_id, finding_key, assessment_type, target_id, target_ids, status, is_quantum_readiness_check, sort_by, sort_order, compartment_id_in_subtree, access_level, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if status is not None:
+        kwargs['status'] = status
+    if is_quantum_readiness_check is not None:
+        kwargs['is_quantum_readiness_check'] = is_quantum_readiness_check
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_finding_targets,
+            compartment_id=compartment_id,
+            finding_key=finding_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_finding_targets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            finding_key=finding_key,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_finding_targets(
+            compartment_id=compartment_id,
+            finding_key=finding_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_findings.command_name', 'list-crypto-assessment-findings'), help=u"""Lists crypto deviation findings for the specified crypto assessment. \n[Command Reference](listCryptoAssessmentFindings)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--finding-key', help=u"""A filter to return only findings with the specified finding key.""")
+@cli_util.option('--title', help=u"""A filter to return only findings with the specified title.""")
+@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["NETWORK_ENCRYPTION", "DATA_ENCRYPTION", "CERTIFICATES_AND_KEY_MANAGEMENT", "BACKUP_AND_EXPORT_ENCRYPTION", "POST_QUANTUM_READINESS", "NOT_SUPPORTED"]), help=u"""A filter to return only findings in the specified category key.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PASS", "FAIL", "ERROR", "EVALUATE", "NOT_AVAILABLE", "NOT_APPLICABLE", "NOT_SUPPORTED"]), help=u"""A filter to return only findings with the specified status.""")
+@cli_util.option('--is-quantum-readiness-check', type=click.BOOL, help=u"""A filter to return only findings that are or are not part of quantum-readiness checks.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentFindingCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_findings(ctx, from_json, all_pages, page_size, crypto_assessment_id, finding_key, title, category, status, is_quantum_readiness_check, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if finding_key is not None:
+        kwargs['finding_key'] = finding_key
+    if title is not None:
+        kwargs['title'] = title
+    if category is not None:
+        kwargs['category'] = category
+    if status is not None:
+        kwargs['status'] = status
+    if is_quantum_readiness_check is not None:
+        kwargs['is_quantum_readiness_check'] = is_quantum_readiness_check
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_findings,
+            crypto_assessment_id=crypto_assessment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_findings,
+            limit,
+            page_size,
+            crypto_assessment_id=crypto_assessment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_findings(
+            crypto_assessment_id=crypto_assessment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_keys.command_name', 'list-crypto-assessment-keys'), help=u"""Gets a paginated list of cryptographic keys across targets in a compartment. Use assessmentId to narrow results to one crypto assessment. \n[Command Reference](listCryptoAssessmentKeys)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""A filter to return only inventory rows associated with the specified target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--feature', type=custom_types.CliCaseInsensitiveChoice(["TDE", "TLS", "NNE"]), help=u"""A filter to return only records for the specified feature.""")
+@cli_util.option('--key-id', help=u"""Filters key results to rows with an exact matching keyId.""")
+@cli_util.option('--key-type', type=custom_types.CliCaseInsensitiveChoice(["MASTER_KEY", "ENCRYPTION_KEY"]), help=u"""Filters key results to rows with the specified key type.""")
+@cli_util.option('--key-manager-type', type=custom_types.CliCaseInsensitiveChoice(["FILE", "OKV", "HSM", "NOT_CONFIGURED", "NOT_APPLICABLE", "NOT_AVAILABLE", "UNKNOWN", "NOT_SUPPORTED"]), multiple=True, help=u"""Filters key results to rows whose primary or secondary keystore type matches any of the specified key manager types.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field used to sort key results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentKeyCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_keys(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, assessment_id, assessment_type, target_id, target_ids, feature, key_id, key_type, key_manager_type, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if feature is not None:
+        kwargs['feature'] = feature
+    if key_id is not None:
+        kwargs['key_id'] = key_id
+    if key_type is not None:
+        kwargs['key_type'] = key_type
+    if key_manager_type is not None and len(key_manager_type) > 0:
+        kwargs['key_manager_type'] = key_manager_type
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_keys,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_keys,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_keys(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_tde_objects.command_name', 'list-crypto-assessment-tde-objects'), help=u"""Lists TDE object encryption summaries across targets in a compartment. Use assessmentId to narrow results to one crypto assessment, and objectType to return either tablespace-level or column-level TDE observations. \n[Command Reference](listCryptoAssessmentTdeObjects)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--object-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TABLESPACE", "COLUMN"]), help=u"""A required filter to return only TDE objects of the specified type.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""A filter to return only inventory rows associated with the specified target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--quantum-readiness', type=custom_types.CliCaseInsensitiveChoice(["RESISTANT", "NOT_RESISTANT", "NOT_AVAILABLE", "NOT_APPLICABLE", "NOT_SUPPORTED"]), help=u"""Filters TDE object summary rows by quantum-readiness category.""")
+@cli_util.option('--encryption-observed', multiple=True, help=u"""Filters TDE object summary rows by any of the specified observed encryption algorithms.""")
+@cli_util.option('--encryption-status', type=custom_types.CliCaseInsensitiveChoice(["ENCRYPTED", "UNENCRYPTED", "NOT_SUPPORTED"]), help=u"""Filters TDE object summary rows by derived encryption status. NOT_SUPPORTED maps to rows where encryptionObserved is NOT_SUPPORTED, UNENCRYPTED maps to rows where encryptionObserved is null or NONE, and ENCRYPTED maps to rows where the observed encryption algorithm is any other value.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["tablespaceName", "columnName", "quantumReadiness"]), help=u"""The field used to sort TDE object summary results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'encryption-observed': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'encryption-observed': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentTdeObjectCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_tde_objects(ctx, from_json, all_pages, page_size, compartment_id, object_type, compartment_id_in_subtree, access_level, assessment_id, assessment_type, target_id, target_ids, quantum_readiness, encryption_observed, encryption_status, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if quantum_readiness is not None:
+        kwargs['quantum_readiness'] = quantum_readiness
+    if encryption_observed is not None and len(encryption_observed) > 0:
+        kwargs['encryption_observed'] = encryption_observed
+    if encryption_status is not None:
+        kwargs['encryption_status'] = encryption_status
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_tde_objects,
+            compartment_id=compartment_id,
+            object_type=object_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_tde_objects,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            object_type=object_type,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_tde_objects(
+            compartment_id=compartment_id,
+            object_type=object_type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessment_wallets.command_name', 'list-crypto-assessment-wallets'), help=u"""Gets wallet details across targets in a compartment. Use assessmentId to narrow results to one crypto assessment. \n[Command Reference](listCryptoAssessmentWallets)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--assessment-type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return targets from assessments of the specified type.""")
+@cli_util.option('--target-id', help=u"""A filter to return only inventory rows associated with the specified target OCID.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--feature', type=custom_types.CliCaseInsensitiveChoice(["TDE", "TLS", "NNE", "ZDLRA"]), help=u"""A filter to return only wallets for the specified feature.""")
+@cli_util.option('--wallet-encryption-algorithm', multiple=True, help=u"""A filter to return only wallets whose encryption algorithm exactly matches any of the specified values, case-insensitively.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["feature", "timeCreated"]), help=u"""The field used to sort wallet results.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'wallet-encryption-algorithm': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}, 'wallet-encryption-algorithm': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentWalletCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessment_wallets(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, assessment_id, assessment_type, target_id, target_ids, feature, wallet_encryption_algorithm, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if assessment_type is not None:
+        kwargs['assessment_type'] = assessment_type
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if feature is not None:
+        kwargs['feature'] = feature
+    if wallet_encryption_algorithm is not None and len(wallet_encryption_algorithm) > 0:
+        kwargs['wallet_encryption_algorithm'] = wallet_encryption_algorithm
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessment_wallets,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessment_wallets,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessment_wallets(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.list_crypto_assessments.command_name', 'list'), help=u"""Gets a list of crypto assessments with filtering and pagination support. \n[Command Reference](listCryptoAssessments)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "SAVED"]), help=u"""A filter to return only crypto assessments that match the specified type.""")
+@cli_util.option('--assessment-id', help=u"""A filter to return only resources associated with the specified crypto assessment OCID.""")
+@cli_util.option('--target-id', help=u"""A filter to return only crypto assessments associated with the specified target OCID. When provided, targetType must also be specified.""")
+@cli_util.option('--target-ids', multiple=True, help=u"""A filter to return only resources associated with any of the specified target OCIDs.""")
+@cli_util.option('--target-database-group-id', help=u"""A filter to return the target database group that matches the specified OCID.""")
+@cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["TARGET_DATABASE", "TARGET_DATABASE_GROUP"]), help=u"""A filter to return crypto assessments belonging to the specified target type. `ListCryptoAssessments` returns assessment rows; use `targetDatabaseGroupId` to list the underlying target database assessments for a group.""")
+@cli_util.option('--posture-category', type=custom_types.CliCaseInsensitiveChoice(["QUANTUM_RESISTANT", "QUANTUM_CAPABLE", "UPGRADE_RECOMMENDED"]), multiple=True, help=u"""A filter to return only crypto assessments that match any of the specified posture categories.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""A filter to return only crypto assessments whose scheduled execution state matches the specified value.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the specified lifecycle state.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["issueCount", "timeCreated", "timeUpdated"]), help=u"""The field used to sort crypto assessments. You can specify only one sort order (sortOrder).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'CryptoAssessmentCollection'})
+@cli_util.wrap_exceptions
+def list_crypto_assessments(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, type, assessment_id, target_id, target_ids, target_database_group_id, target_type, posture_category, is_assessment_scheduled, lifecycle_state, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if type is not None:
+        kwargs['type'] = type
+    if assessment_id is not None:
+        kwargs['assessment_id'] = assessment_id
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_ids is not None and len(target_ids) > 0:
+        kwargs['target_ids'] = target_ids
+    if target_database_group_id is not None:
+        kwargs['target_database_group_id'] = target_database_group_id
+    if target_type is not None:
+        kwargs['target_type'] = target_type
+    if posture_category is not None and len(posture_category) > 0:
+        kwargs['posture_category'] = posture_category
+    if is_assessment_scheduled is not None:
+        kwargs['is_assessment_scheduled'] = is_assessment_scheduled
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_crypto_assessments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_crypto_assessments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_crypto_assessments(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -15605,9 +16644,9 @@ def list_referential_relations(ctx, from_json, all_pages, page_size, sensitive_d
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "DISPLAYORDER"]), help=u"""The field used for sorting. Only one sorting parameter order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--is-seeded', type=click.BOOL, help=u"""A boolean flag indicating to list seeded report definitions. Set this parameter to get list of seeded report definitions.""")
-@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "SECURITY_ASSESSMENT", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
+@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "SECURITY_ASSESSMENT", "CRYPTO_ASSESSMENT", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
-@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_REPORTS", "SUMMARY", "ACTIVITY_AUDITING"]), help=u"""An optional filter to return only resources that match the specified category.""")
+@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_REPORTS", "SUMMARY", "ACTIVITY_AUDITING", "CRYPTO_ASSESSMENT"]), help=u"""An optional filter to return only resources that match the specified category.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -15689,7 +16728,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE", "CREATING", "FAILED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["GENERATED", "SCHEDULED"]), help=u"""An optional filter to return only resources that match the specified type.""")
-@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "SECURITY_ASSESSMENT", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
+@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "SECURITY_ASSESSMENT", "CRYPTO_ASSESSMENT", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -20344,6 +21383,87 @@ def purge_sql_collection_logs(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@crypto_assessment_group.command(name=cli_util.override('data_safe.refresh_crypto_assessment.command_name', 'refresh'), help=u"""Runs a crypto assessment, refreshes the latest assessment, and saves it for future reference. This operation runs with a cryptoAssessmentId of type LATEST. Before you start, first call the ListCryptoAssessments operation with filter \"type = latest\" to get the crypto assessment ID for the target's latest assessment. \n[Command Reference](refreshCryptoAssessment)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--compartment-id', help=u"""This field is ignored when refreshing a crypto assessment.""")
+@cli_util.option('--display-name', help=u"""The display name of the crypto assessment.""")
+@cli_util.option('--description', help=u"""The description of the crypto assessment.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def refresh_crypto_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, crypto_assessment_id, compartment_id, display_name, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.refresh_crypto_assessment(
+        crypto_assessment_id=crypto_assessment_id,
+        run_crypto_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_security_config_group.command(name=cli_util.override('data_safe.refresh_database_security_configuration.command_name', 'refresh'), help=u"""Refreshes the specified database security configuration. \n[Command Reference](refreshDatabaseSecurityConfiguration)""")
 @cli_util.option('--database-security-config-id', required=True, help=u"""The OCID of the database security configuration resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -20401,7 +21521,7 @@ def refresh_database_security_configuration(ctx, from_json, wait_for_state, max_
 
 @security_assessment_group.command(name=cli_util.override('data_safe.refresh_security_assessment.command_name', 'refresh'), help=u"""Runs a security assessment, refreshes the latest assessment, and saves it for future reference. The assessment runs with a securityAssessmentId of type LATEST. Before you start, first call the ListSecurityAssessments operation with filter \"type = latest\" to get the security assessment id for the target's latest assessment. \n[Command Reference](refreshSecurityAssessment)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the security assessment.""")
+@cli_util.option('--compartment-id', help=u"""This field is ignored when refreshing a security assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
@@ -20643,7 +21763,7 @@ def refresh_target_database(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @user_assessment_group.command(name=cli_util.override('data_safe.refresh_user_assessment.command_name', 'refresh'), help=u"""Refreshes the latest assessment and saves it for future reference. This operation runs with a userAssessmentId of type LATEST. Before you start, first call the ListUserAssessments operation with filter \"type = latest\" to get the user assessment ID for the target's latest assessment. \n[Command Reference](refreshUserAssessment)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the user assessment.""")
+@cli_util.option('--compartment-id', help=u"""This field is ignored when refreshing a user assessment.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the user assessment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -22277,6 +23397,96 @@ def update_audit_trail(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     result = client.update_audit_trail(
         audit_trail_id=audit_trail_id,
         update_audit_trail_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@crypto_assessment_group.command(name=cli_util.override('data_safe.update_crypto_assessment.command_name', 'update'), help=u"""Updates one or more attributes of the specified crypto assessment. \n[Command Reference](updateCryptoAssessment)""")
+@cli_util.option('--crypto-assessment-id', required=True, help=u"""The OCID of the crypto assessment.""")
+@cli_util.option('--display-name', help=u"""The display name of the crypto assessment.""")
+@cli_util.option('--schedule', help=u"""Updates the schedule associated with this latest crypto assessment. The schedule uses the format: <version-string>;<version-specific-schedule>
+
+For v1, the version-specific schedule format is: <ss> <mm> <hh> <day-of-week> <day-of-month>
+
+Specify either day-of-week for weekly schedules or day-of-month for monthly schedules. Do not specify both. For monthly schedules, day-of-month must be between 1 and 28. If the service generates a default monthly schedule for an assessment created on day 29, 30, or 31 of a month, it uses day 28. Schedule updates are supported only for assessments of type LATEST.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""Indicates whether scheduled execution is active for this latest crypto assessment. When set to true, the existing schedule is used unless a new schedule is provided. When set to false, the schedule value is retained but scheduled execution is paused. Schedule state updates are supported only for assessments of type LATEST.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_crypto_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, crypto_assessment_id, display_name, schedule, is_assessment_scheduled, freeform_tags, defined_tags, if_match):
+
+    if isinstance(crypto_assessment_id, six.string_types) and len(crypto_assessment_id.strip()) == 0:
+        raise click.UsageError('Parameter --crypto-assessment-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if schedule is not None:
+        _details['schedule'] = schedule
+
+    if is_assessment_scheduled is not None:
+        _details['isAssessmentScheduled'] = is_assessment_scheduled
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_crypto_assessment(
+        crypto_assessment_id=crypto_assessment_id,
+        update_crypto_assessment_details=_details,
         **kwargs
     )
     if wait_for_state:

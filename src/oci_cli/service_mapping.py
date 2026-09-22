@@ -323,11 +323,6 @@ service_mapping = {
         "Globally Distributed Database",
         "Others"
     ],
-    "distributed-database-v26": [
-        "distributed_database_v26",
-        "Globally Distributed Database",
-        "Others"
-    ],
     "dns": [
         "dns",
         "DNS",

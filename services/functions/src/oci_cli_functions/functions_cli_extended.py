@@ -8,11 +8,24 @@ import oci  # noqa: F401
 from services.functions.src.oci_cli_functions.generated import fn_service_cli
 from services.functions.src.oci_cli_functions_management.generated import functionsmanagement_cli
 from services.functions.src.oci_cli_functions_invoke.generated import functionsinvoke_cli
+from services.functions.src.oci_cli_work_request_management.generated import workrequestmanagement_cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 
-cli_util.SERVICES_REQUIRING_ENDPOINTS.append("functions_invoke")
+
+def _add_service_requiring_endpoint(service_name):
+    if service_name not in cli_util.SERVICES_REQUIRING_ENDPOINTS:
+        cli_util.SERVICES_REQUIRING_ENDPOINTS.append(service_name)
+
+
+def _safe_pop(command_group, command_name):
+    if command_name in command_group.commands:
+        command_group.commands.pop(command_name)
+
+
+_add_service_requiring_endpoint("functions_invoke")
+_add_service_requiring_endpoint("work_request_management")
 
 # Change from:
 # oci functions functions-management application change-compartment
@@ -60,10 +73,35 @@ fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.function_gro
 fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.pbf_listing_group)
 fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.triggers_collection_group)
 fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.pbf_listing_version_group)
+
+# Expose runtime commands as `oci fn runtime` and `oci fn runtime-version`.
+# Remove generated command names from all relevant groups first so interactive
+# completion does not suggest the raw generated names.
+_safe_pop(fn_service_cli.fn_service_group, 'functions-runtime')
+_safe_pop(fn_service_cli.fn_service_group, 'functions-runtime-version')
+_safe_pop(functionsmanagement_cli.functions_management_root_group, 'functions-runtime')
+_safe_pop(functionsmanagement_cli.functions_management_root_group, 'functions-runtime-version')
+functionsmanagement_cli.functions_runtime_group.name = 'runtime'
+functionsmanagement_cli.functions_runtime_version_group.name = 'runtime-version'
+fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.functions_runtime_group)
+fn_service_cli.fn_service_group.add_command(functionsmanagement_cli.functions_runtime_version_group)
 fn_service_cli.fn_service_group.commands.pop(functionsmanagement_cli.functions_management_root_group.name)
 functionsmanagement_cli.function_group.add_command(functionsinvoke_cli.functions_invoke_root_group)
 fn_service_cli.fn_service_group.commands.pop(functionsinvoke_cli.functions_invoke_root_group.name)
 functionsmanagement_cli.function_group.commands.pop(functionsinvoke_cli.functions_invoke_root_group.name)
+
+# Flatten work-request commands directly under `oci fn`.
+_safe_pop(fn_service_cli.fn_service_group, workrequestmanagement_cli.work_request_management_root_group.name)
+fn_service_cli.fn_service_group.add_command(workrequestmanagement_cli.work_request_group)
+fn_service_cli.fn_service_group.add_command(workrequestmanagement_cli.work_request_error_group)
+fn_service_cli.fn_service_group.add_command(workrequestmanagement_cli.work_request_log_entry_group)
+_safe_pop(workrequestmanagement_cli.work_request_group, 'cancel')
+cli_util.rename_command(
+    fn_service_cli,
+    workrequestmanagement_cli.work_request_log_entry_group,
+    workrequestmanagement_cli.list_work_request_logs,
+    'list'
+)
 
 
 @cli_util.copy_params_from_generated_command(functionsinvoke_cli.invoke_function, params_to_exclude=['invoke_function_body'])

@@ -617,3 +617,6 @@ db, database, create-from-database
 db, database, create-database-from-database
 iot, iot-flow-runtime, update-iot-flow-runtime-flows
 iot, flow-runtime, update-flows
+fn, function, create, archive-function, direct-archive, fn-update-runtime-config
+fn, function, create, archive-function, direct-archive, manual-runtime-config
+fn, function, update, archive-function
