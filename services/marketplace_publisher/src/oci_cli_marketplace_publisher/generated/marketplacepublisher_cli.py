@@ -8,15 +8,15 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.marketplace_publisher.src.oci_cli_marketplace_publisher.generated import marketplace_publisher_service_cli
 
 
-@cli.command(cli_util.override('marketplace_publisher.marketplace_publisher_root_group.command_name', 'marketplace-publisher'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.help', """Use the Marketplace Publisher API to manage the publishing of applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.short_help', """MarketplacePublisherService API"""))
+@click.command(cli_util.override('marketplace_publisher.marketplace_publisher_root_group.command_name', 'marketplace-publisher'), cls=CommandGroupWithAlias, help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.help', """Use the Marketplace Publisher API to manage the publishing of applications in Oracle Cloud Infrastructure Marketplace."""), short_help=cli_util.override('marketplace_publisher.marketplace_publisher_root_group.short_help', """MarketplacePublisherService API"""))
 @cli_util.help_option_group
 def marketplace_publisher_root_group():
     pass
@@ -100,6 +100,12 @@ def term_group():
     pass
 
 
+@click.command(cli_util.override('marketplace_publisher.customer_instance_report_export_collection_group.command_name', 'customer-instance-report-export-collection'), cls=CommandGroupWithAlias, help="""Customer Instance Report export collection.""")
+@cli_util.help_option_group
+def customer_instance_report_export_collection_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace_publisher.listing_group.command_name', 'listing'), cls=CommandGroupWithAlias, help="""The model for the Marketplace Publisher listing.""")
 @cli_util.help_option_group
 def listing_group():
@@ -127,6 +133,12 @@ def supported_shape_collection_group():
 @click.command(cli_util.override('marketplace_publisher.customer_instance_report_record_collection_group.command_name', 'customer-instance-report-record-collection'), cls=CommandGroupWithAlias, help="""Customer instance report""")
 @cli_util.help_option_group
 def customer_instance_report_record_collection_group():
+    pass
+
+
+@click.command(cli_util.override('marketplace_publisher.customer_instance_report_export_group.command_name', 'customer-instance-report-export'), cls=CommandGroupWithAlias, help="""The model for a Customer Instance Report export.""")
+@cli_util.help_option_group
+def customer_instance_report_export_group():
     pass
 
 
@@ -238,6 +250,7 @@ def listing_revision_package_group():
     pass
 
 
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(marketplace_publisher_root_group)
 marketplace_publisher_root_group.add_command(market_collection_group)
 marketplace_publisher_root_group.add_command(listing_collection_group)
 marketplace_publisher_root_group.add_command(work_request_group)
@@ -251,11 +264,13 @@ marketplace_publisher_root_group.add_command(listing_revision_attachment_collect
 marketplace_publisher_root_group.add_command(work_request_error_group)
 marketplace_publisher_root_group.add_command(supported_currency_collection_group)
 marketplace_publisher_root_group.add_command(term_group)
+marketplace_publisher_root_group.add_command(customer_instance_report_export_collection_group)
 marketplace_publisher_root_group.add_command(listing_group)
 marketplace_publisher_root_group.add_command(listing_revision_note_collection_group)
 marketplace_publisher_root_group.add_command(listing_revision_note_group)
 marketplace_publisher_root_group.add_command(supported_shape_collection_group)
 marketplace_publisher_root_group.add_command(customer_instance_report_record_collection_group)
+marketplace_publisher_root_group.add_command(customer_instance_report_export_group)
 marketplace_publisher_root_group.add_command(product_group)
 marketplace_publisher_root_group.add_command(support_doc_group)
 marketplace_publisher_root_group.add_command(listing_revision_group)
@@ -274,6 +289,46 @@ marketplace_publisher_root_group.add_command(publisher_group)
 marketplace_publisher_root_group.add_command(category_collection_group)
 marketplace_publisher_root_group.add_command(category_group)
 marketplace_publisher_root_group.add_command(listing_revision_package_group)
+# oci marketplace_publisher marketplace_publisher --> oci marketplace_publisher
+marketplace_publisher_service_cli.marketplace_publisher_service_group.commands.pop(marketplace_publisher_root_group.name)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(market_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(support_doc_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(lead_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(publisher_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(artifact_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_version_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(disbursement_report_record_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_attachment_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_error_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(supported_currency_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(customer_instance_report_export_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_note_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_note_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(supported_shape_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(customer_instance_report_record_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(customer_instance_report_export_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(product_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(support_doc_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(product_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(work_request_log_entry_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_version_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(term_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(artifact_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(lead_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(market_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_package_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(available_service_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_attachment_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(publisher_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(category_collection_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(category_group)
+marketplace_publisher_service_cli.marketplace_publisher_service_group.add_command(listing_revision_package_group)
 
 
 @term_version_group.command(name=cli_util.override('marketplace_publisher.activate_term_version.command_name', 'activate'), help=u"""Mark the Term Version identified by the id as active \n[Command Reference](activateTermVersion)""")
@@ -1147,7 +1202,7 @@ def create_artifact_create_machine_image_artifact_details(ctx, from_json, wait_f
 
 You must also specify a *name* for the listing and cannot be updated later.
 
-You must also specify a *packageType* for the listing. Allowed values are CONTAINER_IMAGE and HELM_CHART
+You must also specify a *packageType* for the listing. Allowed values are CONTAINER_IMAGE, HELM_CHART, COMPUTE_IMAGE, TERRAFORM_STACK and SAAS
 
 After you send your request, the new object's `lifecycleState` will be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE. \n[Command Reference](createListing)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
@@ -1352,10 +1407,14 @@ This option is a JSON list with items of type NamedLink.  For documentation on N
 @cli_util.option('--pricing-plans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Pricing Plans provider by publisher.
 
 This option is a JSON list with items of type PricingPlan.  For documentation on PricingPlan please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/PricingPlan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--partner-registration-url', help=u"""The url provided by partner for the registration of subscription.""")
+@cli_util.option('--term-id', help=u"""The unique id of the term attached to the listing.""")
 @cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--recommended-service-provider-listing-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of service listings attached to lead gen listing""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-and-pricing-policy', help=u"""Listing availability and Pricing Policy statement.""")
 @cli_util.option('--is-rover-exportable', type=click.BOOL, help=u"""Is this listing rover exportable""")
+@cli_util.option('--demo-url', help=u"""Url to demo of the listing""")
+@cli_util.option('--self-paced-training-url', help=u"""Url to training resources of the listing""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1364,7 +1423,7 @@ This option is a JSON list with items of type PricingPlan.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-language': {'module': 'marketplace_publisher', 'class': 'LanguageItem'}, 'supportedlanguages': {'module': 'marketplace_publisher', 'class': 'list[LanguageItem]'}, 'support-contacts': {'module': 'marketplace_publisher', 'class': 'list[SupportContact]'}, 'support-links': {'module': 'marketplace_publisher', 'class': 'list[NamedLink]'}, 'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}, 'version-details': {'module': 'marketplace_publisher', 'class': 'VersionDetails'}, 'products': {'module': 'marketplace_publisher', 'class': 'list[ListingProduct]'}, 'pricing-plans': {'module': 'marketplace_publisher', 'class': 'list[PricingPlan]'}, 'recommended-service-provider-listing-ids': {'module': 'marketplace_publisher', 'class': 'list[string]'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevision'})
 @cli_util.wrap_exceptions
-def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, headline, pricing_type, products, display_name, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, status, freeform_tags, defined_tags, version_details, system_requirements, pricing_plans, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, is_rover_exportable):
+def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, headline, pricing_type, products, display_name, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, status, freeform_tags, defined_tags, version_details, system_requirements, pricing_plans, partner_registration_url, term_id, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, is_rover_exportable, demo_url, self_paced_training_url):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1423,6 +1482,12 @@ def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, 
     if pricing_plans is not None:
         _details['pricingPlans'] = cli_util.parse_json_parameter("pricing_plans", pricing_plans)
 
+    if partner_registration_url is not None:
+        _details['partnerRegistrationUrl'] = partner_registration_url
+
+    if term_id is not None:
+        _details['termId'] = term_id
+
     if vanity_url is not None:
         _details['vanityUrl'] = vanity_url
 
@@ -1434,6 +1499,12 @@ def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, 
 
     if is_rover_exportable is not None:
         _details['isRoverExportable'] = is_rover_exportable
+
+    if demo_url is not None:
+        _details['demoUrl'] = demo_url
+
+    if self_paced_training_url is not None:
+        _details['selfPacedTrainingUrl'] = self_paced_training_url
 
     _details['listingType'] = 'OCI_APPLICATION'
 
@@ -1826,6 +1897,7 @@ def create_listing_revision_attachment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--url', help=u"""Optional url to service information""")
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1834,7 +1906,7 @@ def create_listing_revision_attachment(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def create_listing_revision_attachment_create_supported_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, service_name, type, display_name, description, freeform_tags, defined_tags, url):
+def create_listing_revision_attachment_create_supported_service_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, service_name, type, display_name, description, freeform_tags, defined_tags, url, source_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1858,6 +1930,9 @@ def create_listing_revision_attachment_create_supported_service_attachment(ctx, 
 
     if url is not None:
         _details['url'] = url
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
 
     _details['attachmentType'] = 'SUPPORTED_SERVICES'
 
@@ -1898,6 +1973,7 @@ def create_listing_revision_attachment_create_supported_service_attachment(ctx, 
 @cli_util.option('--description', help=u"""Description for this specified attachment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1906,7 +1982,7 @@ def create_listing_revision_attachment_create_supported_service_attachment(ctx, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def create_listing_revision_attachment_create_screen_shot_attachment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, description, freeform_tags, defined_tags):
+def create_listing_revision_attachment_create_screen_shot_attachment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, description, freeform_tags, defined_tags, source_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1925,6 +2001,9 @@ def create_listing_revision_attachment_create_screen_shot_attachment_details(ctx
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
 
     _details['attachmentType'] = 'SCREENSHOT'
 
@@ -1968,6 +2047,7 @@ def create_listing_revision_attachment_create_screen_shot_attachment_details(ctx
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--url', help=u"""Optional url to success story""")
 @cli_util.option('--product-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of product codes for success story""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1976,7 +2056,7 @@ def create_listing_revision_attachment_create_screen_shot_attachment_details(ctx
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}, 'product-codes': {'module': 'marketplace_publisher', 'class': 'list[string]'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def create_listing_revision_attachment_create_customer_success_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, customer_name, display_name, description, freeform_tags, defined_tags, url, product_codes):
+def create_listing_revision_attachment_create_customer_success_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, customer_name, display_name, description, freeform_tags, defined_tags, url, product_codes, source_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2002,6 +2082,9 @@ def create_listing_revision_attachment_create_customer_success_attachment(ctx, f
 
     if product_codes is not None:
         _details['productCodes'] = cli_util.parse_json_parameter("product_codes", product_codes)
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
 
     _details['attachmentType'] = 'CUSTOMER_SUCCESS'
 
@@ -2044,6 +2127,7 @@ def create_listing_revision_attachment_create_customer_success_attachment(ctx, f
 @cli_util.option('--description', help=u"""Description for this specified attachment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2052,7 +2136,7 @@ def create_listing_revision_attachment_create_customer_success_attachment(ctx, f
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def create_listing_revision_attachment_create_review_support_document_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, document_name, template_code, display_name, description, freeform_tags, defined_tags):
+def create_listing_revision_attachment_create_review_support_document_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, document_name, template_code, display_name, description, freeform_tags, defined_tags, source_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2073,6 +2157,9 @@ def create_listing_revision_attachment_create_review_support_document_attachment
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
 
     _details['attachmentType'] = 'REVIEW_SUPPORT_DOCUMENT'
 
@@ -2183,6 +2270,9 @@ def create_listing_revision_attachment_create_video_attachment_details(ctx, from
 @cli_util.option('--description', help=u"""Description for this specified attachment.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-url', help=u"""The document URL of the listing revision attachment.""")
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
+@cli_util.option('--is-oracle-users-only', type=click.BOOL, help=u"""Identifies whether the attachment is for Internal Oracle Users or external users as well.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2191,7 +2281,7 @@ def create_listing_revision_attachment_create_video_attachment_details(ctx, from
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def create_listing_revision_attachment_create_related_document_attachment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, document_category, display_name, description, freeform_tags, defined_tags):
+def create_listing_revision_attachment_create_related_document_attachment_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, document_category, display_name, description, freeform_tags, defined_tags, source_url, source_type, is_oracle_users_only):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2211,6 +2301,15 @@ def create_listing_revision_attachment_create_related_document_attachment_detail
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if source_url is not None:
+        _details['sourceUrl'] = source_url
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
+
+    if is_oracle_users_only is not None:
+        _details['isOracleUsersOnly'] = is_oracle_users_only
 
     _details['attachmentType'] = 'RELATED_DOCUMENT'
 
@@ -2381,6 +2480,59 @@ def create_listing_revision_package(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@publisher_group.command(name=cli_util.override('marketplace_publisher.create_publisher.command_name', 'create'), help=u"""Creates a new publisher \n[Command Reference](createPublisher)""")
+@cli_util.option('--email', required=True, help=u"""Email address of the publisher.""")
+@cli_util.option('--business-phone-number', required=True, help=u"""The business phone number of the publisher.""")
+@cli_util.option('--company-name', required=True, help=u"""The company name of the publisher.""")
+@cli_util.option('--company-description', required=True, help=u"""The company name of the publisher.""")
+@cli_util.option('--employee-count', required=True, type=click.INT, help=u"""Count of employees in publisher's company""")
+@cli_util.option('--opn-number', required=True, help=u"""OPN membership number of the publisher""")
+@cli_util.option('--year-founded', required=True, type=click.INT, help=u"""The year the publisher's company or organization was founded.""")
+@cli_util.option('--city', required=True, help=u"""City""")
+@cli_util.option('--state', required=True, help=u"""State""")
+@cli_util.option('--country', required=True, help=u"""Country""")
+@cli_util.option('--website', required=True, help=u"""The publisher's website.""")
+@cli_util.option('--contact-phone-number', required=True, help=u"""The contact phone number of the publisher.""")
+@cli_util.option('--contact-email', required=True, help=u"""The contact email address of the publisher.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The tenancy(compartment) OCID of the publisher.""")
+@cli_util.option('--solution-description', help=u"""A description of the publisher solutions.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'Publisher'})
+@cli_util.wrap_exceptions
+def create_publisher(ctx, from_json, email, business_phone_number, company_name, company_description, employee_count, opn_number, year_founded, city, state, country, website, contact_phone_number, contact_email, compartment_id, solution_description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['email'] = email
+    _details['businessPhoneNumber'] = business_phone_number
+    _details['companyName'] = company_name
+    _details['companyDescription'] = company_description
+    _details['employeeCount'] = employee_count
+    _details['opnNumber'] = opn_number
+    _details['yearFounded'] = year_founded
+    _details['city'] = city
+    _details['state'] = state
+    _details['country'] = country
+    _details['website'] = website
+    _details['contactPhoneNumber'] = contact_phone_number
+    _details['contactEmail'] = contact_email
+    _details['compartmentId'] = compartment_id
+
+    if solution_description is not None:
+        _details['solutionDescription'] = solution_description
+
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.create_publisher(
+        create_publisher_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('marketplace_publisher.create_term.command_name', 'create'), help=u"""Creates a new Term. \n[Command Reference](createTerm)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the publisher's compartment.""")
 @cli_util.option('--name', required=True, help=u"""The name of the term.""")
@@ -2547,6 +2699,70 @@ def delete_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@customer_instance_report_export_group.command(name=cli_util.override('marketplace_publisher.delete_customer_instance_report_export.command_name', 'delete'), help=u"""Deletes a generated Customer Instance Report export. \n[Command Reference](deleteCustomerInstanceReportExport)""")
+@cli_util.option('--customer-instance-report-export-id', required=True, help=u"""Customer Instance Report export identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "ACCEPTED", "FAILED", "NEEDS_ATTENTION", "SUCCEEDED", "CANCELED", "WAITING", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state IN_PROGRESS --wait-for-state CANCELING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_customer_instance_report_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, customer_instance_report_export_id, if_match):
+
+    if isinstance(customer_instance_report_export_id, six.string_types) and len(customer_instance_report_export_id.strip()) == 0:
+        raise click.UsageError('Parameter --customer-instance-report-export-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.delete_customer_instance_report_export(
+        customer_instance_report_export_id=customer_instance_report_export_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customer_instance_report_export') and callable(getattr(client, 'get_customer_instance_report_export')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_customer_instance_report_export(customer_instance_report_export_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2998,6 +3214,119 @@ def delete_term_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@customer_instance_report_export_group.command(name=cli_util.override('marketplace_publisher.generate_customer_instance_report_export.command_name', 'generate'), help=u"""Generates a new asynchronous Customer Instance Report export for the selected filters. \n[Command Reference](generateCustomerInstanceReportExport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for the export.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order for the generated export.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["INSTANCE_ID"]), help=u"""The field to sort by.""")
+@cli_util.option('--name', help=u"""A filter to return only report records that match the listing name.""")
+@cli_util.option('--listing-id', help=u"""A filter to return only report records that match the listing OCID.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STOPPED", "TERMINATING", "TERMINATED", "DISABLED", "STARTING", "STOPPING", "SNAPSHOTTING"]), help=u"""A filter to return only report records that match the instance status.""")
+@cli_util.option('--shape', help=u"""A filter to return only report records that match the instance shape.""")
+@cli_util.option('--region-parameterconflict', help=u"""A filter to return only report records that match the instance region.""")
+@cli_util.option('--realm', help=u"""A filter to return only report records that match the instance realm.""")
+@cli_util.option('--tenant-admin-domain', help=u"""A filter to return only report records that match the tenant administrator email domain.""")
+@cli_util.option('--package-version', help=u"""A filter to return only report records that match the package version.""")
+@cli_util.option('--instance-id', help=u"""A filter to return only report records that match the instance OCID.""")
+@cli_util.option('--time-instance-creation-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-creation-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_customer_instance_report_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, sort_order, sort_by, name, listing_id, status, shape, region_parameterconflict, realm, tenant_admin_domain, package_version, instance_id, time_instance_creation_from_date, time_instance_creation_to_date, time_instance_termination_from_date, time_instance_termination_to_date):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if name is not None:
+        _details['name'] = name
+
+    if listing_id is not None:
+        _details['listingId'] = listing_id
+
+    if status is not None:
+        _details['status'] = status
+
+    if shape is not None:
+        _details['shape'] = shape
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
+
+    if realm is not None:
+        _details['realm'] = realm
+
+    if tenant_admin_domain is not None:
+        _details['tenantAdminDomain'] = tenant_admin_domain
+
+    if package_version is not None:
+        _details['packageVersion'] = package_version
+
+    if instance_id is not None:
+        _details['instanceId'] = instance_id
+
+    if time_instance_creation_from_date is not None:
+        _details['timeInstanceCreationFromDate'] = time_instance_creation_from_date
+
+    if time_instance_creation_to_date is not None:
+        _details['timeInstanceCreationToDate'] = time_instance_creation_to_date
+
+    if time_instance_termination_from_date is not None:
+        _details['timeInstanceTerminationFromDate'] = time_instance_termination_from_date
+
+    if time_instance_termination_to_date is not None:
+        _details['timeInstanceTerminationToDate'] = time_instance_termination_to_date
+
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.generate_customer_instance_report_export(
+        generate_customer_instance_report_export_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @artifact_group.command(name=cli_util.override('marketplace_publisher.get_artifact.command_name', 'get'), help=u"""Gets the specified artifact's information. \n[Command Reference](getArtifact)""")
 @cli_util.option('--artifact-id', required=True, help=u"""artifact OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3039,6 +3368,50 @@ def get_category(ctx, from_json, category_code, compartment_id):
     result = client.get_category(
         category_code=category_code,
         compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@customer_instance_report_export_group.command(name=cli_util.override('marketplace_publisher.get_customer_instance_report_export.command_name', 'get'), help=u"""Gets details for a specific Customer Instance Report export. \n[Command Reference](getCustomerInstanceReportExport)""")
+@cli_util.option('--customer-instance-report-export-id', required=True, help=u"""Customer Instance Report export identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'CustomerInstanceReportExport'})
+@cli_util.wrap_exceptions
+def get_customer_instance_report_export(ctx, from_json, customer_instance_report_export_id):
+
+    if isinstance(customer_instance_report_export_id, six.string_types) and len(customer_instance_report_export_id.strip()) == 0:
+        raise click.UsageError('Parameter --customer-instance-report-export-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.get_customer_instance_report_export(
+        customer_instance_report_export_id=customer_instance_report_export_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@customer_instance_report_export_group.command(name=cli_util.override('marketplace_publisher.get_customer_instance_report_export_content.command_name', 'get-customer-instance-report-export-content'), help=u"""Downloads the generated Customer Instance Report CSV for the specified export. \n[Command Reference](getCustomerInstanceReportExportContent)""")
+@cli_util.option('--customer-instance-report-export-id', required=True, help=u"""Customer Instance Report export identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_customer_instance_report_export_content(ctx, from_json, customer_instance_report_export_id):
+
+    if isinstance(customer_instance_report_export_id, six.string_types) and len(customer_instance_report_export_id.strip()) == 0:
+        raise click.UsageError('Parameter --customer-instance-report-export-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.get_customer_instance_report_export_content(
+        customer_instance_report_export_id=customer_instance_report_export_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3690,22 +4063,33 @@ def list_categories(ctx, from_json, all_pages, page_size, compartment_id, limit,
     cli_util.render_response(result, ctx)
 
 
-@customer_instance_report_record_collection_group.command(name=cli_util.override('marketplace_publisher.list_customer_instance_report_records.command_name', 'list-customer-instance-report-records'), help=u"""List customer instance report records \n[Command Reference](listCustomerInstanceReportRecords)""")
+@customer_instance_report_export_collection_group.command(name=cli_util.override('marketplace_publisher.list_customer_instance_report_exports.command_name', 'list-customer-instance-report-exports'), help=u"""Lists existing Customer Instance Report exports for the caller. \n[Command Reference](listCustomerInstanceReportExports)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--date-range', required=True, type=custom_types.CliCaseInsensitiveChoice(["THIS_WEEK", "LAST_WEEK", "THIS_MONTH", "LAST_MONTH", "LAST_THREE_MONTHS"]), help=u"""The date range of the report""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "fileName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for fileName is ascending.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--listing-id', help=u"""Listing OCID to query resource against.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STOPPED", "TERMINATING", "TERMINATED", "DISABLED", "STARTING", "STOPPING", "SNAPSHOTTING"]), help=u"""A filter to return only report records that match the instance status.""")
+@cli_util.option('--shape', help=u"""A filter to return only report records that match the instance shape.""")
+@cli_util.option('--region-parameterconflict', help=u"""A filter to return only report records that match the instance region.""")
+@cli_util.option('--realm', help=u"""A filter to return only report records that match the instance realm.""")
+@cli_util.option('--tenant-admin-domain', help=u"""A filter to return only report records that match the tenant administrator domain.""")
+@cli_util.option('--package-version', help=u"""A filter to return only report records that match the package version.""")
+@cli_util.option('--instance-ocid', help=u"""A filter to return only report records that match the instance OCID.""")
+@cli_util.option('--time-instance-creation-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-creation-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'CustomerInstanceReportRecordCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'CustomerInstanceReportExportCollection'})
 @cli_util.wrap_exceptions
-def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, compartment_id, date_range, limit, page, sort_order, sort_by, name):
+def list_customer_instance_report_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by, name, listing_id, status, shape, region_parameterconflict, realm, tenant_admin_domain, package_version, instance_ocid, time_instance_creation_from_date, time_instance_creation_to_date, time_instance_termination_from_date, time_instance_termination_to_date):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3721,6 +4105,123 @@ def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, 
         kwargs['sort_by'] = sort_by
     if name is not None:
         kwargs['name'] = name
+    if listing_id is not None:
+        kwargs['listing_id'] = listing_id
+    if status is not None:
+        kwargs['status'] = status
+    if shape is not None:
+        kwargs['shape'] = shape
+    if region_parameterconflict is not None:
+        kwargs['region'] = region_parameterconflict
+    if realm is not None:
+        kwargs['realm'] = realm
+    if tenant_admin_domain is not None:
+        kwargs['tenant_admin_domain'] = tenant_admin_domain
+    if package_version is not None:
+        kwargs['package_version'] = package_version
+    if instance_ocid is not None:
+        kwargs['instance_ocid'] = instance_ocid
+    if time_instance_creation_from_date is not None:
+        kwargs['time_instance_creation_from_date'] = time_instance_creation_from_date
+    if time_instance_creation_to_date is not None:
+        kwargs['time_instance_creation_to_date'] = time_instance_creation_to_date
+    if time_instance_termination_from_date is not None:
+        kwargs['time_instance_termination_from_date'] = time_instance_termination_from_date
+    if time_instance_termination_to_date is not None:
+        kwargs['time_instance_termination_to_date'] = time_instance_termination_to_date
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_customer_instance_report_exports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_customer_instance_report_exports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_customer_instance_report_exports(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@customer_instance_report_record_collection_group.command(name=cli_util.override('marketplace_publisher.list_customer_instance_report_records.command_name', 'list-customer-instance-report-records'), help=u"""List customer instance report records \n[Command Reference](listCustomerInstanceReportRecords)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["INSTANCE_ID"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for instance_id is ascending.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--listing-id', help=u"""Listing OCID to query resource against.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STOPPED", "TERMINATING", "TERMINATED", "DISABLED", "STARTING", "STOPPING", "SNAPSHOTTING"]), help=u"""A filter to return only report records that match the instance status.""")
+@cli_util.option('--shape', help=u"""A filter to return only report records that match the instance shape.""")
+@cli_util.option('--region-parameterconflict', help=u"""A filter to return only report records that match the instance region.""")
+@cli_util.option('--realm', help=u"""A filter to return only report records that match the instance realm.""")
+@cli_util.option('--tenant-admin-domain', help=u"""A filter to return only report records that match the tenant administrator domain.""")
+@cli_util.option('--package-version', help=u"""A filter to return only report records that match the package version.""")
+@cli_util.option('--instance-ocid', help=u"""A filter to return only report records that match the instance OCID.""")
+@cli_util.option('--time-instance-creation-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-creation-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance creation time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-from-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive earliest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-instance-termination-to-date', type=custom_types.CLI_DATETIME, help=u"""The inclusive latest instance termination time, in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'CustomerInstanceReportRecordCollection'})
+@cli_util.wrap_exceptions
+def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by, name, listing_id, status, shape, region_parameterconflict, realm, tenant_admin_domain, package_version, instance_ocid, time_instance_creation_from_date, time_instance_creation_to_date, time_instance_termination_from_date, time_instance_termination_to_date):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if name is not None:
+        kwargs['name'] = name
+    if listing_id is not None:
+        kwargs['listing_id'] = listing_id
+    if status is not None:
+        kwargs['status'] = status
+    if shape is not None:
+        kwargs['shape'] = shape
+    if region_parameterconflict is not None:
+        kwargs['region'] = region_parameterconflict
+    if realm is not None:
+        kwargs['realm'] = realm
+    if tenant_admin_domain is not None:
+        kwargs['tenant_admin_domain'] = tenant_admin_domain
+    if package_version is not None:
+        kwargs['package_version'] = package_version
+    if instance_ocid is not None:
+        kwargs['instance_ocid'] = instance_ocid
+    if time_instance_creation_from_date is not None:
+        kwargs['time_instance_creation_from_date'] = time_instance_creation_from_date
+    if time_instance_creation_to_date is not None:
+        kwargs['time_instance_creation_to_date'] = time_instance_creation_to_date
+    if time_instance_termination_from_date is not None:
+        kwargs['time_instance_termination_from_date'] = time_instance_termination_from_date
+    if time_instance_termination_to_date is not None:
+        kwargs['time_instance_termination_to_date'] = time_instance_termination_to_date
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
     if all_pages:
@@ -3730,7 +4231,6 @@ def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, 
         result = cli_util.list_call_get_all_results(
             client.list_customer_instance_report_records,
             compartment_id=compartment_id,
-            date_range=date_range,
             **kwargs
         )
     elif limit is not None:
@@ -3739,13 +4239,11 @@ def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, 
             limit,
             page_size,
             compartment_id=compartment_id,
-            date_range=date_range,
             **kwargs
         )
     else:
         result = client.list_customer_instance_report_records(
             compartment_id=compartment_id,
-            date_range=date_range,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3753,7 +4251,7 @@ def list_customer_instance_report_records(ctx, from_json, all_pages, page_size, 
 
 @disbursement_report_record_collection_group.command(name=cli_util.override('marketplace_publisher.list_disbursement_report_records.command_name', 'list-disbursement-report-records'), help=u"""List disbursement report records \n[Command Reference](listDisbursementReportRecords)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--date-range', required=True, type=custom_types.CliCaseInsensitiveChoice(["LAST_MONTH", "LAST_THREE_MONTHS"]), help=u"""The date range of the report""")
+@cli_util.option('--date-range', required=True, type=custom_types.CliCaseInsensitiveChoice(["LAST_MONTH", "LAST_THREE_MONTHS", "LAST_SIX_MONTHS", "LAST_TWELVE_MONTHS", "LAST_EIGHTEEN_MONTHS", "ALL_TIME"]), help=u"""The date range of the report""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -4052,9 +4550,7 @@ def list_listing_revision_packages(ctx, from_json, all_pages, page_size, listing
     cli_util.render_response(result, ctx)
 
 
-@listing_revision_collection_group.command(name=cli_util.override('marketplace_publisher.list_listing_revisions.command_name', 'list-listing-revisions'), help=u"""Lists the list of listing revisions for a specific listing ID, compartment ID or listing revision status.
-
-You can specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listListingRevisions)""")
+@listing_revision_collection_group.command(name=cli_util.override('marketplace_publisher.list_listing_revisions.command_name', 'list-listing-revisions'), help=u"""Lists the list of listing revisions for a specific listing ID, compartment ID or listing revision status. You can specify your compartment's OCID as the value for the compartment ID. For information about OCIDs, see Resource Identifiers (Content/General/Concepts/identifiers.htm). \n[Command Reference](listListingRevisions)""")
 @cli_util.option('--listing-id', required=True, help=u"""listing OCID""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only listing revisions their lifecycleState matches the given lifecycleState.""")
@@ -5970,6 +6466,8 @@ This option is a JSON list with items of type NamedLink.  For documentation on N
 @cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Products subscribed by listing.
 
 This option is a JSON list with items of type ListingProduct.  For documentation on ListingProduct please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/ListingProduct.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--partner-registration-url', help=u"""The url provided by partner for the registration of subscription.""")
+@cli_util.option('--term-id', help=u"""The unique id of the term attached to the listing.""")
 @cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--recommended-service-provider-listing-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of service listings attached to lead gen listing""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-and-pricing-policy', help=u"""Listing availability and Pricing Policy statement.""")
@@ -5977,6 +6475,8 @@ This option is a JSON list with items of type ListingProduct.  For documentation
 
 This option is a JSON list with items of type PricingPlan.  For documentation on PricingPlan please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/PricingPlan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-rover-exportable', type=click.BOOL, help=u"""Is this listing rover exportable""")
+@cli_util.option('--demo-url', help=u"""Url to demo of the listing""")
+@cli_util.option('--self-paced-training-url', help=u"""Url to training resources of the listing""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5987,7 +6487,7 @@ This option is a JSON list with items of type PricingPlan.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-language': {'module': 'marketplace_publisher', 'class': 'LanguageItem'}, 'supportedlanguages': {'module': 'marketplace_publisher', 'class': 'list[LanguageItem]'}, 'support-contacts': {'module': 'marketplace_publisher', 'class': 'list[SupportContact]'}, 'support-links': {'module': 'marketplace_publisher', 'class': 'list[NamedLink]'}, 'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}, 'version-details': {'module': 'marketplace_publisher', 'class': 'VersionDetails'}, 'products': {'module': 'marketplace_publisher', 'class': 'list[ListingProduct]'}, 'recommended-service-provider-listing-ids': {'module': 'marketplace_publisher', 'class': 'list[string]'}, 'pricing-plans': {'module': 'marketplace_publisher', 'class': 'list[PricingPlan]'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevision'})
 @cli_util.wrap_exceptions
-def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, pricing_plans, is_rover_exportable, if_match):
+def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, partner_registration_url, term_id, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, pricing_plans, is_rover_exportable, demo_url, self_paced_training_url, if_match):
 
     if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
@@ -6054,6 +6554,12 @@ def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, 
     if products is not None:
         _details['products'] = cli_util.parse_json_parameter("products", products)
 
+    if partner_registration_url is not None:
+        _details['partnerRegistrationUrl'] = partner_registration_url
+
+    if term_id is not None:
+        _details['termId'] = term_id
+
     if vanity_url is not None:
         _details['vanityUrl'] = vanity_url
 
@@ -6068,6 +6574,12 @@ def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, 
 
     if is_rover_exportable is not None:
         _details['isRoverExportable'] = is_rover_exportable
+
+    if demo_url is not None:
+        _details['demoUrl'] = demo_url
+
+    if self_paced_training_url is not None:
+        _details['selfPacedTrainingUrl'] = self_paced_training_url
 
     _details['listingType'] = 'OCI_APPLICATION'
 
@@ -6600,6 +7112,7 @@ def update_listing_revision_attachment_update_review_support_document_attachment
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document-category', help=u"""The document category of the listing revision attachment.""")
+@cli_util.option('--source-url', help=u"""The document URL of the listing revision attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6610,7 +7123,7 @@ def update_listing_revision_attachment_update_review_support_document_attachment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def update_listing_revision_attachment_update_related_document_attachment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, freeform_tags, defined_tags, document_category, if_match):
+def update_listing_revision_attachment_update_related_document_attachment_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, display_name, description, freeform_tags, defined_tags, document_category, source_url, if_match):
 
     if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
@@ -6640,6 +7153,9 @@ def update_listing_revision_attachment_update_related_document_attachment_detail
 
     if document_category is not None:
         _details['documentCategory'] = document_category
+
+    if source_url is not None:
+        _details['sourceUrl'] = source_url
 
     _details['attachmentType'] = 'RELATED_DOCUMENT'
 
@@ -6684,6 +7200,7 @@ def update_listing_revision_attachment_update_related_document_attachment_detail
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--url', help=u"""Optional url to service information""")
+@cli_util.option('--source-type', help=u"""The specified attachment type is Internal or External.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACTIVE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6694,7 +7211,7 @@ def update_listing_revision_attachment_update_related_document_attachment_detail
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevisionAttachment'})
 @cli_util.wrap_exceptions
-def update_listing_revision_attachment_update_supported_service_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, service_name, type, display_name, description, freeform_tags, defined_tags, url, if_match):
+def update_listing_revision_attachment_update_supported_service_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_attachment_id, service_name, type, display_name, description, freeform_tags, defined_tags, url, source_type, if_match):
 
     if isinstance(listing_revision_attachment_id, six.string_types) and len(listing_revision_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-attachment-id cannot be whitespace or empty string')
@@ -6726,6 +7243,9 @@ def update_listing_revision_attachment_update_supported_service_attachment(ctx, 
 
     if url is not None:
         _details['url'] = url
+
+    if source_type is not None:
+        _details['sourceType'] = source_type
 
     _details['attachmentType'] = 'SUPPORTED_SERVICES'
 
@@ -6882,6 +7402,65 @@ def update_listing_revision_attachment_content(ctx, from_json, wait_for_state, m
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_listing_revision_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@listing_revision_group.command(name=cli_util.override('marketplace_publisher.update_listing_revision_banner_content.command_name', 'update-listing-revision-banner-content'), help=u"""Updates the Listing Revision \n[Command Reference](updateListingRevisionBannerContent)""")
+@cli_util.option('--listing-revision-id', required=True, help=u"""listing revision""")
+@cli_util.option('--banner-name', required=True, help=u"""banner name""")
+@cli_util.option('--update-listing-revision-banner-content', required=True, help=u"""The listing revision icon to be updated.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevision'})
+@cli_util.wrap_exceptions
+def update_listing_revision_banner_content(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, banner_name, update_listing_revision_banner_content, if_match):
+
+    if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('marketplace_publisher', 'marketplace_publisher', ctx)
+    result = client.update_listing_revision_banner_content(
+        listing_revision_id=listing_revision_id,
+        banner_name=banner_name,
+        update_listing_revision_banner_content=update_listing_revision_banner_content,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_listing_revision') and callable(getattr(client, 'get_listing_revision')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_listing_revision(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

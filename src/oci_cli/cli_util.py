@@ -1188,6 +1188,9 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
         list_type = None
         if complex_type_definition and complex_type_definition['class'].find('list[') == 0:
             list_type = {'module': complex_type_definition['module'], 'class': re.match(r'list\[(.*)\]', complex_type_definition['class']).group(1)}  # noqa: W605
+        elif complex_type_definition and complex_type_definition['class'] not in MODULE_TO_TYPE_MAPPINGS[complex_type_definition['module']]:
+            # Preserve arbitrary object semantics for arrays inside dict(str, object) values.
+            list_type = complex_type_definition
 
         for obj in original_obj:
             new_list.append(make_dict_keys_camel_case(obj, complex_parameter_type=list_type))
