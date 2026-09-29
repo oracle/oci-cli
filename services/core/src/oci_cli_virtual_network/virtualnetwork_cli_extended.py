@@ -667,6 +667,8 @@ virtualnetwork_cli.drg_route_table_group.add_command(virtualnetwork_cli.delete_d
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.delete_drg_route_table, "delete")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_route_table_group, virtualnetwork_cli.remove_import_drg_route_distribution, "remove-import-route-distribution")
 
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.drg_attachment_group, virtualnetwork_cli.remove_drg_nat_policy, "remove-drg-nat-policy")
+
 
 @cli_util.copy_params_from_generated_command(virtualnetwork_cli.get_drg_route_distribution, params_to_exclude=['drg_route_distribution_id'])
 @virtualnetwork_cli.drg_route_distribution_group.command(name=virtualnetwork_cli.get_drg_route_distribution.name, help=virtualnetwork_cli.get_drg_route_distribution.help)

@@ -36978,6 +36978,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The new value of autonomous data storage (in TBs) for the Autonomous VM cluster.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The new value of cpus per Autonomous VM cluster per node for the Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The new value of maximum number of ACDs for the Autonomous VM cluster.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU.""")
+@cli_util.option('--sga-percentage', type=click.FLOAT, help=u"""The new value of percentage of ECPU memory allocated for SGA(System Global Area).""")
 @cli_util.option('--time-zone', help=u"""The time zone to use for the Autonomous VM cluster. For details, see [DB System Time Zones].""")
 @cli_util.option('--scan-listener-port-tls', type=click.INT, help=u"""The SCAN Listener TLS port number. Default value is 2484.""")
 @cli_util.option('--scan-listener-port-non-tls', type=click.INT, help=u"""The SCAN Listener Non TLS port number. Default value is 1521.""")
@@ -36993,7 +36995,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled, distribution_algorithm, if_match):
+def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_vm_cluster_id, maintenance_window_details, license_model, freeform_tags, defined_tags, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, memory_per_oracle_compute_unit_in_gbs, sga_percentage, time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled, distribution_algorithm, if_match):
 
     if isinstance(autonomous_vm_cluster_id, six.string_types) and len(autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -37029,6 +37031,12 @@ def update_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait
 
     if total_container_databases is not None:
         _details['totalContainerDatabases'] = total_container_databases
+
+    if memory_per_oracle_compute_unit_in_gbs is not None:
+        _details['memoryPerOracleComputeUnitInGBs'] = memory_per_oracle_compute_unit_in_gbs
+
+    if sga_percentage is not None:
+        _details['sgaPercentage'] = sga_percentage
 
     if time_zone is not None:
         _details['timeZone'] = time_zone
@@ -37356,6 +37364,8 @@ def update_basecc_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--autonomous-data-storage-size-in-tbs', help=u"""The new value of autonomous data storage (in TBs) for the Autonomous VM cluster.""")
 @cli_util.option('--cpu-core-count-per-node', type=click.INT, help=u"""The new value of cpus per Autonomous VM cluster per node for the Autonomous VM cluster.""")
 @cli_util.option('--total-container-databases', type=click.INT, help=u"""The new value of maximum number of ACDs for the Autonomous VM cluster.""")
+@cli_util.option('--memory-per-oracle-compute-unit-in-gbs', type=click.INT, help=u"""The amount of memory (in GBs) to be enabled per OCPU or ECPU.""")
+@cli_util.option('--sga-percentage', type=click.FLOAT, help=u"""The new value of percentage of ECPU memory allocated for SGA(System Global Area).""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Oracle Autonomous AI Database. Bring your own license (BYOL) allows you to apply your current on-premises Oracle software licenses to equivalent, highly automated Oracle services in the cloud. License Included allows you to subscribe to new Oracle AI Database software licenses and the Oracle AI Database service. Note that when provisioning an [Autonomous AI Database on dedicated Exadata infrastructure], this attribute must be null. It is already set at the Autonomous Exadata Infrastructure level. When provisioning an [Autonomous AI Database Serverless]  database, if a value is not specified, the system defaults the value to `BRING_YOUR_OWN_LICENSE`. Bring your own license (BYOL) also allows you to select the DB edition using the optional parameter.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
@@ -37381,7 +37391,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudAutonomousVmCluster'})
 @cli_util.wrap_exceptions
-def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, license_model, nsg_ids, freeform_tags, defined_tags, cluster_time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled_vm_cluster, distribution_algorithm, security_attributes, if_match, opc_dry_run):
+def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_autonomous_vm_cluster_id, description, display_name, maintenance_window_details, autonomous_data_storage_size_in_tbs, cpu_core_count_per_node, total_container_databases, memory_per_oracle_compute_unit_in_gbs, sga_percentage, license_model, nsg_ids, freeform_tags, defined_tags, cluster_time_zone, scan_listener_port_tls, scan_listener_port_non_tls, is_mtls_enabled_vm_cluster, distribution_algorithm, security_attributes, if_match, opc_dry_run):
 
     if isinstance(cloud_autonomous_vm_cluster_id, six.string_types) and len(cloud_autonomous_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-autonomous-vm-cluster-id cannot be whitespace or empty string')
@@ -37416,6 +37426,12 @@ def update_cloud_autonomous_vm_cluster(ctx, from_json, force, wait_for_state, ma
 
     if total_container_databases is not None:
         _details['totalContainerDatabases'] = total_container_databases
+
+    if memory_per_oracle_compute_unit_in_gbs is not None:
+        _details['memoryPerOracleComputeUnitInGBs'] = memory_per_oracle_compute_unit_in_gbs
+
+    if sga_percentage is not None:
+        _details['sgaPercentage'] = sga_percentage
 
     if license_model is not None:
         _details['licenseModel'] = license_model

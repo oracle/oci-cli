@@ -6,6 +6,67 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.94.1 - 2026-09-29
+-------------------
+Added
+~~~~~
+
+* Dual-stack support for cli based session creation with browser
+
+  * ``oci session authenticate --enable-dual-stack``
+
+* Support for new optional parameters ``--memory-per-oracle-compute-unit-in-gbs`` and ``--sga-percentage`` for change of memory to CPU ratio at VM cluster level in the Database Service
+
+  * ``oci db autonomous-vm-cluster update --memory-per-oracle-compute-unit-in-gbs --sga-percentage``
+  * ``oci db cloud-autonomous-vm-cluster update --memory-per-oracle-compute-unit-in-gbs --sga-percentage``
+
+* Data Safe
+
+  * Support for registration policy lifecycle and configuration operations
+
+    * ``oci data-safe registration-policy``
+    * ``oci data-safe registration-policy-summary list-registration-policies``
+
+  * Support to update the Data Safe target database Privileges.
+
+    * ``oci data-safe target-database manage-privileges``
+
+  * Support for Data Subsetting APIs
+
+    * ``oci data-safe subsetted-object-summary list-subsetted-objects``
+    * ``oci data-safe subsetting-error-summary list-subsetting-errors``
+    * ``oci data-safe subsetting-policy``
+    * ``oci data-safe subsetting-policy-health-report``
+    * ``oci data-safe subsetting-report``
+    * ``oci data-safe subsetting-rule``
+    * ``oci data-safe subsetting-rule-processing-chain-object-summary``
+    * ``oci data-safe subsetting-schema-collection list-subsetting-schemas``
+    * ``oci data-safe subsetting-schema-object-summary list-subsetting-schema-objects``
+    * ``oci data-safe subsetting-schema-relation``
+    * ``oci data-safe subsetting-schema-relation-summary``
+    * ``oci data-safe table-estimate-summary list-table-estimates``
+
+  * Support for new optional parameter ``--enablement-resource-ocid`` to return target databases filtered by enablement resource OCID
+
+    * ``oci data-safe target-database list --enablement-resource-ocid``
+
+* Networking Service
+
+  * Support for NAT on DRG
+
+    * ``oci network drg-attachment remove-drg-nat-policy``
+    * ``oci network drg-nat-policy``
+    * ``oci network drg-nat-rule``
+
+  * Support for new optional parameters ``--drg-nat-policy-id`` and ``--does-preserve-original-routes-with-nat``
+
+    * ``oci network drg-attachment create --drg-nat-policy-id --does-preserve-original-routes-with-nat``
+    * ``oci network drg-attachment update --drg-nat-policy-id --does-preserve-original-routes-with-nat``
+
+* Support for OCI CLI authentication using PKCS#11 compatible hardware devices like the YubiKey
+
+    * ``oci <command> --auth pkcs11``
+
 3.94.0 - 2026-09-22
 -------------------
 Added

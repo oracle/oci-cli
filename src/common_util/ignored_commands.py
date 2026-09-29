@@ -10,6 +10,7 @@ IGNORED_COMMANDS = [
     ['setup', 'keys'],
     ['setup', 'repair-file-permissions'],
     ['setup', 'oci-cli-rc'],
+    ['setup', 'pkcs11-auth'],
     ['raw-request'],
     ['session', 'authenticate'],
     ['session', 'export'],

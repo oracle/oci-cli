@@ -5,11 +5,13 @@
 import click
 import os
 import oci
+import sys
+import pytest
 import requests
 import tempfile
 import unittest
 import unittest.mock as mock
-from oci_cli import cli_util
+from oci_cli import cli_constants, cli_util
 
 
 # Trivial object to provide dictionary and dot accessor capabilities
@@ -54,6 +56,7 @@ class TestCliUtil(unittest.TestCase):
         ctx.obj = Obj()
         ctx.obj['query'] = None
         ctx.obj['debug'] = False
+        ctx.obj['default_values_from_file'] = {}
         return ctx
 
     @staticmethod
@@ -74,6 +77,16 @@ class TestCliUtil(unittest.TestCase):
         response.headers = {'content-type': 'text/event-stream'}
         response.data = MockSseStream([MockSseEvent(payload) for payload in event_payloads])
         return response
+
+    @staticmethod
+    def _build_pkcs11_client_config():
+        client_config = {
+            'user': 'ocid1.user.oc1..test',
+            'tenancy': 'ocid1.tenancy.oc1..test',
+            'region': 'us-phoenix-1'
+        }
+
+        return client_config
 
     def test_iam_coalesce_provided_and_default_value(self):
         ctx = Obj()
@@ -152,6 +165,377 @@ class TestCliUtil(unittest.TestCase):
         Mock.expected_result = {'tenancy': 'abc'}
         value = cli_util.coalesce_provided_and_default_value(ctx, param_name, original_value, is_required)
         assert value == 'abc'
+
+    def _assert_pkcs11_signer_values(
+        self,
+        ctx,
+        expected_pin='123456',
+        expected_slot=None,
+        expected_key_id=None,
+        expected_token_label=None,
+        expected_token_serial=None,
+        expected_key_id_override=None,
+        expected_module_path=None,
+        env=None
+    ):
+        client_config = self._build_pkcs11_client_config()
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, pkcs11_slot=None, pkcs11_key_id=None, pkcs11_token_label=None, pkcs11_token_serial=None, pkcs11_key_id_override=None, pkcs11_module_path=None):
+                assert config is client_config
+                assert pin == expected_pin
+                assert pkcs11_slot == expected_slot
+                assert pkcs11_key_id == expected_key_id
+                assert pkcs11_token_label == expected_token_label
+                assert pkcs11_token_serial == expected_token_serial
+                assert pkcs11_key_id_override == expected_key_id_override
+                assert pkcs11_module_path == expected_module_path
+                return signer
+
+            @staticmethod
+            def get_pkcs11_pin():
+                return expected_pin
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, env or {}, clear=True):
+                assert cli_util.get_pkcs11_signer(ctx, client_config) is signer
+
+    def test_pkcs11_config_can_be_valid_from_env_without_fingerprint_or_key_file(self):
+        command_args = {
+            'auth': cli_constants.OCI_CLI_AUTH_PKCS11,
+            'region': None
+        }
+
+        with mock.patch.dict(os.environ, {
+            cli_constants.OCI_CLI_USER_ENV_VAR: 'ocid1.user.oc1..test',
+            cli_constants.OCI_CLI_TENANCY_ENV_VAR: 'ocid1.tenancy.oc1..test',
+            cli_constants.OCI_CLI_REGION_ENV_VAR: 'us-phoenix-1'
+        }, clear=True):
+            assert cli_util.is_config_valid_from_env(command_args)
+
+    def test_pkcs11_config_from_env_accepts_region_from_root_option(self):
+        command_args = {
+            'auth': cli_constants.OCI_CLI_AUTH_PKCS11,
+            'region': 'us-phoenix-1'
+        }
+
+        with mock.patch.dict(os.environ, {
+            cli_constants.OCI_CLI_USER_ENV_VAR: 'ocid1.user.oc1..test',
+            cli_constants.OCI_CLI_TENANCY_ENV_VAR: 'ocid1.tenancy.oc1..test'
+        }, clear=True):
+            assert cli_util.is_config_valid_from_env(command_args)
+
+    def test_pkcs11_config_from_env_requires_user_and_tenancy(self):
+        command_args = {
+            'auth': cli_constants.OCI_CLI_AUTH_PKCS11,
+            'region': 'us-phoenix-1'
+        }
+
+        with mock.patch.dict(os.environ, {
+            cli_constants.OCI_CLI_USER_ENV_VAR: 'ocid1.user.oc1..test'
+        }, clear=True):
+            assert not cli_util.is_config_valid_from_env(command_args)
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_reads_optional_values_from_profile_rc_defaults(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'PIV AUTH',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY: 'token-label-from-rc',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY: 'override-from-rc',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY: '/tmp/pkcs11-from-rc.so'
+        }
+
+        self._assert_pkcs11_signer_values(
+            ctx,
+            expected_slot='PIV AUTH',
+            expected_token_label='token-label-from-rc',
+            expected_key_id_override='override-from-rc',
+            expected_module_path='/tmp/pkcs11-from-rc.so'
+        )
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_env_overrides_profile_rc_defaults(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'PIV AUTH',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY: 'serial-from-rc',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY: 'override-from-rc',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY: '/tmp/pkcs11-from-rc.so'
+        }
+
+        self._assert_pkcs11_signer_values(
+            ctx,
+            expected_slot='CARD AUTH',
+            expected_token_serial='serial-from-env',
+            expected_key_id_override='override-from-env',
+            expected_module_path='/tmp/pkcs11-from-env.so',
+            expected_pin='pin-from-env',
+            env={
+                cli_constants.OCI_CLI_PKCS11_SLOT_LABEL_ENV_VAR: 'CARD AUTH',
+                cli_constants.OCI_CLI_PKCS11_TOKEN_SERIAL_ENV_VAR: 'serial-from-env',
+                cli_constants.OCI_CLI_PKCS11_KEY_ID_OVERRIDE_ENV_VAR: 'override-from-env',
+                cli_constants.OCI_CLI_PKCS11_MODULE_PATH_ENV_VAR: '/tmp/pkcs11-from-env.so',
+                cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR: 'pin-from-env'
+            }
+        )
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_prompts_for_piv_auth_when_env_pin_is_set(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'PIV AUTH'
+        }
+        self._assert_pkcs11_signer_values(
+            ctx,
+            expected_pin='prompted-pin',
+            expected_slot='PIV AUTH',
+            env={cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR: 'pin-from-env'}
+        )
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_uses_env_pin_for_card_auth_without_prompting(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'CARD AUTH'
+        }
+        client_config = self._build_pkcs11_client_config()
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert config is client_config
+                assert pin == 'pin-from-env'
+                assert kwargs['pkcs11_slot'] == 'CARD AUTH'
+                return signer
+
+            @staticmethod
+            def get_pkcs11_pin():
+                raise AssertionError('PIN prompt should not be used when OCI_CLI_PKCS11_PIN is set')
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR: 'pin-from-env'}, clear=True):
+                with mock.patch.object(click, 'echo') as echo:
+                    assert cli_util.get_pkcs11_signer(ctx, client_config) is signer
+
+        warning = echo.call_args_list[0][0][0]
+        assert cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR in warning
+        assert 'Unset it' in warning
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_warns_and_prompts_for_card_auth_without_env_pin(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'CARD AUTH'
+        }
+        client_config = self._build_pkcs11_client_config()
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert config is client_config
+                assert pin == 'prompted-pin'
+                assert kwargs['pkcs11_slot'] == 'CARD AUTH'
+                return signer
+
+            @staticmethod
+            def get_pkcs11_pin():
+                return 'prompted-pin'
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {}, clear=True):
+                with mock.patch.object(click, 'echo') as echo:
+                    assert cli_util.get_pkcs11_signer(ctx, client_config) is signer
+
+        warning = echo.call_args_list[0][0][0]
+        assert cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR in warning
+        assert 'each CLI command' in warning
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_rejects_empty_pin(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        client_config = self._build_pkcs11_client_config()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_pin():
+                return ''
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {}, clear=True):
+                with self.assertRaises(SystemExit) as raised:
+                    cli_util.get_pkcs11_signer(ctx, client_config)
+
+        assert "PKCS#11 PIN cannot be empty." in str(raised.exception)
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_warns_and_prefers_slot_label_over_key_id(self):
+        ctx = self._build_ctx()
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'CARD AUTH',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY: '04'
+        }
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert kwargs['pkcs11_slot'] == 'CARD AUTH'
+                assert kwargs['pkcs11_key_id'] is None
+                return signer
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR: 'pin-from-env'}, clear=True):
+                with mock.patch.object(click, 'echo') as echo:
+                    assert cli_util.get_pkcs11_signer(ctx, self._build_pkcs11_client_config()) is signer
+
+        assert "pkcs11_slot_label and pkcs11_key_id cannot both be provided" in echo.call_args_list[0][0][0]
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_warns_and_prefers_token_label_over_token_serial(self):
+        ctx = self._build_ctx()
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY: 'token-label',
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY: 'serial'
+        }
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert kwargs['pkcs11_token_label'] == 'token-label'
+                assert kwargs['pkcs11_token_serial'] is None
+                return signer
+
+            @staticmethod
+            def get_pkcs11_pin():
+                return 'prompted-pin'
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {}, clear=True):
+                with mock.patch.object(click, 'echo') as echo:
+                    assert cli_util.get_pkcs11_signer(ctx, self._build_pkcs11_client_config()) is signer
+
+        assert "pkcs11_token_label and pkcs11_token_serial cannot both be provided" in echo.call_args_list[0][0][0]
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_shows_actionable_pin_incorrect_error(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'PIV AUTH'
+        }
+        client_config = self._build_pkcs11_client_config()
+
+        class PinIncorrect(RuntimeError):
+            pass
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                raise PinIncorrect('PIN_INCORRECT')
+
+            @staticmethod
+            def get_pkcs11_pin():
+                return '123456'
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {}, clear=True):
+                with self.assertRaises(SystemExit) as raised:
+                    cli_util.get_pkcs11_signer(ctx, client_config)
+
+        assert "Failed to initialize PKCS#11 signer: The PKCS#11 PIN was rejected by the token." in str(raised.exception)
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_shows_actionable_user_not_logged_in_error(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'CARD AUTH'
+        }
+        client_config = self._build_pkcs11_client_config()
+
+        class UserNotLoggedIn(RuntimeError):
+            pass
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert pin == '123456'
+                raise UserNotLoggedIn('USER_NOT_LOGGED_IN')
+
+            @staticmethod
+            def get_pkcs11_pin():
+                return '123456'
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {}, clear=True):
+                with self.assertRaises(SystemExit) as raised:
+                    cli_util.get_pkcs11_signer(ctx, client_config)
+
+        assert "Failed to initialize PKCS#11 signer: The selected PKCS#11 key requires user login before signing." in str(raised.exception)
+
+    @pytest.mark.skipif(sys.version_info < (3, 9),
+                        reason="Python 3.9.0 or higher is required for using pkcs11 authentication. Skipping this test.")
+    def test_get_pkcs11_signer_prints_card_auth_touch_guidance(self):
+        ctx = self._build_ctx()
+        ctx.obj['settings'] = {}
+        ctx.obj['default_values_from_file'] = {
+            cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: 'CARD AUTH'
+        }
+        client_config = self._build_pkcs11_client_config()
+        signer = Obj()
+        signer.pkcs11_signer = Obj()
+
+        class FakePKCS11RequestSigner(object):
+            @staticmethod
+            def get_pkcs11_signer(config, pin, **kwargs):
+                assert pin == 'pin-from-env'
+                assert kwargs['pkcs11_slot'] == 'CARD AUTH'
+                return signer
+
+        with mock.patch.object(oci.auth.signers, 'PKCS11RequestSigner', FakePKCS11RequestSigner, create=True):
+            with mock.patch.dict(os.environ, {cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR: 'pin-from-env'}, clear=True):
+                with mock.patch('oci_cli.cli_util.click.echo') as mock_echo:
+                    assert cli_util.get_pkcs11_signer(ctx, client_config) is signer
+
+        assert mock_echo.call_count == 2
+        assert 'Using PKCS#11 CARD AUTH PIN from' in mock_echo.call_args_list[0][0][0]
+        assert 'Touch the pkcs11 external authenticator when it blinks to authorize signing.' in mock_echo.call_args_list[1][0][0]
+
+    def test_root_command_rejects_removed_pkcs11_selector_option(self):
+        from click.testing import CliRunner
+        from oci_cli.cli_root import cli
+
+        result = CliRunner().invoke(cli, ['--pkcs11-slot-label', 'CARD AUTH', '--help'])
+
+        assert result.exit_code == 2
+        assert 'No such command' in result.output
 
     # TODO: This test does not work on Windows due to the use of tempfile.NamedTemoraryFile.
     # https://bugs.python.org/issue14243

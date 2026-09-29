@@ -7,6 +7,7 @@ import click
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from services.data_safe.src.oci_cli_data_safe.generated import datasafe_cli
+from oci_cli import custom_types
 
 # 1 :
 # From: oci data-safe data-safe-configuration get --compartment-id | -c, -? | -h | --help
@@ -306,3 +307,33 @@ datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.update_peer_ta
 
 # Remove update-peer-target-database-installed-database-details from oci data-safe peer-target-database
 datasafe_cli.peer_target_database_group.commands.pop(datasafe_cli.update_peer_target_database_installed_database_details.name)
+
+
+@cli_util.copy_params_from_generated_command(datasafe_cli.create_registration_policy, params_to_exclude=['features'])
+@datasafe_cli.registration_policy_group.command(name='create', help=datasafe_cli.create_registration_policy.help)
+@cli_util.option('--features', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def create_registration_policy_extended(ctx, **kwargs):
+    ctx.invoke(datasafe_cli.create_registration_policy, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datasafe_cli.manage_privileges, params_to_exclude=['features'])
+@datasafe_cli.target_database_group.command(name='manage-privileges', help=datasafe_cli.manage_privileges.help)
+@cli_util.option('--features', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def manage_privileges_extended(ctx, **kwargs):
+    ctx.invoke(datasafe_cli.manage_privileges, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(datasafe_cli.update_registration_policy, params_to_exclude=['features'])
+@datasafe_cli.registration_policy_group.command(name='update', help=datasafe_cli.update_registration_policy.help)
+@cli_util.option('--features', multiple=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def update_registration_policy_extended(ctx, **kwargs):
+    ctx.invoke(datasafe_cli.update_registration_policy, **kwargs)

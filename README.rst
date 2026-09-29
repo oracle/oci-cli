@@ -8,7 +8,7 @@ This is the command line interface for Oracle Cloud Infrastructure.
 The project is open source and maintained by Oracle Corp. The home page for the project is `here`__.
 
 __ https://docs.cloud.oracle.com/Content/API/Concepts/cliconcepts.htm
-
+ 
 Announcements
 =============
 
