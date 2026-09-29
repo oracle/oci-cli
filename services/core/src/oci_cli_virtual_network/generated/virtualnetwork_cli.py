@@ -280,6 +280,12 @@ def security_list_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.drg_nat_policy_group.command_name', 'drg-nat-policy'), cls=CommandGroupWithAlias, help="""Collection of DRG NAT rules that is associated to a DRG Attachment to allow Network Address Translation of one or more conflicting IPs or CIDR ranges.""")
+@cli_util.help_option_group
+def drg_nat_policy_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.byoip_allocated_range_summary_group.command_name', 'byoip-allocated-range-summary'), cls=CommandGroupWithAlias, help="""A summary of CIDR block subranges that are currently allocated to an IP pool.""")
 @cli_util.help_option_group
 def byoip_allocated_range_summary_group():
@@ -337,6 +343,12 @@ def vcn_dns_resolver_association_group():
 @click.command(cli_util.override('virtual_network.cross_connect_location_group.command_name', 'cross-connect-location'), cls=CommandGroupWithAlias, help="""An individual FastConnect location.""")
 @cli_util.help_option_group
 def cross_connect_location_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.drg_nat_rule_group.command_name', 'drg-nat-rule'), cls=CommandGroupWithAlias, help="""A DRG NAT rule specifies the mapping between an original source/destination IP and a translated source/destination IP. The source needs to be described in the context of packet entering the DRG.""")
+@cli_util.help_option_group
+def drg_nat_rule_group():
     pass
 
 
@@ -604,6 +616,7 @@ virtual_network_root_group.add_command(ip_sec_connection_group)
 virtual_network_root_group.add_command(network_security_group_group)
 virtual_network_root_group.add_command(tunnel_route_group)
 virtual_network_root_group.add_command(security_list_group)
+virtual_network_root_group.add_command(drg_nat_policy_group)
 virtual_network_root_group.add_command(byoip_allocated_range_summary_group)
 virtual_network_root_group.add_command(remote_peering_connection_group)
 virtual_network_root_group.add_command(nat_gateway_group)
@@ -613,6 +626,7 @@ virtual_network_root_group.add_command(ip_sec_connection_tunnel_group)
 virtual_network_root_group.add_command(allowed_ike_ip_sec_parameters_group)
 virtual_network_root_group.add_command(vcn_dns_resolver_association_group)
 virtual_network_root_group.add_command(cross_connect_location_group)
+virtual_network_root_group.add_command(drg_nat_rule_group)
 virtual_network_root_group.add_command(private_ip_group)
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
@@ -640,6 +654,37 @@ virtual_network_root_group.add_command(cross_connect_group_group)
 virtual_network_root_group.add_command(virtual_circuit_associated_tunnel_details_group)
 virtual_network_root_group.add_command(drg_redundancy_status_group)
 virtual_network_root_group.add_command(internal_public_ip_group)
+
+
+@drg_nat_rule_group.command(name=cli_util.override('virtual_network.add_drg_nat_rules.command_name', 'add'), help=u"""Adds DRG NAT rules to the specified DRG NAT policy. \n[Command Reference](addDrgNatRules)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of DRG NAT rules to insert into the DRG NAT policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'rules': {'module': 'core', 'class': 'list[AddDrgNatRuleDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'core', 'class': 'list[AddDrgNatRuleDetails]'}}, output_type={'module': 'core', 'class': 'list[DrgNatRule]'})
+@cli_util.wrap_exceptions
+def add_drg_nat_rules(ctx, from_json, drg_nat_policy_id, rules, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.add_drg_nat_rules(
+        drg_nat_policy_id=drg_nat_policy_id,
+        add_drg_nat_rules_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @drg_route_distribution_statement_group.command(name=cli_util.override('virtual_network.add_drg_route_distribution_statements.command_name', 'add'), help=u"""Adds one or more route distribution statements to the specified route distribution. \n[Command Reference](addDrgRouteDistributionStatements)""")
@@ -2071,6 +2116,37 @@ def change_drg_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.change_drg_nat_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a DrgNatPolicy into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDrgNatPolicyCompartment)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the DrgNatPolicy to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_drg_nat_policy_compartment(ctx, from_json, drg_nat_policy_id, compartment_id, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.change_drg_nat_policy_compartment(
+        drg_nat_policy_id=drg_nat_policy_id,
+        change_drg_nat_policy_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @internet_gateway_group.command(name=cli_util.override('virtual_network.change_internet_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves an internet gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeInternetGatewayCompartment)""")
 @cli_util.option('--ig-id', required=True, help=u"""The [OCID] of the internet gateway.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the internet gateway to.""")
@@ -3399,7 +3475,9 @@ If you don't specify a route table here, the DRG attachment is created without a
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services] This field is deprecated. Instead, use the networkDetails field to specify the VCN route table for this attachment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN. This field is deprecated. Instead, use the `networkDetails` field to specify the [OCID] of the attached resource.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ATTACHING --wait-for-state DETACHED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--drg-nat-policy-id', help=u"""The [OCID] of the DRG attachment's DRG NAT policy.""")
+@cli_util.option('--does-preserve-original-routes-with-nat', type=click.BOOL, help=u"""By default, only translated DrgNatRule CIDRs are imported into the DrgRouteTable to prevent routing complications. Enable this option to also preserve original CIDRs. The original source CIDRs is not advertised if this value is set to false, else it is advertised. default: `false`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'network-details': {'module': 'core', 'class': 'DrgAttachmentNetworkCreateDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
@@ -3407,7 +3485,7 @@ If you don't specify a route table here, the DRG attachment is created without a
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-details': {'module': 'core', 'class': 'DrgAttachmentNetworkCreateDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, display_name, drg_route_table_id, network_details, defined_tags, freeform_tags, route_table_id, vcn_id):
+def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, display_name, drg_route_table_id, network_details, defined_tags, freeform_tags, route_table_id, vcn_id, drg_nat_policy_id, does_preserve_original_routes_with_nat):
 
     kwargs = {}
 
@@ -3434,6 +3512,12 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if vcn_id is not None:
         _details['vcnId'] = vcn_id
+
+    if drg_nat_policy_id is not None:
+        _details['drgNatPolicyId'] = drg_nat_policy_id
+
+    if does_preserve_original_routes_with_nat is not None:
+        _details['doesPreserveOriginalRoutesWithNat'] = does_preserve_original_routes_with_nat
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_drg_attachment(
@@ -3488,6 +3572,8 @@ If you don't specify a route table here, the DRG attachment is created without a
 
   * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services] This field is deprecated. Instead, use the networkDetails field to specify the VCN route table for this attachment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN. This field is deprecated. Instead, use the `networkDetails` field to specify the [OCID] of the attached resource.""")
+@cli_util.option('--drg-nat-policy-id', help=u"""The [OCID] of the DRG attachment's DRG NAT policy.""")
+@cli_util.option('--does-preserve-original-routes-with-nat', type=click.BOOL, help=u"""By default, only translated DrgNatRule CIDRs are imported into the DrgRouteTable to prevent routing complications. Enable this option to also preserve original CIDRs. The original source CIDRs is not advertised if this value is set to false, else it is advertised. default: `false`""")
 @cli_util.option('--network-details-id', help=u"""The [OCID] of the network attached to the DRG.""")
 @cli_util.option('--network-details-route-table-id', help=u"""This is the [OCID] of the route table that is used to route the traffic as it enters a VCN through this attachment.
 
@@ -3503,7 +3589,7 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, network_details_id, network_details_route_table_id, network_details_vcn_route_type):
+def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_id, display_name, drg_route_table_id, defined_tags, freeform_tags, route_table_id, vcn_id, drg_nat_policy_id, does_preserve_original_routes_with_nat, network_details_id, network_details_route_table_id, network_details_vcn_route_type):
 
     kwargs = {}
 
@@ -3528,6 +3614,12 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
     if vcn_id is not None:
         _details['vcnId'] = vcn_id
+
+    if drg_nat_policy_id is not None:
+        _details['drgNatPolicyId'] = drg_nat_policy_id
+
+    if does_preserve_original_routes_with_nat is not None:
+        _details['doesPreserveOriginalRoutesWithNat'] = does_preserve_original_routes_with_nat
 
     if network_details_id is not None:
         _details['networkDetails']['id'] = network_details_id
@@ -3557,6 +3649,71 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_drg_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.create_drg_nat_policy.command_name', 'create'), help=u"""Creates a new DRG NAT policy. Assign the DRG NAT policy to a DRG attachment using the `UpdateDrgAttachment` or `CreateDrgAttachment` operations. \n[Command Reference](createDrgNatPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the DRG NAT policy.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgNatPolicy'})
+@cli_util.wrap_exceptions
+def create_drg_nat_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.create_drg_nat_policy(
+        create_drg_nat_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_drg_nat_policy') and callable(getattr(client, 'get_drg_nat_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_drg_nat_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -5944,6 +6101,63 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.delete_drg_nat_policy.command_name', 'delete'), help=u"""Deletes the specified DRG NAT policy. \n[Command Reference](deleteDrgNatPolicy)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_drg_nat_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_nat_policy_id, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.delete_drg_nat_policy(
+        drg_nat_policy_id=drg_nat_policy_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @drg_route_distribution_statement_group.command(name=cli_util.override('virtual_network.delete_drg_route_distribution.command_name', 'delete-drg-route-distribution'), help=u"""Deletes the specified route distribution. You can't delete a route distribution currently in use by a DRG attachment or DRG route table.
 
 Remove the DRG route distribution from a DRG attachment or DRG route table by using the \"RemoveExportDrgRouteDistribution\" or \"RemoveImportDrgRouteDistribution' operations. \n[Command Reference](deleteDrgRouteDistribution)""")
@@ -7611,6 +7825,28 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_drg_attachment(
         drg_attachment_id=drg_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.get_drg_nat_policy.command_name', 'get'), help=u"""Gets the specified DRG NAT policy's information. \n[Command Reference](getDrgNatPolicy)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgNatPolicy'})
+@cli_util.wrap_exceptions
+def get_drg_nat_policy(ctx, from_json, drg_nat_policy_id):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_drg_nat_policy(
+        drg_nat_policy_id=drg_nat_policy_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -9449,6 +9685,7 @@ The LIST API lists DRG attachments by attachment type. It will default to list V
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--drg-nat-policy-id', help=u"""The [OCID] of the DrgNatPolicy.""")
 @cli_util.option('--network-id', help=u"""The [OCID] of the resource (virtual circuit, VCN, IPSec tunnel, or remote peering connection) attached to the DRG.""")
 @cli_util.option('--attachment-type', type=custom_types.CliCaseInsensitiveChoice(["VCN", "VIRTUAL_CIRCUIT", "REMOTE_PEERING_CONNECTION", "IPSEC_TUNNEL", "ALL"]), help=u"""The type for the network resource attached to the DRG.""")
 @cli_util.option('--drg-route-table-id', help=u"""The [OCID] of the DRG route table assigned to the DRG attachment.""")
@@ -9465,7 +9702,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgAttachment]'})
 @cli_util.wrap_exceptions
-def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, drg_id, limit, page, network_id, attachment_type, drg_route_table_id, display_name, sort_by, sort_order, lifecycle_state):
+def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, drg_id, limit, page, drg_nat_policy_id, network_id, attachment_type, drg_route_table_id, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9479,6 +9716,8 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if drg_nat_policy_id is not None:
+        kwargs['drg_nat_policy_id'] = drg_nat_policy_id
     if network_id is not None:
         kwargs['network_id'] = network_id
     if attachment_type is not None:
@@ -9514,6 +9753,123 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
     else:
         result = client.list_drg_attachments(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.list_drg_nat_policies.command_name', 'list'), help=u"""The list of DRG NAT policies in the compartment. \n[Command Reference](listDrgNatPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgNatPolicy]'})
+@cli_util.wrap_exceptions
+def list_drg_nat_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_drg_nat_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_drg_nat_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_drg_nat_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_rule_group.command(name=cli_util.override('virtual_network.list_drg_nat_rules.command_name', 'list'), help=u"""Lists the rules for the specified DRG NAT policy. \n[Command Reference](listDrgNatRules)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["PRIORITY"]), help=u"""The field to sort by.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DrgNatRule]'})
+@cli_util.wrap_exceptions
+def list_drg_nat_rules(ctx, from_json, all_pages, page_size, drg_nat_policy_id, limit, page, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_drg_nat_rules,
+            drg_nat_policy_id=drg_nat_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_drg_nat_rules,
+            limit,
+            page_size,
+            drg_nat_policy_id=drg_nat_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_drg_nat_rules(
+            drg_nat_policy_id=drg_nat_policy_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -11986,6 +12342,125 @@ def private_ip_vnic_detach(ctx, from_json, private_ip_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@drg_attachment_group.command(name=cli_util.override('virtual_network.remove_drg_nat_policy.command_name', 'remove'), help=u"""Dissociates the DRG NAT policy from the DRG attachment so no DRG NAT rules are advertised to it. \n[Command Reference](removeDrgNatPolicy)""")
+@cli_util.option('--drg-attachment-id', required=True, help=u"""The [OCID] of the DRG attachment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgAttachment'})
+@cli_util.wrap_exceptions
+def remove_drg_nat_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, if_match):
+
+    if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.remove_drg_nat_policy(
+        drg_attachment_id=drg_attachment_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_drg_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_rule_group.command(name=cli_util.override('virtual_network.remove_drg_nat_rules.command_name', 'remove'), help=u"""Request with DRG NAT rules to remove from the DRG NAT policy. \n[Command Reference](removeDrgNatRules)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--rule-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Oracle-assigned ID of each DRG NAT rule to remove.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'rule-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rule-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_drg_nat_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_nat_policy_id, rule_ids, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['ruleIds'] = cli_util.parse_json_parameter("rule_ids", rule_ids)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.remove_drg_nat_rules(
+        drg_nat_policy_id=drg_nat_policy_id,
+        remove_drg_nat_rules_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @drg_route_distribution_statement_group.command(name=cli_util.override('virtual_network.remove_drg_route_distribution_statements.command_name', 'remove'), help=u"""Removes one or more route distribution statements from the specified route distribution's map. \n[Command Reference](removeDrgRouteDistributionStatements)""")
 @cli_util.option('--drg-route-distribution-id', required=True, help=u"""The [OCID] of the route distribution.""")
 @cli_util.option('--statement-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Oracle-assigned ID of each route distribution to remove.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13314,6 +13789,8 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @drg_attachment_group.command(name=cli_util.override('virtual_network.update_drg_attachment.command_name', 'update'), help=u"""Updates the display name and routing information for the specified `DrgAttachment`. Avoid entering confidential information. \n[Command Reference](updateDrgAttachment)""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The [OCID] of the DRG attachment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--drg-nat-policy-id', help=u"""The [OCID] of the DRG attachment's DRG NAT policy.""")
+@cli_util.option('--does-preserve-original-routes-with-nat', type=click.BOOL, help=u"""By default, only translated DrgNatRule CIDRs are imported into the DrgRouteTable to prevent routing complications. Enable this option to also preserve original CIDRs. The original source CIDRs is not advertised if this value is set to false, else it is advertised. default: `false`""")
 @cli_util.option('--drg-route-table-id', help=u"""The [OCID] of the DRG route table that is assigned to this attachment.
 
 The DRG route table manages traffic inside the DRG.
@@ -13342,7 +13819,7 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-details': {'module': 'core', 'class': 'DrgAttachmentNetworkUpdateDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def update_drg_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, network_details, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match):
+def update_drg_attachment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_nat_policy_id, does_preserve_original_routes_with_nat, drg_route_table_id, network_details, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match):
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
@@ -13359,6 +13836,12 @@ def update_drg_attachment(ctx, from_json, force, wait_for_state, max_wait_second
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if drg_nat_policy_id is not None:
+        _details['drgNatPolicyId'] = drg_nat_policy_id
+
+    if does_preserve_original_routes_with_nat is not None:
+        _details['doesPreserveOriginalRoutesWithNat'] = does_preserve_original_routes_with_nat
 
     if drg_route_table_id is not None:
         _details['drgRouteTableId'] = drg_route_table_id
@@ -13413,6 +13896,8 @@ def update_drg_attachment(ctx, from_json, force, wait_for_state, max_wait_second
 @drg_attachment_group.command(name=cli_util.override('virtual_network.update_drg_attachment_vcn_drg_attachment_network_update_details.command_name', 'update-drg-attachment-vcn-drg-attachment-network-update-details'), help=u"""Updates the display name and routing information for the specified `DrgAttachment`. Avoid entering confidential information. \n[Command Reference](updateDrgAttachment)""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The [OCID] of the DRG attachment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--drg-nat-policy-id', help=u"""The [OCID] of the DRG attachment's DRG NAT policy.""")
+@cli_util.option('--does-preserve-original-routes-with-nat', type=click.BOOL, help=u"""By default, only translated DrgNatRule CIDRs are imported into the DrgRouteTable to prevent routing complications. Enable this option to also preserve original CIDRs. The original source CIDRs is not advertised if this value is set to false, else it is advertised. default: `false`""")
 @cli_util.option('--drg-route-table-id', help=u"""The [OCID] of the DRG route table that is assigned to this attachment.
 
 The DRG route table manages traffic inside the DRG.
@@ -13446,7 +13931,7 @@ For information about why you would associate a route table with a DRG attachmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgAttachment'})
 @cli_util.wrap_exceptions
-def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_route_table_id, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match, network_details_route_table_id, network_details_vcn_route_type):
+def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_attachment_id, display_name, drg_nat_policy_id, does_preserve_original_routes_with_nat, drg_route_table_id, defined_tags, freeform_tags, export_drg_route_distribution_id, route_table_id, if_match, network_details_route_table_id, network_details_vcn_route_type):
 
     if isinstance(drg_attachment_id, six.string_types) and len(drg_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
@@ -13464,6 +13949,12 @@ def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_js
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if drg_nat_policy_id is not None:
+        _details['drgNatPolicyId'] = drg_nat_policy_id
+
+    if does_preserve_original_routes_with_nat is not None:
+        _details['doesPreserveOriginalRoutesWithNat'] = does_preserve_original_routes_with_nat
 
     if drg_route_table_id is not None:
         _details['drgRouteTableId'] = drg_route_table_id
@@ -13517,6 +14008,113 @@ def update_drg_attachment_vcn_drg_attachment_network_update_details(ctx, from_js
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_policy_group.command(name=cli_util.override('virtual_network.update_drg_nat_policy.command_name', 'update'), help=u"""Updates the specified DRG NAT policy \n[Command Reference](updateDrgNatPolicy)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DrgNatPolicy'})
+@cli_util.wrap_exceptions
+def update_drg_nat_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, drg_nat_policy_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.update_drg_nat_policy(
+        drg_nat_policy_id=drg_nat_policy_id,
+        update_drg_nat_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_drg_nat_policy') and callable(getattr(client, 'get_drg_nat_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_drg_nat_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@drg_nat_rule_group.command(name=cli_util.override('virtual_network.update_drg_nat_rules.command_name', 'update'), help=u"""Updates DRG NAT rules in the specified DRG NAT policy. \n[Command Reference](updateDrgNatRules)""")
+@cli_util.option('--drg-nat-policy-id', required=True, help=u"""The [OCID] of the DRG NAT policy.""")
+@cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The DRG NAT rules to update, and the details to be updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'rules': {'module': 'core', 'class': 'list[UpdateDrgNatRuleDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'rules': {'module': 'core', 'class': 'list[UpdateDrgNatRuleDetails]'}}, output_type={'module': 'core', 'class': 'list[DrgNatRule]'})
+@cli_util.wrap_exceptions
+def update_drg_nat_rules(ctx, from_json, drg_nat_policy_id, rules, if_match):
+
+    if isinstance(drg_nat_policy_id, six.string_types) and len(drg_nat_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-nat-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.update_drg_nat_rules(
+        drg_nat_policy_id=drg_nat_policy_id,
+        update_drg_nat_rules_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

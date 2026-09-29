@@ -353,6 +353,132 @@ def get_session_token_signer(client_config):
     return signer
 
 
+def get_pkcs11_value(ctx, env_var, rc_key):
+    # PKCS#11 selectors are intentionally resolved outside the root command. Environment
+    # variables remain the highest-precedence override, followed by the active profile section
+    # in oci_cli_rc and then the legacy/global CLI RC settings section.
+    value = os.environ.get(env_var)
+    if value is None:
+        value = ctx.obj.get('default_values_from_file', {}).get(rc_key)
+    if value is None:
+        value = ctx.obj.get('settings', {}).get(rc_key)
+    if isinstance(value, six.string_types):
+        value = value.strip()
+    return value or None
+
+
+def _raise_pkcs11_auth_failure(exit_value):
+    raise SystemExit(exit_value)
+
+
+def get_pkcs11_signer(ctx, client_config):
+    required_config_values = ['user', 'tenancy', 'region']
+    missing_config_values = []
+    for key in required_config_values:
+        value = client_config.get(key)
+        if isinstance(value, six.string_types):
+            value = value.strip()
+        if not value:
+            missing_config_values.append(key)
+
+    if missing_config_values:
+        _raise_pkcs11_auth_failure(
+            "ERROR: Config value(s) {} must be specified when using --auth {}.".format(
+                ', '.join("'{}'".format(value) for value in missing_config_values),
+                cli_constants.OCI_CLI_AUTH_PKCS11
+            )
+        )
+
+    pkcs11_signer_class = oci.auth.signers.PKCS11RequestSigner
+
+    pkcs11_slot_label = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_SLOT_LABEL_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY)
+    pkcs11_key_id = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_KEY_ID_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY)
+    pkcs11_token_label = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_TOKEN_LABEL_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY)
+    pkcs11_token_serial = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_TOKEN_SERIAL_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY)
+    pkcs11_key_id_override = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_KEY_ID_OVERRIDE_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY)
+    pkcs11_module_path = get_pkcs11_value(ctx, cli_constants.OCI_CLI_PKCS11_MODULE_PATH_ENV_VAR, cli_constants.CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY)
+
+    if pkcs11_slot_label and pkcs11_key_id:
+        click.echo("WARNING: pkcs11_slot_label and pkcs11_key_id cannot both be provided. Using pkcs11_slot_label.", err=True)
+        pkcs11_key_id = None
+
+    if pkcs11_token_label and pkcs11_token_serial:
+        click.echo("WARNING: pkcs11_token_label and pkcs11_token_serial cannot both be provided. Using pkcs11_token_label.", err=True)
+        pkcs11_token_serial = None
+
+    card_auth_selected = False
+    if pkcs11_slot_label is not None and pkcs11_slot_label.strip().upper().replace('_', ' ').replace('-', ' ') in ('CARD', 'CARD AUTH', '9E'):
+        card_auth_selected = True
+    if pkcs11_key_id is not None and pkcs11_key_id.strip().lower() in ('4', '04', '0x04'):
+        card_auth_selected = True
+    pkcs11_pin = None
+    if card_auth_selected:
+        pkcs11_pin = os.environ.get(cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR)
+        if pkcs11_pin:
+            click.echo(
+                'Using PKCS#11 CARD AUTH PIN from {}. Unset it when it is no longer required.'.format(
+                    cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR
+                ),
+                err=True
+            )
+        else:
+            click.echo(
+                'PKCS#11 CARD AUTH PIN is not set in {}. You will be prompted for the PIN for each CLI command. '
+                'To avoid repeated prompts, set this environment variable for your terminal session and clear it when '
+                'finished.'.format(cli_constants.OCI_CLI_PKCS11_PIN_ENV_VAR),
+                err=True
+            )
+    if not pkcs11_pin:
+        try:
+            pkcs11_pin = pkcs11_signer_class.get_pkcs11_pin()
+        except (KeyboardInterrupt, EOFError):
+            _raise_pkcs11_auth_failure("\nPKCS#11 PIN entry was cancelled. Exiting.")
+        except OSError as e:
+            _raise_pkcs11_auth_failure("Failed to read PKCS#11 PIN: {}".format(str(e)))
+        if not pkcs11_pin:
+            _raise_pkcs11_auth_failure("PKCS#11 PIN cannot be empty.")
+
+    try:
+        signer = pkcs11_signer_class.get_pkcs11_signer(
+            client_config,
+            pkcs11_pin,
+            pkcs11_slot=pkcs11_slot_label,
+            pkcs11_key_id=pkcs11_key_id,
+            pkcs11_token_label=pkcs11_token_label,
+            pkcs11_token_serial=pkcs11_token_serial,
+            pkcs11_key_id_override=pkcs11_key_id_override,
+            pkcs11_module_path=pkcs11_module_path
+        )
+    except (RuntimeError, ValueError, OSError) as e:
+        # inspired from python-sdk examples/pkcs11_example.py since the requirement highlighted the need for the CLI to
+        # returns actionable errors.
+        error_name = e.__class__.__name__
+        error_message = str(e).strip()
+        pkcs11_error_details = {
+            'PinLenRange': 'The PKCS#11 PIN length is outside the range accepted by the token.',
+            'PinIncorrect': 'The PKCS#11 PIN was rejected by the token.',
+            'PinInvalid': 'The PKCS#11 PIN was rejected by the token.',
+            'PinLocked': 'The PKCS#11 PIN is locked on the token.',
+            'PinExpired': 'The PKCS#11 PIN is expired on the token.',
+            'NoSuchKey': 'The selected PKCS#11 key was not found on the token.',
+            'UserNotLoggedIn': 'The selected PKCS#11 key requires user login before signing.',
+            'OperationNotInitialized': 'The token rejected context-specific authentication for this signing operation.',
+            'GeneralError': 'The token rejected the signing operation. Touch the external authenticator when it blinks during signing.'
+        }
+        if error_name in pkcs11_error_details:
+            _raise_pkcs11_auth_failure("Failed to initialize PKCS#11 signer: {}".format(pkcs11_error_details[error_name]))
+
+        if error_message:
+            _raise_pkcs11_auth_failure("Failed to initialize PKCS#11 signer: {}: {}".format(error_name, error_message))
+
+        _raise_pkcs11_auth_failure("Failed to initialize PKCS#11 signer: {}.".format(error_name))
+
+    if card_auth_selected:
+        click.echo("Using PKCS#11 CARD AUTH/Key ID 04. Touch the pkcs11 external authenticator when it blinks to authorize signing. This may be required for each request. It can also timeout.", err=True)
+
+    return signer
+
+
 def create_config_and_signer_based_on_click_context(ctx):
     # If not set by the user as part of the command, then set it to a default.
     # This value is used later by some commands.
@@ -364,6 +490,7 @@ def create_config_and_signer_based_on_click_context(ctx):
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
     delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
     oke_workload_identity_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_OKE_WORKLOAD_IDENTITY
+    pkcs11_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_PKCS11
 
     signer = None
     kwargs = {}
@@ -418,6 +545,10 @@ def create_config_and_signer_based_on_click_context(ctx):
         if ctx.obj['debug']:
             logger.debug("auth: session_token")
         signer = get_session_token_signer(client_config)
+    elif pkcs11_auth:
+        if ctx.obj['debug']:
+            logger.debug("auth: pkcs11")
+        signer = get_pkcs11_signer(ctx, client_config)
     elif resource_principal_auth:
         # The following environment variables are expected to be set for this to work.
         #
@@ -2679,12 +2810,21 @@ def convert_time_elapsed(time_elapsed):
 
 # Checks that enough env variables have been set to mock a config
 def is_config_valid_from_env(command_args):
+    if command_args.get('auth') == cli_constants.OCI_CLI_AUTH_PKCS11:
+        required_pkcs11_env_vars = [
+            cli_constants.OCI_CLI_USER_ENV_VAR,
+            cli_constants.OCI_CLI_TENANCY_ENV_VAR
+        ]
+        for env_var in required_pkcs11_env_vars:
+            if env_var not in os.environ:
+                return False
+        return cli_constants.OCI_CLI_REGION_ENV_VAR in os.environ or bool(command_args.get('region'))
+
     for required_key in cli_constants.OCI_CONFIG_REQUIRED_VARS:
         if not cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] in os.environ:
             if cli_constants.OCI_CONFIG_REQUIRED_VARS[required_key] == cli_constants.OCI_CLI_REGION_ENV_VAR and command_args['region']:
                 continue
             return False
-
     return cli_constants.OCI_CLI_KEY_FILE_ENV_VAR in os.environ or cli_constants.OCI_CLI_KEY_CONTENT_ENV_VAR in os.environ
 
 

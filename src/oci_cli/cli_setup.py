@@ -5,7 +5,23 @@
 from __future__ import print_function
 import click
 from oci_cli.cli_root import cli
-from oci_cli.cli_constants import CLI_RC_CANNED_QUERIES_SECTION_NAME, CLI_RC_COMMAND_ALIASES_SECTION_NAME, CLI_RC_PARAM_ALIASES_SECTION_NAME, CLI_RC_DEFAULT_LOCATION, OCI_CLI_AUTH_API_KEY, OCI_CLI_AUTH_SESSION_TOKEN, OCI_CLI_AUTH_INSTANCE_PRINCIPAL, OCI_CLI_AUTH_RESOURCE_PRINCIPAL
+from oci_cli.cli_constants import (
+    CLI_RC_CANNED_QUERIES_SECTION_NAME,
+    CLI_RC_COMMAND_ALIASES_SECTION_NAME,
+    CLI_RC_PARAM_ALIASES_SECTION_NAME,
+    CLI_RC_DEFAULT_LOCATION,
+    OCI_CLI_AUTH_API_KEY,
+    OCI_CLI_AUTH_SESSION_TOKEN,
+    OCI_CLI_AUTH_INSTANCE_PRINCIPAL,
+    OCI_CLI_AUTH_RESOURCE_PRINCIPAL,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY,
+    CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY,
+    OCI_CLI_AUTH_PKCS11
+)
 from oci_cli import cli_util
 from services.identity.src.oci_cli_identity.generated import identity_cli
 from oci_cli.util import pymd5
@@ -463,6 +479,82 @@ def setup_cli_rc(file):
         click.echo('Parameter aliases written under section {}'.format(CLI_RC_PARAM_ALIASES_SECTION_NAME))
 
 
+@setup_group.command('pkcs11-auth', help="""Interactive script to generate PKCS#11 authentication config.""")
+@cli_util.option('--profile-name', help='Name of the profile you are creating')
+@cli_util.option('--use-default-pkcs11-options', is_flag=True, help='Skip PKCS#11 selector prompts and rely on the SDK defaults, environment variables, or existing CLI RC defaults.')
+@cli_util.option('--user-ocid', help='The OCID of the user to write to the PKCS#11 config profile.')
+@cli_util.option('--tenancy-ocid', help='The OCID of the tenancy to write to the PKCS#11 config profile.')
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def setup_pkcs11_auth(ctx, profile_name, use_default_pkcs11_options, user_ocid, tenancy_ocid):
+    cli_rc_file = ctx.obj.get('cli_rc_file', CLI_RC_DEFAULT_LOCATION)
+    if profile_name:
+        config_location = os.path.abspath(os.path.expanduser(ctx.obj['config_file']))
+    else:
+        config_location, profile_name = prompt_session_for_profile()
+    validate_profile_name(profile_name)
+
+    config_dir = os.path.dirname(config_location)
+    if config_dir and not os.path.exists(config_dir):
+        cli_util.create_directory(config_dir)
+    if os.path.exists(config_location):
+        config_parser = configparser.ConfigParser()
+        config_parser.read(config_location)
+        if profile_name in config_parser and not click.confirm(
+            'Profile {} already exists in config. Do you want to overwrite it?'.format(profile_name),
+            default=False
+        ):
+            click.echo(config_generation_canceled_message)
+            return
+
+    if user_ocid is None:
+        user_ocid = click.prompt('Enter a user OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['user']))
+    else:
+        user_ocid = validate_ocid(user_ocid, config.PATTERNS['user'])
+
+    if tenancy_ocid is None:
+        tenancy_ocid = click.prompt('Enter a tenancy OCID', value_proc=lambda ocid: validate_ocid(ocid, config.PATTERNS['tenancy']))
+    else:
+        tenancy_ocid = validate_ocid(tenancy_ocid, config.PATTERNS['tenancy'])
+
+    region = ctx.obj.get('region')
+    if region is None:
+        region = prompt_for_region()
+
+    pkcs11_defaults = {
+        CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: None,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY: None,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY: None,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY: None,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY: None,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY: None
+    }
+    if not use_default_pkcs11_options:
+        pkcs11_defaults = prompt_for_pkcs11_defaults()
+
+    remove_profile_from_config(config_location, profile_name)
+    write_config(
+        config_location,
+        user_ocid,
+        None,
+        None,
+        tenancy_ocid,
+        region,
+        profile_name=profile_name,
+        write_key_file=False
+    )
+    write_pkcs11_defaults_to_cli_rc(cli_rc_file, profile_name, pkcs11_defaults)
+
+    click.echo('Config written to: {}'.format(config_location))
+    click.echo('PKCS#11 defaults written to: {}'.format(os.path.expanduser(cli_rc_file)))
+    click.echo("""
+    Try out your newly created PKCS#11 profile with the following example command:
+
+    oci os ns get --config-file {config_file} --profile {profile} --auth {auth}
+""".format(config_file=config_location, profile=profile_name, auth=OCI_CLI_AUTH_PKCS11))
+
+
 @setup_group.command('autocomplete', help="""Interactive script to set up tab completion for commands and parameters.""")
 @cli_util.help_option
 def setup_autocomplete():
@@ -667,7 +759,7 @@ def public_key_to_fingerprint(public_key):
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
 
 
-def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenancy=None, region=None, pass_phrase=None, profile_name=DEFAULT_PROFILE_NAME, security_token_file=None, **kwargs):
+def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenancy=None, region=None, pass_phrase=None, profile_name=DEFAULT_PROFILE_NAME, security_token_file=None, write_key_file=True, **kwargs):
     existing_file = os.path.exists(filename)
     with open(filename, 'a') as f:
         if existing_file:
@@ -678,8 +770,11 @@ def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenanc
         if user_id:
             f.write('user={}\n'.format(user_id))
 
-        f.write('fingerprint={}\n'.format(fingerprint))
-        f.write('key_file={}\n'.format(key_file))
+        if fingerprint:
+            f.write('fingerprint={}\n'.format(fingerprint))
+
+        if write_key_file and key_file:
+            f.write('key_file={}\n'.format(key_file))
         f.write('tenancy={}\n'.format(tenancy))
         f.write('region={}\n'.format(region))
 
@@ -691,6 +786,80 @@ def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenanc
 
     # only user has R/W permissions to the config file
     cli_util.apply_user_only_access_permissions(filename)
+
+
+def prompt_for_pkcs11_defaults():
+    # Slot label and key id are alternate ways to select the same PKCS#11 key. Prompt for key
+    # id only when the user did not provide a slot label so setup does not write conflicting
+    # selector defaults.
+    pkcs11_slot_label = click.prompt('Enter the PKCS#11 slot label, or leave blank to use the SDK default', default='', show_default=False).strip() or None
+
+    pkcs11_key_id = None
+    if not pkcs11_slot_label:  # since slot label and key id can't be provided together
+        pkcs11_key_id = click.prompt('Enter the PKCS#11 key id, or leave blank to use the SDK default', default='', show_default=False).strip() or None
+
+    pkcs11_token_label = click.prompt('Enter the PKCS#11 token label, or leave blank to use the default token', default='', show_default=False).strip() or None
+
+    pkcs11_token_serial = None
+    if not pkcs11_token_label:  # since token label and token serial can't be provided together
+        pkcs11_token_serial = click.prompt('Enter the PKCS#11 token serial number, or leave blank to use the default token', default='', show_default=False).strip() or None
+
+    pkcs11_key_id_override = click.prompt('Enter a PKCS#11 keyId override, or leave blank to use the SDK-derived keyId', default='', show_default=False).strip() or None
+
+    pkcs11_module_path = click.prompt('Enter a PKCS#11 module path, or leave blank to use automatic discovery', default='', show_default=False).strip() or None
+
+    return {
+        CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY: pkcs11_slot_label,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY: pkcs11_key_id,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY: pkcs11_token_label,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY: pkcs11_token_serial,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY: pkcs11_key_id_override,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY: pkcs11_module_path
+    }
+
+
+def write_pkcs11_defaults_to_cli_rc(cli_rc_file, profile_name, pkcs11_defaults):
+    # CLI RC supports profile sections. Keeping PKCS#11 selectors here avoids adding specialized
+    # auth configuration to the root command and avoids storing PIN material in any config file.
+    cli_rc_file = os.path.abspath(os.path.expanduser(cli_rc_file))
+    cli_rc_dir = os.path.dirname(cli_rc_file)
+    if cli_rc_dir and not os.path.exists(cli_rc_dir):
+        cli_util.create_directory(cli_rc_dir)
+
+    parser = configparser.ConfigParser(interpolation=None)
+    parser.optionxform = str
+    if os.path.exists(cli_rc_file):
+        parser.read(cli_rc_file)
+
+    pkcs11_keys = [
+        CLI_RC_GENERIC_SETTINGS_PKCS11_SLOT_LABEL_KEY,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_KEY,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_LABEL_KEY,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_TOKEN_SERIAL_NUMBER_KEY,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_KEY_ID_OVERRIDE_KEY,
+        CLI_RC_GENERIC_SETTINGS_PKCS11_MODULE_PATH_KEY
+    ]
+    has_pkcs11_defaults = any(pkcs11_defaults.get(key) for key in pkcs11_keys)
+
+    if profile_name == parser.default_section:
+        section = parser[parser.default_section]
+    else:
+        if profile_name not in parser:
+            if not has_pkcs11_defaults:
+                return
+            parser.add_section(profile_name)
+        section = parser[profile_name]
+
+    for key in pkcs11_keys:
+        if key in section:
+            del section[key]
+        value = pkcs11_defaults.get(key)
+        if value:
+            section[key] = value
+
+    with open(cli_rc_file, 'w') as f:
+        parser.write(f)
+    cli_util.apply_user_only_access_permissions(cli_rc_file)
 
 
 def write_public_key_to_file(filename, public_key, overwrite=False, silent=False):
@@ -939,6 +1108,16 @@ def prompt_for_passphrase():
 
 
 def remove_profile_from_config(config_file, profile_name_to_terminate):
+    if profile_name_to_terminate == DEFAULT_PROFILE_NAME:
+        config = configparser.ConfigParser()
+        config.read(config_file)
+        for key in ['user', 'fingerprint', 'key_file', 'tenancy', 'region', 'pass_phrase', 'security_token_file']:
+            if key in config[DEFAULT_PROFILE_NAME]:
+                del config[DEFAULT_PROFILE_NAME][key]
+        with open(config_file, 'w') as config_file_handle:
+            config.write(config_file_handle)
+        return
+
     # Set default_section to custom value or else we can't delete 'DEFAULT'
     # profiles since it is protected by configparser
     config = configparser.ConfigParser(default_section="")

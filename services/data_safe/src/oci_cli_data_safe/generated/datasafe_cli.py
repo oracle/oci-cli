@@ -40,39 +40,15 @@ def sensitive_type_group_summary_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.security_policy_collection_group.command_name', 'security-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy summary.""")
-@cli_util.help_option_group
-def security_policy_collection_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.security_policy_config_collection_group.command_name', 'security-policy-config-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy configuration summaries.""")
 @cli_util.help_option_group
 def security_policy_config_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.data_safe_configuration_group.command_name', 'data-safe-configuration'), cls=CommandGroupWithAlias, help="""A Data Safe configuration for a tenancy and region.""")
+@click.command(cli_util.override('data_safe.subsetting_report_group.command_name', 'subsetting-report'), cls=CommandGroupWithAlias, help="""Summary information for a report generated from a data subsetting operation""")
 @cli_util.help_option_group
-def data_safe_configuration_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.database_view_access_entry_group.command_name', 'database-view-access-entry'), cls=CommandGroupWithAlias, help="""A DatabaseViewAccessEntry object is a resource corresponding to a row in view authorization report. It's a subresource of Security Policy Report resource and is always associated with a SecurityPolicyReport.""")
-@cli_util.help_option_group
-def database_view_access_entry_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sensitive_type_group.command_name', 'sensitive-type'), cls=CommandGroupWithAlias, help="""A sensitive type defines a particular type or class of sensitive data. It can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. [Learn more].""")
-@cli_util.help_option_group
-def sensitive_type_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.security_assessment_group.command_name', 'security-assessment'), cls=CommandGroupWithAlias, help="""A security assessment that provides an overall insight into your database security posture. The security assessment results are based on the analysis of your database configurations, user accounts, and security controls. For more information, see [Security Assessment Overview].""")
-@cli_util.help_option_group
-def security_assessment_group():
+def subsetting_report_group():
     pass
 
 
@@ -82,27 +58,9 @@ def sensitive_data_model_sensitive_type_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.on_prem_connector_group.command_name', 'on-prem-connector'), cls=CommandGroupWithAlias, help="""A Data Safe on-premises connector that enables Data Safe to connect to on-premises databases.""")
-@cli_util.help_option_group
-def on_prem_connector_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.referential_relation_group.command_name', 'referential-relation'), cls=CommandGroupWithAlias, help="""A referential relation is a resource corresponding to database columns. It's a subresource of sensitive data model resource and is always associated with a sensitive data model.""")
 @cli_util.help_option_group
 def referential_relation_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sql_firewall_policy_group.command_name', 'sql-firewall-policy'), cls=CommandGroupWithAlias, help="""The SQL Firewall policy resource contains the firewall policy metadata for a single user.""")
-@cli_util.help_option_group
-def sql_firewall_policy_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
-@cli_util.help_option_group
-def work_request_group():
     pass
 
 
@@ -136,12 +94,6 @@ def security_policy_config_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_collection_collection_group.command_name', 'sql-collection-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL collection summary.""")
-@cli_util.help_option_group
-def sql_collection_collection_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error related to a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
@@ -154,27 +106,9 @@ def target_database_group_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.attribute_set_group.command_name', 'attribute-set'), cls=CommandGroupWithAlias, help="""Represents an attribute set. An attribute set is a collection of data attributes defined by the user. i.e an attribute set of ip addresses, os user names or database privileged users.""")
-@cli_util.help_option_group
-def attribute_set_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.library_masking_format_summary_group.command_name', 'library-masking-format-summary'), cls=CommandGroupWithAlias, help="""Summary of a library masking format.""")
-@cli_util.help_option_group
-def library_masking_format_summary_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.alert_policy_rule_group.command_name', 'alert-policy-rule'), cls=CommandGroupWithAlias, help="""A rule associated with a alert policy.""")
 @cli_util.help_option_group
 def alert_policy_rule_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.alert_summary_group.command_name', 'alert-summary'), cls=CommandGroupWithAlias, help="""Summary of a Data Safe Alert.""")
-@cli_util.help_option_group
-def alert_summary_group():
     pass
 
 
@@ -184,57 +118,15 @@ def database_view_access_entry_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sensitive_types_export_group.command_name', 'sensitive-types-export'), cls=CommandGroupWithAlias, help="""The resource represents sensitive types to be exported in Data Safe.""")
-@cli_util.help_option_group
-def sensitive_types_export_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.data_safe_private_endpoint_group.command_name', 'data-safe-private-endpoint'), cls=CommandGroupWithAlias, help="""A Data Safe private endpoint that allows Data Safe to connect to databases in a customer's virtual cloud network (VCN).""")
-@cli_util.help_option_group
-def data_safe_private_endpoint_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.security_policy_group.command_name', 'security-policy'), cls=CommandGroupWithAlias, help="""The resource represents as a container for all the security policies in Data Safe.""")
 @cli_util.help_option_group
 def security_policy_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_collection_group.command_name', 'sql-firewall-allowed-sql-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall allowed SQL statements.""")
+@click.command(cli_util.override('data_safe.registration_policy_group.command_name', 'registration-policy'), cls=CommandGroupWithAlias, help="""A registration policy. This object contains detailed information about a registration policy, including its ID, compartment ID, display name, and features.""")
 @cli_util.help_option_group
-def sql_firewall_allowed_sql_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.discovery_job_result_group.command_name', 'discovery-job-result'), cls=CommandGroupWithAlias, help="""A discovery job result representing a sensitive column. It can be one of the following three types: NEW: A new sensitive column in the target database that is not in the sensitive data model. DELETED: A column that is present in the sensitive data model but has been deleted from the target database. MODIFIED: A column that is present in the target database as well as the sensitive data model but some of its attributes have been modified.""")
-@cli_util.help_option_group
-def discovery_job_result_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sql_firewall_policy_analytics_collection_group.command_name', 'sql-firewall-policy-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL Firewall policy analytics collection.""")
-@cli_util.help_option_group
-def sql_firewall_policy_analytics_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sql_firewall_policy_collection_group.command_name', 'sql-firewall-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall policy summary.""")
-@cli_util.help_option_group
-def sql_firewall_policy_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.masking_schema_collection_group.command_name', 'masking-schema-collection'), cls=CommandGroupWithAlias, help="""A collection of masking schema summary objects.""")
-@cli_util.help_option_group
-def masking_schema_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.report_definition_group.command_name', 'report-definition'), cls=CommandGroupWithAlias, help="""Description of report definition.""")
-@cli_util.help_option_group
-def report_definition_group():
+def registration_policy_group():
     pass
 
 
@@ -244,15 +136,15 @@ def profile_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.security_policy_report_collection_group.command_name', 'security-policy-report-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy report summary.""")
+@click.command(cli_util.override('data_safe.subsetting_schema_object_summary_group.command_name', 'subsetting-schema-object-summary'), cls=CommandGroupWithAlias, help="""Summary of a table included in the schema for a subsetting policy""")
 @cli_util.help_option_group
-def security_policy_report_collection_group():
+def subsetting_schema_object_summary_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.finding_group.command_name', 'finding'), cls=CommandGroupWithAlias, help="""The particular finding reported by the security assessment.""")
+@click.command(cli_util.override('data_safe.subsetting_policy_group.command_name', 'subsetting-policy'), cls=CommandGroupWithAlias, help="""A subsetting policy defines the approach to subset data in a target database. It's basically a collection of rules applied on tables or schemas, to reduce rows in them. A subsetting policy can be used to subset multiple databases provided that they have the same schema design.""")
 @cli_util.help_option_group
-def finding_group():
+def subsetting_policy_group():
     pass
 
 
@@ -262,15 +154,9 @@ def audit_profile_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.target_database_group.command_name', 'target-database'), cls=CommandGroupWithAlias, help="""The details of the Data Safe target database.""")
+@click.command(cli_util.override('data_safe.subsetting_rule_group.command_name', 'subsetting-rule'), cls=CommandGroupWithAlias, help="""Defines a rule for subsetting data in specific tables or schemas, including scope and processing strategies""")
 @cli_util.help_option_group
-def target_database_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.target_database_group_summary_group.command_name', 'target-database-group-summary'), cls=CommandGroupWithAlias, help="""Summary of the target database group used in list operations. Contains essential information without matching criteria.""")
-@cli_util.help_option_group
-def target_database_group_summary_group():
+def subsetting_rule_group():
     pass
 
 
@@ -280,27 +166,9 @@ def sensitive_data_model_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.security_policy_deployment_collection_group.command_name', 'security-policy-deployment-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy deployment summary.""")
-@cli_util.help_option_group
-def security_policy_deployment_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sensitive_types_export_collection_group.command_name', 'sensitive-types-export-collection'), cls=CommandGroupWithAlias, help="""A collection of sensitive types export summary objects.""")
-@cli_util.help_option_group
-def sensitive_types_export_collection_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.unified_audit_policy_definition_collection_group.command_name', 'unified-audit-policy-definition-collection'), cls=CommandGroupWithAlias, help="""Collection of audit policy summary.""")
 @cli_util.help_option_group
 def unified_audit_policy_definition_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.audit_profile_analytic_collection_group.command_name', 'audit-profile-analytic-collection'), cls=CommandGroupWithAlias, help="""Details of audit profile analytic summary.""")
-@cli_util.help_option_group
-def audit_profile_analytic_collection_group():
     pass
 
 
@@ -310,27 +178,9 @@ def sql_collection_analytics_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.peer_target_database_group.command_name', 'peer-target-database'), cls=CommandGroupWithAlias, help="""The details of the peer target database in Data Safe.""")
-@cli_util.help_option_group
-def peer_target_database_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.security_policy_deployment_group.command_name', 'security-policy-deployment'), cls=CommandGroupWithAlias, help="""The resource represents the state of the deployment of a security policy on a target.""")
-@cli_util.help_option_group
-def security_policy_deployment_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.audit_policy_analytic_collection_group.command_name', 'audit-policy-analytic-collection'), cls=CommandGroupWithAlias, help="""Details of audit policy aggregation.""")
 @cli_util.help_option_group
 def audit_policy_analytic_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.audit_event_summary_group.command_name', 'audit-event-summary'), cls=CommandGroupWithAlias, help="""The resource represents the audit events collected from the target database by Oracle Data Safe.""")
-@cli_util.help_option_group
-def audit_event_summary_group():
     pass
 
 
@@ -348,12 +198,6 @@ def masking_report_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_group.command_name', 'sql-firewall-allowed-sql'), cls=CommandGroupWithAlias, help="""The resource represents a SQL Firewall allowed SQL in Data Safe.""")
-@cli_util.help_option_group
-def sql_firewall_allowed_sql_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.alert_policy_group.command_name', 'alert-policy'), cls=CommandGroupWithAlias, help="""An Alert Policy is a set of alerting rules evaluated against a target. The alert policy is said to be satisfied when all rules in the policy evaulate to true. If there are three rules: rule1,rule2 and rule3, the policy is satisfied if rule1 AND rule2 AND rule3 is True.""")
 @cli_util.help_option_group
 def alert_policy_group():
@@ -363,18 +207,6 @@ def alert_policy_group():
 @click.command(cli_util.override('data_safe.user_assessment_group.command_name', 'user-assessment'), cls=CommandGroupWithAlias, help="""The details of the user assessment, which includes statistics related to target database users.""")
 @cli_util.help_option_group
 def user_assessment_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sql_collection_group.command_name', 'sql-collection'), cls=CommandGroupWithAlias, help="""The resource represents SQL collection for a specific database user in a target. SqlCollection encapsulates the SQL commands issued in the user\u2019s database sessions, and its execution context.""")
-@cli_util.help_option_group
-def sql_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.alert_group.command_name', 'alert'), cls=CommandGroupWithAlias, help="""The details of a Data Safe Alert, that shows alerts generated by a Data Safe feature.""")
-@cli_util.help_option_group
-def alert_group():
     pass
 
 
@@ -390,33 +222,15 @@ def audit_policy_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.masking_error_summary_group.command_name', 'masking-error-summary'), cls=CommandGroupWithAlias, help="""Summary of a masking error. A Masking error is an error seen during the masking run.""")
+@click.command(cli_util.override('data_safe.table_estimate_summary_group.command_name', 'table-estimate-summary'), cls=CommandGroupWithAlias, help="""Estimated row count and size details for a table in a subsetting policy.""")
 @cli_util.help_option_group
-def masking_error_summary_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.masking_policy_health_report_group.command_name', 'masking-policy-health-report'), cls=CommandGroupWithAlias, help="""The masking policy health report.""")
-@cli_util.help_option_group
-def masking_policy_health_report_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.role_grant_path_collection_group.command_name', 'role-grant-path-collection'), cls=CommandGroupWithAlias, help="""A collection of role grant path summary objects.""")
-@cli_util.help_option_group
-def role_grant_path_collection_group():
+def table_estimate_summary_group():
     pass
 
 
 @click.command(cli_util.override('data_safe.sensitive_object_collection_group.command_name', 'sensitive-object-collection'), cls=CommandGroupWithAlias, help="""A collection of sensitive object summary objects.""")
 @cli_util.help_option_group
 def sensitive_object_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.masking_policy_referential_relation_summary_group.command_name', 'masking-policy-referential-relation-summary'), cls=CommandGroupWithAlias, help="""A referential relation is a resource corresponding to database columns. It is always associated with a masking policy.""")
-@cli_util.help_option_group
-def masking_policy_referential_relation_summary_group():
     pass
 
 
@@ -438,24 +252,6 @@ def sql_collection_log_insights_collection_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.security_policy_entry_state_group.command_name', 'security-policy-entry-state'), cls=CommandGroupWithAlias, help="""The resource represents the state of a specific entry type deployment on a target.""")
-@cli_util.help_option_group
-def security_policy_entry_state_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.database_table_access_entry_collection_group.command_name', 'database-table-access-entry-collection'), cls=CommandGroupWithAlias, help="""A collection of database table access summary objects.""")
-@cli_util.help_option_group
-def database_table_access_entry_collection_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log entry related to a work request.""")
-@cli_util.help_option_group
-def work_request_log_entry_group():
-    pass
-
-
 @click.command(cli_util.override('data_safe.audit_policy_group.command_name', 'audit-policy'), cls=CommandGroupWithAlias, help="""The resource represents all available audit policies relevant for the target database with their corresponding audit conditions. The audit policies could be in any one of the following 3 states in the target database 1) Created and enabled 2) Created but not enabled 3) Not created For more details on available audit policies, refer to [documentation].""")
 @cli_util.help_option_group
 def audit_policy_group():
@@ -471,30 +267,6 @@ def audit_trail_analytic_collection_group():
 @click.command(cli_util.override('data_safe.masking_policy_group.command_name', 'masking-policy'), cls=CommandGroupWithAlias, help="""A masking policy defines the approach to mask data in a target database. It's basically a collection of columns to be masked, called masking columns, and the associated masking formats to be used to mask these columns. A masking policy can be used to mask multiple databases provided that they have the same schema design. For more information, see <a href=\"https://docs.oracle.com/en/cloud/paas/data-safe/udscs/masking-policies.html\">Masking Policies </a> in the Oracle Data Safe documentation.""")
 @cli_util.help_option_group
 def masking_policy_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.target_alert_policy_association_group.command_name', 'target-alert-policy-association'), cls=CommandGroupWithAlias, help="""The association of the target database to an alert policy.""")
-@cli_util.help_option_group
-def target_alert_policy_association_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sensitive_column_group.command_name', 'sensitive-column'), cls=CommandGroupWithAlias, help="""A sensitive column is a resource corresponding to a database column that is considered sensitive. It's a subresource of sensitive data model resource and is always associated with a sensitive data model. Note that referential relationships are also managed as part of sensitive columns.""")
-@cli_util.help_option_group
-def sensitive_column_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.sensitive_type_group_group.command_name', 'sensitive-type-group'), cls=CommandGroupWithAlias, help="""The details of the sensitive type group.""")
-@cli_util.help_option_group
-def sensitive_type_group_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.audit_trail_group.command_name', 'audit-trail'), cls=CommandGroupWithAlias, help="""An audit trail represents the source of audit records that provides documentary evidence of the sequence of activities in the target database. Configuring audit trails in Data Safe, and enabling audit data collection on the audit trails copies the audit records from the target database's audit trail into the Data Safe repository.""")
-@cli_util.help_option_group
-def audit_trail_group():
     pass
 
 
@@ -546,6 +318,330 @@ def security_policy_entry_state_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.report_summary_group.command_name', 'report-summary'), cls=CommandGroupWithAlias, help="""Description of report.""")
+@cli_util.help_option_group
+def report_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.target_alert_policy_association_summary_group.command_name', 'target-alert-policy-association-summary'), cls=CommandGroupWithAlias, help="""A summary of target to alert policy association.""")
+@cli_util.help_option_group
+def target_alert_policy_association_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_policy_collection_group.command_name', 'security-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy summary.""")
+@cli_util.help_option_group
+def security_policy_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.data_safe_configuration_group.command_name', 'data-safe-configuration'), cls=CommandGroupWithAlias, help="""A Data Safe configuration for a tenancy and region.""")
+@cli_util.help_option_group
+def data_safe_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_rule_processing_chain_object_summary_group.command_name', 'subsetting-rule-processing-chain-object-summary'), cls=CommandGroupWithAlias, help="""Summary of a subsetting schema relation processed while extracting rows for processing a subsetting rule.""")
+@cli_util.help_option_group
+def subsetting_rule_processing_chain_object_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.database_view_access_entry_group.command_name', 'database-view-access-entry'), cls=CommandGroupWithAlias, help="""A DatabaseViewAccessEntry object is a resource corresponding to a row in view authorization report. It's a subresource of Security Policy Report resource and is always associated with a SecurityPolicyReport.""")
+@cli_util.help_option_group
+def database_view_access_entry_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sensitive_type_group.command_name', 'sensitive-type'), cls=CommandGroupWithAlias, help="""A sensitive type defines a particular type or class of sensitive data. It can be a basic sensitive type with regular expressions or a sensitive category. While sensitive types are used for data discovery, sensitive categories are used for logically grouping the related or similar sensitive types. [Learn more].""")
+@cli_util.help_option_group
+def sensitive_type_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_assessment_group.command_name', 'security-assessment'), cls=CommandGroupWithAlias, help="""A security assessment that provides an overall insight into your database security posture. The security assessment results are based on the analysis of your database configurations, user accounts, and security controls. For more information, see [Security Assessment Overview].""")
+@cli_util.help_option_group
+def security_assessment_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.on_prem_connector_group.command_name', 'on-prem-connector'), cls=CommandGroupWithAlias, help="""A Data Safe on-premises connector that enables Data Safe to connect to on-premises databases.""")
+@cli_util.help_option_group
+def on_prem_connector_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_firewall_policy_group.command_name', 'sql-firewall-policy'), cls=CommandGroupWithAlias, help="""The SQL Firewall policy resource contains the firewall policy metadata for a single user.""")
+@cli_util.help_option_group
+def sql_firewall_policy_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_schema_collection_group.command_name', 'subsetting-schema-collection'), cls=CommandGroupWithAlias, help="""A collection of subsetting schema summary objects.""")
+@cli_util.help_option_group
+def subsetting_schema_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_schema_relation_group.command_name', 'subsetting-schema-relation'), cls=CommandGroupWithAlias, help="""Summary of a relationship between tables in the subsetting for a subsetting policy.""")
+@cli_util.help_option_group
+def subsetting_schema_relation_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_collection_collection_group.command_name', 'sql-collection-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL collection summary.""")
+@cli_util.help_option_group
+def sql_collection_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.attribute_set_group.command_name', 'attribute-set'), cls=CommandGroupWithAlias, help="""Represents an attribute set. An attribute set is a collection of data attributes defined by the user. i.e an attribute set of ip addresses, os user names or database privileged users.""")
+@cli_util.help_option_group
+def attribute_set_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.library_masking_format_summary_group.command_name', 'library-masking-format-summary'), cls=CommandGroupWithAlias, help="""Summary of a library masking format.""")
+@cli_util.help_option_group
+def library_masking_format_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_schema_relation_summary_group.command_name', 'subsetting-schema-relation-summary'), cls=CommandGroupWithAlias, help="""Summary of a relationship between tables in the subsetting for a subsetting policy.""")
+@cli_util.help_option_group
+def subsetting_schema_relation_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.alert_summary_group.command_name', 'alert-summary'), cls=CommandGroupWithAlias, help="""Summary of a Data Safe Alert.""")
+@cli_util.help_option_group
+def alert_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sensitive_types_export_group.command_name', 'sensitive-types-export'), cls=CommandGroupWithAlias, help="""The resource represents sensitive types to be exported in Data Safe.""")
+@cli_util.help_option_group
+def sensitive_types_export_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.data_safe_private_endpoint_group.command_name', 'data-safe-private-endpoint'), cls=CommandGroupWithAlias, help="""A Data Safe private endpoint that allows Data Safe to connect to databases in a customer's virtual cloud network (VCN).""")
+@cli_util.help_option_group
+def data_safe_private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_collection_group.command_name', 'sql-firewall-allowed-sql-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall allowed SQL statements.""")
+@cli_util.help_option_group
+def sql_firewall_allowed_sql_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.discovery_job_result_group.command_name', 'discovery-job-result'), cls=CommandGroupWithAlias, help="""A discovery job result representing a sensitive column. It can be one of the following three types: NEW: A new sensitive column in the target database that is not in the sensitive data model. DELETED: A column that is present in the sensitive data model but has been deleted from the target database. MODIFIED: A column that is present in the target database as well as the sensitive data model but some of its attributes have been modified.""")
+@cli_util.help_option_group
+def discovery_job_result_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_firewall_policy_analytics_collection_group.command_name', 'sql-firewall-policy-analytics-collection'), cls=CommandGroupWithAlias, help="""SQL Firewall policy analytics collection.""")
+@cli_util.help_option_group
+def sql_firewall_policy_analytics_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_firewall_policy_collection_group.command_name', 'sql-firewall-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of SQL Firewall policy summary.""")
+@cli_util.help_option_group
+def sql_firewall_policy_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.masking_schema_collection_group.command_name', 'masking-schema-collection'), cls=CommandGroupWithAlias, help="""A collection of masking schema summary objects.""")
+@cli_util.help_option_group
+def masking_schema_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.report_definition_group.command_name', 'report-definition'), cls=CommandGroupWithAlias, help="""Description of report definition.""")
+@cli_util.help_option_group
+def report_definition_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_error_summary_group.command_name', 'subsetting-error-summary'), cls=CommandGroupWithAlias, help="""Summary of a subsetting error. A Subsetting error is an error seen during the subsetting run.""")
+@cli_util.help_option_group
+def subsetting_error_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_policy_report_collection_group.command_name', 'security-policy-report-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy report summary.""")
+@cli_util.help_option_group
+def security_policy_report_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetting_policy_health_report_group.command_name', 'subsetting-policy-health-report'), cls=CommandGroupWithAlias, help="""The subsetting policy health report.""")
+@cli_util.help_option_group
+def subsetting_policy_health_report_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.finding_group.command_name', 'finding'), cls=CommandGroupWithAlias, help="""The particular finding reported by the security assessment.""")
+@cli_util.help_option_group
+def finding_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.target_database_group.command_name', 'target-database'), cls=CommandGroupWithAlias, help="""The details of the Data Safe target database.""")
+@cli_util.help_option_group
+def target_database_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.target_database_group_summary_group.command_name', 'target-database-group-summary'), cls=CommandGroupWithAlias, help="""Summary of the target database group used in list operations. Contains essential information without matching criteria.""")
+@cli_util.help_option_group
+def target_database_group_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_policy_deployment_collection_group.command_name', 'security-policy-deployment-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy deployment summary.""")
+@cli_util.help_option_group
+def security_policy_deployment_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sensitive_types_export_collection_group.command_name', 'sensitive-types-export-collection'), cls=CommandGroupWithAlias, help="""A collection of sensitive types export summary objects.""")
+@cli_util.help_option_group
+def sensitive_types_export_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.audit_profile_analytic_collection_group.command_name', 'audit-profile-analytic-collection'), cls=CommandGroupWithAlias, help="""Details of audit profile analytic summary.""")
+@cli_util.help_option_group
+def audit_profile_analytic_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.peer_target_database_group.command_name', 'peer-target-database'), cls=CommandGroupWithAlias, help="""The details of the peer target database in Data Safe.""")
+@cli_util.help_option_group
+def peer_target_database_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_policy_deployment_group.command_name', 'security-policy-deployment'), cls=CommandGroupWithAlias, help="""The resource represents the state of the deployment of a security policy on a target.""")
+@cli_util.help_option_group
+def security_policy_deployment_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.subsetted_object_summary_group.command_name', 'subsetted-object-summary'), cls=CommandGroupWithAlias, help="""Summary of a subsetted object. A subsetted object is a database table subsetted by a data subsetting request""")
+@cli_util.help_option_group
+def subsetted_object_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.audit_event_summary_group.command_name', 'audit-event-summary'), cls=CommandGroupWithAlias, help="""The resource represents the audit events collected from the target database by Oracle Data Safe.""")
+@cli_util.help_option_group
+def audit_event_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_group.command_name', 'sql-firewall-allowed-sql'), cls=CommandGroupWithAlias, help="""The resource represents a SQL Firewall allowed SQL in Data Safe.""")
+@cli_util.help_option_group
+def sql_firewall_allowed_sql_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sql_collection_group.command_name', 'sql-collection'), cls=CommandGroupWithAlias, help="""The resource represents SQL collection for a specific database user in a target. SqlCollection encapsulates the SQL commands issued in the user\u2019s database sessions, and its execution context.""")
+@cli_util.help_option_group
+def sql_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.alert_group.command_name', 'alert'), cls=CommandGroupWithAlias, help="""The details of a Data Safe Alert, that shows alerts generated by a Data Safe feature.""")
+@cli_util.help_option_group
+def alert_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.masking_error_summary_group.command_name', 'masking-error-summary'), cls=CommandGroupWithAlias, help="""Summary of a masking error. A Masking error is an error seen during the masking run.""")
+@cli_util.help_option_group
+def masking_error_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.masking_policy_health_report_group.command_name', 'masking-policy-health-report'), cls=CommandGroupWithAlias, help="""The masking policy health report.""")
+@cli_util.help_option_group
+def masking_policy_health_report_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.role_grant_path_collection_group.command_name', 'role-grant-path-collection'), cls=CommandGroupWithAlias, help="""A collection of role grant path summary objects.""")
+@cli_util.help_option_group
+def role_grant_path_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.masking_policy_referential_relation_summary_group.command_name', 'masking-policy-referential-relation-summary'), cls=CommandGroupWithAlias, help="""A referential relation is a resource corresponding to database columns. It is always associated with a masking policy.""")
+@cli_util.help_option_group
+def masking_policy_referential_relation_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.security_policy_entry_state_group.command_name', 'security-policy-entry-state'), cls=CommandGroupWithAlias, help="""The resource represents the state of a specific entry type deployment on a target.""")
+@cli_util.help_option_group
+def security_policy_entry_state_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.database_table_access_entry_collection_group.command_name', 'database-table-access-entry-collection'), cls=CommandGroupWithAlias, help="""A collection of database table access summary objects.""")
+@cli_util.help_option_group
+def database_table_access_entry_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log entry related to a work request.""")
+@cli_util.help_option_group
+def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.registration_policy_summary_group.command_name', 'registration-policy-summary'), cls=CommandGroupWithAlias, help="""A summary of a registration policy. This object contains key information about a registration policy, including its ID, compartment ID, display name, and lifecycle state.""")
+@cli_util.help_option_group
+def registration_policy_summary_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.target_alert_policy_association_group.command_name', 'target-alert-policy-association'), cls=CommandGroupWithAlias, help="""The association of the target database to an alert policy.""")
+@cli_util.help_option_group
+def target_alert_policy_association_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sensitive_column_group.command_name', 'sensitive-column'), cls=CommandGroupWithAlias, help="""A sensitive column is a resource corresponding to a database column that is considered sensitive. It's a subresource of sensitive data model resource and is always associated with a sensitive data model. Note that referential relationships are also managed as part of sensitive columns.""")
+@cli_util.help_option_group
+def sensitive_column_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.sensitive_type_group_group.command_name', 'sensitive-type-group'), cls=CommandGroupWithAlias, help="""The details of the sensitive type group.""")
+@cli_util.help_option_group
+def sensitive_type_group_group():
+    pass
+
+
+@click.command(cli_util.override('data_safe.audit_trail_group.command_name', 'audit-trail'), cls=CommandGroupWithAlias, help="""An audit trail represents the source of audit records that provides documentary evidence of the sequence of activities in the target database. Configuring audit trails in Data Safe, and enabling audit data collection on the audit trails copies the audit records from the target database's audit trail into the Data Safe repository.""")
+@cli_util.help_option_group
+def audit_trail_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.unified_audit_policy_definition_group.command_name', 'unified-audit-policy-definition'), cls=CommandGroupWithAlias, help="""Resource represents a single unified audit policy definition.""")
 @cli_util.help_option_group
 def unified_audit_policy_definition_group():
@@ -564,97 +660,47 @@ def crypto_assessment_group():
     pass
 
 
-@click.command(cli_util.override('data_safe.report_summary_group.command_name', 'report-summary'), cls=CommandGroupWithAlias, help="""Description of report.""")
-@cli_util.help_option_group
-def report_summary_group():
-    pass
-
-
-@click.command(cli_util.override('data_safe.target_alert_policy_association_summary_group.command_name', 'target-alert-policy-association-summary'), cls=CommandGroupWithAlias, help="""A summary of target to alert policy association.""")
-@cli_util.help_option_group
-def target_alert_policy_association_summary_group():
-    pass
-
-
 data_safe_root_group.add_command(masked_column_summary_group)
 data_safe_root_group.add_command(sdm_masking_policy_difference_group)
 data_safe_root_group.add_command(sensitive_type_group_summary_group)
-data_safe_root_group.add_command(security_policy_collection_group)
 data_safe_root_group.add_command(security_policy_config_collection_group)
-data_safe_root_group.add_command(data_safe_configuration_group)
-data_safe_root_group.add_command(database_view_access_entry_group)
-data_safe_root_group.add_command(sensitive_type_group)
-data_safe_root_group.add_command(security_assessment_group)
+data_safe_root_group.add_command(subsetting_report_group)
 data_safe_root_group.add_command(sensitive_data_model_sensitive_type_collection_group)
-data_safe_root_group.add_command(on_prem_connector_group)
 data_safe_root_group.add_command(referential_relation_group)
-data_safe_root_group.add_command(sql_firewall_policy_group)
-data_safe_root_group.add_command(work_request_group)
 data_safe_root_group.add_command(difference_column_group)
 data_safe_root_group.add_command(security_policy_report_group)
 data_safe_root_group.add_command(sql_firewall_violation_summary_group)
 data_safe_root_group.add_command(database_security_config_collection_group)
 data_safe_root_group.add_command(security_policy_config_group)
-data_safe_root_group.add_command(sql_collection_collection_group)
 data_safe_root_group.add_command(work_request_error_group)
 data_safe_root_group.add_command(target_database_group_group)
-data_safe_root_group.add_command(attribute_set_group)
-data_safe_root_group.add_command(library_masking_format_summary_group)
 data_safe_root_group.add_command(alert_policy_rule_group)
-data_safe_root_group.add_command(alert_summary_group)
 data_safe_root_group.add_command(database_view_access_entry_collection_group)
-data_safe_root_group.add_command(sensitive_types_export_group)
-data_safe_root_group.add_command(data_safe_private_endpoint_group)
 data_safe_root_group.add_command(security_policy_group)
-data_safe_root_group.add_command(sql_firewall_allowed_sql_collection_group)
-data_safe_root_group.add_command(discovery_job_result_group)
-data_safe_root_group.add_command(sql_firewall_policy_analytics_collection_group)
-data_safe_root_group.add_command(sql_firewall_policy_collection_group)
-data_safe_root_group.add_command(masking_schema_collection_group)
-data_safe_root_group.add_command(report_definition_group)
+data_safe_root_group.add_command(registration_policy_group)
 data_safe_root_group.add_command(profile_group)
-data_safe_root_group.add_command(security_policy_report_collection_group)
-data_safe_root_group.add_command(finding_group)
+data_safe_root_group.add_command(subsetting_schema_object_summary_group)
+data_safe_root_group.add_command(subsetting_policy_group)
 data_safe_root_group.add_command(audit_profile_group)
-data_safe_root_group.add_command(target_database_group)
-data_safe_root_group.add_command(target_database_group_summary_group)
+data_safe_root_group.add_command(subsetting_rule_group)
 data_safe_root_group.add_command(sensitive_data_model_group)
-data_safe_root_group.add_command(security_policy_deployment_collection_group)
-data_safe_root_group.add_command(sensitive_types_export_collection_group)
 data_safe_root_group.add_command(unified_audit_policy_definition_collection_group)
-data_safe_root_group.add_command(audit_profile_analytic_collection_group)
 data_safe_root_group.add_command(sql_collection_analytics_collection_group)
-data_safe_root_group.add_command(peer_target_database_group)
-data_safe_root_group.add_command(security_policy_deployment_group)
 data_safe_root_group.add_command(audit_policy_analytic_collection_group)
-data_safe_root_group.add_command(audit_event_summary_group)
 data_safe_root_group.add_command(library_masking_format_group)
 data_safe_root_group.add_command(masking_report_group)
-data_safe_root_group.add_command(sql_firewall_allowed_sql_group)
 data_safe_root_group.add_command(alert_policy_group)
 data_safe_root_group.add_command(user_assessment_group)
-data_safe_root_group.add_command(sql_collection_group)
-data_safe_root_group.add_command(alert_group)
 data_safe_root_group.add_command(sensitive_schema_collection_group)
 data_safe_root_group.add_command(audit_policy_collection_group)
-data_safe_root_group.add_command(masking_error_summary_group)
-data_safe_root_group.add_command(masking_policy_health_report_group)
-data_safe_root_group.add_command(role_grant_path_collection_group)
+data_safe_root_group.add_command(table_estimate_summary_group)
 data_safe_root_group.add_command(sensitive_object_collection_group)
-data_safe_root_group.add_command(masking_policy_referential_relation_summary_group)
 data_safe_root_group.add_command(sql_firewall_allowed_sql_analytics_collection_group)
 data_safe_root_group.add_command(database_table_access_entry_group)
 data_safe_root_group.add_command(sql_collection_log_insights_collection_group)
-data_safe_root_group.add_command(security_policy_entry_state_group)
-data_safe_root_group.add_command(database_table_access_entry_collection_group)
-data_safe_root_group.add_command(work_request_log_entry_group)
 data_safe_root_group.add_command(audit_policy_group)
 data_safe_root_group.add_command(audit_trail_analytic_collection_group)
 data_safe_root_group.add_command(masking_policy_group)
-data_safe_root_group.add_command(target_alert_policy_association_group)
-data_safe_root_group.add_command(sensitive_column_group)
-data_safe_root_group.add_command(sensitive_type_group_group)
-data_safe_root_group.add_command(audit_trail_group)
 data_safe_root_group.add_command(audit_archive_retrieval_group)
 data_safe_root_group.add_command(discovery_job_group)
 data_safe_root_group.add_command(masking_object_collection_group)
@@ -663,11 +709,63 @@ data_safe_root_group.add_command(database_security_config_group)
 data_safe_root_group.add_command(masking_column_group)
 data_safe_root_group.add_command(report_group)
 data_safe_root_group.add_command(security_policy_entry_state_collection_group)
+data_safe_root_group.add_command(report_summary_group)
+data_safe_root_group.add_command(target_alert_policy_association_summary_group)
+data_safe_root_group.add_command(security_policy_collection_group)
+data_safe_root_group.add_command(data_safe_configuration_group)
+data_safe_root_group.add_command(subsetting_rule_processing_chain_object_summary_group)
+data_safe_root_group.add_command(database_view_access_entry_group)
+data_safe_root_group.add_command(sensitive_type_group)
+data_safe_root_group.add_command(security_assessment_group)
+data_safe_root_group.add_command(on_prem_connector_group)
+data_safe_root_group.add_command(sql_firewall_policy_group)
+data_safe_root_group.add_command(subsetting_schema_collection_group)
+data_safe_root_group.add_command(work_request_group)
+data_safe_root_group.add_command(subsetting_schema_relation_group)
+data_safe_root_group.add_command(sql_collection_collection_group)
+data_safe_root_group.add_command(attribute_set_group)
+data_safe_root_group.add_command(library_masking_format_summary_group)
+data_safe_root_group.add_command(subsetting_schema_relation_summary_group)
+data_safe_root_group.add_command(alert_summary_group)
+data_safe_root_group.add_command(sensitive_types_export_group)
+data_safe_root_group.add_command(data_safe_private_endpoint_group)
+data_safe_root_group.add_command(sql_firewall_allowed_sql_collection_group)
+data_safe_root_group.add_command(discovery_job_result_group)
+data_safe_root_group.add_command(sql_firewall_policy_analytics_collection_group)
+data_safe_root_group.add_command(sql_firewall_policy_collection_group)
+data_safe_root_group.add_command(masking_schema_collection_group)
+data_safe_root_group.add_command(report_definition_group)
+data_safe_root_group.add_command(subsetting_error_summary_group)
+data_safe_root_group.add_command(security_policy_report_collection_group)
+data_safe_root_group.add_command(subsetting_policy_health_report_group)
+data_safe_root_group.add_command(finding_group)
+data_safe_root_group.add_command(target_database_group)
+data_safe_root_group.add_command(target_database_group_summary_group)
+data_safe_root_group.add_command(security_policy_deployment_collection_group)
+data_safe_root_group.add_command(sensitive_types_export_collection_group)
+data_safe_root_group.add_command(audit_profile_analytic_collection_group)
+data_safe_root_group.add_command(peer_target_database_group)
+data_safe_root_group.add_command(security_policy_deployment_group)
+data_safe_root_group.add_command(subsetted_object_summary_group)
+data_safe_root_group.add_command(audit_event_summary_group)
+data_safe_root_group.add_command(sql_firewall_allowed_sql_group)
+data_safe_root_group.add_command(sql_collection_group)
+data_safe_root_group.add_command(alert_group)
+data_safe_root_group.add_command(masking_error_summary_group)
+data_safe_root_group.add_command(masking_policy_health_report_group)
+data_safe_root_group.add_command(role_grant_path_collection_group)
+data_safe_root_group.add_command(masking_policy_referential_relation_summary_group)
+data_safe_root_group.add_command(security_policy_entry_state_group)
+data_safe_root_group.add_command(database_table_access_entry_collection_group)
+data_safe_root_group.add_command(work_request_log_entry_group)
+data_safe_root_group.add_command(registration_policy_summary_group)
+data_safe_root_group.add_command(target_alert_policy_association_group)
+data_safe_root_group.add_command(sensitive_column_group)
+data_safe_root_group.add_command(sensitive_type_group_group)
+data_safe_root_group.add_command(audit_trail_group)
 data_safe_root_group.add_command(unified_audit_policy_definition_group)
 data_safe_root_group.add_command(unified_audit_policy_collection_group)
 data_safe_root_group.add_command(crypto_assessment_group)
-data_safe_root_group.add_command(report_summary_group)
-data_safe_root_group.add_command(target_alert_policy_association_summary_group)
 
 
 @target_database_group.command(name=cli_util.override('data_safe.activate_target_database.command_name', 'activate'), help=u"""Reactivates a previously deactivated Data Safe target database. \n[Command Reference](activateTargetDatabase)""")
@@ -2355,6 +2453,67 @@ def change_on_prem_connector_compartment(ctx, from_json, on_prem_connector_id, c
     cli_util.render_response(result, ctx)
 
 
+@registration_policy_group.command(name=cli_util.override('data_safe.change_registration_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the registration policy to the specified compartment. \n[Command Reference](changeRegistrationPolicyCompartment)""")
+@cli_util.option('--registration-policy-id', required=True, help=u"""The OCID of the registration policy to be used for identification""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which the registration policy should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def change_registration_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, registration_policy_id, compartment_id, if_match):
+
+    if isinstance(registration_policy_id, six.string_types) and len(registration_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --registration-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_registration_policy_compartment(
+        registration_policy_id=registration_policy_id,
+        change_registration_policy_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @report_group.command(name=cli_util.override('data_safe.change_report_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeReportCompartment)""")
 @cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
@@ -3040,6 +3199,68 @@ def change_sql_firewall_policy_compartment(ctx, from_json, wait_for_state, max_w
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.change_subsetting_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified subsetting policy and its dependent resources into a different compartment. \n[Command Reference](changeSubsettingPolicyCompartment)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the subsetting policy should be moved""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_subsetting_policy_compartment(ctx, from_json, subsetting_policy_id, compartment_id, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_subsetting_policy_compartment(
+        subsetting_policy_id=subsetting_policy_id,
+        change_subsetting_policy_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.change_subsetting_policy_health_report_compartment.command_name', 'change-compartment'), help=u"""Moves the specified subsetting policy health report and its dependent resources into a different compartment. \n[Command Reference](changeSubsettingPolicyHealthReportCompartment)""")
+@cli_util.option('--subsetting-policy-health-report-id', required=True, help=u"""The OCID of the subsetting health report.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the subsetting policy should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_subsetting_policy_health_report_compartment(ctx, from_json, subsetting_policy_health_report_id, compartment_id, if_match):
+
+    if isinstance(subsetting_policy_health_report_id, six.string_types) and len(subsetting_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_subsetting_policy_health_report_compartment(
+        subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+        change_subsetting_policy_health_report_compartment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -5062,6 +5283,95 @@ def create_referential_relation(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@registration_policy_group.command(name=cli_util.override('data_safe.create_registration_policy.command_name', 'create'), help=u"""Creates a new OptIn/Registration Policy \n[Command Reference](createRegistrationPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the registration policy will be created.""")
+@cli_util.option('--resource-id', required=True, help=u"""The OCID of the resource used in the registration policy.""")
+@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the registration policy.""")
+@cli_util.option('--description', help=u"""A description of the registration policy.""")
+@cli_util.option('--can-override-features', type=click.BOOL, help=u"""Indicates whether features will be overridden for all targets.""")
+@cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
+@cli_util.option('--x-cluster-id', help=u"""Identifier of the cluster of the CDB associated to the registration policy being created.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def create_registration_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, resource_id, features, display_name, description, can_override_features, connection_option, freeform_tags, defined_tags, opc_dry_run, x_cluster_id):
+
+    kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    if x_cluster_id is not None:
+        kwargs['x_cluster_id'] = x_cluster_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['resourceId'] = resource_id
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if can_override_features is not None:
+        _details['canOverrideFeatures'] = can_override_features
+
+    if connection_option is not None:
+        _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_registration_policy(
+        create_registration_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @report_definition_group.command(name=cli_util.override('data_safe.create_report_definition.command_name', 'create'), help=u"""Creates a new report definition with parameters specified in the body. The report definition is stored in the specified compartment. \n[Command Reference](createReportDefinition)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the report definition.""")
 @cli_util.option('--display-name', required=True, help=u"""Specifies the name of the report definition.""")
@@ -6217,6 +6527,930 @@ def create_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.create_sql_collection(
         create_sql_collection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.create_subsetting_policy.command_name', 'create'), help=u"""Creates a new subsetting policy and associates it with a sensitive data model or a target database.
+
+To use a sensitive data model as the source of subsetting schemas, set the schemaSource attribute to SENSITIVE_DATA_MODEL and provide the sensitiveDataModelId attribute. In this case, the target database associated with the sensitive data model is used for subsetting rules validations.
+
+You can also create a subsetting policy without using a sensitive data model. In this case, you need to associate your subsetting policy with a target database by setting the schemaSource attribute to TARGET and providing the targetId attribute. The specified target database is used for subsetting rules validations.
+
+After creating a subsetting policy, you can use the CreateSubsettingRule operation to manually add subsetting rules to the policy. \n[Command Reference](createSubsettingPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the subsetting policy should be created""")
+@cli_util.option('--schema-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data.""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data.""")
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-source': {'module': 'data_safe', 'class': 'CreateSchemaSourceDetails'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-source': {'module': 'data_safe', 'class': 'CreateSchemaSourceDetails'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicy'})
+@cli_util.wrap_exceptions
+def create_subsetting_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, schema_source, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, masking_policy_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['schemaSource'] = cli_util.parse_json_parameter("schema_source", schema_source)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_policy(
+        create_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.create_subsetting_policy_create_schema_source_from_sdm_details.command_name', 'create-subsetting-policy-create-schema-source-from-sdm-details'), help=u"""Creates a new subsetting policy and associates it with a sensitive data model or a target database.
+
+To use a sensitive data model as the source of subsetting schemas, set the schemaSource attribute to SENSITIVE_DATA_MODEL and provide the sensitiveDataModelId attribute. In this case, the target database associated with the sensitive data model is used for subsetting rules validations.
+
+You can also create a subsetting policy without using a sensitive data model. In this case, you need to associate your subsetting policy with a target database by setting the schemaSource attribute to TARGET and providing the targetId attribute. The specified target database is used for subsetting rules validations.
+
+After creating a subsetting policy, you can use the CreateSubsettingRule operation to manually add subsetting rules to the policy. \n[Command Reference](createSubsettingPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the subsetting policy should be created""")
+@cli_util.option('--schema-source-sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model that's used as the source of subsetting schemas""")
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data.""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data.""")
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicy'})
+@cli_util.wrap_exceptions
+def create_subsetting_policy_create_schema_source_from_sdm_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, schema_source_sensitive_data_model_id, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, masking_policy_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schemaSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['schemaSource']['sensitiveDataModelId'] = schema_source_sensitive_data_model_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['schemaSource']['schemaSource'] = 'SENSITIVE_DATA_MODEL'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_policy(
+        create_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.create_subsetting_policy_create_schema_source_from_target_details.command_name', 'create-subsetting-policy-create-schema-source-from-target-details'), help=u"""Creates a new subsetting policy and associates it with a sensitive data model or a target database.
+
+To use a sensitive data model as the source of subsetting schemas, set the schemaSource attribute to SENSITIVE_DATA_MODEL and provide the sensitiveDataModelId attribute. In this case, the target database associated with the sensitive data model is used for subsetting rules validations.
+
+You can also create a subsetting policy without using a sensitive data model. In this case, you need to associate your subsetting policy with a target database by setting the schemaSource attribute to TARGET and providing the targetId attribute. The specified target database is used for subsetting rules validations.
+
+After creating a subsetting policy, you can use the CreateSubsettingRule operation to manually add subsetting rules to the policy. \n[Command Reference](createSubsettingPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the subsetting policy should be created""")
+@cli_util.option('--schema-source-target-id', required=True, help=u"""The OCID of the target database that's used as the source of subsetting schemas""")
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data.""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data.""")
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schema-source-schemas-for-subsetting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be subsetted""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'schema-source-schemas-for-subsetting': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'schema-source-schemas-for-subsetting': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicy'})
+@cli_util.wrap_exceptions
+def create_subsetting_policy_create_schema_source_from_target_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, schema_source_target_id, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, masking_policy_id, freeform_tags, defined_tags, schema_source_schemas_for_subsetting):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schemaSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['schemaSource']['targetId'] = schema_source_target_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if schema_source_schemas_for_subsetting is not None:
+        _details['schemaSource']['schemasForSubsetting'] = cli_util.parse_json_parameter("schema_source_schemas_for_subsetting", schema_source_schemas_for_subsetting)
+
+    _details['schemaSource']['schemaSource'] = 'TARGET'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_policy(
+        create_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule.command_name', 'create'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--scope', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subset-rule-entry', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scope, subset_rule_entry, subsetting_policy_id, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+    _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule_subset_scope_for_all_objects.command_name', 'create-subsetting-rule-subset-scope-for-all-objects'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--subset-rule-entry', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--scope-schema-name', help=u"""The name of the schema containing the objects to be subsetted""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule_subset_scope_for_all_objects(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subset_rule_entry, subsetting_policy_id, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action, scope_schema_name):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scope'] = {}
+    _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    if scope_schema_name is not None:
+        _details['scope']['schemaName'] = scope_schema_name
+
+    _details['scope']['scopeType'] = 'ALL'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule_subset_scope_for_specific_objects.command_name', 'create-subsetting-rule-subset-scope-for-specific-objects'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--subset-rule-entry', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--scope-schema-name', required=True, help=u"""The name of the schema containing the specific object to be subsetted""")
+@cli_util.option('--scope-object-name', required=True, help=u"""The name of the specific object (e.g., table) to be subsetted""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule_subset_scope_for_specific_objects(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subset_rule_entry, subsetting_policy_id, scope_schema_name, scope_object_name, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scope'] = {}
+    _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+    _details['scope']['schemaName'] = scope_schema_name
+    _details['scope']['objectName'] = scope_object_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['scope']['scopeType'] = 'SPECIFIC'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule_partition_subset_rule_entry.command_name', 'create-subsetting-rule-partition-subset-rule-entry'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--scope', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--subset-rule-entry-partitions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of partition names which are to be part of the subset data""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subset-rule-entry-sub-partitions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of sub-partition names which are to be part of the subset data. The sub-partition names should have the partition name also, separated by a dot""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}, 'subset-rule-entry-sub-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}, 'subset-rule-entry-sub-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule_partition_subset_rule_entry(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scope, subsetting_policy_id, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action, subset_rule_entry_partitions_list, subset_rule_entry_sub_partitions_list):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+    _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    if subset_rule_entry_partitions_list is not None:
+        _details['subsetRuleEntry']['partitionsList'] = cli_util.parse_json_parameter("subset_rule_entry_partitions_list", subset_rule_entry_partitions_list)
+
+    if subset_rule_entry_sub_partitions_list is not None:
+        _details['subsetRuleEntry']['subPartitionsList'] = cli_util.parse_json_parameter("subset_rule_entry_sub_partitions_list", subset_rule_entry_sub_partitions_list)
+
+    _details['subsetRuleEntry']['ruleType'] = 'PARTITION'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule_percent_subset_rule_entry.command_name', 'create-subsetting-rule-percent-subset-rule-entry'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--scope', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subset-rule-entry-percent', required=True, type=click.INT, help=u"""The percentage of rows to retain in the subset (between 0 and 100)""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule_percent_subset_rule_entry(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scope, subsetting_policy_id, subset_rule_entry_percent, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+    _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+    _details['subsetRuleEntry']['percent'] = subset_rule_entry_percent
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['subsetRuleEntry']['ruleType'] = 'PERCENT'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.create_subsetting_rule_condition_subset_rule_entry.command_name', 'create-subsetting-rule-condition-subset-rule-entry'), help=u"""Details to create a new subsetting rule \n[Command Reference](createSubsettingRule)""")
+@cli_util.option('--scope', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subset-rule-entry-condition', required=True, help=u"""The SQL WHERE clause condition used to filter rows for the subset""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.wrap_exceptions
+def create_subsetting_rule_condition_subset_rule_entry(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scope, subsetting_policy_id, subset_rule_entry_condition, display_name, description, rule_combination_mode, related_tables_propagation, peer_tables_action):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+    _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+    _details['subsetRuleEntry']['condition'] = subset_rule_entry_condition
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['subsetRuleEntry']['ruleType'] = 'CONDITION'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_relation_summary_group.command(name=cli_util.override('data_safe.create_subsetting_schema_relation.command_name', 'create-subsetting-schema-relation'), help=u"""Details to create a new referential relation. \n[Command Reference](createSubsettingSchemaRelation)""")
+@cli_util.option('--parent-schema-name', required=True, help=u"""The database schema that contains the parent subsetting table""")
+@cli_util.option('--parent-object-name', required=True, help=u"""The name of the parent subsetting table""")
+@cli_util.option('--parent-columns', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unique identifiers identifying the parents columns in the relation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--child-schema-name', required=True, help=u"""The database schema that contains the child subsetting table""")
+@cli_util.option('--child-object-name', required=True, help=u"""The name of the child subsetting table""")
+@cli_util.option('--child-columns', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Unique identifiers identifying the child columns in the relation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--parent-object-key', help=u"""The key that identifies the parent subsetting table in this relation.""")
+@cli_util.option('--child-object-key', help=u"""The key that identifies the child subsetting table in this relation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'parent-columns': {'module': 'data_safe', 'class': 'list[string]'}, 'child-columns': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-columns': {'module': 'data_safe', 'class': 'list[string]'}, 'child-columns': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_subsetting_schema_relation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, parent_schema_name, parent_object_name, parent_columns, child_schema_name, child_object_name, child_columns, subsetting_policy_id, parent_object_key, child_object_key):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['parentSchemaName'] = parent_schema_name
+    _details['parentObjectName'] = parent_object_name
+    _details['parentColumns'] = cli_util.parse_json_parameter("parent_columns", parent_columns)
+    _details['childSchemaName'] = child_schema_name
+    _details['childObjectName'] = child_object_name
+    _details['childColumns'] = cli_util.parse_json_parameter("child_columns", child_columns)
+
+    if parent_object_key is not None:
+        _details['parentObjectKey'] = parent_object_key
+
+    if child_object_key is not None:
+        _details['childObjectKey'] = child_object_key
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_subsetting_schema_relation(
+        subsetting_policy_id=subsetting_policy_id,
+        create_subsetting_schema_relation_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -8164,6 +9398,62 @@ def delete_referential_relation(ctx, from_json, sensitive_data_model_id, referen
     cli_util.render_response(result, ctx)
 
 
+@registration_policy_group.command(name=cli_util.override('data_safe.delete_registration_policy.command_name', 'delete'), help=u"""Deletes the specified registration policy. \n[Command Reference](deleteRegistrationPolicy)""")
+@cli_util.option('--registration-policy-id', required=True, help=u"""The OCID of the registration policy to be used for identification""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_registration_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, registration_policy_id, if_match):
+
+    if isinstance(registration_policy_id, six.string_types) and len(registration_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --registration-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_registration_policy(
+        registration_policy_id=registration_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @report_definition_group.command(name=cli_util.override('data_safe.delete_report_definition.command_name', 'delete'), help=u"""Deletes the specified report definition. Only the user created report definition can be deleted. The seeded report definitions cannot be deleted. \n[Command Reference](deleteReportDefinition)""")
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8907,6 +10197,296 @@ def delete_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_seconds,
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.delete_sql_firewall_policy(
         sql_firewall_policy_id=sql_firewall_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.delete_subsetting_policy.command_name', 'delete'), help=u"""Deletes the specified subsetting policy. \n[Command Reference](deleteSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subsetting_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.delete_subsetting_policy_health_report.command_name', 'delete'), help=u"""Deletes the specified subsetting policy health report. \n[Command Reference](deleteSubsettingPolicyHealthReport)""")
+@cli_util.option('--subsetting-policy-health-report-id', required=True, help=u"""The OCID of the subsetting health report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subsetting_policy_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_health_report_id, if_match):
+
+    if isinstance(subsetting_policy_health_report_id, six.string_types) and len(subsetting_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_subsetting_policy_health_report(
+        subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_report_group.command(name=cli_util.override('data_safe.delete_subsetting_report.command_name', 'delete'), help=u"""Deletes the specified subsetting report. \n[Command Reference](deleteSubsettingReport)""")
+@cli_util.option('--subsetting-report-id', required=True, help=u"""The OCID of the subsetting report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subsetting_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_report_id, if_match):
+
+    if isinstance(subsetting_report_id, six.string_types) and len(subsetting_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_subsetting_report(
+        subsetting_report_id=subsetting_report_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.delete_subsetting_rule.command_name', 'delete'), help=u"""Deletes the specified subsetting rule. \n[Command Reference](deleteSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subsetting_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, if_match):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_relation_group.command(name=cli_util.override('data_safe.delete_subsetting_schema_relation.command_name', 'delete'), help=u"""Deletes the specified referential relation. Note that only the relation created by the user can be deleted \n[Command Reference](deleteSubsettingSchemaRelation)""")
+@cli_util.option('--subsetting-schema-relation-key', required=True, help=u"""The unique key that identifies the subsetting relation. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_subsetting_schema_relation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_schema_relation_key, subsetting_policy_id, if_match):
+
+    if isinstance(subsetting_schema_relation_key, six.string_types) and len(subsetting_schema_relation_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-schema-relation-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_subsetting_schema_relation(
+        subsetting_schema_relation_key=subsetting_schema_relation_key,
+        subsetting_policy_id=subsetting_policy_id,
         **kwargs
     )
     if wait_for_state:
@@ -9868,6 +11448,169 @@ def download_sensitive_types_export(ctx, from_json, file, sensitive_types_export
         file.close()
 
 
+@subsetting_policy_group.command(name=cli_util.override('data_safe.download_subsetting_log.command_name', 'download-subsetting-log'), help=u"""Downloads the subsetting log generated by the last subsetting operation on a target database using the specified subsetting policy. \n[Command Reference](downloadSubsettingLog)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--target-id', help=u"""The OCID of the target database for which the subsetting log is to be downloaded""")
+@cli_util.option('--subsetting-work-request-id', help=u"""The OCID of the subsetting work request that resulted in this subsetting log""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_subsetting_log(ctx, from_json, file, subsetting_policy_id, target_id, subsetting_work_request_id):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    if subsetting_work_request_id is not None:
+        _details['subsettingWorkRequestId'] = subsetting_work_request_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.download_subsetting_log(
+        subsetting_policy_id=subsetting_policy_id,
+        download_subsetting_log_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.download_subsetting_policy.command_name', 'download'), help=u"""Downloads an already-generated file corresponding to the specified subsetting policy. Note that the GenerateSubsettingPolicyForDownload operation is a prerequisite for the DownloadSubsettingPolicy operation. Use GenerateSubsettingPolicyForDownload to generate a subsetting policy file and then use DownloadSubsettingPolicy to download the generated file. \n[Command Reference](downloadSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--policy-format', type=custom_types.CliCaseInsensitiveChoice(["XML"]), help=u"""The format of the subsetting policy file""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_subsetting_policy(ctx, from_json, file, subsetting_policy_id, policy_format):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if policy_format is not None:
+        _details['policyFormat'] = policy_format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.download_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        download_subsetting_policy_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.download_subsetting_report.command_name', 'download-subsetting-report'), help=u"""Downloads an already-generated subsetting report. Note that the GenerateSubsettingReportForDownload operation is a prerequisite for the DownloadSubsettingReport operation. Use GenerateSubsettingReportForDownload to generate a subsetting report file and then use DownloadSubsettingReport to download the generated file. \n[Command Reference](downloadSubsettingReport)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--report-id', required=True, help=u"""The OCID of the subsetting report to be downloaded""")
+@cli_util.option('--report-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the report.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_subsetting_report(ctx, from_json, file, subsetting_policy_id, report_id, report_format):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reportId'] = report_id
+    _details['reportFormat'] = report_format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.download_subsetting_report(
+        subsetting_policy_id=subsetting_policy_id,
+        download_subsetting_report_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @user_assessment_group.command(name=cli_util.override('data_safe.download_user_assessment_report.command_name', 'download-user-assessment-report'), help=u"""Downloads the report of the specified user assessment. To download the user assessment report, it needs to be generated first. Please use GenerateUserAssessmentReport to generate a downloadable report in the preferred format (PDF, XLS). \n[Command Reference](downloadUserAssessmentReport)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
 @cli_util.option('--format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the report.""")
@@ -9949,6 +11692,68 @@ def enable_data_safe_configuration(ctx, from_json, wait_for_state, max_wait_seco
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.enable_data_safe_configuration(
         enable_data_safe_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.estimate_table_sizes.command_name', 'estimate-table-sizes'), help=u"""Estimates table sizes for the specified subsetting policy and target database. \n[Command Reference](estimateTableSizes)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--target-credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-id', help=u"""The OCID of the target database to use for estimating table sizes. If it's not provided, the value of the targetId attribute in the SubsettingPolicy resource is used.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.wrap_exceptions
+def estimate_table_sizes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, target_credentials, target_id):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetCredentials'] = cli_util.parse_json_parameter("target_credentials", target_credentials)
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.estimate_table_sizes(
+        subsetting_policy_id=subsetting_policy_id,
+        estimate_table_sizes_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -10612,6 +12417,210 @@ def generate_sql_firewall_policy(ctx, from_json, wait_for_state, max_wait_second
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.generate_sql_firewall_policy(
         sql_collection_id=sql_collection_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.generate_subsetting_health_report.command_name', 'generate-subsetting-health-report'), help=u"""Performs health check on the subsetting policy. \n[Command Reference](generateSubsettingHealthReport)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--target-credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--check-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "TABLESPACE_CHECK"]), help=u"""The type of health check. The default behaviour is to perform all health checks. TABLESPACE_CHECK performs only the tablespace health check.""")
+@cli_util.option('--target-id', help=u"""The OCID of the target database to use for the subsetting policy health check. The targetId associated with the subsetting policy is used if this is not passed.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment where the health report resource should be created.""")
+@cli_util.option('--tablespace', help=u"""The tablespace that should be used to estimate space. If no tablespace is provided, the DEFAULT tablespace is used.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.wrap_exceptions
+def generate_subsetting_health_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, target_credentials, check_type, target_id, compartment_id, tablespace, freeform_tags, defined_tags):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetCredentials'] = cli_util.parse_json_parameter("target_credentials", target_credentials)
+
+    if check_type is not None:
+        _details['checkType'] = check_type
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if tablespace is not None:
+        _details['tablespace'] = tablespace
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.generate_subsetting_health_report(
+        subsetting_policy_id=subsetting_policy_id,
+        generate_subsetting_health_report_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.generate_subsetting_policy_for_download.command_name', 'generate-subsetting-policy-for-download'), help=u"""Generates a downloadable file corresponding to the specified subsetting policy. It's a prerequisite for the DownloadSubsettingPolicy operation. Use this operation to generate a subsetting policy file and then use DownloadSubsettingPolicy to download the generated file. Note that file generation and download are serial operations. The download operation can't be invoked while the generate operation is in progress. \n[Command Reference](generateSubsettingPolicyForDownload)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--policy-format', type=custom_types.CliCaseInsensitiveChoice(["XML"]), help=u"""The format of the subsetting policy file.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_subsetting_policy_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, policy_format):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if policy_format is not None:
+        _details['policyFormat'] = policy_format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.generate_subsetting_policy_for_download(
+        subsetting_policy_id=subsetting_policy_id,
+        generate_subsetting_policy_for_download_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.generate_subsetting_report_for_download.command_name', 'generate-subsetting-report-for-download'), help=u"""Generates a downloadable subsetting report. It's a prerequisite for the DownloadSubsettingReport operation. Use this endpoint to generate a subsetting report file and then use DownloadSubsettingReport to download the generated file. \n[Command Reference](generateSubsettingReportForDownload)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--report-id', required=True, help=u"""The OCID of the subsetting report for which a downloadable file is to be generated""")
+@cli_util.option('--report-format', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Format of the report.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_subsetting_report_for_download(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, report_id, report_format):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['reportId'] = report_id
+    _details['reportFormat'] = report_format
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.generate_subsetting_report_for_download(
+        subsetting_policy_id=subsetting_policy_id,
+        generate_subsetting_report_for_download_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -11447,6 +13456,28 @@ def get_referential_relation(ctx, from_json, sensitive_data_model_id, referentia
     cli_util.render_response(result, ctx)
 
 
+@registration_policy_group.command(name=cli_util.override('data_safe.get_registration_policy.command_name', 'get'), help=u"""Returns the details of the specified Registration Policy. \n[Command Reference](getRegistrationPolicy)""")
+@cli_util.option('--registration-policy-id', required=True, help=u"""The OCID of the registration policy to be used for identification""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def get_registration_policy(ctx, from_json, registration_policy_id):
+
+    if isinstance(registration_policy_id, six.string_types) and len(registration_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --registration-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_registration_policy(
+        registration_policy_id=registration_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @report_group.command(name=cli_util.override('data_safe.get_report.command_name', 'get'), help=u"""Gets a report by identifier \n[Command Reference](getReport)""")
 @cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11898,6 +13929,126 @@ def get_sql_firewall_policy(ctx, from_json, sql_firewall_policy_id):
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_sql_firewall_policy(
         sql_firewall_policy_id=sql_firewall_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.get_subsetting_policy.command_name', 'get'), help=u"""Gets the details of the specified subsetting policy. \n[Command Reference](getSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicy'})
+@cli_util.wrap_exceptions
+def get_subsetting_policy(ctx, from_json, subsetting_policy_id):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.get_subsetting_policy_health_report.command_name', 'get'), help=u"""Gets the details of the specified subsetting policy health report. \n[Command Reference](getSubsettingPolicyHealthReport)""")
+@cli_util.option('--subsetting-policy-health-report-id', required=True, help=u"""The OCID of the subsetting health report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicyHealthReport'})
+@cli_util.wrap_exceptions
+def get_subsetting_policy_health_report(ctx, from_json, subsetting_policy_health_report_id):
+
+    if isinstance(subsetting_policy_health_report_id, six.string_types) and len(subsetting_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_subsetting_policy_health_report(
+        subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_report_group.command(name=cli_util.override('data_safe.get_subsetting_report.command_name', 'get'), help=u"""Gets the details of the specified subsetting report. \n[Command Reference](getSubsettingReport)""")
+@cli_util.option('--subsetting-report-id', required=True, help=u"""The OCID of the subsetting report.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingReport'})
+@cli_util.wrap_exceptions
+def get_subsetting_report(ctx, from_json, subsetting_report_id):
+
+    if isinstance(subsetting_report_id, six.string_types) and len(subsetting_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_subsetting_report(
+        subsetting_report_id=subsetting_report_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.get_subsetting_rule.command_name', 'get'), help=u"""Gets the details of the specified subsetting rule. \n[Command Reference](getSubsettingRule)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingRule'})
+@cli_util.wrap_exceptions
+def get_subsetting_rule(ctx, from_json, subsetting_policy_id, subsetting_rule_key):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_subsetting_rule(
+        subsetting_policy_id=subsetting_policy_id,
+        subsetting_rule_key=subsetting_rule_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_relation_group.command(name=cli_util.override('data_safe.get_subsetting_schema_relation.command_name', 'get'), help=u"""Gets the details of the specified referential relation in the subsetting policy. \n[Command Reference](getSubsettingSchemaRelation)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subsetting-schema-relation-key', required=True, help=u"""The unique key that identifies the subsetting relation. It's numeric and unique within a subsetting policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingSchemaRelation'})
+@cli_util.wrap_exceptions
+def get_subsetting_schema_relation(ctx, from_json, subsetting_policy_id, subsetting_schema_relation_key):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    if isinstance(subsetting_schema_relation_key, six.string_types) and len(subsetting_schema_relation_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-schema-relation-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_subsetting_schema_relation(
+        subsetting_policy_id=subsetting_policy_id,
+        subsetting_schema_relation_key=subsetting_schema_relation_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -16634,6 +18785,158 @@ def list_referential_relations(ctx, from_json, all_pages, page_size, sensitive_d
     cli_util.render_response(result, ctx)
 
 
+@registration_policy_summary_group.command(name=cli_util.override('data_safe.list_registration_policies.command_name', 'list-registration-policies'), help=u"""Retrieves a list of registration policies according to the specified query parameters. \n[Command Reference](listRegistrationPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "enablementLevel", "lifecycleState"]), help=u"""Field to sort the registration policies by. Only one sort order (sortOrder) can be specified. Defaults to sorting by `timeCreated` in descending order""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "NEEDS_ATTENTION", "FAILED", "DELETING"]), help=u"""Filter registration policies by their lifecycle state.""")
+@cli_util.option('--enablement-level', type=custom_types.CliCaseInsensitiveChoice(["DATABASE"]), help=u"""Filter registration policies by resource type.""")
+@cli_util.option('--resource-id', help=u"""Filter to return the registration policy matching the specified resource OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created before a specific date. Specifying this parameter corresponding `timeCreatedLessThan` parameter will retrieve all resources created before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--registration-policy-id', help=u"""Filter to return the registration policy matching the specified OCID.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["PRIVATE_ENDPOINT", "ONPREM_CONNECTOR"]), help=u"""Filter to return the registration policies matching the specified connectionType i.e ONPREM_CONNECTOR or PRIVATE_ENDPOINT.""")
+@cli_util.option('--connection-id', help=u"""Filter to return the registration policies matching the specified connection ID.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicyCollection'})
+@cli_util.wrap_exceptions
+def list_registration_policies(ctx, from_json, all_pages, page_size, compartment_id, display_name, sort_by, lifecycle_state, enablement_level, resource_id, compartment_id_in_subtree, access_level, sort_order, time_created_greater_than_or_equal_to, time_created_less_than, limit, page, registration_policy_id, connection_type, connection_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if enablement_level is not None:
+        kwargs['enablement_level'] = enablement_level
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if registration_policy_id is not None:
+        kwargs['registration_policy_id'] = registration_policy_id
+    if connection_type is not None:
+        kwargs['connection_type'] = connection_type
+    if connection_id is not None:
+        kwargs['connection_id'] = connection_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_registration_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_registration_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_registration_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@registration_policy_group.command(name=cli_util.override('data_safe.list_registration_policy_target_databases.command_name', 'list-registration-policy-target-databases'), help=u"""Retrieves the OCIDs of target databases registered via the specified registration policy. Supports optional filtering by registration status (OPTIN/OPTOUT) and by target database OCID. \n[Command Reference](listRegistrationPolicyTargetDatabases)""")
+@cli_util.option('--registration-policy-id', required=True, help=u"""The OCID of the registration policy to be used for identification""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--target-database-id', help=u"""A filter to return the target database only if it is registered via the registration policy.""")
+@cli_util.option('--membership-status', type=custom_types.CliCaseInsensitiveChoice(["OPTIN", "OPTOUT"]), help=u"""Filters registered targets associated with this registration policy by membership status. - OPTIN: returns targets that are included (opted in) by the policy. - OPTOUT: returns targets that are explicitly excluded (opted out) by the policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicyTargetDatabaseSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_registration_policy_target_databases(ctx, from_json, all_pages, page_size, registration_policy_id, compartment_id, target_database_id, membership_status, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(registration_policy_id, six.string_types) and len(registration_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --registration-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if target_database_id is not None:
+        kwargs['target_database_id'] = target_database_id
+    if membership_status is not None:
+        kwargs['membership_status'] = membership_status
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_registration_policy_target_databases,
+            registration_policy_id=registration_policy_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_registration_policy_target_databases,
+            limit,
+            page_size,
+            registration_policy_id=registration_policy_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_registration_policy_target_databases(
+            registration_policy_id=registration_policy_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @report_definition_group.command(name=cli_util.override('data_safe.list_report_definitions.command_name', 'list'), help=u"""Gets a list of report definitions. The ListReportDefinitions operation returns only the report definitions in the specified `compartmentId`. It also returns the seeded report definitions which are available to all the compartments. \n[Command Reference](listReportDefinitions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
@@ -19099,6 +21402,888 @@ def list_sql_firewall_violations(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
+@subsetted_object_summary_group.command(name=cli_util.override('data_safe.list_subsetted_objects.command_name', 'list-subsetted-objects'), help=u"""Gets a list of subsetted tables present in the specified subsetting report and based on the specified query parameters. \n[Command Reference](listSubsettedObjects)""")
+@cli_util.option('--subsetting-report-id', required=True, help=u"""The OCID of the subsetting report.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["schemaName", "objectName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for all the fields is ascending.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettedObjectCollection'})
+@cli_util.wrap_exceptions
+def list_subsetted_objects(ctx, from_json, all_pages, page_size, subsetting_report_id, limit, page, sort_order, sort_by, schema_name, object_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_report_id, six.string_types) and len(subsetting_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetted_objects,
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetted_objects,
+            limit,
+            page_size,
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetted_objects(
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.list_subsetting_analytics.command_name', 'list-subsetting-analytics'), help=u"""Gets consolidated subsetting analytics data based on the specified query parameters. If CompartmentIdInSubtreeQueryParam is specified as true, the behaviour is equivalent to accessLevel \"ACCESSIBLE\" by default. \n[Command Reference](listSubsettingAnalytics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "policyId", "targetIdAndPolicyId"]), help=u"""Attribute by which the subsetting analytics data should be grouped.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--subsetting-policy-id', help=u"""A filter to return only the resources that match the specified subsetting policy OCID.""")
+@cli_util.option('--target-database-group-id', help=u"""A filter to return the target database group that matches the specified OCID.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeLastSubsetted"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for all the fields is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created before a specific date. Specifying this parameter corresponding `timeCreatedLessThan` parameter will retrieve all resources created before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, group_by, target_id, subsetting_policy_id, target_database_group_id, sort_by, sort_order, time_created_greater_than_or_equal_to, time_created_less_than, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if group_by is not None:
+        kwargs['group_by'] = group_by
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if subsetting_policy_id is not None:
+        kwargs['subsetting_policy_id'] = subsetting_policy_id
+    if target_database_group_id is not None:
+        kwargs['target_database_group_id'] = target_database_group_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_analytics,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_analytics,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_analytics(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_error_summary_group.command(name=cli_util.override('data_safe.list_subsetting_errors.command_name', 'list-subsetting-errors'), help=u"""Gets a list of subsetting errors in a subsetting run based on the specified query parameters. \n[Command Reference](listSubsettingErrors)""")
+@cli_util.option('--subsetting-report-id', required=True, help=u"""The OCID of the subsetting report.""")
+@cli_util.option('--step-name', type=custom_types.CliCaseInsensitiveChoice(["VALIDATE", "IDENTIFY_ROWS_FOR_SUBSET", "GENERATE_SCRIPT", "EXECUTE_SUBSETTING", "PRE_SUBSETTING", "POST_SUBSETTING"]), help=u"""A filter to return only subsetting errors that match the specified step name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["stepName", "timeCreated"]), help=u"""The field to sort by. The default order will be ascending.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingErrorCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_errors(ctx, from_json, all_pages, page_size, subsetting_report_id, step_name, sort_by, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_report_id, six.string_types) and len(subsetting_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if step_name is not None:
+        kwargs['step_name'] = step_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_errors,
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_errors,
+            limit,
+            page_size,
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_errors(
+            subsetting_report_id=subsetting_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.list_subsetting_policies.command_name', 'list'), help=u"""Gets a list of subsetting policies based on the specified query parameters. \n[Command Reference](listSubsettingPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--subsetting-policy-id', help=u"""A filter to return only the resources that match the specified subsetting policy OCID.""")
+@cli_util.option('--masking-policy-id', help=u"""A filter to return only the resources that match the specified masking policy OCID.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle states.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for displayName is ascending. The displayName sort order is case sensitive.""")
+@cli_util.option('--sensitive-data-model-id', help=u"""A filter to return only the resources that match the specified sensitive data model OCID.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created before a specific date. Specifying this parameter corresponding `timeCreatedLessThan` parameter will retrieve all resources created before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicyCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_policies(ctx, from_json, all_pages, page_size, compartment_id, subsetting_policy_id, masking_policy_id, display_name, limit, page, lifecycle_state, sort_order, sort_by, sensitive_data_model_id, target_id, time_created_greater_than_or_equal_to, time_created_less_than, compartment_id_in_subtree, access_level):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if subsetting_policy_id is not None:
+        kwargs['subsetting_policy_id'] = subsetting_policy_id
+    if masking_policy_id is not None:
+        kwargs['masking_policy_id'] = masking_policy_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sensitive_data_model_id is not None:
+        kwargs['sensitive_data_model_id'] = sensitive_data_model_id
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.list_subsetting_policy_health_report_logs.command_name', 'list-subsetting-policy-health-report-logs'), help=u"""Gets a list of errors and warnings from a subsetting policy health check. \n[Command Reference](listSubsettingPolicyHealthReportLogs)""")
+@cli_util.option('--subsetting-policy-health-report-id', required=True, help=u"""The OCID of the subsetting health report.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["messageType"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for messageType is ascending.""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["PASS", "WARNING", "ERROR"]), help=u"""A filter to return only the resources that match the specified log message type.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicyHealthReportLogCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_policy_health_report_logs(ctx, from_json, all_pages, page_size, subsetting_policy_health_report_id, limit, page, sort_order, sort_by, message_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_health_report_id, six.string_types) and len(subsetting_policy_health_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-health-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if message_type is not None:
+        kwargs['message_type'] = message_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_policy_health_report_logs,
+            subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_policy_health_report_logs,
+            limit,
+            page_size,
+            subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_policy_health_report_logs(
+            subsetting_policy_health_report_id=subsetting_policy_health_report_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_health_report_group.command(name=cli_util.override('data_safe.list_subsetting_policy_health_reports.command_name', 'list'), help=u"""Gets a list of subsetting policy health reports based on the specified query parameters. \n[Command Reference](listSubsettingPolicyHealthReports)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--subsetting-policy-health-report-id', help=u"""A filter to return only the resources that match the specified subsetting policy health report OCID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""sort by""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--subsetting-policy-id', help=u"""A filter to return only the resources that match the specified subsetting policy OCID.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle states.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingPolicyHealthReportCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_policy_health_reports(ctx, from_json, all_pages, page_size, compartment_id, subsetting_policy_health_report_id, limit, page, compartment_id_in_subtree, access_level, sort_by, sort_order, display_name, target_id, subsetting_policy_id, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if subsetting_policy_health_report_id is not None:
+        kwargs['subsetting_policy_health_report_id'] = subsetting_policy_health_report_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if subsetting_policy_id is not None:
+        kwargs['subsetting_policy_id'] = subsetting_policy_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_policy_health_reports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_policy_health_reports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_policy_health_reports(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_report_group.command(name=cli_util.override('data_safe.list_subsetting_reports.command_name', 'list'), help=u"""Gets a list of subsetting reports based on the specified query parameters. \n[Command Reference](listSubsettingReports)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--subsetting-policy-id', help=u"""A filter to return only the resources that match the specified subsetting policy OCID.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--target-database-group-id', help=u"""A filter to return the target database group that matches the specified OCID.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeSubsettingFinished"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeSubsettingFinished is descending.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingReportCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_reports(ctx, from_json, all_pages, page_size, compartment_id, limit, page, subsetting_policy_id, target_id, target_database_group_id, sort_order, sort_by, compartment_id_in_subtree, access_level):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if subsetting_policy_id is not None:
+        kwargs['subsetting_policy_id'] = subsetting_policy_id
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_database_group_id is not None:
+        kwargs['target_database_group_id'] = target_database_group_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_reports,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_reports,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_reports(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_processing_chain_object_summary_group.command(name=cli_util.override('data_safe.list_subsetting_rule_processing_chain_objects.command_name', 'list-subsetting-rule-processing-chain-objects'), help=u"""Gets a list of objects of processing chain based on the specified query parameters generated for a subsetting rule. A processing chain is the relationship path that determines how a subsetting rule is applied across related tables. It is built from the selected subsetting table, subsetting rule, the chosen relatedTablesPropagation direction, and the referential relationships in the schema. \n[Command Reference](listSubsettingRuleProcessingChainObjects)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["key"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for key is ascending. The default order for other fields is ascending.""")
+@cli_util.option('--is-enabled-for-processing', type=click.BOOL, help=u"""A filter to return the processing chain objects which are enabled for processing.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SubsettingRuleProcessingChainObjectsCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_rule_processing_chain_objects(ctx, from_json, all_pages, page_size, subsetting_policy_id, subsetting_rule_key, page, limit, sort_by, is_enabled_for_processing, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if is_enabled_for_processing is not None:
+        kwargs['is_enabled_for_processing'] = is_enabled_for_processing
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_rule_processing_chain_objects,
+            subsetting_policy_id=subsetting_policy_id,
+            subsetting_rule_key=subsetting_rule_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_rule_processing_chain_objects,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            subsetting_rule_key=subsetting_rule_key,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_rule_processing_chain_objects(
+            subsetting_policy_id=subsetting_policy_id,
+            subsetting_rule_key=subsetting_rule_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.list_subsetting_rules.command_name', 'list'), help=u"""Gets a list of subsetting rules present in the specified subsetting policy and based on the specified query parameters. A subsetting rule is the criteria that tells Data Safe which rows to retain from the selected starting table for a subsetting operation. It is the entry point for the subset. Data Safe uses this rule, along with the propagation setting, to determine the related rows that must also be retained across parent and child tables. \n[Command Reference](listSubsettingRules)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for other fields is ascending.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettingRuleCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_rules(ctx, from_json, all_pages, page_size, subsetting_policy_id, limit, page, sort_order, sort_by, schema_name, object_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_rules,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_rules,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_rules(
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_object_summary_group.command(name=cli_util.override('data_safe.list_subsetting_schema_objects.command_name', 'list-subsetting-schema-objects'), help=u"""Gets a list of objects/tables present in the specified subsetting policy schemas based on the specified query parameters. \n[Command Reference](listSubsettingSchemaObjects)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for other fields is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettingSchemaObjectCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_schema_objects(ctx, from_json, all_pages, page_size, subsetting_policy_id, schema_name, object_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_schema_objects,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_schema_objects,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_schema_objects(
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_relation_summary_group.command(name=cli_util.override('data_safe.list_subsetting_schema_relations.command_name', 'list-subsetting-schema-relations'), help=u"""Gets a list of referential relations present in the specified subsetting policy schemas based on the specified query parameters. \n[Command Reference](listSubsettingSchemaRelations)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--relation-type', type=custom_types.CliCaseInsensitiveChoice(["APP_DEFINED", "DB_DEFINED"]), help=u"""A filter to return columns based on their relationship with their parent columns. If set to APP_DEFINED, it returns all the child columns that have application-level (non-dictionary) relationship with their parents. If set to DB_DEFINED, it returns all the child columns that have database-level (dictionary-defined) relationship with their parents.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["relationType", "schemaName", "objectName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettingSchemaRelationCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_schema_relations(ctx, from_json, all_pages, page_size, subsetting_policy_id, schema_name, object_name, relation_type, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    if relation_type is not None:
+        kwargs['relation_type'] = relation_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_schema_relations,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_schema_relations,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_schema_relations(
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_schema_collection_group.command(name=cli_util.override('data_safe.list_subsetting_schemas.command_name', 'list-subsetting-schemas'), help=u"""Gets a list of subsetting schemas present in the specified subsetting policy and based on the specified query parameters. \n[Command Reference](listSubsettingSchemas)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["schemaName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order is ascending.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--is-derived-schema', type=click.BOOL, help=u"""A filter to return the schemas which are derived. A schema is derived if it is related to a input schema.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SubsettingSchemaCollection'})
+@cli_util.wrap_exceptions
+def list_subsetting_schemas(ctx, from_json, all_pages, page_size, subsetting_policy_id, limit, page, sort_order, sort_by, schema_name, is_derived_schema):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if is_derived_schema is not None:
+        kwargs['is_derived_schema'] = is_derived_schema
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_subsetting_schemas,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_subsetting_schemas,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_subsetting_schemas(
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@table_estimate_summary_group.command(name=cli_util.override('data_safe.list_table_estimates.command_name', 'list-table-estimates'), help=u"""Gets table size estimates for the specified subsetting policy. \n[Command Reference](listTableEstimates)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["schemaName", "tableName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for schemaName is ascending.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'TableEstimateCollection'})
+@cli_util.wrap_exceptions
+def list_table_estimates(ctx, from_json, all_pages, page_size, subsetting_policy_id, schema_name, object_name, target_id, sort_order, sort_by, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_table_estimates,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_table_estimates,
+            limit,
+            page_size,
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_table_estimates(
+            subsetting_policy_id=subsetting_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @target_database_group.command(name=cli_util.override('data_safe.list_tables.command_name', 'list-tables'), help=u"""Returns a list of table metadata objects. \n[Command Reference](listTables)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -19395,6 +22580,7 @@ def list_target_database_groups(ctx, from_json, all_pages, page_size, compartmen
 @target_database_group.command(name=cli_util.override('data_safe.list_target_databases.command_name', 'list'), help=u"""Returns the list of registered target databases in Data Safe. \n[Command Reference](listTargetDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--associated-resource-id', help=u"""A filter to return the target databases that are associated to the resource id passed in as a parameter value.""")
+@cli_util.option('--enablement-resource-ocid', help=u"""A filter to return target databases filtered by the enablementResourceOcid column (always a DbaasDatabase OCID).""")
 @cli_util.option('--target-database-id', help=u"""A filter to return the target database that matches the specified OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "NEEDS_ATTENTION", "FAILED"]), help=u"""A filter to return only target databases that match the specified lifecycle state.""")
@@ -19413,7 +22599,7 @@ def list_target_database_groups(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'list[TargetDatabaseSummary]'})
 @cli_util.wrap_exceptions
-def list_target_databases(ctx, from_json, all_pages, page_size, compartment_id, associated_resource_id, target_database_id, display_name, lifecycle_state, database_type, infrastructure_type, limit, page, compartment_id_in_subtree, access_level, sort_order, sort_by):
+def list_target_databases(ctx, from_json, all_pages, page_size, compartment_id, associated_resource_id, enablement_resource_ocid, target_database_id, display_name, lifecycle_state, database_type, infrastructure_type, limit, page, compartment_id_in_subtree, access_level, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -19421,6 +22607,8 @@ def list_target_databases(ctx, from_json, all_pages, page_size, compartment_id, 
     kwargs = {}
     if associated_resource_id is not None:
         kwargs['associated_resource_id'] = associated_resource_id
+    if enablement_resource_ocid is not None:
+        kwargs['enablement_resource_ocid'] = enablement_resource_ocid
     if target_database_id is not None:
         kwargs['target_database_id'] = target_database_id
     if display_name is not None:
@@ -20437,6 +23625,67 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
     cli_util.render_response(result, ctx)
 
 
+@target_database_group.command(name=cli_util.override('data_safe.manage_privileges.command_name', 'manage-privileges'), help=u"""Updates the Data Safe target database Privileges. \n[Command Reference](managePrivileges)""")
+@cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
+@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def manage_privileges(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_database_id, features, if_match):
+
+    if isinstance(target_database_id, six.string_types) and len(target_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.manage_privileges(
+        target_database_id=target_database_id,
+        manage_privileges_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @masking_policy_group.command(name=cli_util.override('data_safe.mask_data.command_name', 'mask-data'), help=u"""Masks data using the specified masking policy. \n[Command Reference](maskData)""")
 @cli_util.option('--masking-policy-id', required=True, help=u"""The OCID of the masking policy.""")
 @cli_util.option('--target-id', help=u"""The OCID of the target database to be masked. If it's not provided, the value of the targetId attribute in the MaskingPolicy resource is used. The OCID of the target database to be masked. If it's not provided, the value of the targetId attribute in the MaskingPolicy resource is used.""")
@@ -21173,6 +24422,71 @@ def patch_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_seco
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.patch_sql_firewall_allowed_sql(
         patch_sql_firewall_allowed_sql_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.patch_subsetting_rules.command_name', 'patch'), help=u"""Patches one or more subsetting rules in the specified subsetting policy. Use INSERT to add a new rule with CreateSubsettingRuleDetails as the patch value, and MERGE to update an existing rule with UpdateSubsettingRuleDetails as the patch value. To delete a rule, use the existing DeleteSubsettingRule API. \n[Command Reference](patchSubsettingRules)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.
+
+This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/datasafe/20181201/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.wrap_exceptions
+def patch_subsetting_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, items, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.patch_subsetting_rules(
+        subsetting_policy_id=subsetting_policy_id,
+        patch_subsetting_rules_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -22576,6 +25890,100 @@ def stop_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.stop_sql_collection(
         sql_collection_id=sql_collection_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.subset_data.command_name', 'subset-data'), help=u"""Subsets data using the specified subsetting policy. \n[Command Reference](subsetData)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--target-credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-id', help=u"""The OCID of the target database to be subsetted. If it's not provided, the value of the targetId attribute in the SubsettingPolicy resource is used""")
+@cli_util.option('--masking', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Indicates whether masking should be triggered after successful subsetting""")
+@cli_util.option('--is-rerun', type=click.BOOL, help=u"""Indicates if the request is to rerun the previously failed subsetting job""")
+@cli_util.option('--re-run-from-step', type=custom_types.CliCaseInsensitiveChoice(["PRE_SUBSETTING_SCRIPT", "POST_SUBSETTING_SCRIPT"]), help=u"""Specifies the step from which subsetting needs to be rerun. This param will be used only when isRerun attribute is true. If PRE_SUBSETTING_SCRIPT is passed, it will rerun the pre-subsetting script, followed by subsetting, and then the post-subsetting script. If POST_SUBSETTING_SCRIPT is passed, it will rerun only the post-subsetting script. If this field is not set and isRerun is set to true, then it will default to the last failed step.""")
+@cli_util.option('--tablespace', help=u"""The tablespace that should be used to create the temporary tables for data subsetting. If no tablespace is provided, the DEFAULT tablespace is used.""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. Set this attribute to true to enable redo logging. If set as false, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted. If it's not provided, the value of the isRedoLoggingEnabled attribute in the SubsettingPolicy resource is used.""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subset database tables after subsetting completes. If it's not provided, the value of the isRefreshStatsEnabled attribute in the SubsettingPolicy resource is used.""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism. https://www.oracle.com/pls/topic/lookup?ctx=dblatest&en/database/oracle/oracle-database&id=VLDBG-GUID-3E2AE088-2505-465E-A8B2-AC38813EA355 If it's not provided, the value of the parallelDegree attribute in the SubsettingPolicy resource is used.""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes. If it's not provided, the value of the recompile attribute in the SubsettingPolicy resource is used.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-credentials': {'module': 'data_safe', 'class': 'Credentials'}})
+@cli_util.wrap_exceptions
+def subset_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, target_credentials, target_id, masking, is_rerun, re_run_from_step, tablespace, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetCredentials'] = cli_util.parse_json_parameter("target_credentials", target_credentials)
+
+    if target_id is not None:
+        _details['targetId'] = target_id
+
+    if masking is not None:
+        _details['masking'] = masking
+
+    if is_rerun is not None:
+        _details['isRerun'] = is_rerun
+
+    if re_run_from_step is not None:
+        _details['reRunFromStep'] = re_run_from_step
+
+    if tablespace is not None:
+        _details['tablespace'] = tablespace
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.subset_data(
+        subsetting_policy_id=subsetting_policy_id,
+        subset_data_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -24820,6 +28228,173 @@ def update_peer_target_database_database_cloud_service_details(ctx, from_json, f
     cli_util.render_response(result, ctx)
 
 
+@subsetting_rule_processing_chain_object_summary_group.command(name=cli_util.override('data_safe.update_processing_chain_object.command_name', 'update-processing-chain-object'), help=u"""Updates one or more attributes of the specified processing chain object. \n[Command Reference](updateProcessingChainObject)""")
+@cli_util.option('--processing-chain-object-key', required=True, help=u"""The unique key that identifies the processing chain object. It's numeric and unique within a processing chain.""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--is-enabled-for-processing', type=click.BOOL, help=u"""Indicates if this object/edge is enabled for processing""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_processing_chain_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, processing_chain_object_key, subsetting_rule_key, subsetting_policy_id, is_enabled_for_processing, if_match):
+
+    if isinstance(processing_chain_object_key, six.string_types) and len(processing_chain_object_key.strip()) == 0:
+        raise click.UsageError('Parameter --processing-chain-object-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_enabled_for_processing is not None:
+        _details['isEnabledForProcessing'] = is_enabled_for_processing
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_processing_chain_object(
+        processing_chain_object_key=processing_chain_object_key,
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_processing_chain_object_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@registration_policy_group.command(name=cli_util.override('data_safe.update_registration_policy.command_name', 'update'), help=u"""Updates one or more attributes of the specified registration policy. \n[Command Reference](updateRegistrationPolicy)""")
+@cli_util.option('--registration-policy-id', required=True, help=u"""The OCID of the registration policy to be used for identification""")
+@cli_util.option('--display-name', help=u"""The display name of the registration policy.""")
+@cli_util.option('--description', help=u"""A description of the registration policy.""")
+@cli_util.option('--can-override-features', type=click.BOOL, help=u"""Indicates whether features will be overridden for all targets.""")
+@cli_util.option('--features', type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-option', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'connection-option': {'module': 'data_safe', 'class': 'PolicyConnectionOption'}}, output_type={'module': 'data_safe', 'class': 'RegistrationPolicy'})
+@cli_util.wrap_exceptions
+def update_registration_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, registration_policy_id, display_name, description, can_override_features, features, freeform_tags, defined_tags, connection_option, if_match):
+
+    if isinstance(registration_policy_id, six.string_types) and len(registration_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --registration-policy-id cannot be whitespace or empty string')
+    if not force:
+        if features or freeform_tags or defined_tags or connection_option:
+            if not click.confirm("WARNING: Updates to features and freeform-tags and defined-tags and connection-option will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if can_override_features is not None:
+        _details['canOverrideFeatures'] = can_override_features
+
+    if features is not None:
+        _details['features'] = cli_util.parse_json_parameter("features", features)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if connection_option is not None:
+        _details['connectionOption'] = cli_util.parse_json_parameter("connection_option", connection_option)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_registration_policy(
+        registration_policy_id=registration_policy_id,
+        update_registration_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @report_group.command(name=cli_util.override('data_safe.update_report.command_name', 'update'), help=u"""Updates the specified report. Only tags can be updated. \n[Command Reference](updateReport)""")
 @cli_util.option('--report-id', required=True, help=u"""Unique report identifier""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -26271,6 +29846,965 @@ def update_sql_firewall_policy(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@subsetting_policy_group.command(name=cli_util.override('data_safe.update_subsetting_policy.command_name', 'update'), help=u"""Updates one or more attributes of the specified subsetting policy. \n[Command Reference](updateSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data""")
+@cli_util.option('--schema-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'schema-source': {'module': 'data_safe', 'class': 'UpdateSchemaSourceDetails'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-source': {'module': 'data_safe', 'class': 'UpdateSchemaSourceDetails'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_subsetting_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, schema_source, masking_policy_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if schema_source or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to schema-source and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if schema_source is not None:
+        _details['schemaSource'] = cli_util.parse_json_parameter("schema_source", schema_source)
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.update_subsetting_policy_update_schema_source_from_target_details.command_name', 'update-subsetting-policy-update-schema-source-from-target-details'), help=u"""Updates one or more attributes of the specified subsetting policy. \n[Command Reference](updateSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data""")
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--schema-source-target-id', help=u"""The OCID of the target database that's used as the source of subsetting schemas""")
+@cli_util.option('--schema-source-schemas-for-subsetting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be subsetted""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'schema-source-schemas-for-subsetting': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}, 'schema-source-schemas-for-subsetting': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_subsetting_policy_update_schema_source_from_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, masking_policy_id, freeform_tags, defined_tags, if_match, schema_source_target_id, schema_source_schemas_for_subsetting):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schemaSource'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if schema_source_target_id is not None:
+        _details['schemaSource']['targetId'] = schema_source_target_id
+
+    if schema_source_schemas_for_subsetting is not None:
+        _details['schemaSource']['schemasForSubsetting'] = cli_util.parse_json_parameter("schema_source_schemas_for_subsetting", schema_source_schemas_for_subsetting)
+
+    _details['schemaSource']['schemaSource'] = 'TARGET'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.update_subsetting_policy_update_schema_source_from_sdm_details.command_name', 'update-subsetting-policy-update-schema-source-from-sdm-details'), help=u"""Updates one or more attributes of the specified subsetting policy. \n[Command Reference](updateSubsettingPolicy)""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--schema-source-sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model that's used as the source of subsetting schemas""")
+@cli_util.option('--display-name', help=u"""The display name of the subsetting policy. The name does not have to be unique, and it's changeable""")
+@cli_util.option('--description', help=u"""The description of the subsetting policy""")
+@cli_util.option('--is-redo-logging-enabled', type=click.BOOL, help=u"""Indicates if redo logging is enabled during a subsetting operation. It's disabled by default. Set this attribute to true to enable redo logging. By default, subsetting disables redo logging and flashback logging to purge any original data from logs. However, in certain circumstances when you only want to test subsetting, rollback changes, and retry subsetting, you could enable logging and use a flashback database to retrieve the original data after it has been subsetted""")
+@cli_util.option('--is-refresh-stats-enabled', type=click.BOOL, help=u"""Indicates if statistics gathering is enabled. It's enabled by default. Set this attribute to false to disable statistics gathering. The subsetting process gathers statistics on subsetted database tables after subsetting completes""")
+@cli_util.option('--parallel-degree', help=u"""Specifies options to enable parallel execution when running data subsetting. Allowed values are 'NONE' (no parallelism), 'DEFAULT' (the Oracle Database computes the optimum degree of parallelism) or an integer value to be used as the degree of parallelism. Parallel execution helps effectively use multiple CPUs and improve subsetting performance. Refer to the Oracle Database parallel execution framework when choosing an explicit degree of parallelism""")
+@cli_util.option('--recompile', help=u"""Specifies how to recompile invalid objects post data subsetting. Allowed values are 'SERIAL' (recompile in serial), 'PARALLEL' (recompile in parallel), 'NONE' (do not recompile). If it's set to PARALLEL, the value of parallelDegree attribute is used. Use the built-in UTL_RECOMP package to recompile any remaining invalid objects after subsetting completes""")
+@cli_util.option('--unrelated-tables-action', help=u"""Strategy to be applied for tables which are not impacted by any of the subsetting rules""")
+@cli_util.option('--pre-subsetting-script', help=u"""A pre-subsetting script, which can contain SQL and PL/SQL statements. It's executed before the subsetting process. It's usually used to perform any preparation or prerequisite work before subsetting data""")
+@cli_util.option('--post-subsetting-script', help=u"""A post-subsetting script, which can contain SQL and PL/SQL statements. It's executed after the subsetting process. It's usually used to perform additional transformation or cleanup work after subsetting data""")
+@cli_util.option('--masking-policy-id', help=u"""The OCID of the masking policy to associate with this subsetting policy""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_subsetting_policy_update_schema_source_from_sdm_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_policy_id, schema_source_sensitive_data_model_id, display_name, description, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile, unrelated_tables_action, pre_subsetting_script, post_subsetting_script, masking_policy_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schemaSource'] = {}
+    _details['schemaSource']['sensitiveDataModelId'] = schema_source_sensitive_data_model_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_redo_logging_enabled is not None:
+        _details['isRedoLoggingEnabled'] = is_redo_logging_enabled
+
+    if is_refresh_stats_enabled is not None:
+        _details['isRefreshStatsEnabled'] = is_refresh_stats_enabled
+
+    if parallel_degree is not None:
+        _details['parallelDegree'] = parallel_degree
+
+    if recompile is not None:
+        _details['recompile'] = recompile
+
+    if unrelated_tables_action is not None:
+        _details['unrelatedTablesAction'] = unrelated_tables_action
+
+    if pre_subsetting_script is not None:
+        _details['preSubsettingScript'] = pre_subsetting_script
+
+    if post_subsetting_script is not None:
+        _details['postSubsettingScript'] = post_subsetting_script
+
+    if masking_policy_id is not None:
+        _details['maskingPolicyId'] = masking_policy_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['schemaSource']['schemaSource'] = 'SENSITIVE_DATA_MODEL'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_policy(
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule.command_name', 'update'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subset-rule-entry', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, display_name, description, scope, subset_rule_entry, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if scope or subset_rule_entry:
+            if not click.confirm("WARNING: Updates to scope and subset-rule-entry will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+
+    if subset_rule_entry is not None:
+        _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule_subset_scope_for_all_objects.command_name', 'update-subsetting-rule-subset-scope-for-all-objects'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--subset-rule-entry', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--scope-schema-name', help=u"""The name of the schema containing the objects to be subsetted""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule_subset_scope_for_all_objects(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, display_name, description, subset_rule_entry, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match, scope_schema_name):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if subset_rule_entry:
+            if not click.confirm("WARNING: Updates to subset-rule-entry will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scope'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if subset_rule_entry is not None:
+        _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    if scope_schema_name is not None:
+        _details['scope']['schemaName'] = scope_schema_name
+
+    _details['scope']['scopeType'] = 'ALL'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule_subset_scope_for_specific_objects.command_name', 'update-subsetting-rule-subset-scope-for-specific-objects'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--scope-schema-name', required=True, help=u"""The name of the schema containing the specific object to be subsetted""")
+@cli_util.option('--scope-object-name', required=True, help=u"""The name of the specific object (e.g., table) to be subsetted""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--subset-rule-entry', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'subset-rule-entry': {'module': 'data_safe', 'class': 'SubsetRuleEntry'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule_subset_scope_for_specific_objects(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, scope_schema_name, scope_object_name, display_name, description, subset_rule_entry, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if subset_rule_entry:
+            if not click.confirm("WARNING: Updates to subset-rule-entry will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['scope'] = {}
+    _details['scope']['schemaName'] = scope_schema_name
+    _details['scope']['objectName'] = scope_object_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if subset_rule_entry is not None:
+        _details['subsetRuleEntry'] = cli_util.parse_json_parameter("subset_rule_entry", subset_rule_entry)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['scope']['scopeType'] = 'SPECIFIC'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule_partition_subset_rule_entry.command_name', 'update-subsetting-rule-partition-subset-rule-entry'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--subset-rule-entry-partitions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of partition names which are to be part of the subset data""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subset-rule-entry-sub-partitions-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of sub-partition names which are to be part of the subset data. The sub-partition names should have the partition name also, separated by a dot""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}, 'subset-rule-entry-sub-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}, 'subset-rule-entry-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}, 'subset-rule-entry-sub-partitions-list': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule_partition_subset_rule_entry(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, display_name, description, scope, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match, subset_rule_entry_partitions_list, subset_rule_entry_sub_partitions_list):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if scope:
+            if not click.confirm("WARNING: Updates to scope will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    if subset_rule_entry_partitions_list is not None:
+        _details['subsetRuleEntry']['partitionsList'] = cli_util.parse_json_parameter("subset_rule_entry_partitions_list", subset_rule_entry_partitions_list)
+
+    if subset_rule_entry_sub_partitions_list is not None:
+        _details['subsetRuleEntry']['subPartitionsList'] = cli_util.parse_json_parameter("subset_rule_entry_sub_partitions_list", subset_rule_entry_sub_partitions_list)
+
+    _details['subsetRuleEntry']['ruleType'] = 'PARTITION'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule_percent_subset_rule_entry.command_name', 'update-subsetting-rule-percent-subset-rule-entry'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subset-rule-entry-percent', required=True, type=click.INT, help=u"""The percentage of rows to retain in the subset (between 0 and 100)""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule_percent_subset_rule_entry(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, subset_rule_entry_percent, display_name, description, scope, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if scope:
+            if not click.confirm("WARNING: Updates to scope will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+    _details['subsetRuleEntry']['percent'] = subset_rule_entry_percent
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['subsetRuleEntry']['ruleType'] = 'PERCENT'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_rule_group.command(name=cli_util.override('data_safe.update_subsetting_rule_condition_subset_rule_entry.command_name', 'update-subsetting-rule-condition-subset-rule-entry'), help=u"""Updates one or more attributes of the specified subsetting rule. Note that updating the subsettingRuleEntry attribute replaces the currently assigned subsettingRuleEntry \n[Command Reference](updateSubsettingRule)""")
+@cli_util.option('--subsetting-rule-key', required=True, help=u"""The unique key that identifies the subsetting rule. It's numeric and unique within a subsetting policy.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--subset-rule-entry-condition', required=True, help=u"""The SQL WHERE clause condition used to filter rows for the subset""")
+@cli_util.option('--display-name', help=u"""The display name of the subset rule""")
+@cli_util.option('--description', help=u"""The description of the subset rule""")
+@cli_util.option('--scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rule-combination-mode', type=custom_types.CliCaseInsensitiveChoice(["UNION", "SERIAL"]), help=u"""Specifies how this rule combines with other rules. UNION evaluates this rule independently and adds matching rows to the result set. SERIAL applies this rule sequentially to filter rows selected by a compatible preceding rule.""")
+@cli_util.option('--related-tables-propagation', type=custom_types.CliCaseInsensitiveChoice(["ANCESTORS_AND_DESCENDANTS", "ANCESTORS", "DESCENDANTS", "NONE"]), help=u"""Strategy to be applied while propagating subsetting rule to related tables""")
+@cli_util.option('--peer-tables-action', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_ROWS", "SUBSET", "MAXIMUM_ROWS"]), help=u"""Strategy to be applied while processing peer tables""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scope': {'module': 'data_safe', 'class': 'SubsetScope'}})
+@cli_util.wrap_exceptions
+def update_subsetting_rule_condition_subset_rule_entry(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subsetting_rule_key, subsetting_policy_id, subset_rule_entry_condition, display_name, description, scope, rule_combination_mode, related_tables_propagation, peer_tables_action, if_match):
+
+    if isinstance(subsetting_rule_key, six.string_types) and len(subsetting_rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-rule-key cannot be whitespace or empty string')
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+    if not force:
+        if scope:
+            if not click.confirm("WARNING: Updates to scope will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subsetRuleEntry'] = {}
+    _details['subsetRuleEntry']['condition'] = subset_rule_entry_condition
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if scope is not None:
+        _details['scope'] = cli_util.parse_json_parameter("scope", scope)
+
+    if rule_combination_mode is not None:
+        _details['ruleCombinationMode'] = rule_combination_mode
+
+    if related_tables_propagation is not None:
+        _details['relatedTablesPropagation'] = related_tables_propagation
+
+    if peer_tables_action is not None:
+        _details['peerTablesAction'] = peer_tables_action
+
+    _details['subsetRuleEntry']['ruleType'] = 'CONDITION'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_subsetting_rule(
+        subsetting_rule_key=subsetting_rule_key,
+        subsetting_policy_id=subsetting_policy_id,
+        update_subsetting_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.update_target_alert_policy_association.command_name', 'update'), help=u"""Updates the specified target-alert policy association. \n[Command Reference](updateTargetAlertPolicyAssociation)""")
 @cli_util.option('--target-alert-policy-association-id', required=True, help=u"""The OCID of the target-alert policy association.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates if the target-alert policy association is enabled or disabled by user.""")
@@ -27426,6 +31960,67 @@ def upload_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds
     result = client.upload_sensitive_data_model(
         sensitive_data_model_id=sensitive_data_model_id,
         upload_sensitive_data_model_details=upload_sensitive_data_model_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subsetting_policy_group.command(name=cli_util.override('data_safe.upload_subsetting_policy.command_name', 'upload'), help=u"""Uploads a subsetting policy file (also called template) to update the specified subsetting policy. To create a new subsetting policy using a file, first use the CreateSubsettingPolicy operation to create an empty subsetting policy and then use this operation to upload the subsetting policy file. Note that the upload operation replaces the content of the specified subsetting policy, including all the subsetting rules, with the content of the file. \n[Command Reference](uploadSubsettingPolicy)""")
+@cli_util.option('--upload-subsetting-policy-details', required=True, help=u"""Details to upload a subsetting policy file.""")
+@cli_util.option('--subsetting-policy-id', required=True, help=u"""The OCID of the subsetting policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def upload_subsetting_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, upload_subsetting_policy_details, subsetting_policy_id, if_match):
+
+    if isinstance(subsetting_policy_id, six.string_types) and len(subsetting_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --subsetting-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.upload_subsetting_policy(
+        upload_subsetting_policy_details=upload_subsetting_policy_details,
+        subsetting_policy_id=subsetting_policy_id,
         **kwargs
     )
     if wait_for_state:

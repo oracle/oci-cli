@@ -42,7 +42,7 @@ from oci_cli.service_mapping import service_mapping    # noqa: E402
 # important security information.
 logging.basicConfig(level=logging.WARN)
 
-OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_OKE_WORKLOAD_IDENTITY]
+OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_OKE_WORKLOAD_IDENTITY, cli_constants.OCI_CLI_AUTH_PKCS11]
 
 OCI_HELP = 'Oracle Cloud Infrastructure command line interface'
 
@@ -497,6 +497,9 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
                 auth = os.environ[cli_constants.OCI_CLI_AUTH_ENV_VAR]
             else:
                 raise click.BadParameter('invalid choice: {arg_value}. (choose from {choices})'.format(arg_value=os.environ[cli_constants.OCI_CLI_AUTH_ENV_VAR], choices=', '.join(OCI_CLI_AUTH_CHOICES)), param_hint='OCI_CLI_AUTH')
+
+    if auth == cli_constants.OCI_CLI_AUTH_PKCS11 and sys.version_info < (3, 9, 0):
+        raise click.ClickException("Python 3.9.0 or higher is required for using {pkcs11_auth} authentication.".format(pkcs11_auth=cli_constants.OCI_CLI_AUTH_PKCS11))
 
     initial_dict = {
         'config_file': config_file,

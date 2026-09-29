@@ -144,7 +144,8 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
         user_session = cli_setup_bootstrap.UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
     else:
         # create a user session through the browser login flow
-        user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name, identity_provider_name)
+        enable_dual_stack = ctx.obj.get('enable_dual_stack', False) if ctx.obj else False
+        user_session = cli_setup_bootstrap.create_user_session(region, tenancy_name, identity_provider_name, enable_dual_stack=enable_dual_stack)
 
     # persist the session to a config (including the token value)
     profile, config = cli_setup_bootstrap.persist_user_session(user_session, profile_name=profile_name, config=config_location, token_location=token_location, use_passphrase=use_passphrase, persist_token=True, session_auth=True, persist_only_public_key=persist_only_public_key)

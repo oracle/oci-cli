@@ -27,6 +27,17 @@ BOOTSTRAP_SERVICE_PORT = 8181
 BOOTSTRAP_PROCESS_CANCELED_MESSAGE = 'Bootstrap process canceled.'
 CONSOLE_AUTH_URL_FORMAT = "https://login.{region}.{realm}/v1/oauth2/authorize"
 
+# Login dual-stack support is currently available in OC1. This mapping is
+# derived from the SDK region catalog so new OC1 regions are supported without
+# maintaining a hardcoded region list.
+DUAL_STACK_LOGIN_ENDPOINTS = {
+    region: "https://login.{}.ds.oci.{}/v1/oauth2/authorize".format(
+        region, regions.REALMS[realm]
+    )
+    for region, realm in regions.REGION_REALMS.items()
+    if realm == 'oc1'
+}
+
 
 @cli_setup.setup_group.command('bootstrap', help="""
 Provides an interactive process to create a CLI config file using username / password based login through a browser.
@@ -109,7 +120,7 @@ def bootstrap_oci_cli(ctx, profile_name, config_location):
 """.format(config_file=config_location, profile=profile_name))
 
 
-def create_user_session(region='', tenancy_name=None, identity_provider_name=None):
+def create_user_session(region='', tenancy_name=None, identity_provider_name=None, enable_dual_stack=False):
     if region == '':
         region = cli_setup.prompt_for_region()
 
@@ -160,8 +171,7 @@ def create_user_session(region='', tenancy_name=None, identity_provider_name=Non
         region = regions.REGIONS_SHORT_NAMES[region]
 
     if regions.is_region(region):
-        console_url = CONSOLE_AUTH_URL_FORMAT.format(region=region,
-                                                     realm=regions.REALMS[regions.REGION_REALMS[region]])
+        console_url = get_console_auth_url(region, enable_dual_stack)
     else:
         click.echo('Error: {} is not a valid region. Valid regions are \n{}'.format(region, regions.REGIONS))
         sys.exit(1)
@@ -199,6 +209,17 @@ def create_user_session(region='', tenancy_name=None, identity_provider_name=Non
     tenancy_ocid = token_data['tenant']
 
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
+
+
+def get_console_auth_url(region, enable_dual_stack=False):
+    """Return the browser authentication URL for a session login."""
+    if enable_dual_stack and region in DUAL_STACK_LOGIN_ENDPOINTS:
+        return DUAL_STACK_LOGIN_ENDPOINTS[region]
+
+    return CONSOLE_AUTH_URL_FORMAT.format(
+        region=region,
+        realm=regions.REALMS[regions.REGION_REALMS[region]]
+    )
 
 
 def persist_user_session(user_session, profile_name=None, config=None, token_location=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False, persist_only_public_key=False):
