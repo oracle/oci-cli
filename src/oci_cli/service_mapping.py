@@ -598,6 +598,11 @@ service_mapping = {
         "Oracle Content and Experience",
         "Developer Services"
     ],
+    "oci-product-catalog": [
+        "oci_product_catalog",
+        "Product Catalog",
+        "Others"
+    ],
     "ocvs": [
         "ocvp",
         "Oracle Cloud VMware Solution",

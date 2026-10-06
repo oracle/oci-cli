@@ -263,6 +263,7 @@ compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attac
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_emulated_volume_details.name)
 
 cli_util.rename_command(compute_cli, compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_i_scsi_volume_details, 'attach-iscsi-volume')
+cli_util.rename_command(compute_cli, compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_nvme_volume_details, 'attach-nvme-volume')
 
 compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
 cli_util.rename_command(compute_cli, compute_cli.console_history_group, compute_cli.get_console_history_content, "get-content")
@@ -310,7 +311,7 @@ or
 '{ "destinationUri": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/MyNamespace/b/MyBucket/o/exported-image.qcow2", "destinationType": "objectStorageUri" }'"""
 cli_util.update_param_help(compute_cli.export_image, 'destination_type', "", append=True, example=destination_type_example)
 
-cli_util.get_param(compute_cli.attach_volume, 'type').type = custom_types.CliCaseInsensitiveChoice(['service_determined', 'emulated', 'iscsi', 'paravirtualized'])
+cli_util.get_param(compute_cli.attach_volume, 'type').type = custom_types.CliCaseInsensitiveChoice(['service_determined', 'emulated', 'iscsi', 'paravirtualized', 'nvme'])
 
 cli_util.update_param_help(compute_cli.create_image, 'image_source_details', """[DEPRECATED] The use of the `oci compute image create` command to import an image from Object Storage is deprecated.
 

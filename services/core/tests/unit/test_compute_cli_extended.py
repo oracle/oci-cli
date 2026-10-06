@@ -3,6 +3,8 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import unittest
+from oci_cli import cli_util
+from services.core.src.oci_cli_compute import compute_cli_extended
 from tests import util
 
 
@@ -54,7 +56,10 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach', '--type', 'x'])
         assert "Error: Invalid value for '--type':" in result.output
-        assert '(choose from service_determined, emulated, iscsi, paravirtualized)' in result.output
+        assert '(choose from service_determined, emulated, iscsi, paravirtualized, nvme)' in result.output
+
+        type_param = cli_util.get_param(compute_cli_extended.compute_cli.attach_volume, 'type')
+        assert type_param.type.choices == ['service_determined', 'emulated', 'iscsi', 'paravirtualized', 'nvme']
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach', '--type', 'service_determined'])
         assert 'Error: Missing option(s)' in result.output
@@ -71,6 +76,14 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach-iscsi-volume'])
         assert 'Error: Missing option(s) --instance-id, --volume-id.' in result.output
+
+    def test_attach_nvme_volume(self):
+        result = util.invoke_command(['compute', 'volume-attachment'])
+        assert 'attach-nvme-volume' in result.output
+        assert 'attach-volume-attach-nvme-volume-details' not in result.output
+
+        result = util.invoke_command(['compute', 'volume-attachment', 'attach-nvme-volume', '--help'])
+        assert result.exit_code == 0
 
     # verify if change-compartment takes --wait-for-state option
     def test_change_compartment(self):
