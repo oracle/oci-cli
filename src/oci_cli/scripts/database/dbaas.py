@@ -10,6 +10,7 @@ from subprocess import Popen, PIPE  # to spawn processes
 import time  # to sleep before retrying
 import os  # to get access to os environment
 import re  # for regular expressions
+import shlex
 from oci._vendor import requests  # to make non-standard oci http calls
 from oci._vendor.requests.auth import HTTPBasicAuth  # for swift authorizarion
 import math  # to ceil dataSize and redoSize
@@ -36,6 +37,65 @@ except ImportError:
 
 DEFAULT_LOCATION = os.path.join('~', '.oci', 'config')
 DEFAULT_PROFILE = "DEFAULT"
+REDACTED_OPC_INSTALLER_VALUE = "<redacted_password>"
+SENSITIVE_OPC_INSTALLER_OPTION_MARKERS = ("pass", "pwd", "secret", "token")
+
+
+def _get_opc_installer_option_name(token):
+    return token.split("=", 1)[0]
+
+
+def _is_sensitive_opc_installer_option(token):
+    if not token.startswith("-"):
+        return False
+
+    option_name = _get_opc_installer_option_name(token)
+    normalized_option_name = option_name.lstrip("-").replace("-", "").replace("_", "").lower()
+    return any(marker in normalized_option_name for marker in SENSITIVE_OPC_INSTALLER_OPTION_MARKERS)
+
+
+def _build_opc_installer_command(opcinstaller, swift_path, user_name, password, tmpdir, oracle_sid,
+                                 bucket_name, additional_opc_args):
+    cmd = [
+        "java", "-jar", opcinstaller,
+        "-host", swift_path,
+        "-opcId", user_name,
+        "-opcPass", password,
+        "-walletDir", tmpdir,
+        "-libDir", tmpdir,
+        "-configFile", os.path.join(tmpdir, "opc" + oracle_sid + ".ora"),
+        "-container", bucket_name
+    ]
+
+    if additional_opc_args:
+        try:
+            additional_args = shlex.split(additional_opc_args)
+        except ValueError as exc:
+            sys.exit("Invalid --additional-opc-args: " + str(exc))
+        cmd.extend(additional_args)
+
+    return cmd
+
+
+def _redact_command(command):
+    redacted = []
+    redact_next = False
+    for token in command:
+        if redact_next:
+            redacted.append(REDACTED_OPC_INSTALLER_VALUE)
+            redact_next = False
+            continue
+
+        if _is_sensitive_opc_installer_option(token):
+            if "=" in token:
+                redacted.append(_get_opc_installer_option_name(token) + "=" + REDACTED_OPC_INSTALLER_VALUE)
+            else:
+                redacted.append(token)
+                redact_next = True
+            continue
+
+        redacted.append(token)
+    return " ".join(shlex.quote(token) for token in redacted)
 
 
 @click.command(name='create-from-onprem', help="""Create a backup of on-premise database on OCI """,
@@ -372,24 +432,22 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
             response.raise_for_status()
 
         # Run opcInstaller
-        cmd = "java -jar " + opcinstaller + " -host " + swiftPath + " -opcId '" + userName + "' -opcPass '" + passWord + \
-              "' -walletDir " + tmpdir + " -libDir " + tmpdir + " -configFile " + \
-              os.path.join(tmpdir, "opc" + os.environ['ORACLE_SID'] + ".ora") + " -container " + bucketName
-
-        if additionalopcargs:
-            cmd = cmd + " " + additionalopcargs
-
         click.echo("Setting up opc installer")
-
-        cmd_redacted = "java -jar " + opcinstaller + " -host " + swiftPath + " -opcId '" + userName + "' -opcPass " + \
-            "<redacted_password>" + " -walletDir " + tmpdir + " -libDir " + tmpdir + " -configFile " + \
-            os.path.join(tmpdir, "opc" + os.environ['ORACLE_SID'] + ".ora") + " -container " + bucketName
-
-        click.echo("Executing command: %s" % cmd_redacted)
-        p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        cmd = _build_opc_installer_command(
+            opcinstaller=opcinstaller,
+            swift_path=swiftPath,
+            user_name=userName,
+            password=passWord,
+            tmpdir=tmpdir,
+            oracle_sid=os.environ['ORACLE_SID'],
+            bucket_name=bucketName,
+            additional_opc_args=additionalopcargs
+        )
+        click.echo("Executing command: %s" % _redact_command(cmd))
+        p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         out, err = p.communicate()
         if err or (p.returncode != 0):
-            sys.exit("Failed to run opcInstaller cmd:" + cmd)
+            sys.exit("Failed to run opcInstaller command")
             print(out)
             print(err)
 

@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.94.2 - 2026-10-06
+-------------------
+Added
+~~~~~
+* Generative AI Service Management
+
+  * Support for new optional parameter ``--public-access-path-patterns``
+
+    * ``oci generative-ai hosted-application create --public-access-path-patterns``
+    * ``oci generative-ai hosted-application update --public-access-path-patterns``
+
+* Product Catalog
+
+  * Support for the service
+
+    * ``oci oci-product-catalog``
+
+* Compute Service
+
+  * Support for new command
+
+    * ``oci compute volume-attachment attach-volume-attach-nvme-volume-details``
+
+  * Support for new accepted value ``nvme`` for ``--type``
+
+    * ``oci compute volume-attachment attach --type nvme``
+    * ``oci compute instance launch --launch-volume-attachments``
+
 3.94.1 - 2026-09-29
 -------------------
 Added
