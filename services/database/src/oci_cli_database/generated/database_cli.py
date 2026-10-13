@@ -418,9 +418,7 @@ def exadb_vm_cluster_update_group():
     pass
 
 
-@click.command(cli_util.override('db.gi_version_group.command_name', 'gi-version'), cls=CommandGroupWithAlias, help="""The Oracle Grid Infrastructure (GI) version.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('db.gi_version_group.command_name', 'gi-version'), cls=CommandGroupWithAlias, help="""The Oracle Grid Infrastructure (GI) version. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def gi_version_group():
     pass
@@ -2970,6 +2968,7 @@ def change_encryption_key_location_azure_encryption_key_details(ctx, from_json, 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location_aws_encryption_key_details.command_name', 'change-encryption-key-location-aws-encryption-key-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--aws-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered AWS key.""")
+@cli_util.option('--aws-encryption-key-pool-id', help=u"""Provide the key pool OCID of a registered AWS key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2979,7 +2978,7 @@ def change_encryption_key_location_azure_encryption_key_details(ctx, from_json, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, aws_encryption_key_id, if_match):
+def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, aws_encryption_key_id, aws_encryption_key_pool_id, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -2991,6 +2990,9 @@ def change_encryption_key_location_aws_encryption_key_details(ctx, from_json, wa
 
     _details = {}
     _details['awsEncryptionKeyId'] = aws_encryption_key_id
+
+    if aws_encryption_key_pool_id is not None:
+        _details['awsEncryptionKeyPoolId'] = aws_encryption_key_pool_id
 
     _details['providerType'] = 'AWS'
 
@@ -6524,6 +6526,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--vm-failover-reservation', type=click.INT, help=u"""The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.""")
 @cli_util.option('--distribution-affinity', type=custom_types.CliCaseInsensitiveChoice(["MINIMUM_DISTRIBUTION", "MAXIMUM_DISTRIBUTION"]), help=u"""Determines whether an Autonomous AI Database must be opened across a minimum or maximum of nodes. By default, Minimum nodes is selected.""")
 @cli_util.option('--net-services-architecture', type=custom_types.CliCaseInsensitiveChoice(["DEDICATED", "SHARED", "DRCP"]), help=u"""Enabling SHARED server architecture enables a database server to allow many client processes to share very few server processes, thereby increasing the number of supported users.""")
+@cli_util.option('--encryption-key-location-details-aws-encryption-key-pool-id', help=u"""Provide the key pool OCID of a registered AWS key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UNAVAILABLE would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6532,7 +6535,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, encryption_key_location_details_aws_encryption_key_id, customer_contacts, okv_end_point_group_name, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
+def create_autonomous_container_database_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, encryption_key_location_details_aws_encryption_key_id, customer_contacts, okv_end_point_group_name, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture, encryption_key_location_details_aws_encryption_key_pool_id):
 
     kwargs = {}
 
@@ -6649,6 +6652,9 @@ def create_autonomous_container_database_aws_encryption_key_details(ctx, from_js
 
     if net_services_architecture is not None:
         _details['netServicesArchitecture'] = net_services_architecture
+
+    if encryption_key_location_details_aws_encryption_key_pool_id is not None:
+        _details['encryptionKeyLocationDetails']['awsEncryptionKeyPoolId'] = encryption_key_location_details_aws_encryption_key_pool_id
 
     _details['encryptionKeyLocationDetails']['providerType'] = 'AWS'
 
@@ -6820,7 +6826,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -6861,6 +6867,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DATABASE", "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP", "UNDELETE_ADB", "CLONE_TO_REFRESHABLE", "CROSS_REGION_DATAGUARD", "CROSS_REGION_DISASTER_RECOVERY"]), help=u"""The source of the database: Use `NONE` for creating a new Autonomous AI Database. Use `DATABASE` for creating a new Autonomous AI Database by cloning an existing Autonomous AI Database. Use `CROSS_REGION_DATAGUARD` to create a standby Data Guard database in another region.
@@ -7165,7 +7173,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -7206,6 +7214,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -7508,7 +7518,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -7549,6 +7559,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -7851,7 +7863,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -7892,6 +7904,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -8220,7 +8234,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -8261,6 +8275,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -8568,7 +8584,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -8609,6 +8625,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -8916,7 +8934,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -8957,6 +8975,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -9272,7 +9292,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -9313,6 +9333,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -9619,7 +9641,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -9660,6 +9682,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -9960,7 +9984,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -10001,6 +10025,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -10303,7 +10329,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -10344,6 +10370,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -10650,7 +10678,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -10691,6 +10719,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -10991,7 +11021,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -11032,6 +11062,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -11340,7 +11372,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -11381,6 +11413,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -11683,7 +11717,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -11724,6 +11758,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -12028,7 +12064,7 @@ This cannot be used in conjunction with with OCI vault secrets (secretId).""")
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, dataStorageSizeInTBs, adminPassword, isMTLSConnectionRequired, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous AI Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous AI Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `TRUE`.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous AI Database CPU core count. The default value is `FALSE`.""")
 @cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous AI Database on Dedicated Exadata Infrastructure.""")
@@ -12069,6 +12105,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--private-endpoint-ip', help=u"""The private endpoint Ip address for the resource.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts.
@@ -12835,7 +12873,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 
 @basecc_vm_cluster_group.command(name=cli_util.override('db.create_basecc_vm_cluster.command_name', 'create'), help=u"""Creates a BaseDB-C@C VM cluster. \n[Command Reference](createBaseccVmCluster)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""Total CPU cores for the BaseDB C@C VM cluster.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of ECPUs to enable per VM for the BaseDB C@C VM cluster. Minimum: 8 ECPUs per VM for Enterprise Edition Extreme Performance VM clusters, and 4 ECPUs per VM for other editions. Maximum: 32 ECPUs per VM for Standard Edition, and 240 ECPUs per VM for other editions. For a two-VM Enterprise Edition Extreme Performance VM Cluster, the maximum is 480 total ECPUs (240 ECPUs per VM).""")
 @cli_util.option('--base-infrastructure-id', required=True, help=u"""The [OCID] of Oracle Data Cloud@Customer Infrastructure.""")
 @cli_util.option('--base-vm-cluster-network-id', required=True, help=u"""The [OCID] of BaseDB-C@C VM Cluster Network.""")
 @cli_util.option('--gi-version', required=True, help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")
@@ -12850,7 +12888,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
 @cli_util.option('--additional-vm-storage-size-in-gbs', type=click.INT, help=u"""Total /u01 partition size (GB) for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The DATA Disk Group size in GB for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""The RECO Disk Group size in GB for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster.""")
-@cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The total memory to be allocated, in GBs, for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. The minimum is 11GB for every 4 ECPU.""")
+@cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The total memory to be allocated, in GBs, for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. Minimum for Extreme Performance Edition 1-node or 2-node systems is 16 GB per VM. Minimum for all other editions is 11 GB.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -13259,6 +13297,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-version', help=u"""Operating system version of the image.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--file-system-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the file system configuration of the VM cluster.
 
 This option is a JSON list with items of type FileSystemConfigurationDetail.  For documentation on FileSystemConfigurationDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/FileSystemConfigurationDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13276,7 +13315,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, exascale_db_storage_vault_id, vm_cluster_type, vm_file_system_storage_type, vm_backup_storage_type, opc_dry_run):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, is_older_version_acknowledged, file_system_configuration_details, cloud_automation_update_details, exascale_db_storage_vault_id, vm_cluster_type, vm_file_system_storage_type, vm_backup_storage_type, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -13368,6 +13407,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if system_version is not None:
         _details['systemVersion'] = system_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if file_system_configuration_details is not None:
         _details['fileSystemConfigurationDetails'] = cli_util.parse_json_parameter("file_system_configuration_details", file_system_configuration_details)
@@ -13574,6 +13616,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--creation-type', required=True, help=u"""Specifies whether to create the peer database in an existing DB system or in a new DB system.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--source-encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
@@ -13586,7 +13629,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, creation_type, database_software_image_id, is_older_version_acknowledged, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -13601,6 +13644,9 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if source_encryption_key_location_details is not None:
         _details['sourceEncryptionKeyLocationDetails'] = cli_util.parse_json_parameter("source_encryption_key_location_details", source_encryption_key_location_details)
@@ -13674,6 +13720,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--source-encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
@@ -13728,7 +13775,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-system-security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, cpu_core_count, storage_volume_performance_mode, compute_model, compute_count, node_count, subnet_id, nsg_ids, backup_network_nsg_ids, hostname, domain, time_zone, fault_domains, private_ip, private_ip_v6, license_model, db_system_freeform_tags, db_system_defined_tags, db_system_security_attributes, database_freeform_tags, database_defined_tags, data_collection_options, cluster_placement_group_id, subscription_id):
+def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_older_version_acknowledged, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, cpu_core_count, storage_volume_performance_mode, compute_model, compute_count, node_count, subnet_id, nsg_ids, backup_network_nsg_ids, hostname, domain, time_zone, fault_domains, private_ip, private_ip_v6, license_model, db_system_freeform_tags, db_system_defined_tags, db_system_security_attributes, database_freeform_tags, database_defined_tags, data_collection_options, cluster_placement_group_id, subscription_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -13742,6 +13789,9 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if source_encryption_key_location_details is not None:
         _details['sourceEncryptionKeyLocationDetails'] = cli_util.parse_json_parameter("source_encryption_key_location_details", source_encryption_key_location_details)
@@ -13895,6 +13945,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--source-encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
@@ -13909,7 +13960,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_vm_cluster_id, peer_db_home_id):
+def create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_older_version_acknowledged, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_vm_cluster_id, peer_db_home_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -13923,6 +13974,9 @@ def create_data_guard_association_create_data_guard_association_to_existing_vm_c
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if source_encryption_key_location_details is not None:
         _details['sourceEncryptionKeyLocationDetails'] = cli_util.parse_json_parameter("source_encryption_key_location_details", source_encryption_key_location_details)
@@ -14004,6 +14058,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--source-encryption-key-location-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
@@ -14018,7 +14073,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_db_system_id, peer_db_home_id):
+def create_data_guard_association_create_data_guard_association_to_existing_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_older_version_acknowledged, source_encryption_key_location_details, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, peer_db_system_id, peer_db_home_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14032,6 +14087,9 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if source_encryption_key_location_details is not None:
         _details['sourceEncryptionKeyLocationDetails'] = cli_util.parse_json_parameter("source_encryption_key_location_details", source_encryption_key_location_details)
@@ -14114,6 +14172,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--source-encryption-key-location-details-hsm-password', required=True, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
@@ -14125,7 +14184,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_external_hsm_encryption_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_hsm_password, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association_external_hsm_encryption_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_hsm_password, database_software_image_id, is_older_version_acknowledged, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14141,6 +14200,9 @@ def create_data_guard_association_external_hsm_encryption_details(ctx, from_json
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_active_data_guard_enabled is not None:
         _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
@@ -14214,6 +14276,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--source-encryption-key-location-details-google-cloud-provider-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Google Cloud Provider key.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
@@ -14225,7 +14288,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_google_cloud_provider_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_google_cloud_provider_encryption_key_id, database_software_image_id, is_older_version_acknowledged, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14241,6 +14304,9 @@ def create_data_guard_association_google_cloud_provider_encryption_key_details(c
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_active_data_guard_enabled is not None:
         _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
@@ -14314,6 +14380,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--source-encryption-key-location-details-azure-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Azure key.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
@@ -14325,7 +14392,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_azure_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_azure_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association_azure_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_azure_encryption_key_id, database_software_image_id, is_older_version_acknowledged, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14341,6 +14408,9 @@ def create_data_guard_association_azure_encryption_key_details(ctx, from_json, w
 
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_active_data_guard_enabled is not None:
         _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
@@ -14414,9 +14484,11 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--source-encryption-key-location-details-aws-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered AWS key.""")
 @cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
 @cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
+@cli_util.option('--source-encryption-key-location-details-aws-encryption-key-pool-id', help=u"""Provide the key pool OCID of a registered AWS key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UPGRADING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -14425,7 +14497,7 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_aws_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_aws_encryption_key_id, database_software_image_id, is_older_version_acknowledged, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, source_encryption_key_location_details_aws_encryption_key_pool_id):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14442,6 +14514,9 @@ def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wai
     if database_software_image_id is not None:
         _details['databaseSoftwareImageId'] = database_software_image_id
 
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
+
     if is_active_data_guard_enabled is not None:
         _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
 
@@ -14450,6 +14525,9 @@ def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wai
 
     if peer_sid_prefix is not None:
         _details['peerSidPrefix'] = peer_sid_prefix
+
+    if source_encryption_key_location_details_aws_encryption_key_pool_id is not None:
+        _details['sourceEncryptionKeyLocationDetails']['awsEncryptionKeyPoolId'] = source_encryption_key_location_details_aws_encryption_key_pool_id
 
     _details['sourceEncryptionKeyLocationDetails']['providerType'] = 'AWS'
 
@@ -14850,6 +14928,7 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE", "EXACC_SHAPE", "EXADBXS_SHAPE", "BDBCC_SHAPE"]), help=u"""To what shape the image is meant for.""")
 @cli_util.option('--image-type', type=custom_types.CliCaseInsensitiveChoice(["GRID_IMAGE", "DATABASE_IMAGE"]), help=u"""The type of software image. Can be grid or database.""")
 @cli_util.option('--patch-set', help=u"""The PSU or PBP or Release Updates. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--database-software-image-one-off-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of one-off patches for Database Homes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ls-inventory', help=u"""The output from the OPatch lsInventory command, which is passed as a string.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -14866,7 +14945,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-software-image-one-off-patches': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSoftwareImage'})
 @cli_util.wrap_exceptions
-def create_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, database_version, image_shape_family, image_type, patch_set, database_software_image_one_off_patches, ls_inventory, freeform_tags, defined_tags, source_db_home_id, source_gi_home_id):
+def create_database_software_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, database_version, image_shape_family, image_type, patch_set, is_older_version_acknowledged, database_software_image_one_off_patches, ls_inventory, freeform_tags, defined_tags, source_db_home_id, source_gi_home_id):
 
     kwargs = {}
 
@@ -14885,6 +14964,9 @@ def create_database_software_image(ctx, from_json, wait_for_state, max_wait_seco
 
     if patch_set is not None:
         _details['patchSet'] = patch_set
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if database_software_image_one_off_patches is not None:
         _details['databaseSoftwareImageOneOffPatches'] = cli_util.parse_json_parameter("database_software_image_one_off_patches", database_software_image_one_off_patches)
@@ -14946,6 +15028,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "VM_CLUSTER_BACKUP", "VM_CLUSTER_NEW", "VM_CLUSTER_DATABASE"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -14955,7 +15038,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, source, is_desupported_version, is_unified_auditing_enabled):
+def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, source, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -14984,6 +15067,9 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15031,6 +15117,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15040,7 +15127,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
+def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -15068,6 +15155,9 @@ def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, f
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15117,6 +15207,7 @@ def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, f
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15126,7 +15217,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
+def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -15154,6 +15245,9 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15203,6 +15297,7 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15212,7 +15307,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_vm_cluster_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
+def create_db_home_create_db_home_with_vm_cluster_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -15240,6 +15335,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_database_details(ctx, 
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15289,6 +15387,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_database_details(ctx, 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -15298,7 +15397,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled):
+def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled):
 
     kwargs = {}
 
@@ -15326,6 +15425,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15374,6 +15476,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -15387,7 +15490,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled, db_version, database):
+def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled, db_version, database):
 
     kwargs = {}
 
@@ -15414,6 +15517,9 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15468,6 +15574,7 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-desupported-version', type=click.BOOL, help=u"""If true, the customer acknowledges that the specified Oracle Database software is an older release that is not currently supported by OCI.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-unified-auditing-enabled', type=click.BOOL, help=u"""Indicates whether unified autiding is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
@@ -15481,7 +15588,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_unified_auditing_enabled, db_version, database):
+def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, display_name, kms_key_id, kms_key_version_id, database_software_image_id, freeform_tags, defined_tags, is_desupported_version, is_older_version_acknowledged, is_unified_auditing_enabled, db_version, database):
 
     kwargs = {}
 
@@ -15508,6 +15615,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 
     if is_desupported_version is not None:
         _details['isDesupportedVersion'] = is_desupported_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_unified_auditing_enabled is not None:
         _details['isUnifiedAuditingEnabled'] = is_unified_auditing_enabled
@@ -15713,6 +15823,7 @@ The grid image ID can be obtained using the API /20160918/giVersions/{majorVersi
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous AI Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-network-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that the backup network of this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. Applicable only to Exadata systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-version', help=u"""Operating system version of the image.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15729,7 +15840,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'vm-file-system-storage': {'module': 'database', 'class': 'ExadbVmClusterStorageDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'ExadbVmCluster'})
 @cli_util.wrap_exceptions
-def create_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, backup_subnet_id, display_name, hostname, ssh_public_keys, shape, node_count, total_e_cpu_count, enabled_e_cpu_count, vm_file_system_storage, exascale_db_storage_vault_id, grid_image_id, cluster_name, domain, license_model, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, system_version, freeform_tags, defined_tags, security_attributes, data_collection_options, subscription_id, shape_attribute):
+def create_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, backup_subnet_id, display_name, hostname, ssh_public_keys, shape, node_count, total_e_cpu_count, enabled_e_cpu_count, vm_file_system_storage, exascale_db_storage_vault_id, grid_image_id, cluster_name, domain, license_model, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, system_version, is_older_version_acknowledged, freeform_tags, defined_tags, security_attributes, data_collection_options, subscription_id, shape_attribute):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -15779,6 +15890,9 @@ def create_exadb_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if system_version is not None:
         _details['systemVersion'] = system_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -17532,6 +17646,7 @@ def create_scheduling_window(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--is-sparse-diskgroup-enabled', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the VM cluster. If false, the sparse disk group is not created.""")
 @cli_util.option('--is-local-backup-enabled', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the VM cluster. If false, database backup on local Exadata storage is not available in the VM cluster.""")
 @cli_util.option('--time-zone', help=u"""The time zone to use for the VM cluster. For details, see [DB System Time Zones].""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--db-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Db server.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -17555,7 +17670,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options, system_version, file_system_configuration_details, vm_cluster_type, cloud_automation_update_details, exascale_db_storage_vault_id, vm_file_system_storage_type, vm_backup_storage_type):
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, data_storage_percentage, reco_storage_percentage, sparse_storage_percentage, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, is_older_version_acknowledged, db_servers, freeform_tags, defined_tags, data_collection_options, system_version, file_system_configuration_details, vm_cluster_type, cloud_automation_update_details, exascale_db_storage_vault_id, vm_file_system_storage_type, vm_backup_storage_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -17604,6 +17719,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if time_zone is not None:
         _details['timeZone'] = time_zone
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if db_servers is not None:
         _details['dbServers'] = cli_util.parse_json_parameter("db_servers", db_servers)
@@ -24643,6 +24761,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MIGRATED", "MAINTENANCE_IN_PROGRESS", "NEEDS_ATTENTION", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UPGRADING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -24652,7 +24771,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, source, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, opc_dry_run):
+def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, source, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -24751,6 +24870,9 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_db_system(
@@ -24853,6 +24975,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help=u"""The type of redundancy configured for the DB system. Normal is 2-way redundancy, recommended for test and development systems. High is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -24865,8 +24988,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, disk_redundancy, license_model, maintenance_window_details, opc_dry_run):
-
+def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, disk_redundancy, license_model, maintenance_window_details, opc_dry_run):
     kwargs = {}
     if opc_dry_run is not None:
         kwargs['opc_dry_run'] = opc_dry_run
@@ -24963,6 +25085,9 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if disk_redundancy is not None:
         _details['diskRedundancy'] = disk_redundancy
@@ -25076,6 +25201,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MIGRATED", "MAINTENANCE_IN_PROGRESS", "NEEDS_ATTENTION", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UPGRADING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -25086,8 +25212,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeForStandbyDbSystem'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_standby_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, primary_db_system_id, db_home, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, license_model, opc_dry_run):
-
+def launch_db_system_launch_standby_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, primary_db_system_id, db_home, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, license_model, opc_dry_run):
     kwargs = {}
     if opc_dry_run is not None:
         kwargs['opc_dry_run'] = opc_dry_run
@@ -25184,6 +25309,9 @@ def launch_db_system_launch_standby_db_system_details(ctx, from_json, wait_for_s
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -25291,6 +25419,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MIGRATED", "MAINTENANCE_IN_PROGRESS", "NEEDS_ATTENTION", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UPGRADING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -25301,7 +25430,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDbSystemDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, source_db_system_id, db_home, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, license_model, opc_dry_run):
+def launch_db_system_launch_db_system_from_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, source_db_system_id, db_home, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, license_model, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -25399,6 +25528,9 @@ def launch_db_system_launch_db_system_from_db_system_details(ctx, from_json, wai
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if license_model is not None:
         _details['licenseModel'] = license_model
@@ -25506,6 +25638,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help=u"""The type of redundancy configured for the DB system. NORMAL 2-way redundancy, recommended for test and development systems. HIGH is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -25517,7 +25650,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, disk_redundancy, license_model, opc_dry_run):
+def launch_db_system_launch_db_system_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, disk_redundancy, license_model, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -25615,6 +25748,9 @@ def launch_db_system_launch_db_system_from_database_details(ctx, from_json, wait
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if disk_redundancy is not None:
         _details['diskRedundancy'] = disk_redundancy
@@ -25725,6 +25861,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
 @cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help=u"""The type of redundancy configured for the DB system. NORMAL 2-way redundancy, recommended for test and development systems. HIGH is 3-way redundancy, recommended for production systems.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
@@ -25736,7 +25873,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, disk_redundancy, license_model, opc_dry_run):
+def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, disk_redundancy, license_model, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -25834,6 +25971,9 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
 
     if compute_count is not None:
         _details['computeCount'] = compute_count
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if disk_redundancy is not None:
         _details['diskRedundancy'] = disk_redundancy
@@ -36253,7 +36393,7 @@ For Autonomous AI Database Serverless, this is an array of CIDR (classless inter
 For an update operation, if you want to delete all the IPs in the ACL, use an array with a single empty string entry.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates whether auto scaling is enabled for the Autonomous AI Database CPU core count. Setting to `TRUE` enables auto scaling. Setting to `FALSE` disables auto scaling. The default value is `TRUE`. Auto scaling is only available for [Autonomous AI Database Serverless instances].""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates whether auto scaling is enabled for the Autonomous AI Database CPU core count. Setting to `TRUE` enables auto scaling. Setting to `FALSE` disables auto scaling. The default value is null. Auto scaling is only available for [Autonomous AI Database Serverless instances].""")
 @cli_util.option('--is-refreshable-clone', type=click.BOOL, help=u"""Indicates if the Autonomous AI Database is a refreshable clone.
 
 This cannot be updated in parallel with any of the following: cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -36278,6 +36418,8 @@ To create or delete a local (in-region) standby, see the `isDataGuardEnabled` pa
 
 When disconnecting a cross-region standby, specify the standby database OCID in this parameter together with `isDisconnectPeer=true`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle AI Database version for Autonomous AI Database. When you specify 23ai for dbversion, the system will provision a 23ai database, but the UI will display it as 26ai. When you specify 26ai for dbversion, the system will provision and display a 26ai database as expected. For new databases, it is recommended to use either 19c or 26ai.
+
+The default database version is the Oracle-recommended version. You can retrieve the default DB version by calling the [ListAutonomousDbVersions] operation.
 
 **Note** Starting December 2026, 23ai will not be supported as a valid value for this parameter.""")
 @cli_util.option('--open-mode', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "READ_WRITE"]), help=u"""Indicates the Autonomous AI Database mode. The database can be opened in `READ_ONLY` or `READ_WRITE` mode.
@@ -37244,8 +37386,8 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
 
 @basecc_vm_cluster_group.command(name=cli_util.override('db.update_basecc_vm_cluster.command_name', 'update'), help=u"""Updates the specified BaseDB-C@C VM cluster. Applies to Base Database Service on Cloud@Customer instances only. \n[Command Reference](updateBaseccVmCluster)""")
 @cli_util.option('--basecc-vm-cluster-id', required=True, help=u"""The BaseDB-C@C VM cluster [OCID].""")
-@cli_util.option('--cpu-core-count', type=click.INT, help=u"""Total CPU cores for the BaseDB C@C VM cluster.""")
-@cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The total memory to be allocated, in GBs, for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. The minimum is 11GB for every 4 ECPU.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of ECPUs to enable per VM for the BaseDB C@C VM cluster. Minimum: 8 ECPUs per VM for Enterprise Edition Extreme Performance VM clusters, and 4 ECPUs per VM for other editions. Maximum: 32 ECPUs per VM for Standard Edition, and 240 ECPUs per VM for other editions. For a two-VM Enterprise Edition Extreme Performance VM Cluster, the maximum is 480 total ECPUs (240 ECPUs per VM).""")
+@cli_util.option('--memory-size-in-gbs', type=click.INT, help=u"""The total memory to be allocated, in GBs, for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. Minimum for Extreme Performance Edition 1-node or 2-node systems is 16 GB per VM. Minimum for all other editions is 11 GB.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""The DATA Disk Group size in GB for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster.""")
 @cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""The RECO Disk Group size in GB for the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Base Database Service on Cloud@Customer (BaseDB-C@C) VM cluster. The default is LICENSE_INCLUDED.""")
@@ -38163,23 +38305,24 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 **IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
 @cli_util.option('--auto-failover-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-safe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}, 'auto-failover-configuration': {'module': 'database', 'class': 'AutoFailoverConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}, 'auto-failover-configuration': {'module': 'database', 'class': 'AutoFailoverConfiguration'}, 'data-safe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}, 'auto-failover-configuration': {'module': 'database', 'class': 'AutoFailoverConfiguration'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'storage-size-details': {'module': 'database', 'class': 'DatabaseStorageSizeDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'managed-software-update-details': {'module': 'database', 'class': 'ManagedSoftwareUpdateInputDetails'}, 'patch-options': {'module': 'database', 'class': 'PatchOptions'}, 'auto-failover-configuration': {'module': 'database', 'class': 'AutoFailoverConfiguration'}, 'data-safe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, new_admin_password, old_tde_wallet_password, new_tde_wallet_password, storage_size_details, freeform_tags, defined_tags, managed_software_update_details, patch_options, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, auto_failover_configuration, if_match):
+def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, new_admin_password, old_tde_wallet_password, new_tde_wallet_password, storage_size_details, freeform_tags, defined_tags, managed_software_update_details, patch_options, database_admin_password, protection_mode, transport_type, is_active_data_guard_enabled, auto_failover_configuration, data_safe_registration_details, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
     if not force:
-        if db_backup_config or storage_size_details or freeform_tags or defined_tags or managed_software_update_details or patch_options or auto_failover_configuration:
-            if not click.confirm("WARNING: Updates to db-backup-config and storage-size-details and freeform-tags and defined-tags and managed-software-update-details and patch-options and auto-failover-configuration will replace any existing values. Are you sure you want to continue?"):
+        if db_backup_config or storage_size_details or freeform_tags or defined_tags or managed_software_update_details or patch_options or auto_failover_configuration or data_safe_registration_details:
+            if not click.confirm("WARNING: Updates to db-backup-config and storage-size-details and freeform-tags and defined-tags and managed-software-update-details and patch-options and auto-failover-configuration and data-safe-registration-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -38232,6 +38375,9 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if auto_failover_configuration is not None:
         _details['autoFailoverConfiguration'] = cli_util.parse_json_parameter("auto_failover_configuration", auto_failover_configuration)
+
+    if data_safe_registration_details is not None:
+        _details['dataSafeRegistrationDetails'] = cli_util.parse_json_parameter("data_safe_registration_details", data_safe_registration_details)
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_database(
@@ -38869,6 +39015,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 The grid image ID can be obtained using the API /20160918/giVersions/{majorVersion}/minorVersions?compartmentId=<compartmentId>&shapeFamily=EXADB_XS&availabilityDomain=<AD name>. The list of supported major versions can be obtained using the API /20160918/giVersions?compartmentId=<compartmentId>&shape=ExaDbXS&availabilityDomain=<AD name>""")
 @cli_util.option('--update-action', type=custom_types.CliCaseInsensitiveChoice(["ROLLING_APPLY", "NON_ROLLING_APPLY", "PRECHECK", "ROLLBACK"]), help=u"""The update action.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state MAINTENANCE_IN_PROGRESS would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -38879,7 +39026,7 @@ The grid image ID can be obtained using the API /20160918/giVersions/{majorVersi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vm-file-system-storage': {'module': 'database', 'class': 'ExadbVmClusterStorageDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'ExadbVmCluster'})
 @cli_util.wrap_exceptions
-def update_exadb_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, display_name, total_e_cpu_count, enabled_e_cpu_count, vm_file_system_storage, node_count, license_model, ssh_public_keys, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, grid_image_id, update_action, if_match):
+def update_exadb_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadb_vm_cluster_id, display_name, total_e_cpu_count, enabled_e_cpu_count, vm_file_system_storage, node_count, license_model, ssh_public_keys, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, grid_image_id, update_action, is_older_version_acknowledged, if_match):
 
     if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
@@ -38942,6 +39089,9 @@ def update_exadb_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if update_action is not None:
         _details['updateAction'] = update_action
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_exadb_vm_cluster(
@@ -40631,6 +40781,7 @@ def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details-db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-upgrade-source-details-is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--database-upgrade-source-details-options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -40640,7 +40791,7 @@ def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_home_id, if_match, database_upgrade_source_details_options):
+def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_home_id, if_match, database_upgrade_source_details_is_older_version_acknowledged, database_upgrade_source_details_options):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -40654,6 +40805,9 @@ def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_
     _details['databaseUpgradeSourceDetails'] = {}
     _details['action'] = action
     _details['databaseUpgradeSourceDetails']['dbHomeId'] = database_upgrade_source_details_db_home_id
+
+    if database_upgrade_source_details_is_older_version_acknowledged is not None:
+        _details['databaseUpgradeSourceDetails']['isOlderVersionAcknowledged'] = database_upgrade_source_details_is_older_version_acknowledged
 
     if database_upgrade_source_details_options is not None:
         _details['databaseUpgradeSourceDetails']['options'] = database_upgrade_source_details_options
@@ -40697,6 +40851,7 @@ def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_
 @cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""The database upgrade action.""")
 @cli_util.option('--database-upgrade-source-details-database-software-image-id', required=True, help=u"""The database software image [OCID] of the image to be used to upgrade a database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-upgrade-source-details-is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--database-upgrade-source-details-options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -40706,7 +40861,7 @@ def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def upgrade_database_database_upgrade_with_database_software_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_database_software_image_id, if_match, database_upgrade_source_details_options):
+def upgrade_database_database_upgrade_with_database_software_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_database_software_image_id, if_match, database_upgrade_source_details_is_older_version_acknowledged, database_upgrade_source_details_options):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -40720,6 +40875,9 @@ def upgrade_database_database_upgrade_with_database_software_image_details(ctx, 
     _details['databaseUpgradeSourceDetails'] = {}
     _details['action'] = action
     _details['databaseUpgradeSourceDetails']['databaseSoftwareImageId'] = database_upgrade_source_details_database_software_image_id
+
+    if database_upgrade_source_details_is_older_version_acknowledged is not None:
+        _details['databaseUpgradeSourceDetails']['isOlderVersionAcknowledged'] = database_upgrade_source_details_is_older_version_acknowledged
 
     if database_upgrade_source_details_options is not None:
         _details['databaseUpgradeSourceDetails']['options'] = database_upgrade_source_details_options
@@ -40765,6 +40923,7 @@ def upgrade_database_database_upgrade_with_database_software_image_details(ctx, 
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--database-upgrade-source-details-is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--database-upgrade-source-details-options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -40774,7 +40933,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_version, if_match, database_upgrade_source_details_options):
+def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_version, if_match, database_upgrade_source_details_is_older_version_acknowledged, database_upgrade_source_details_options):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -40788,6 +40947,9 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
     _details['databaseUpgradeSourceDetails'] = {}
     _details['action'] = action
     _details['databaseUpgradeSourceDetails']['dbVersion'] = database_upgrade_source_details_db_version
+
+    if database_upgrade_source_details_is_older_version_acknowledged is not None:
+        _details['databaseUpgradeSourceDetails']['isOlderVersionAcknowledged'] = database_upgrade_source_details_is_older_version_acknowledged
 
     if database_upgrade_source_details_options is not None:
         _details['databaseUpgradeSourceDetails']['options'] = database_upgrade_source_details_options
@@ -40832,6 +40994,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 @cli_util.option('--snapshot-retention-period-in-days', type=click.INT, help=u"""The retention period, in days, for the snapshot that allows you to perform a rollback of the upgrade operation. After this number of days passes, you cannot roll back the upgrade.""")
 @cli_util.option('--new-gi-version', help=u"""A valid Oracle Grid Infrastructure (GI) software version.""")
 @cli_util.option('--new-os-version', help=u"""A valid Oracle Software (OS) version eg. Oracle Linux Server release 8""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--is-snapshot-retention-days-force-updated', type=click.BOOL, help=u"""If true, rollback time is updated even if operating system upgrade history contains errors.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MIGRATED", "MAINTENANCE_IN_PROGRESS", "NEEDS_ATTENTION", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state UPGRADING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -40842,7 +41005,7 @@ def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, action, snapshot_retention_period_in_days, new_gi_version, new_os_version, is_snapshot_retention_days_force_updated, if_match):
+def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, action, snapshot_retention_period_in_days, new_gi_version, new_os_version, is_older_version_acknowledged, is_snapshot_retention_days_force_updated, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
@@ -40863,6 +41026,9 @@ def upgrade_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if new_os_version is not None:
         _details['newOsVersion'] = new_os_version
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if is_snapshot_retention_days_force_updated is not None:
         _details['isSnapshotRetentionDaysForceUpdated'] = is_snapshot_retention_days_force_updated

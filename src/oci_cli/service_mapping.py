@@ -138,6 +138,11 @@ service_mapping = {
         "Compute Cloud@Customer",
         "Others"
     ],
+    "ccd-offers": [
+        "ccd_offers",
+        "Continuous Consumption Discounts",
+        "Others"
+    ],
     "ce": [
         "container_engine",
         "Kubernetes Engine",
