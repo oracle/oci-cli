@@ -1409,10 +1409,10 @@ This option is a JSON list with items of type NamedLink.  For documentation on N
 This option is a JSON list with items of type PricingPlan.  For documentation on PricingPlan please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/PricingPlan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--partner-registration-url', help=u"""The url provided by partner for the registration of subscription.""")
 @cli_util.option('--term-id', help=u"""The unique id of the term attached to the listing.""")
-@cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--recommended-service-provider-listing-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of service listings attached to lead gen listing""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-and-pricing-policy', help=u"""Listing availability and Pricing Policy statement.""")
 @cli_util.option('--is-rover-exportable', type=click.BOOL, help=u"""Is this listing rover exportable""")
+@cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--demo-url', help=u"""Url to demo of the listing""")
 @cli_util.option('--self-paced-training-url', help=u"""Url to training resources of the listing""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1423,7 +1423,7 @@ This option is a JSON list with items of type PricingPlan.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-language': {'module': 'marketplace_publisher', 'class': 'LanguageItem'}, 'supportedlanguages': {'module': 'marketplace_publisher', 'class': 'list[LanguageItem]'}, 'support-contacts': {'module': 'marketplace_publisher', 'class': 'list[SupportContact]'}, 'support-links': {'module': 'marketplace_publisher', 'class': 'list[NamedLink]'}, 'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}, 'version-details': {'module': 'marketplace_publisher', 'class': 'VersionDetails'}, 'products': {'module': 'marketplace_publisher', 'class': 'list[ListingProduct]'}, 'pricing-plans': {'module': 'marketplace_publisher', 'class': 'list[PricingPlan]'}, 'recommended-service-provider-listing-ids': {'module': 'marketplace_publisher', 'class': 'list[string]'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevision'})
 @cli_util.wrap_exceptions
-def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, headline, pricing_type, products, display_name, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, status, freeform_tags, defined_tags, version_details, system_requirements, pricing_plans, partner_registration_url, term_id, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, is_rover_exportable, demo_url, self_paced_training_url):
+def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_id, headline, pricing_type, products, display_name, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, status, freeform_tags, defined_tags, version_details, system_requirements, pricing_plans, partner_registration_url, term_id, recommended_service_provider_listing_ids, availability_and_pricing_policy, is_rover_exportable, vanity_url, demo_url, self_paced_training_url):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1488,9 +1488,6 @@ def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, 
     if term_id is not None:
         _details['termId'] = term_id
 
-    if vanity_url is not None:
-        _details['vanityUrl'] = vanity_url
-
     if recommended_service_provider_listing_ids is not None:
         _details['recommendedServiceProviderListingIds'] = cli_util.parse_json_parameter("recommended_service_provider_listing_ids", recommended_service_provider_listing_ids)
 
@@ -1499,6 +1496,9 @@ def create_listing_revision_create_oci_listing_revision_details(ctx, from_json, 
 
     if is_rover_exportable is not None:
         _details['isRoverExportable'] = is_rover_exportable
+
+    if vanity_url is not None:
+        _details['vanityUrl'] = vanity_url
 
     if demo_url is not None:
         _details['demoUrl'] = demo_url
@@ -6468,13 +6468,13 @@ This option is a JSON list with items of type NamedLink.  For documentation on N
 This option is a JSON list with items of type ListingProduct.  For documentation on ListingProduct please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/ListingProduct.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--partner-registration-url', help=u"""The url provided by partner for the registration of subscription.""")
 @cli_util.option('--term-id', help=u"""The unique id of the term attached to the listing.""")
-@cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--recommended-service-provider-listing-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCIDs of service listings attached to lead gen listing""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-and-pricing-policy', help=u"""Listing availability and Pricing Policy statement.""")
 @cli_util.option('--pricing-plans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Pricing Plans provider by publisher.
 
 This option is a JSON list with items of type PricingPlan.  For documentation on PricingPlan please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/marketplacepublisher/20241201/datatypes/PricingPlan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-rover-exportable', type=click.BOOL, help=u"""Is this listing rover exportable""")
+@cli_util.option('--vanity-url', help=u"""Custom link to the listing""")
 @cli_util.option('--demo-url', help=u"""Url to demo of the listing""")
 @cli_util.option('--self-paced-training-url', help=u"""Url to training resources of the listing""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6487,7 +6487,7 @@ This option is a JSON list with items of type PricingPlan.  For documentation on
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'content-language': {'module': 'marketplace_publisher', 'class': 'LanguageItem'}, 'supportedlanguages': {'module': 'marketplace_publisher', 'class': 'list[LanguageItem]'}, 'support-contacts': {'module': 'marketplace_publisher', 'class': 'list[SupportContact]'}, 'support-links': {'module': 'marketplace_publisher', 'class': 'list[NamedLink]'}, 'freeform-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'marketplace_publisher', 'class': 'dict(str, dict(str, object))'}, 'version-details': {'module': 'marketplace_publisher', 'class': 'VersionDetails'}, 'products': {'module': 'marketplace_publisher', 'class': 'list[ListingProduct]'}, 'recommended-service-provider-listing-ids': {'module': 'marketplace_publisher', 'class': 'list[string]'}, 'pricing-plans': {'module': 'marketplace_publisher', 'class': 'list[PricingPlan]'}}, output_type={'module': 'marketplace_publisher', 'class': 'ListingRevision'})
 @cli_util.wrap_exceptions
-def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, partner_registration_url, term_id, vanity_url, recommended_service_provider_listing_ids, availability_and_pricing_policy, pricing_plans, is_rover_exportable, demo_url, self_paced_training_url, if_match):
+def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, listing_revision_id, display_name, headline, tagline, keywords, short_description, usage_information, long_description, content_language, supportedlanguages, support_contacts, support_links, freeform_tags, defined_tags, version_details, system_requirements, pricing_type, products, partner_registration_url, term_id, recommended_service_provider_listing_ids, availability_and_pricing_policy, pricing_plans, is_rover_exportable, vanity_url, demo_url, self_paced_training_url, if_match):
 
     if isinstance(listing_revision_id, six.string_types) and len(listing_revision_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-revision-id cannot be whitespace or empty string')
@@ -6560,9 +6560,6 @@ def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, 
     if term_id is not None:
         _details['termId'] = term_id
 
-    if vanity_url is not None:
-        _details['vanityUrl'] = vanity_url
-
     if recommended_service_provider_listing_ids is not None:
         _details['recommendedServiceProviderListingIds'] = cli_util.parse_json_parameter("recommended_service_provider_listing_ids", recommended_service_provider_listing_ids)
 
@@ -6574,6 +6571,9 @@ def update_listing_revision_update_oci_listing_revision_details(ctx, from_json, 
 
     if is_rover_exportable is not None:
         _details['isRoverExportable'] = is_rover_exportable
+
+    if vanity_url is not None:
+        _details['vanityUrl'] = vanity_url
 
     if demo_url is not None:
         _details['demoUrl'] = demo_url

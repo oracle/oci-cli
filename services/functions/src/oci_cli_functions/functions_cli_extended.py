@@ -6,6 +6,7 @@ import sys
 import click
 import oci  # noqa: F401
 from services.functions.src.oci_cli_functions.generated import fn_service_cli
+from services.functions.src.oci_cli_functions import invoke_endpoint_cache
 from services.functions.src.oci_cli_functions_management.generated import functionsmanagement_cli
 from services.functions.src.oci_cli_functions_invoke.generated import functionsinvoke_cli
 from services.functions.src.oci_cli_work_request_management.generated import workrequestmanagement_cli
@@ -106,20 +107,35 @@ cli_util.rename_command(
 
 @cli_util.copy_params_from_generated_command(functionsinvoke_cli.invoke_function, params_to_exclude=['invoke_function_body'])
 @functionsmanagement_cli.function_group.command(name='invoke', help=u"""Invokes a function""")
+@cli_util.option('--endpoint-cache-ttl', type=click.IntRange(min=0), envvar=invoke_endpoint_cache.ENDPOINT_CACHE_TTL_ENV_VAR, help=u"""The number of seconds to cache the resolved function invoke endpoint. If not set, the endpoint is cached for 900 seconds (15 minutes). Set to 0 to disable endpoint caching.""")
+@cli_util.option('--no-endpoint-cache', is_flag=True, help=u"""Disable the local function invoke endpoint cache for this invocation.""")
 @cli_util.option('--body', required=True, help=u"""The body of the function invocation. Note: The maximum size of the request is limited. This limit is currently 6MB and the endpoint will not accept requests that are bigger than this limit.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def invoke_function_extended(ctx, **kwargs):
+    no_endpoint_cache = kwargs.pop('no_endpoint_cache', False)
+    endpoint_cache_ttl = kwargs.pop('endpoint_cache_ttl', None)
     kwargs['invoke_function_body'] = kwargs['body']
     del kwargs['body']
 
-    # Make a get call so we can grab the endpoint so the user doesn't have to specify --endpoint.
-    get_kwargs = {}
-    get_kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions', 'functions_management', ctx)
-    result = client.get_function(function_id=kwargs['function_id'], **get_kwargs)
-    ctx.obj['endpoint'] = result.data.invoke_endpoint
+    # Preserve the management endpoint context before replacing ctx.obj['endpoint'] with the invoke endpoint.
+    cache_context = dict(ctx.obj)
+    invoke_endpoint = None
+    if not no_endpoint_cache:
+        invoke_endpoint = invoke_endpoint_cache.get_cached_endpoint(cache_context, kwargs['function_id'], endpoint_cache_ttl)
+
+    if invoke_endpoint is None:
+        # Make a get call so we can grab the endpoint so the user doesn't have to specify --endpoint.
+        get_kwargs = {}
+        get_kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+        client = cli_util.build_client('functions', 'functions_management', ctx)
+        result = client.get_function(function_id=kwargs['function_id'], **get_kwargs)
+        invoke_endpoint = result.data.invoke_endpoint
+        if not no_endpoint_cache and endpoint_cache_ttl != 0:
+            invoke_endpoint_cache.put_cached_endpoint(cache_context, kwargs['function_id'], invoke_endpoint)
+
+    ctx.obj['endpoint'] = invoke_endpoint
 
     # Theoretically, this should be good enough, but there is a bug in python sdk when
     # oci.retry.NoneRetryStrategy() is used.  The retry strategy is set in the generated code, functionsinvoke_cli.py.

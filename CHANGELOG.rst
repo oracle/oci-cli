@@ -6,6 +6,120 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.95.0 - 2026-10-13
+-------------------
+Added
+~~~~~
+* Continuous Consumption Discounts Service
+
+  * Support for metering Continuous Consumption Discount offers and commitments
+
+    * ``oci ccd-offers ccd-commitments ccd-commitment``
+    * ``oci ccd-offers ccd-commitments ccd-commitment-collection list-ccd-commitments``
+    * ``oci ccd-offers ccd-offer``
+    * ``oci ccd-offers ccd-offer-collection list-ccd-offers``
+
+* OpenSearch Service
+
+  * Support for configuring OpenSearch cluster master-user authentication with a plain-text password or Vault secret
+
+    * ``oci opensearch cluster create --security-master-user-auth-details``
+    * ``oci opensearch cluster update --security-master-user-auth-details``
+
+  * Support for new optional parameter ``--remote-reindex-trust-config``
+
+    * ``oci opensearch cluster create --remote-reindex-trust-config``
+    * ``oci opensearch cluster update --remote-reindex-trust-config``
+
+* Database MultiCloud Service
+
+  * Support for Key Pool for Oracle Database@AWS in the Database Multicloud Integrations service
+
+    * ``oci dbmulticloud oracle-db-aws-key-pool``
+    * ``oci dbmulticloud oracle-db-aws-key create --oracle-db-aws-key-pool-id``
+    * ``oci dbmulticloud oracle-db-aws-key list --oracle-db-aws-key-pool-id``
+    * ``oci dbmulticloud oracle-db-aws-key update --oracle-db-aws-key-pool-id``
+
+* Database Service
+
+  * Support for new tool Spatial Studio in Autonomous Database Serverless
+
+    * ``oci db autonomous-database create --db-tools-details``
+    * ``oci db autonomous-database update --db-tools-details``
+
+  * Support for AWS encryption keys during Database creation, Data Guard association creation, and changing the database encryption key location
+
+    * ``oci db autonomous-container-database create-autonomous-container-database-aws-encryption-key-details --encryption-key-location-details-aws-encryption-key-pool-id``
+    * ``oci db data-guard-association create-data-guard-association-aws-encryption-key-details --source-encryption-key-location-details-aws-encryption-key-pool-id``
+    * ``oci db database change-encryption-key-location-aws-encryption-key-details --aws-encryption-key-pool-id``
+
+  * Support for the seamless integration of Exadata Databases into the DataSafe service using the new optional parameter ``--datasafe-registration-details``.
+
+    * ``oci db database update --datasafe-registration-details``
+    * ``oci db database create --datasafe-registration-details``
+    * ``oci db database create-from-database --datasafe-registration-details``
+    * ``oci db database create-from-backup --datasafe-registration-details``
+    * ``oci db database create-database-from-database --datasafe-registration-details``
+
+  * Support for providing self service acknowledgment for older versions
+
+    * ``oci db cloud-vm-cluster create --is-older-version-acknowledged``
+    * ``oci db cloud-vm-cluster update --is-older-version-acknowledged``
+    * ``oci db data-guard-association create from-existing-db-system --is-older-version-acknowledged``
+    * ``oci db data-guard-association create from-existing-vm-cluster --is-older-version-acknowledged``
+    * ``oci db data-guard-association create with-new-db-system --is-older-version-acknowledged``
+    * ``oci db data-guard-association create-data-guard-association-aws-encryption-key-details --is-older-version-acknowledged``
+    * ``oci db data-guard-association create-data-guard-association-azure-encryption-key-details --is-older-version-acknowledged``
+    * ``oci db data-guard-association create-data-guard-association-external-hsm-encryption-details --is-older-version-acknowledged``
+    * ``oci db data-guard-association create-data-guard-association-google-cloud-provider-encryption-key-details --is-older-version-acknowledged``
+    * ``oci db database create --is-older-version-acknowledged``
+    * ``oci db database create-from-backup --is-older-version-acknowledged``
+    * ``oci db database create-from-database --is-older-version-acknowledged``
+    * ``oci db database upgrade-with-database-software-image --is-older-version-acknowledged``
+    * ``oci db database upgrade-with-db-home --is-older-version-acknowledged``
+    * ``oci db database upgrade-with-db-version --is-older-version-acknowledged``
+    * ``oci db database-software-image create --is-older-version-acknowledged``
+    * ``oci db db-home create --is-older-version-acknowledged``
+    * ``oci db db-home create-db-home-create-db-home-with-vm-cluster-id-from-database-details --is-older-version-acknowledged``
+    * ``oci db exadb-vm-cluster create --is-older-version-acknowledged``
+    * ``oci db exadb-vm-cluster update --is-older-version-acknowledged``
+    * ``oci db system launch --is-older-version-acknowledged``
+    * ``oci db system launch-db-system-launch-standby-db-system-details --is-older-version-acknowledged``
+    * ``oci db system launch-from-backup --is-older-version-acknowledged``
+    * ``oci db system launch-from-database --is-older-version-acknowledged``
+    * ``oci db system launch-from-db-system --is-older-version-acknowledged``
+    * ``oci db system upgrade --is-older-version-acknowledged``
+    * ``oci db vm-cluster create --is-older-version-acknowledged``
+    * ``oci db vm-cluster update --is-older-version-acknowledged``
+
+* Data Science Service
+
+  * Support for new model artifact signature and integrity verification commands
+
+    * ``oci data-science model-artifact-signature change-compartment``
+    * ``oci data-science model-artifact-signature create``
+    * ``oci data-science model-artifact-signature delete``
+    * ``oci data-science model-artifact-signature get``
+    * ``oci data-science model-artifact-signature update``
+    * ``oci data-science model-artifact-signature verify``
+    * ``oci data-science model-artifact-signature list``
+
+* Functions Service
+
+  * Support for caching function invoke endpoints for 15 minutes by default. Use ``--endpoint-cache-ttl`` to set the cache duration in seconds, or ``--no-endpoint-cache`` to disable caching for an invocation.
+
+    * ``oci fn function invoke --endpoint-cache-ttl --no-endpoint-cache``
+
+  * Support for setting the invoke endpoint cache TTL with ``OCI_CLI_FUNCTIONS_INVOKE_ENDPOINT_CACHE_TTL``.
+
+Changed
+~~~~~~~
+* Database Service
+
+  * [BREAKING] Removed optional parameters ``--patch-options``, ``--managed-software-update-details`` and ``--auto-failover-configuration`` from the following command
+
+    * ``oci db database update``
+
 3.94.2 - 2026-10-06
 -------------------
 Added

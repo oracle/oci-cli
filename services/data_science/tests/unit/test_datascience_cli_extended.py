@@ -35,6 +35,15 @@ class TestDatascienceCLI(unittest.TestCase):
         assert '--file' in result.output
         assert '--model-id' in result.output
 
+    def test_list_model_artifact_signatures(self):
+        result = util.invoke_command(['data-science', 'model-artifact-signature-summary'])
+        assert "No such command 'model-artifact-signature-summary'" in result.output
+
+        result = util.invoke_command(['data-science', 'model-artifact-signature', 'list'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--compartment-id' in result.output
+        assert '--model-id' in result.output
+
     def test_create_model_artifact_model_artifact(self):
         result = util.invoke_command(['data-science', 'model', 'create-model-artifact'])
         tokens = re.split('[ .]', result.output)

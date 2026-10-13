@@ -77,6 +77,20 @@ cli_util.rename_command(datascience_cli, datascience_cli.model_group,
                         datascience_cli.get_model_artifact_content, "get-artifact-content")
 
 
+# oci data-science model-artifact-signature-summary list-model-artifact-signatures
+# to oci data-science model-artifact-signature list
+datascience_cli.model_artifact_signature_summary_group.commands.pop(
+    datascience_cli.list_model_artifact_signatures.name)
+datascience_cli.model_artifact_signature_group.add_command(
+    datascience_cli.list_model_artifact_signatures)
+cli_util.rename_command(datascience_cli,
+                        datascience_cli.model_artifact_signature_group,
+                        datascience_cli.list_model_artifact_signatures,
+                        "list")
+datascience_cli.data_science_root_group.commands.pop(
+    datascience_cli.model_artifact_signature_summary_group.name)
+
+
 # Overrides the rendering behavior to include all heads in the response
 @cli_util.copy_params_from_generated_command(datascience_cli.head_model_artifact, params_to_exclude=[])
 @datascience_cli.model_group.command(name=cli_util.override('head_model_artifact.command_name', 'head-model-artifact'), help=datascience_cli.head_model_artifact.help)

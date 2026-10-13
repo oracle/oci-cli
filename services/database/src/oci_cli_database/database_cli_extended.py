@@ -119,7 +119,8 @@ database_cli.database_group.commands.pop(database_cli.upgrade_database_database_
 
 
 # Rename the command upgrade_database_database_upgrade_with_database_software_image_details and the parameter database-upgrade-source-details-database-software-image-id to database-software-image-id and database_upgrade_source_details_options to options.
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, params_to_exclude=['database_upgrade_source_details_database_software_image_id', 'database_upgrade_source_details_options'])
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, params_to_exclude=['database_upgrade_source_details_database_software_image_id', 'database_upgrade_source_details_options', 'database_upgrade_source_details_is_older_version_acknowledged'])
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--database-software-image-id', required=True, help=u"""the database software id used for upgrading the database.""")
 @cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-database-software-image', help=database_cli.database_group.help)
@@ -127,6 +128,9 @@ database_cli.database_group.commands.pop(database_cli.upgrade_database_database_
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_database_software_image_details_extended(ctx, **kwargs):
+
+    if 'is_older_version_acknowledged' in kwargs:
+        kwargs['database_upgrade_source_details_is_older_version_acknowledged'] = kwargs['is_older_version_acknowledged']
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         kwargs['database_upgrade_source_details_database_software_image_id'] = kwargs['database_software_image_id']
 
@@ -135,12 +139,14 @@ def upgrade_database_database_upgrade_with_database_software_image_details_exten
 
     del kwargs['database_software_image_id']
     del kwargs['options']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, **kwargs)
 
 
 # Rename the command upgrade_database_database_upgrade_with_db_version_details and the parameter database-upgrade-source-details-db-version to db-version and database_upgrade_source_details_options to options.
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_version_details, params_to_exclude=['database_upgrade_source_details_db_version', 'database_upgrade_source_details_options'])
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_version_details, params_to_exclude=['database_upgrade_source_details_db_version', 'database_upgrade_source_details_options', 'database_upgrade_source_details_is_older_version_acknowledged'])
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-db-version', help=database_cli.database_group.help)
@@ -148,6 +154,9 @@ def upgrade_database_database_upgrade_with_database_software_image_details_exten
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kwargs):
+
+    if 'is_older_version_acknowledged' in kwargs:
+        kwargs['database_upgrade_source_details_is_older_version_acknowledged'] = kwargs['is_older_version_acknowledged']
     if 'db_version' in kwargs and kwargs['db_version']:
         kwargs['database_upgrade_source_details_db_version'] = kwargs['db_version']
 
@@ -156,12 +165,14 @@ def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kw
 
     del kwargs['db_version']
     del kwargs['options']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_version_details, **kwargs)
 
 
 # Rename the command upgrade_database_database_upgrade_with_db_home_details and the parameter database-upgrade-source-details-db-home-id to db-home-id and database_upgrade_source_details_options to options.
-@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id', 'database_upgrade_source_details_options'])
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id', 'database_upgrade_source_details_options', 'database_upgrade_source_details_is_older_version_acknowledged'])
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--options', help=u"""Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: \"-upgradeTimezone false -keepEvents\"""")
 @database_cli.database_group.command(name='upgrade-with-db-home', help=database_cli.database_group.help)
@@ -169,6 +180,9 @@ def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kw
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def upgrade_database_database_upgrade_with_db_home_details_extended(ctx, **kwargs):
+
+    if 'is_older_version_acknowledged' in kwargs:
+        kwargs['database_upgrade_source_details_is_older_version_acknowledged'] = kwargs['is_older_version_acknowledged']
     if 'db_home_id' in kwargs and kwargs['db_home_id']:
         kwargs['database_upgrade_source_details_db_home_id'] = kwargs['db_home_id']
 
@@ -177,6 +191,7 @@ def upgrade_database_database_upgrade_with_db_home_details_extended(ctx, **kwarg
 
     del kwargs['db_home_id']
     del kwargs['options']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_home_details, **kwargs)
 
@@ -672,11 +687,24 @@ the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--zero-data-loss-enabled', required=False, type=click.BOOL, help=u"""Enable Zero Data loss feature""")
+@cli_util.option('--datasafe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help="""The requested Data Safe registration action details for the database.
+Allowed value for 'action' is "REGISTER" to opt-in to use Data Safe features. If using Exadata Cloud@Customer, also provide 'connectionIds'.
+
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'datasafe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     create_database_details = oci.database.models.CreateDatabaseDetails()
+
+    if 'datasafe_registration_details' in kwargs and kwargs['datasafe_registration_details']:
+        create_database_details.data_safe_registration_details = cli_util.parse_json_parameter(
+            'datasafe_registration_details', kwargs['datasafe_registration_details'])
+        kwargs.pop('datasafe_registration_details')
+
     if 'msu_details' in kwargs and kwargs['msu_details']:
         create_database_details.managed_software_update_details = kwargs['msu_details']
         kwargs.pop('msu_details')
@@ -701,6 +729,9 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
         else:
             click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
             sys.exit(1)
+
+    if 'is_older_version_acknowledged' in kwargs and kwargs['is_older_version_acknowledged']:
+        create_db_home_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_details.database_software_image_id = kwargs['database_software_image_id']
@@ -884,8 +915,15 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 the file://path/to/file syntax.
 The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
 in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--datasafe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help="""The requested Data Safe registration action details for the database.
+Allowed value for 'action' is "REGISTER" to opt-in to use Data Safe features. If using Exadata Cloud@Customer, also provide 'connectionIds'.
+
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'datasafe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
 
@@ -905,6 +943,12 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
             sys.exit(1)
 
     create_database_details = oci.database.models.CreateDatabaseFromBackupDetails()
+
+    if 'datasafe_registration_details' in kwargs and kwargs['datasafe_registration_details']:
+        create_database_details.data_safe_registration_details = cli_util.parse_json_parameter(
+            'datasafe_registration_details', kwargs['datasafe_registration_details'])
+        kwargs.pop('datasafe_registration_details')
+
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details.admin_password = kwargs['admin_password']
 
@@ -934,6 +978,9 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 
     if 'is_desupported_version' in kwargs and kwargs['is_desupported_version']:
         create_db_home_with_system_details.is_desupported_version = kwargs['is_desupported_version']
+
+    if 'is_older_version_acknowledged' in kwargs and kwargs['is_older_version_acknowledged']:
+        create_db_home_with_system_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     database_storage_size_details = oci.database.models.DatabaseStorageSizeDetails()
     include_storage_details = False
@@ -1024,14 +1071,24 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--point-in-time-recovery-timestamp', required=False, help="""The point in time of the original database from which the new database is created. If not specified, the latest backup is used to create the database.""")
+@cli_util.option('--datasafe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help="""The requested Data Safe registration action details for the database.
+Allowed value for 'action' is "REGISTER" to opt-in to use Data Safe features. If using Exadata Cloud@Customer, also provide 'connectionIds'.
+
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'datasafe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def create_database_create_database_from_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     kwargs_for_client = {}
     kwargs_for_client['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     create_database_details = oci.database.models.CreateDatabaseFromAnotherDatabaseDetails()
+    if 'datasafe_registration_details' in kwargs and kwargs['datasafe_registration_details']:
+        create_database_details.data_safe_registration_details = cli_util.parse_json_parameter(
+            'datasafe_registration_details', kwargs['datasafe_registration_details'])
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details.admin_password = kwargs['admin_password']
 
@@ -1110,7 +1167,7 @@ def create_database_create_database_from_database(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config'])
+@cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config', 'patch_options', 'managed_software_update_details', 'auto_failover_configuration', 'data_safe_registration_details'])
 @database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--msu-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
@@ -1126,13 +1183,24 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--manage-auto-failover', type=custom_types.CliCaseInsensitiveChoice(["ENABLE", "DISABLE"]), help=u"""The value to assign to the managed_auto_failover property of the standby to be created.
             Allowed values for this property are: "ENABLE", "DISABLE".""")
 @cli_util.option('--auto-failover-targets', type=click.STRING, help=u"""Defines auto failover targets for the current database. The value should be comma separated unique names of other data guard members.""")
+@cli_util.option('--datasafe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help="""The requested Data Safe registration action details for the database.
+Allowed value for 'action' is "REGISTER" and "UNREGISTER" to opt-in or opt-out of using Data Safe features respectively. If using Exadata Cloud@Customer, also provide 'connectionIds'.
+
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'datasafe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def update_database_extended(ctx, **kwargs):
     if 'msu_details' in kwargs:
         kwargs['managed_software_update_details'] = kwargs['msu_details']
         kwargs.pop('msu_details')
+
+    if 'datasafe_registration_details' in kwargs:
+        kwargs['data_safe_registration_details'] = kwargs['datasafe_registration_details']
+        kwargs.pop('datasafe_registration_details')
 
     database_auto_failover_details = {}
     if 'manage_auto_failover' in kwargs and kwargs['manage_auto_failover']:
@@ -1207,11 +1275,22 @@ def update_database_extended(ctx, **kwargs):
 * AZURE: `{\"azureEncryptionKeyId\": \"<key-ocid>\", \"providerType\": \"AZURE\"}`
 * EXTERNAL: `{\"hsmPassword\": \"<password>\", \"providerType\": \"EXTERNAL\"}`
 * GCP: `{\"googleCloudProviderEncryptionKeyId\": \"<key-ocid>\", \"providerType\": \"GCP\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datasafe-registration-details', type=custom_types.CLI_COMPLEX_TYPE, help="""The requested Data Safe registration action details for the database.
+Allowed value for 'action' is "REGISTER" to opt-in to use Data Safe features. If using Exadata Cloud@Customer, also provide 'connectionIds'.
+
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-encryption-key-location-details': {'module': 'database', 'class': 'EncryptionKeyLocationDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'datasafe-registration-details': {'module': 'database', 'class': 'DataSafeRegistrationRequestDetails'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
     create_database_details = oci.database.models.CreateDatabaseFromAnotherDatabaseDetails()
+    if 'datasafe_registration_details' in kwargs and kwargs['datasafe_registration_details']:
+        create_database_details.data_safe_registration_details = cli_util.parse_json_parameter(
+            'datasafe_registration_details', kwargs['datasafe_registration_details'])
+
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromDatabaseDetails()
         create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
@@ -1274,6 +1353,9 @@ def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds,
 
     if kwargs['is_unified_auditing_enabled'] is not None:
         create_db_home_with_system_details.is_unified_auditing_enabled = kwargs['is_unified_auditing_enabled']
+
+    if kwargs['is_older_version_acknowledged'] is not None:
+        create_db_home_with_system_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     create_db_home_with_system_details.source = source
 
@@ -1650,6 +1732,7 @@ database_cli.db_root_group.commands.pop(database_cli.vm_cluster_update_history_e
 @cli_util.option('--gi-image-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure software image. This is a database software image of type `GRID_IMAGE`.""")
 @cli_util.option('--gi-home-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure home.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version-parameterconflict': {'module': 'database', 'class': 'PatchDetails'}, 'update-details': {'module': 'database', 'class': 'VmClusterUpdateDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
@@ -1690,6 +1773,8 @@ def update_vm_cluster_extended(ctx, **kwargs):
         }
         if update_mode is not None:
             kwargs['update_details']['updateMode'] = update_mode
+        if 'is_older_version_acknowledged' in kwargs and kwargs['is_older_version_acknowledged']:
+            kwargs['update_details']['isOlderVersionAcknowledged'] = kwargs['is_older_version_acknowledged']
 
     # remove kwargs that update_vm_cluster wont recognize
     del kwargs['patch_action']
@@ -1699,6 +1784,7 @@ def update_vm_cluster_extended(ctx, **kwargs):
     del kwargs['gi_image_id']
     del kwargs['update_mode']
     del kwargs['gi_home_id']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.update_vm_cluster, **kwargs)
 
@@ -1721,7 +1807,7 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_system_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
+def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_system_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id, is_older_version_acknowledged):
     kwargs = {}
 
     details = {}
@@ -1741,6 +1827,8 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
         details['peerSidPrefix'] = peer_sid_prefix
     if is_active_data_guard_enabled is not None:
         details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
+    if is_older_version_acknowledged is not None:
+        details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -1784,7 +1872,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, compute_model, compute_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, domain, **kwargs):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, compute_model, compute_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, domain, is_older_version_acknowledged, **kwargs):
     kwargs = {}
 
     details = {}
@@ -1845,6 +1933,8 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
     if domain is not None:
         details['domain'] = domain
+    if is_older_version_acknowledged is not None:
+        details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     details['creationType'] = 'NewDbSystem'
 
@@ -1868,8 +1958,7 @@ All Oracle Cloud Infrastructure resources, including Data Guard associations, ge
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id, hsm_password):
-
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id, hsm_password, is_older_version_acknowledged):
     kwargs = {}
 
     details = {}
@@ -1894,7 +1983,8 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
         _source_encryption_key_location_details['hsmPassword'] = hsm_password
         _source_encryption_key_location_details['providerType'] = 'EXTERNAL'
         details['sourceEncryptionKeyLocationDetails'] = _source_encryption_key_location_details
-
+    if is_older_version_acknowledged is not None:
+        details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
@@ -2316,6 +2406,7 @@ def list_cloud_vm_clusters(ctx, **kwargs):
 @cli_util.option('--gi-home-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the grid infrastructure home.""")
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the cloud VM cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=DATA_COLLECTION_OPTIONS_HELP)
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'update-details': {'module': 'database', 'class': 'UpdateDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'compute-nodes': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
@@ -2348,6 +2439,8 @@ def update_cloud_vm_cluster(ctx, **kwargs):
         }
         if update_mode is not None:
             kwargs['update_details']['updateMode'] = update_mode
+        if 'is_older_version_acknowledged' in kwargs and kwargs['is_older_version_acknowledged']:
+            kwargs['update_details']['isOlderVersionAcknowledged'] = kwargs['is_older_version_acknowledged']
 
     # remove kwargs that update cloud vm cluster wont recognize
     del kwargs['ssh_authorized_keys_file']
@@ -2356,6 +2449,7 @@ def update_cloud_vm_cluster(ctx, **kwargs):
     del kwargs['gi_image_id']
     del kwargs['update_mode']
     del kwargs['gi_home_id']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.update_cloud_vm_cluster, **kwargs)
 
@@ -2440,6 +2534,8 @@ def create_db_home(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds,
         db_home_details.display_name = kwargs['display_name']
     if kwargs['is_desupported_version'] is not None:
         db_home_details.is_desupported_version = kwargs['is_desupported_version']
+    if kwargs['is_older_version_acknowledged'] is not None:
+        db_home_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called

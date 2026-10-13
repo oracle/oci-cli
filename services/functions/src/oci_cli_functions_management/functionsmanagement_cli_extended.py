@@ -20,12 +20,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # coding: utf-8
-
 import base64
 import json
 import os
 
 import click
+from services.functions.src.oci_cli_functions import invoke_endpoint_cache
 from oci_cli import cli_util
 from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
@@ -87,10 +87,25 @@ def _invoke_create(ctx, kwargs, source_details):
 
 
 def _invoke_update(ctx, kwargs, source_details=None):
+    function_id = kwargs.get('function_id')
     _normalize_provisioned_concurrency(kwargs)
     if source_details is not None:
         kwargs['source_details'] = json.dumps(source_details)
-    ctx.invoke(functionsmanagement_cli.update_function, **kwargs)
+    result = ctx.invoke(functionsmanagement_cli.update_function, **kwargs)
+    invoke_endpoint_cache.delete_cached_endpoint(ctx.obj, function_id)
+    return result
+
+
+@cli_util.copy_params_from_generated_command(functionsmanagement_cli.delete_function)
+@functionsmanagement_cli.function_group.command(name=functionsmanagement_cli.delete_function.name, help=functionsmanagement_cli.delete_function.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_function_extended(ctx, **kwargs):
+    function_id = kwargs.get('function_id')
+    result = ctx.invoke(functionsmanagement_cli.delete_function, **kwargs)
+    invoke_endpoint_cache.delete_cached_endpoint(ctx.obj, function_id)
+    return result
 
 
 def _add_if_present(payload, payload_key, value):

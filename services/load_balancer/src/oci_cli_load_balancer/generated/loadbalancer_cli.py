@@ -1239,13 +1239,6 @@ def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @ssl_cipher_suite_group.command(name=cli_util.override('lb.create_ssl_cipher_suite.command_name', 'create'), help=u"""Creates a custom SSL cipher suite. \n[Command Reference](createSSLCipherSuite)""")
-@cli_util.option('--name', required=True, help=u"""A friendly name for the SSL cipher suite. It must be unique and it cannot be changed.
-
-**Note:** The name of your user-defined cipher suite must not be the same as any of Oracle's predefined or           reserved SSL cipher suite names:
-
-* oci-default-ssl-cipher-suite-v1 * oci-modern-ssl-cipher-suite-v1 * oci-compatible-ssl-cipher-suite-v1 * oci-wider-compatible-ssl-cipher-suite-v1 * oci-customized-ssl-cipher-suite * oci-default-http2-ssl-cipher-suite-v1 * oci-default-http2-tls-13-ssl-cipher-suite-v1 * oci-default-http2-tls-12-13-ssl-cipher-suite-v1 * oci-tls-13-recommended-ssl-cipher-suite-v1 * oci-tls-12-13-wider-ssl-cipher-suite-v1 * oci-tls-11-12-13-wider-ssl-cipher-suite-v1
-
-example: `example_cipher_suite`""")
 @cli_util.option('--ciphers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of SSL ciphers the load balancer must support for HTTPS or SSL connections.
 
 The following ciphers are valid values for this property:
@@ -1263,6 +1256,13 @@ The following ciphers are valid values for this property:
         \"AES128-SHA\"         \"AES256-SHA\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
 
 example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', required=True, help=u"""A friendly name for the SSL cipher suite. It must be unique and it cannot be changed.
+
+**Note:** The name of your user-defined cipher suite must not be the same as any of Oracle's predefined or           reserved SSL cipher suite names:
+
+* oci-default-ssl-cipher-suite-v1 * oci-modern-ssl-cipher-suite-v1 * oci-compatible-ssl-cipher-suite-v1 * oci-wider-compatible-ssl-cipher-suite-v1 * oci-customized-ssl-cipher-suite * oci-default-http2-ssl-cipher-suite-v1 * oci-default-http2-tls-13-ssl-cipher-suite-v1 * oci-default-http2-tls-12-13-ssl-cipher-suite-v1 * oci-tls-13-recommended-ssl-cipher-suite-v1 * oci-tls-12-13-wider-ssl-cipher-suite-v1 * oci-tls-11-12-13-wider-ssl-cipher-suite-v1
+
+example: `example_cipher_suite`""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
@@ -1279,7 +1279,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, ciphers, load_balancer_id, if_match):
+def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ciphers, name, load_balancer_id, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -1290,8 +1290,8 @@ def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['name'] = name
     _details['ciphers'] = cli_util.parse_json_parameter("ciphers", ciphers)
+    _details['name'] = name
 
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_ssl_cipher_suite(

@@ -178,9 +178,21 @@ def model_version_set_group():
     pass
 
 
+@click.command(cli_util.override('data_science.model_artifact_signature_group.command_name', 'model-artifact-signature'), cls=CommandGroupWithAlias, help="""Metadata of the model artifact signature.""")
+@cli_util.help_option_group
+def model_artifact_signature_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""A job for training models.""")
 @cli_util.help_option_group
 def job_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.model_artifact_signature_summary_group.command_name', 'model-artifact-signature-summary'), cls=CommandGroupWithAlias, help="""Summary of the model artifact signature.""")
+@cli_util.help_option_group
+def model_artifact_signature_summary_group():
     pass
 
 
@@ -216,7 +228,9 @@ data_science_root_group.add_command(compute_target_shape_group)
 data_science_root_group.add_command(schedule_group)
 data_science_root_group.add_command(ml_application_group)
 data_science_root_group.add_command(model_version_set_group)
+data_science_root_group.add_command(model_artifact_signature_group)
 data_science_root_group.add_command(job_group)
+data_science_root_group.add_command(model_artifact_signature_summary_group)
 data_science_root_group.add_command(data_science_private_endpoint_group)
 
 
@@ -931,6 +945,42 @@ def change_ml_application_instance_view_compartment(ctx, from_json, wait_for_sta
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_artifact_signature_group.command(name=cli_util.override('data_science.change_model_artifact_signature_compartment.command_name', 'change-compartment'), help=u"""Moves a model artifact signature into a different compartment \n[Command Reference](changeModelArtifactSignatureCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-signature-id', required=True, help=u"""The [OCID] of the model artifact signature.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_model_artifact_signature_compartment(ctx, from_json, compartment_id, model_id, artifact_signature_id, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(artifact_signature_id, six.string_types) and len(artifact_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --artifact-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_model_artifact_signature_compartment(
+        model_id=model_id,
+        artifact_signature_id=artifact_signature_id,
+        change_model_artifact_signature_compartment_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -4053,6 +4103,82 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
     cli_util.render_response(result, ctx)
 
 
+@model_artifact_signature_group.command(name=cli_util.override('data_science.create_model_artifact_signature.command_name', 'create'), help=u"""Create model artifact signature for the specified model \n[Command Reference](createModelArtifactSignature)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resource.""")
+@cli_util.option('--kms-key-id', required=True, help=u"""The [OCID] of the key from OCI KMS.""")
+@cli_util.option('--kms-key-version-id', required=True, help=u"""The [OCID] of the key version from OCI KMS.""")
+@cli_util.option('--signing-algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"]), help=u"""The algorithm used for signing.""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information. Example: `My Model Artifact Signature`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelArtifactSignature'})
+@cli_util.wrap_exceptions
+def create_model_artifact_signature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, kms_key_id, kms_key_version_id, signing_algorithm, model_id, display_name, freeform_tags, defined_tags):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['kmsKeyId'] = kms_key_id
+    _details['kmsKeyVersionId'] = kms_key_version_id
+    _details['signingAlgorithm'] = signing_algorithm
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_artifact_signature(
+        model_id=model_id,
+        create_model_artifact_signature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.create_model_custom_metadatum_artifact.command_name', 'create-model-custom-metadatum-artifact'), help=u"""Creates model custom metadata artifact for specified model. \n[Command Reference](createModelCustomMetadatumArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
@@ -6676,6 +6802,37 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@model_artifact_signature_group.command(name=cli_util.override('data_science.delete_model_artifact_signature.command_name', 'delete'), help=u"""Deletes the specified artifact signature for a model \n[Command Reference](deleteModelArtifactSignature)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-signature-id', required=True, help=u"""The [OCID] of the model artifact signature.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_artifact_signature(ctx, from_json, model_id, artifact_signature_id, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(artifact_signature_id, six.string_types) and len(artifact_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --artifact-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_artifact_signature(
+        model_id=model_id,
+        artifact_signature_id=artifact_signature_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.delete_model_custom_metadatum_artifact.command_name', 'delete-model-custom-metadatum-artifact'), help=u"""Deletes model custom metadata artifact for specified model metadata key. \n[Command Reference](deleteModelCustomMetadatumArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
@@ -7919,6 +8076,33 @@ def get_model_artifact_content(ctx, from_json, file, model_id, range):
         if bar:
             bar.render_finish()
         file.close()
+
+
+@model_artifact_signature_group.command(name=cli_util.override('data_science.get_model_artifact_signature.command_name', 'get'), help=u"""Gets the specified artifact signature for a model \n[Command Reference](getModelArtifactSignature)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-signature-id', required=True, help=u"""The [OCID] of the model artifact signature.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelArtifactSignature'})
+@cli_util.wrap_exceptions
+def get_model_artifact_signature(ctx, from_json, model_id, artifact_signature_id):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(artifact_signature_id, six.string_types) and len(artifact_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --artifact-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_artifact_signature(
+        model_id=model_id,
+        artifact_signature_id=artifact_signature_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @model_group.command(name=cli_util.override('data_science.get_model_custom_metadatum_artifact_content.command_name', 'get-model-custom-metadatum-artifact-content'), help=u"""Downloads model custom metadata artifact content for specified model metadata key. \n[Command Reference](getModelCustomMetadatumArtifactContent)""")
@@ -9508,6 +9692,80 @@ def list_ml_applications(ctx, from_json, all_pages, page_size, compartment_id, m
     cli_util.render_response(result, ctx)
 
 
+@model_artifact_signature_summary_group.command(name=cli_util.override('data_science.list_model_artifact_signatures.command_name', 'list-model-artifact-signatures'), help=u"""List model artifact signatures of a model in the specified compartment \n[Command Reference](listModelArtifactSignatures)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--digest', help=u"""The digest of the model artifact.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "FAILED"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. All other fields default to ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelArtifactSignatureSummary]'})
+@cli_util.wrap_exceptions
+def list_model_artifact_signatures(ctx, from_json, all_pages, page_size, model_id, compartment_id, display_name, digest, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if digest is not None:
+        kwargs['digest'] = digest
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_artifact_signatures,
+            model_id=model_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_artifact_signatures,
+            limit,
+            page_size,
+            model_id=model_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_artifact_signatures(
+            model_id=model_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @model_deployment_model_state_group.command(name=cli_util.override('data_science.list_model_deployment_model_states.command_name', 'list'), help=u"""Lists the status of models in a model group deployment. \n[Command Reference](listModelDeploymentModelStates)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
@@ -10619,7 +10877,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--resource-id', help=u"""<b>Filter</b> results by the [OCID] of the resource associated with the work request.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "COMPUTE_TARGET_CREATE", "COMPUTE_TARGET_UPDATE", "COMPUTE_TARGET_DELETE", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "COMPUTE_TARGET_CREATE", "COMPUTE_TARGET_UPDATE", "COMPUTE_TARGET_DELETE", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE", "CREATE_MODEL_ARTIFACT_SIGNATURE", "VERIFY_MODEL_ARTIFACT_SIGNATURE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -12418,6 +12676,87 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@model_artifact_signature_group.command(name=cli_util.override('data_science.update_model_artifact_signature.command_name', 'update'), help=u"""Update model artifact signature for the specified model \n[Command Reference](updateModelArtifactSignature)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-signature-id', required=True, help=u"""The [OCID] of the model artifact signature.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.  Example: `My Model Artifact Signature`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelArtifactSignature'})
+@cli_util.wrap_exceptions
+def update_model_artifact_signature(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_signature_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(artifact_signature_id, six.string_types) and len(artifact_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --artifact-signature-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_artifact_signature(
+        model_id=model_id,
+        artifact_signature_id=artifact_signature_id,
+        update_model_artifact_signature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.update_model_custom_metadatum_artifact.command_name', 'update-model-custom-metadatum-artifact'), help=u"""Updates model custom metadata artifact for specified model metadata key. \n[Command Reference](updateModelCustomMetadatumArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
@@ -14095,6 +14434,66 @@ def update_schedule_schedule_http_action(ctx, from_json, force, wait_for_state, 
     result = client.update_schedule(
         schedule_id=schedule_id,
         update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_artifact_signature_group.command(name=cli_util.override('data_science.verify_model_artifact_signature.command_name', 'verify'), help=u"""Verifies the specified artifact signature for a model \n[Command Reference](verifyModelArtifactSignature)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--artifact-signature-id', required=True, help=u"""The [OCID] of the model artifact signature.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelArtifactSignature'})
+@cli_util.wrap_exceptions
+def verify_model_artifact_signature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_signature_id, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(artifact_signature_id, six.string_types) and len(artifact_signature_id.strip()) == 0:
+        raise click.UsageError('Parameter --artifact-signature-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.verify_model_artifact_signature(
+        model_id=model_id,
+        artifact_signature_id=artifact_signature_id,
         **kwargs
     )
     if wait_for_state:

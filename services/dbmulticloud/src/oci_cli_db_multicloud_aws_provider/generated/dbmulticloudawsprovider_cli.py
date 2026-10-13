@@ -62,6 +62,12 @@ def oracle_db_aws_identity_connector_group():
     pass
 
 
+@click.command(cli_util.override('db_multicloud_aws_provider.oracle_db_aws_key_pool_group.command_name', 'oracle-db-aws-key-pool'), cls=CommandGroupWithAlias, help="""Oracle DB AWS Key Pool is a resource that represents a collection of AWS KMS keys. These keys are used for Oracle Database Transparent Data Encryption (TDE) operations.""")
+@cli_util.help_option_group
+def oracle_db_aws_key_pool_group():
+    pass
+
+
 @click.command(cli_util.override('db_multicloud_aws_provider.oracle_db_aws_key_group.command_name', 'oracle-db-aws-key'), cls=CommandGroupWithAlias, help="""Oracle DB AWS Key Resource object.""")
 @cli_util.help_option_group
 def oracle_db_aws_key_group():
@@ -70,6 +76,7 @@ def oracle_db_aws_key_group():
 
 dbmulticloud_service_cli.dbmulticloud_service_group.add_command(db_multicloud_aws_provider_root_group)
 db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_identity_connector_group)
+db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_key_pool_group)
 db_multicloud_aws_provider_root_group.add_command(oracle_db_aws_key_group)
 
 
@@ -199,6 +206,69 @@ def change_oracle_db_aws_key_compartment(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.change_oracle_db_aws_key_pool_compartment.command_name', 'change-compartment'), help=u"""Moves the AWS Key Pool resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAwsKeyPoolCompartment)""")
+@cli_util.option('--oracle-db-aws-key-pool-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_oracle_db_aws_key_pool_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_pool_id, compartment_id, if_match):
+
+    if isinstance(oracle_db_aws_key_pool_id, six.string_types) and len(oracle_db_aws_key_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.change_oracle_db_aws_key_pool_compartment(
+        oracle_db_aws_key_pool_id=oracle_db_aws_key_pool_id,
+        change_oracle_db_aws_key_pool_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_identity_connector.command_name', 'create'), help=u"""Creates Oracle DB AWS Identity Connector resource. \n[Command Reference](createOracleDbAwsIdentityConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB Google AWS Identity Connector resource name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Identity Connector resource.""")
@@ -288,6 +358,7 @@ def create_oracle_db_aws_identity_connector(ctx, from_json, wait_for_state, max_
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB AWS Key resource.""")
 @cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--display-name', required=True, help=u"""Oracle DB AWS Key resource name.""")
+@cli_util.option('--oracle-db-aws-key-pool-id', help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
 @cli_util.option('--aws-key-arn', help=u"""Amazon resource name of AWS Key.""")
 @cli_util.option('--aws-account-id', help=u"""AWS Account ID.""")
 @cli_util.option('--type', help=u"""AWS Key resource type.""")
@@ -309,7 +380,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKey'})
 @cli_util.wrap_exceptions
-def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, oracle_db_connector_id, display_name, aws_key_arn, aws_account_id, type, location, is_aws_key_enabled, properties, freeform_tags, defined_tags, if_match):
+def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, oracle_db_connector_id, display_name, oracle_db_aws_key_pool_id, aws_key_arn, aws_account_id, type, location, is_aws_key_enabled, properties, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -320,6 +391,9 @@ def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['compartmentId'] = compartment_id
     _details['oracleDbConnectorId'] = oracle_db_connector_id
     _details['displayName'] = display_name
+
+    if oracle_db_aws_key_pool_id is not None:
+        _details['oracleDbAwsKeyPoolId'] = oracle_db_aws_key_pool_id
 
     if aws_key_arn is not None:
         _details['awsKeyArn'] = aws_key_arn
@@ -348,6 +422,81 @@ def create_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, w
     client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
     result = client.create_oracle_db_aws_key(
         create_oracle_db_aws_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.create_oracle_db_aws_key_pool.command_name', 'create'), help=u"""Create DB AWS Key Pool resource. \n[Command Reference](createOracleDbAwsKeyPool)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The Compartment [OCID] that contains this Oracle DB AWS Pool resource.""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the Oracle DB AWS key pool resource.""")
+@cli_util.option('--is-reuse-allowed', type=click.BOOL, help=u"""Indicates whether AWS KMS keys in this key pool can be reused.""")
+@cli_util.option('--is-multi-region-key-pool', type=click.BOOL, help=u"""Indicates whether this key pool accepts only multi-region AWS KMS keys. When false, the key pool accepts only single-region AWS KMS keys.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKeyPool'})
+@cli_util.wrap_exceptions
+def create_oracle_db_aws_key_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, is_reuse_allowed, is_multi_region_key_pool, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+
+    if is_reuse_allowed is not None:
+        _details['isReuseAllowed'] = is_reuse_allowed
+
+    if is_multi_region_key_pool is not None:
+        _details['isMultiRegionKeyPool'] = is_multi_region_key_pool
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.create_oracle_db_aws_key_pool(
+        create_oracle_db_aws_key_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -492,6 +641,62 @@ def delete_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.delete_oracle_db_aws_key_pool.command_name', 'delete'), help=u"""Delete AWS Key Pool resource. \n[Command Reference](deleteOracleDbAwsKeyPool)""")
+@cli_util.option('--oracle-db-aws-key-pool-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_oracle_db_aws_key_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_pool_id, if_match):
+
+    if isinstance(oracle_db_aws_key_pool_id, six.string_types) and len(oracle_db_aws_key_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.delete_oracle_db_aws_key_pool(
+        oracle_db_aws_key_pool_id=oracle_db_aws_key_pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.get_oracle_db_aws_identity_connector.command_name', 'get'), help=u"""Retrieves detailed information about a Oracle DB AWS Identity Connector resource by specifying its unique resource [OCID]. \n[Command Reference](getOracleDbAwsIdentityConnector)""")
 @cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -540,6 +745,28 @@ def get_oracle_db_aws_key(ctx, from_json, oracle_db_aws_key_id, limit, page, sor
     client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
     result = client.get_oracle_db_aws_key(
         oracle_db_aws_key_id=oracle_db_aws_key_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.get_oracle_db_aws_key_pool.command_name', 'get'), help=u"""Retrieves detailed information about a Oracle AWS Key Pool resource by specifying its unique resource [OCID]. \n[Command Reference](getOracleDbAwsKeyPool)""")
+@cli_util.option('--oracle-db-aws-key-pool-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKeyPool'})
+@cli_util.wrap_exceptions
+def get_oracle_db_aws_key_pool(ctx, from_json, oracle_db_aws_key_pool_id):
+
+    if isinstance(oracle_db_aws_key_pool_id, six.string_types) and len(oracle_db_aws_key_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.get_oracle_db_aws_key_pool(
+        oracle_db_aws_key_pool_id=oracle_db_aws_key_pool_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -608,12 +835,76 @@ def list_oracle_db_aws_identity_connectors(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_key_pools.command_name', 'list'), help=u"""Lists all DB AWS Key Pools based on the specified filters. \n[Command Reference](listOracleDbAwsKeyPools)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Key Pool Resource that match the given display name.""")
+@cli_util.option('--oracle-db-aws-key-pool-id', help=u"""A filter to return only resources that match the given OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified, default is timeCreated.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKeyPoolCollection'})
+@cli_util.wrap_exceptions
+def list_oracle_db_aws_key_pools(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_aws_key_pool_id, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if oracle_db_aws_key_pool_id is not None:
+        kwargs['oracle_db_aws_key_pool_id'] = oracle_db_aws_key_pool_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_oracle_db_aws_key_pools,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_oracle_db_aws_key_pools,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_oracle_db_aws_key_pools(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.list_oracle_db_aws_keys.command_name', 'list'), help=u"""Lists all DB AWS Keys based on the specified filters. \n[Command Reference](listOracleDbAwsKeys)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return Oracle DB AWS Key Resource that match the given display name.""")
 @cli_util.option('--oracle-db-aws-key-id', help=u"""A filter to return Oracle DB AWS Identity Connector Resource that match the given OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB AWS Key resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--oracle-db-aws-connector-id', help=u"""A filter to return Oracle DB AWS Identity Connector resources that match the specified [OCID] of the Oracle DB AWS Identity Connector resource.""")
+@cli_util.option('--oracle-db-aws-key-pool-id', help=u"""A filter to return only resources that match the given OCID](/Content/General/Concepts/identifiers.htm) of the Oracle DB AWS Key Pool resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -625,7 +916,7 @@ def list_oracle_db_aws_identity_connectors(ctx, from_json, all_pages, page_size,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'OracleDbAwsKeySummaryCollection'})
 @cli_util.wrap_exceptions
-def list_oracle_db_aws_keys(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_aws_key_id, lifecycle_state, oracle_db_aws_connector_id, limit, page, sort_order, sort_by):
+def list_oracle_db_aws_keys(ctx, from_json, all_pages, page_size, compartment_id, display_name, oracle_db_aws_key_id, lifecycle_state, oracle_db_aws_connector_id, oracle_db_aws_key_pool_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -639,6 +930,8 @@ def list_oracle_db_aws_keys(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['lifecycle_state'] = lifecycle_state
     if oracle_db_aws_connector_id is not None:
         kwargs['oracle_db_aws_connector_id'] = oracle_db_aws_connector_id
+    if oracle_db_aws_key_pool_id is not None:
+        kwargs['oracle_db_aws_key_pool_id'] = oracle_db_aws_key_pool_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -855,6 +1148,69 @@ def replicate_oracle_db_aws_key(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.replicate_oracle_db_aws_key_pool.command_name', 'replicate'), help=u"""Replicate Oracle AWS Key Pool resource to target region. \n[Command Reference](replicateOracleDbAwsKeyPool)""")
+@cli_util.option('--oracle-db-aws-key-pool-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--target-region', required=True, help=u"""The destination OCI public region name (e.g., us-phoenix-1 or us-ashburn-1) where the Oracle DB AWS Key Pool resource will be replicated.""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["CREATE", "DELETE"]), help=u"""The replication action to perform for the Oracle DB AWS key pool resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def replicate_oracle_db_aws_key_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_pool_id, target_region, action, if_match):
+
+    if isinstance(oracle_db_aws_key_pool_id, six.string_types) and len(oracle_db_aws_key_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetRegion'] = target_region
+    _details['action'] = action
+
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.replicate_oracle_db_aws_key_pool(
+        oracle_db_aws_key_pool_id=oracle_db_aws_key_pool_id,
+        replicate_oracle_db_aws_key_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @oracle_db_aws_identity_connector_group.command(name=cli_util.override('db_multicloud_aws_provider.update_oracle_db_aws_identity_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB AWS Identity Connector resource for a given [OCID]. \n[Command Reference](updateOracleDbAwsIdentityConnector)""")
 @cli_util.option('--oracle-db-aws-identity-connector-id', required=True, help=u"""The [OCID]  of the Oracle DB AWS Identity Connector resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB Google AWS Identity Connector resource name.""")
@@ -968,6 +1324,95 @@ def update_oracle_db_aws_identity_connector(ctx, from_json, force, wait_for_stat
 @oracle_db_aws_key_group.command(name=cli_util.override('db_multicloud_aws_provider.update_oracle_db_aws_key.command_name', 'update'), help=u"""Modifies the existing Oracle AWS Key Details for a given [OCID]. \n[Command Reference](updateOracleDbAwsKey)""")
 @cli_util.option('--oracle-db-aws-key-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key resource.""")
 @cli_util.option('--display-name', help=u"""Oracle DB AWS Key resource name.""")
+@cli_util.option('--oracle-db-aws-key-pool-id', help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-force-delete-from-key-pool', type=click.BOOL, help=u"""If true, removes the key from its key pool even when it is currently in use; otherwise the request is rejected.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, display_name, oracle_db_aws_key_pool_id, freeform_tags, defined_tags, if_match, is_force_delete_from_key_pool):
+
+    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_force_delete_from_key_pool is not None:
+        kwargs['is_force_delete_from_key_pool'] = is_force_delete_from_key_pool
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if oracle_db_aws_key_pool_id is not None:
+        _details['oracleDbAwsKeyPoolId'] = oracle_db_aws_key_pool_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
+    result = client.update_oracle_db_aws_key(
+        oracle_db_aws_key_id=oracle_db_aws_key_id,
+        update_oracle_db_aws_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@oracle_db_aws_key_pool_group.command(name=cli_util.override('db_multicloud_aws_provider.update_oracle_db_aws_key_pool.command_name', 'update'), help=u"""Modifies the existing Oracle AWS Key Pool Details for a given [OCID]. \n[Command Reference](updateOracleDbAwsKeyPool)""")
+@cli_util.option('--oracle-db-aws-key-pool-id', required=True, help=u"""The [OCID] of the Oracle DB AWS Key Pool resource.""")
+@cli_util.option('--display-name', help=u"""The display name of the Oracle DB AWS key pool resource.""")
+@cli_util.option('--is-reuse-allowed', type=click.BOOL, help=u"""Indicates whether AWS KMS keys in this key pool can be reused.""")
+@cli_util.option('--is-multi-region-key-pool', type=click.BOOL, help=u"""Indicates whether this key pool accepts only multi-region AWS KMS keys. When false, the key pool accepts only single-region AWS KMS keys.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -984,10 +1429,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_id, display_name, freeform_tags, defined_tags, if_match):
+def update_oracle_db_aws_key_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_aws_key_pool_id, display_name, is_reuse_allowed, is_multi_region_key_pool, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oracle_db_aws_key_id, six.string_types) and len(oracle_db_aws_key_id.strip()) == 0:
-        raise click.UsageError('Parameter --oracle-db-aws-key-id cannot be whitespace or empty string')
+    if isinstance(oracle_db_aws_key_pool_id, six.string_types) and len(oracle_db_aws_key_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-aws-key-pool-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
@@ -1003,6 +1448,12 @@ def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_sec
     if display_name is not None:
         _details['displayName'] = display_name
 
+    if is_reuse_allowed is not None:
+        _details['isReuseAllowed'] = is_reuse_allowed
+
+    if is_multi_region_key_pool is not None:
+        _details['isMultiRegionKeyPool'] = is_multi_region_key_pool
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -1010,9 +1461,9 @@ def update_oracle_db_aws_key(ctx, from_json, force, wait_for_state, max_wait_sec
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('dbmulticloud', 'db_multicloud_aws_provider', ctx)
-    result = client.update_oracle_db_aws_key(
-        oracle_db_aws_key_id=oracle_db_aws_key_id,
-        update_oracle_db_aws_key_details=_details,
+    result = client.update_oracle_db_aws_key_pool(
+        oracle_db_aws_key_pool_id=oracle_db_aws_key_pool_id,
+        update_oracle_db_aws_key_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
