@@ -22,7 +22,7 @@ def billing_schedule_root_group():
     pass
 
 
-@click.command(cli_util.override('billing_schedule.billing_schedule_summary_group.command_name', 'billing-schedule-summary'), cls=CommandGroupWithAlias, help="""Billing schedule details related to Subscription Id""")
+@click.command(cli_util.override('billing_schedule.billing_schedule_summary_group.command_name', 'billing-schedule-summary'), cls=CommandGroupWithAlias, help="""Billing schedule details related to subscription ID.""")
 @cli_util.help_option_group
 def billing_schedule_summary_group():
     pass
@@ -32,10 +32,10 @@ onesubscription_service_cli.onesubscription_service_group.add_command(billing_sc
 billing_schedule_root_group.add_command(billing_schedule_summary_group)
 
 
-@billing_schedule_summary_group.command(name=cli_util.override('billing_schedule.list_billing_schedules.command_name', 'list-billing-schedules'), help=u"""This list API returns all billing schedules for given subscription id and for a particular Subscribed Service if provided \n[Command Reference](listBillingSchedules)""")
+@billing_schedule_summary_group.command(name=cli_util.override('billing_schedule.list_billing_schedules.command_name', 'list-billing-schedules'), help=u"""This list API returns all billing schedules for a given subscription ID, and for a particular subscribed service if provided. \n[Command Reference](listBillingSchedules)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""This param is used to get only the billing schedules for a particular Subscription Id""")
-@cli_util.option('--subscribed-service-id', help=u"""This param is used to get only the billing schedules for a particular Subscribed Service""")
+@cli_util.option('--subscription-id', required=True, help=u"""This parameter gets the billing schedules for a particular subscription ID.""")
+@cli_util.option('--subscribed-service-id', help=u"""This parameter gets the billing schedules for a particular subscribed service.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")

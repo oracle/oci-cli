@@ -22,22 +22,57 @@ def subscription_root_group():
     pass
 
 
-@click.command(cli_util.override('subscription.subscription_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help="""Subscription summary""")
+@click.command(cli_util.override('subscription.usage_ledger_summary_group.command_name', 'usage-ledger-summary'), cls=CommandGroupWithAlias, help="""Revenue invoice consumption detail for a subscription.""")
+@cli_util.help_option_group
+def usage_ledger_summary_group():
+    pass
+
+
+@click.command(cli_util.override('subscription.subscription_details_group.command_name', 'subscription-details'), cls=CommandGroupWithAlias, help="""Commitment summary for a subscription.""")
+@cli_util.help_option_group
+def subscription_details_group():
+    pass
+
+
+@click.command(cli_util.override('subscription.subscription_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help="""Subscription summary.""")
 @cli_util.help_option_group
 def subscription_group():
     pass
 
 
 onesubscription_service_cli.onesubscription_service_group.add_command(subscription_root_group)
+subscription_root_group.add_command(usage_ledger_summary_group)
+subscription_root_group.add_command(subscription_details_group)
 subscription_root_group.add_command(subscription_group)
 
 
-@subscription_group.command(name=cli_util.override('subscription.list_subscriptions.command_name', 'list'), help=u"""This list API returns all subscriptions for a given plan number or subscription id or buyer email and provides additional parameters to include ratecard and commitment details. This API expects exactly one of the above mentioned parameters as input. If more than one parameters are provided the API will throw a 400 - invalid parameters exception and if no parameters are provided it will throw a 400 - missing parameter exception \n[Command Reference](listSubscriptions)""")
+@subscription_details_group.command(name=cli_util.override('subscription.get_subscription_details.command_name', 'get'), help=u"""Returns the commitment summary for a subscription. \n[Command Reference](getSubscriptionDetails)""")
+@cli_util.option('--subscription-id', required=True, help=u"""Subscription identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--plan-number', help=u"""The Plan Number""")
-@cli_util.option('--subscription-id', help=u"""Line level Subscription Id""")
-@cli_util.option('--buyer-email', help=u"""Buyer Email Id""")
-@cli_util.option('--is-commit-info-required', type=click.BOOL, help=u"""Boolean value to decide whether commitment services will be shown""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'onesubscription', 'class': 'SubscriptionDetails'})
+@cli_util.wrap_exceptions
+def get_subscription_details(ctx, from_json, subscription_id, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('onesubscription', 'subscription', ctx)
+    result = client.get_subscription_details(
+        subscription_id=subscription_id,
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('subscription.list_subscriptions.command_name', 'list'), help=u"""Returns all subscriptions for a given plan number, subscription ID, or buyer email, and provides additional parameters, to include rate card and commitment details. Exactly one of the these parameters is expected as input. If more than one parameter is provided, a 400 - invalid parameters exception is thrown, and if no parameters are provided, a 400 - missing parameter exception is thrown. \n[Command Reference](listSubscriptions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--plan-number', help=u"""The plan number.""")
+@cli_util.option('--subscription-id', help=u"""Line level subscription ID.""")
+@cli_util.option('--buyer-email', help=u"""Buyer email ID.""")
+@cli_util.option('--is-commit-info-required', type=click.BOOL, help=u"""Boolean value to determine whether commitment services are shown.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")
@@ -94,6 +129,75 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, pla
         )
     else:
         result = client.list_subscriptions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@usage_ledger_summary_group.command(name=cli_util.override('subscription.list_usage_ledgers.command_name', 'list-usage-ledgers'), help=u"""Returns revenue invoice consumption details for authorization orders that draw down from the requested subscription. It includes authorization-order subscription IDs but excludes the requested subscription ID itself. \n[Command Reference](listUsageLedgers)""")
+@cli_util.option('--subscription-id', required=True, help=u"""Subscription identifier.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
+
+Example: '500'""")
+@cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The usage-ledger sort order to use, either ascending ('ASC') or descending ('DESC').""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeConsumption", "consumptionAmount"]), help=u"""The usage-ledger field to sort by. You can provide one sort order ('sortOrder').""")
+@cli_util.option('--time-consumption-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""The lower bound of the consumption-date range, expressed in RFC 3339 timestamp format. The value is inclusive (>=).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-consumption-less-than', type=custom_types.CLI_DATETIME, help=u"""The upper bound of the consumption-date range, expressed in RFC 3339 timestamp format. The value is exclusive (<).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'onesubscription', 'class': 'list[UsageLedgerSummary]'})
+@cli_util.wrap_exceptions
+def list_usage_ledgers(ctx, from_json, all_pages, page_size, subscription_id, compartment_id, limit, page, sort_order, sort_by, time_consumption_greater_than_or_equal_to, time_consumption_less_than):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if time_consumption_greater_than_or_equal_to is not None:
+        kwargs['time_consumption_greater_than_or_equal_to'] = time_consumption_greater_than_or_equal_to
+    if time_consumption_less_than is not None:
+        kwargs['time_consumption_less_than'] = time_consumption_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('onesubscription', 'subscription', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_usage_ledgers,
+            subscription_id=subscription_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_usage_ledgers,
+            limit,
+            page_size,
+            subscription_id=subscription_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_usage_ledgers(
+            subscription_id=subscription_id,
             compartment_id=compartment_id,
             **kwargs
         )

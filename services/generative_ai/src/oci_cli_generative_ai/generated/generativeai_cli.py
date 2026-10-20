@@ -28,6 +28,12 @@ def generative_ai_root_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai.sandbox_warm_pool_collection_group.command_name', 'sandbox-warm-pool-collection'), cls=CommandGroupWithAlias, help="""Sandbox Warm Pool Collection.""")
+@cli_util.help_option_group
+def sandbox_warm_pool_collection_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai.hosted_application_storage_collection_group.command_name', 'hosted-application-storage-collection'), cls=CommandGroupWithAlias, help="""Results of a dedicate hosted application search. Contains  HostedApplicationStorageSummary items and other information such as metadata.""")
 @cli_util.help_option_group
 def hosted_application_storage_collection_group():
@@ -186,6 +192,12 @@ def imported_model_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai.sandbox_warm_pool_group.command_name', 'sandbox-warm-pool'), cls=CommandGroupWithAlias, help="""CP-owned configuration and management lifecycle of a Project-owned Sandbox warm pool. Get can include best-effort runtime observations independently of lifecycle.""")
+@cli_util.help_option_group
+def sandbox_warm_pool_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai.hosted_deployment_collection_group.command_name', 'hosted-deployment-collection'), cls=CommandGroupWithAlias, help="""Results of a dedicate hosted deployment search. Contains  Hosted Deployment Summary items and other information such as metadata.""")
 @cli_util.help_option_group
 def hosted_deployment_collection_group():
@@ -223,6 +235,12 @@ def model_collection_group():
 @click.command(cli_util.override('generative_ai.generative_ai_private_endpoint_group.command_name', 'generative-ai-private-endpoint'), cls=CommandGroupWithAlias, help="""Generative AI private endpoint.""")
 @cli_util.help_option_group
 def generative_ai_private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.allocatable_gpu_collection_group.command_name', 'allocatable-gpu-collection'), cls=CommandGroupWithAlias, help="""Results of an allocatable GPU search for launching dedicated AI clusters.""")
+@cli_util.help_option_group
+def allocatable_gpu_collection_group():
     pass
 
 
@@ -268,6 +286,7 @@ def imported_model_collection_group():
     pass
 
 
+generative_ai_root_group.add_command(sandbox_warm_pool_collection_group)
 generative_ai_root_group.add_command(hosted_application_storage_collection_group)
 generative_ai_root_group.add_command(hosted_application_group)
 generative_ai_root_group.add_command(endpoint_collection_group)
@@ -292,12 +311,14 @@ generative_ai_root_group.add_command(generative_ai_private_endpoint_collection_g
 generative_ai_root_group.add_command(hosted_deployment_group)
 generative_ai_root_group.add_command(hosted_application_collection_group)
 generative_ai_root_group.add_command(imported_model_group)
+generative_ai_root_group.add_command(sandbox_warm_pool_group)
 generative_ai_root_group.add_command(hosted_deployment_collection_group)
 generative_ai_root_group.add_command(work_request_log_entry_group)
 generative_ai_root_group.add_command(hosted_application_iam_group)
 generative_ai_root_group.add_command(generative_ai_project_group)
 generative_ai_root_group.add_command(model_collection_group)
 generative_ai_root_group.add_command(generative_ai_private_endpoint_group)
+generative_ai_root_group.add_command(allocatable_gpu_collection_group)
 generative_ai_root_group.add_command(generative_ai_project_collection_group)
 generative_ai_root_group.add_command(routing_profile_group)
 generative_ai_root_group.add_command(api_key_group)
@@ -1032,9 +1053,10 @@ Allowed values are: - HOSTING - FINE_TUNING""")
 
 Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_GENERIC_V3 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1 - A10_X1 - A10_X2 - A10_X4 - A100_40G_X1 - A100_40G_X2 - A100_40G_X4 - A100_40G_X8 - A100_80G_X1 - A100_80G_X2 - A100_80G_X4 - A100_80G_X8 - H100_X1 - H100_X2 - H100_X4 - H100_X8 - H100_X16 - H100_X32 - H200_X1 - H200_X2 - H200_X4 - H200_X8
 
-The following shapes can only be used to deploy imported models: - A10_X1, A10_X2, A10_X4 - A100_40G_X1, A100_40G_X2, A100_40G_X4, A100_40G_X8 - A100_80G_X1, A100_80G_X2, A100_80G_X4, A100_80G_X8 - H100_X1, H100_X2, H100_X4, H100_X8 - H100_X16, H100_X32 - H200_X1, H200_X2, H200_X4, H200_X8 - B200_X16, B200_X32 - B300_X1, B300_X2, B300_X4, B300_X8, B300_X16, B300_X32 - L40S_X1, L40S_X2, L40S_X4, L40S_X8, L40S_X16, L40S_X32 - MI300X_X1, MI300X_X2, MI300X_X4, MI300X_X8, MI300X_X16, MI300X_X32 - OAI_A10_X2 - OAI_H100_X1 - OAI_H100_X2 - OAI_H200_X1 - OAI_A100_80G_X1 - OAI_A100_80G_X2 - OAI_A100_40G_X1 - OAI_A100_40G_X4 - B200_X1 - B200_X2 - B200_X4 - B200_X8 - OAI_B200_X1 - OAI_B200_X2 - OAI_B200_X4 - OAI_B200_X8 - SB_B200_X1 - B200_X16 - B200_X32 - B300_X1 - B300_X2 - B300_X4 - B300_X8 - B300_X16 - B300_X32 - L40S_X1 - L40S_X2 - L40S_X4 - L40S_X8 - L40S_X16 - L40S_X32 - MI300X_X1 - MI300X_X2 - MI300X_X4 - MI300X_X8 - MI300X_X16 - MI300X_X32 - COHERE_B300_X1 - META_B300_X1 - OAI_B300_X1""")
+The following shapes can only be used to deploy imported models: - A10_X1, A10_X2, A10_X4 - A100_40G_X1, A100_40G_X2, A100_40G_X4, A100_40G_X8 - A100_80G_X1, A100_80G_X2, A100_80G_X4, A100_80G_X8 - H100_X1, H100_X2, H100_X4, H100_X8 - H100_X16, H100_X32 - H200_X1, H200_X2, H200_X4, H200_X8 - B200_X16, B200_X32 - B300_X1, B300_X2, B300_X4, B300_X8, B300_X16, B300_X32 - L40S_X1, L40S_X2, L40S_X4, L40S_X8, L40S_X16, L40S_X32 - MI300X_X1, MI300X_X2, MI300X_X4, MI300X_X8, MI300X_X16, MI300X_X32 - OAI_H100_X4 - OAI_A10_X2 - OAI_H100_X1 - OAI_H100_X2 - OAI_H200_X1 - OAI_A100_80G_X1 - OAI_A100_80G_X2 - OAI_A100_40G_X1 - OAI_A100_40G_X4 - B200_X1 - B200_X2 - B200_X4 - B200_X8 - OAI_B200_X1 - OAI_B200_X2 - OAI_B200_X4 - OAI_B200_X8 - SB_B200_X1 - B200_X16 - B200_X32 - B300_X1 - B300_X2 - B300_X4 - B300_X8 - B300_X16 - B300_X32 - L40S_X1 - L40S_X2 - L40S_X4 - L40S_X8 - L40S_X16 - L40S_X32 - MI300X_X1 - MI300X_X2 - MI300X_X4 - MI300X_X8 - MI300X_X16 - MI300X_X32 - COHERE_B300_X1 - META_B300_X1 - OAI_B300_X1""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the dedicated AI cluster.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The OCID of the capacity reservation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1049,7 +1071,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'DedicatedAiCluster'})
 @cli_util.wrap_exceptions
-def create_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, unit_count, unit_shape, display_name, description, freeform_tags, defined_tags):
+def create_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, compartment_id, unit_count, unit_shape, display_name, description, capacity_reservation_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1065,6 +1087,9 @@ def create_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 
     if description is not None:
         _details['description'] = description
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1302,6 +1327,7 @@ def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
 @cli_util.option('--conversation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--long-term-memory-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--short-term-memory-optimization-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sandbox-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1311,12 +1337,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'sandbox-config': {'module': 'generative_ai', 'class': 'SandboxConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiProject'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'sandbox-config': {'module': 'generative_ai', 'class': 'SandboxConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiProject'})
 @cli_util.wrap_exceptions
-def create_generative_ai_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, description, display_name, conversation_config, long_term_memory_config, short_term_memory_optimization_config, freeform_tags, defined_tags):
+def create_generative_ai_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, description, display_name, conversation_config, long_term_memory_config, short_term_memory_optimization_config, sandbox_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1338,6 +1364,9 @@ def create_generative_ai_project(ctx, from_json, wait_for_state, max_wait_second
 
     if short_term_memory_optimization_config is not None:
         _details['shortTermMemoryOptimizationConfig'] = cli_util.parse_json_parameter("short_term_memory_optimization_config", short_term_memory_optimization_config)
+
+    if sandbox_config is not None:
+        _details['sandboxConfig'] = cli_util.parse_json_parameter("sandbox_config", sandbox_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1833,7 +1862,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1924,7 +1953,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2022,7 +2051,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2276,6 +2305,74 @@ def create_routing_profile(ctx, from_json, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sandbox_warm_pool_group.command(name=cli_util.override('generative_ai.create_sandbox_warm_pool.command_name', 'create'), help=u"""Creates a named MANAGED or CUSTOM pool. MANAGED uses the service-provided python-3.11 runtime and requires containerImage to be omitted. CUSTOM requires a digest-pinned containerImage. Project-wide shape capacity limits include named pools of both types and reserved default pools. Type, image, shape and name are immutable. The CP atomically persists CREATING and a Work Request, then its workflow prepares an immutable pool-owned template and applies the pool configuration. Each MANAGED pool has a distinct template based on the service runtime configuration, isolated from other pools of the same shape. ACTIVE means configuration was applied and verified; it does not require ready members, a successful image boot or available cluster capacity. Zero capacity pauses idle prewarming. An ACTIVE named pool can still create Sandboxes through cold fallback when its applied template is available. Retry identity and configuration are persisted atomically. Within the 24-hour retry-token validity period, the same token and input identify the original pool id, including after name reuse. A retry never creates or selects a replacement pool. A retry after the original pool is deleted returns 409; changed input with the same token conflicts. Reserved default names cannot be reused for either type. \n[Command Reference](createSandboxWarmPool)""")
+@cli_util.option('--project-id', required=True, help=u"""Owning Generative AI Project OCID. Resolve parent compartment for authorization.""")
+@cli_util.option('--name', required=True, help=u"""Unique immutable name within the Project.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MANAGED", "CUSTOM"]), help=u"""MANAGED uses the service-provided python-3.11 runtime. CUSTOM uses a customer-provided containerImage. Both types support named pool creation.""")
+@cli_util.option('--shape', required=True, type=custom_types.CliCaseInsensitiveChoice(["SMALL", "MEDIUM", "LARGE"]), help=u"""Compute shape for each idle Sandbox member.""")
+@cli_util.option('--desired-capacity', required=True, type=click.INT, help=u"""Desired number of idle members. Zero pauses idle prewarming. Once the pool is ACTIVE, named-pool Sandbox creation can still cold-start from its available applied template when no eligible warm member is available. Existing customer Sandboxes continue. A positive target does not guarantee ready capacity. Existing service capacity validation still applies.""")
+@cli_util.option('--container-image', help=u"""Required for CUSTOM and must be omitted for MANAGED. A CUSTOM image must be a digest-pinned same-region OCIR reference, using sha256 with exactly 64 lowercase hexadecimal characters. The CP workflow prepares the template through the data plane, reusing current BYOC image and Project identity validation. Successful configuration does not guarantee image pull or runtime readiness.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'SandboxWarmPool'})
+@cli_util.wrap_exceptions
+def create_sandbox_warm_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, name, type, shape, desired_capacity, container_image):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['type'] = type
+    _details['shape'] = shape
+    _details['desiredCapacity'] = desired_capacity
+
+    if container_image is not None:
+        _details['containerImage'] = container_image
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_sandbox_warm_pool(
+        project_id=project_id,
+        create_sandbox_warm_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4165,6 +4262,67 @@ def delete_routing_profile(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@sandbox_warm_pool_group.command(name=cli_util.override('generative_ai.delete_sandbox_warm_pool.command_name', 'delete'), help=u"""Deletes a named MANAGED or CUSTOM pool through a CP Work Request. Reserved MANAGED default entries cannot be deleted and return 409. CP persists DELETING and closes admission as the new configuration propagates, drains idle members and deletes the pool resource. The management response does not promise immediate global admission closure or completed cleanup. Already-adopted customer Sandboxes survive and retain required template dependencies. Get and List continue to show DELETING until pool cleanup completes. The CP then records DELETED and releases the name. Name reuse always allocates a new id and materialized names. Retained templates may outlive the pool while customer Sandboxes still depend on them. A repeated delete during DELETING returns the existing Work Request. A missing name returns 404. After name reuse, the path identifies the new pool; use the original if-match ETag to prevent deleting it. Conflicting operations return 409 and stale if-match returns 412. \n[Command Reference](deleteSandboxWarmPool)""")
+@cli_util.option('--project-id', required=True, help=u"""Owning Generative AI Project OCID. Resolve parent compartment for authorization.""")
+@cli_util.option('--name', required=True, help=u"""Immutable name within the Project.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_sandbox_warm_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, name, if_match):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.delete_sandbox_warm_pool(
+        project_id=project_id,
+        name=name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @semantic_store_group.command(name=cli_util.override('generative_ai.delete_semantic_store.command_name', 'delete'), help=u"""Deletes a semanticStore. \n[Command Reference](deleteSemanticStore)""")
 @cli_util.option('--semantic-store-id', required=True, help=u"""The [OCID] of the SemanticStore.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4541,6 +4699,33 @@ def get_routing_profile(ctx, from_json, routing_profile_id):
     cli_util.render_response(result, ctx)
 
 
+@sandbox_warm_pool_group.command(name=cli_util.override('generative_ai.get_sandbox_warm_pool.command_name', 'get'), help=u"""Gets authoritative CP configuration and management lifecycle for the current pool incarnation, including DELETING until pool cleanup completes. Returns 404 after deletion completes unless the name has been reused for a new id. A best-effort runtime observation may report ready idle capacity. A runtime read failure returns UNAVAILABLE without failing the configuration read. ACTIVE does not imply runtime capacity is ready. The configuration ETag excludes runtime changes; it must not be used to suppress runtime observations with a conditional not-modified response. \n[Command Reference](getSandboxWarmPool)""")
+@cli_util.option('--project-id', required=True, help=u"""Owning Generative AI Project OCID. Resolve parent compartment for authorization.""")
+@cli_util.option('--name', required=True, help=u"""Immutable name within the Project.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'SandboxWarmPool'})
+@cli_util.wrap_exceptions
+def get_sandbox_warm_pool(ctx, from_json, project_id, name):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.get_sandbox_warm_pool(
+        project_id=project_id,
+        name=name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @semantic_store_group.command(name=cli_util.override('generative_ai.get_semantic_store.command_name', 'get'), help=u"""Gets information about a semanticStore. \n[Command Reference](getSemanticStore)""")
 @cli_util.option('--semantic-store-id', required=True, help=u"""The [OCID] of the SemanticStore.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4723,6 +4908,7 @@ def list_api_keys(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the capacity reservation.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4730,7 +4916,7 @@ def list_api_keys(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'DedicatedAiClusterCollection'})
 @cli_util.wrap_exceptions
-def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by, capacity_reservation_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4750,6 +4936,8 @@ def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if capacity_reservation_id is not None:
+        kwargs['capacity_reservation_id'] = capacity_reservation_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     if all_pages:
@@ -4772,6 +4960,61 @@ def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment
     else:
         result = client.list_dedicated_ai_clusters(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@allocatable_gpu_collection_group.command(name=cli_util.override('generative_ai.list_dedicated_ai_clusters_allocatable_gpus.command_name', 'list-dedicated-ai-clusters-allocatable-gpus'), help=u"""Lists the allocatable GPUs for launching dedicated AI clusters tied to a specific capacity reservation id. \n[Command Reference](listDedicatedAiClustersAllocatableGpus)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--capacity-reservation-id', required=True, help=u"""The [OCID] of the capacity reservation.""")
+@cli_util.option('--compute-shape', help=u"""The compute shape to use to filter allocatable GPUs. For example, `BM.GPU.A10.4`.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'AllocatableGpuCollection'})
+@cli_util.wrap_exceptions
+def list_dedicated_ai_clusters_allocatable_gpus(ctx, from_json, all_pages, page_size, compartment_id, capacity_reservation_id, compute_shape, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compute_shape is not None:
+        kwargs['compute_shape'] = compute_shape
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_ai_clusters_allocatable_gpus,
+            compartment_id=compartment_id,
+            capacity_reservation_id=capacity_reservation_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_ai_clusters_allocatable_gpus,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            capacity_reservation_id=capacity_reservation_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_ai_clusters_allocatable_gpus(
+            compartment_id=compartment_id,
+            capacity_reservation_id=capacity_reservation_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -5233,7 +5476,7 @@ def list_hosted_deployments(ctx, from_json, all_pages, page_size, compartment_id
 @imported_model_collection_group.command(name=cli_util.override('generative_ai.list_imported_models.command_name', 'list-imported-models'), help=u"""Lists imported models in a specific compartment. \n[Command Reference](listImportedModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the importedModel.""")
@@ -5306,7 +5549,7 @@ def list_imported_models(ctx, from_json, all_pages, page_size, compartment_id, v
 @cli_util.option('--model-id', help=u"""A filter to return only resources whose model identifier matches the given modelId.""")
 @cli_util.option('--serving-mode', type=custom_types.CliCaseInsensitiveChoice(["ON_DEMAND", "DEDICATED"]), multiple=True, help=u"""A filter to return only resources whose serving modes match the given servingModes.""")
 @cli_util.option('--api-capability', multiple=True, help=u"""Filter models that support any of the specified API capabilities.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_TEXT", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_TEXT", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--model-access', type=custom_types.CliCaseInsensitiveChoice(["HOSTED", "PROXY"]), multiple=True, help=u"""Filter models by access type.""")
 @cli_util.option('--is-deprecated', type=click.BOOL, help=u"""If true, return only deprecated models; if false, exclude deprecated models.""")
 @cli_util.option('--is-on-demand-retired', type=click.BOOL, help=u"""Filter models based on on-demand retirement status.""")
@@ -5380,7 +5623,7 @@ def list_model_discovery(ctx, from_json, all_pages, page_size, compartment_id, r
 @model_collection_group.command(name=cli_util.override('generative_ai.list_models.command_name', 'list-models'), help=u"""Lists the models in a specific compartment. Includes pretrained base models and fine-tuned custom models. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_TEXT", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_TEXT", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the model.""")
@@ -5504,6 +5747,72 @@ def list_routing_profiles(ctx, from_json, all_pages, page_size, compartment_id, 
     else:
         result = client.list_routing_profiles(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sandbox_warm_pool_collection_group.command(name=cli_util.override('generative_ai.list_sandbox_warm_pools.command_name', 'list-sandbox-warm-pools'), help=u"""Lists named MANAGED and CUSTOM pools for Sandbox-enabled Projects, including zero targets and in-progress management operations. Reserved defaults can be resized but cannot be created or deleted by customers. DELETED resources are excluded. Responses include CP management lifecycle but do not perform runtime reads or return ready capacity. \n[Command Reference](listSandboxWarmPools)""")
+@cli_util.option('--project-id', required=True, help=u"""Owning Generative AI Project OCID. Resolve parent compartment for authorization.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--name', help=u"""Exact name filter.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["MANAGED", "CUSTOM"]), help=u"""Filter by type.""")
+@cli_util.option('--shape', type=custom_types.CliCaseInsensitiveChoice(["SMALL", "MEDIUM", "LARGE"]), help=u"""Filter by shape.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name"]), help=u"""Filter by sortBy.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Filter by sortOrder.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'SandboxWarmPoolCollection'})
+@cli_util.wrap_exceptions
+def list_sandbox_warm_pools(ctx, from_json, all_pages, page_size, project_id, limit, page, name, type, shape, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if name is not None:
+        kwargs['name'] = name
+    if type is not None:
+        kwargs['type'] = type
+    if shape is not None:
+        kwargs['shape'] = shape
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sandbox_warm_pools,
+            project_id=project_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sandbox_warm_pools,
+            limit,
+            page_size,
+            project_id=project_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sandbox_warm_pools(
+            project_id=project_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6518,6 +6827,7 @@ def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state,
 @cli_util.option('--conversation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--long-term-memory-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--short-term-memory-optimization-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sandbox-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6529,18 +6839,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'sandbox-config': {'module': 'generative_ai', 'class': 'SandboxConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiProject'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conversation-config': {'module': 'generative_ai', 'class': 'ConversationConfig'}, 'long-term-memory-config': {'module': 'generative_ai', 'class': 'LongTermMemoryConfig'}, 'short-term-memory-optimization-config': {'module': 'generative_ai', 'class': 'ShortTermMemoryOptimizationConfig'}, 'sandbox-config': {'module': 'generative_ai', 'class': 'SandboxConfig'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'GenerativeAiProject'})
 @cli_util.wrap_exceptions
-def update_generative_ai_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_project_id, description, display_name, conversation_config, long_term_memory_config, short_term_memory_optimization_config, freeform_tags, defined_tags, if_match):
+def update_generative_ai_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, generative_ai_project_id, description, display_name, conversation_config, long_term_memory_config, short_term_memory_optimization_config, sandbox_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(generative_ai_project_id, six.string_types) and len(generative_ai_project_id.strip()) == 0:
         raise click.UsageError('Parameter --generative-ai-project-id cannot be whitespace or empty string')
     if not force:
-        if conversation_config or long_term_memory_config or short_term_memory_optimization_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to conversation-config and long-term-memory-config and short-term-memory-optimization-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if conversation_config or long_term_memory_config or short_term_memory_optimization_config or sandbox_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to conversation-config and long-term-memory-config and short-term-memory-optimization-config and sandbox-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6564,6 +6874,9 @@ def update_generative_ai_project(ctx, from_json, force, wait_for_state, max_wait
 
     if short_term_memory_optimization_config is not None:
         _details['shortTermMemoryOptimizationConfig'] = cli_util.parse_json_parameter("short_term_memory_optimization_config", short_term_memory_optimization_config)
+
+    if sandbox_config is not None:
+        _details['sandboxConfig'] = cli_util.parse_json_parameter("sandbox_config", sandbox_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -7146,6 +7459,74 @@ def update_routing_profile(ctx, from_json, force, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sandbox_warm_pool_group.command(name=cli_util.override('generative_ai.update_sandbox_warm_pool.command_name', 'update'), help=u"""Only desiredCapacity may change. If desiredCapacity is omitted, the current desired capacity is preserved. An empty update object is allowed; an explicit null value for desiredCapacity is not allowed. Named MANAGED and CUSTOM pools and reserved MANAGED defaults can be resized. Default-pool updates use the existing Project configuration workflow; no separate desired configuration is created for those entries. CP persists UPDATING and a Work Request, applies the desired replica count, then returns the pool to ACTIVE after verifying the configuration. The workflow does not wait for ready members. Zero pauses idle prewarming. Once the pool is ACTIVE, named-pool Sandbox creation can still cold-start from its available applied template when no eligible warm member is available, regardless of the capacity target. Already-admitted Sandboxes continue. Unnamed Sandbox creation retains its existing behavior. Concurrent management operations return 409. If provided, if-match must match the current configuration ETag; otherwise this operation returns 412. \n[Command Reference](updateSandboxWarmPool)""")
+@cli_util.option('--project-id', required=True, help=u"""Owning Generative AI Project OCID. Resolve parent compartment for authorization.""")
+@cli_util.option('--name', required=True, help=u"""Immutable name within the Project.""")
+@cli_util.option('--desired-capacity', type=click.INT, help=u"""Replacement idle target. If omitted, the current desired capacity is preserved. An empty update object is allowed; an explicit null value is not allowed. Image, shape, name and type are immutable. Zero pauses idle prewarming. Once the pool is ACTIVE, named-pool Sandbox creation can still cold-start from its available applied template when no eligible warm member is available. Reserved MANAGED default entries may be resized through the existing Project configuration workflow. Named MANAGED and CUSTOM pools use the same warm-pool lifecycle workflows. Existing customer Sandboxes continue, and unnamed Sandbox creation keeps its existing behavior.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'SandboxWarmPool'})
+@cli_util.wrap_exceptions
+def update_sandbox_warm_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, name, desired_capacity, if_match):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if desired_capacity is not None:
+        _details['desiredCapacity'] = desired_capacity
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.update_sandbox_warm_pool(
+        project_id=project_id,
+        name=name,
+        update_sandbox_warm_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

@@ -21,7 +21,6 @@
 # limitations under the License.
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates. All rights reserved.
-
 import click
 import json  # noqa: F401
 import oci  # noqa: F401
@@ -710,6 +709,7 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 # oci goldengate deployment generate-library-url-generate-log-reader-component-library-url-details -> oci goldengate deployment generate-log-reader-component-library-url
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.generate_library_url_generate_log_reader_component_library_url_details, "generate-log-reader-component-library-url")
 
+
 # oci goldengate connection refresh-connection-default-refresh-connection-details -> oci goldengate connection refresh
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.refresh_connection_default_refresh_connection_details, "refresh")
 
@@ -1033,3 +1033,35 @@ def list_ai_models_extended(ctx, **kwargs):
         kwargs.pop('model_region')
 
     ctx.invoke(goldengate_cli.list_ai_models, **kwargs)
+
+
+# oci goldengate connection create-connection-create-ai-provider-connection-details -> oci goldengate connection create-ai-provider-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_ai_provider_connection_details, "create-ai-provider-connection")
+
+
+# oci goldengate connection create-connection-create-databricks-engine-connection-details -> oci goldengate connection create-databricks-engine-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_databricks_engine_connection_details, "create-databricks-engine-connection")
+
+
+# oci goldengate connection create-connection-create-oracle-ai-data-platform-engine-connection-details -> oci goldengate connection create-oracle-ai-data-platform-engine-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_oracle_ai_data_platform_engine_connection_details, "create-oracle-ai-data-platform-engine-connection")
+
+
+# oci goldengate connection create-connection-create-spark-connection-details -> oci goldengate connection create-spark-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_spark_connection_details, "create-spark-connection")
+
+
+# oci goldengate connection update-connection-update-ai-provider-connection-details -> oci goldengate connection update-ai-provider-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_ai_provider_connection_details, "update-ai-provider-connection")
+
+
+# oci goldengate connection update-connection-update-databricks-engine-connection-details -> oci goldengate connection update-databricks-engine-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_databricks_engine_connection_details, "update-databricks-engine-connection")
+
+
+# oci goldengate connection update-connection-update-oracle-ai-data-platform-engine-connection-details -> oci goldengate connection update-oracle-ai-data-platform-engine-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_oracle_ai_data_platform_engine_connection_details, "update-oracle-ai-data-platform-engine-connection")
+
+
+# oci goldengate connection update-connection-update-spark-connection-details -> oci goldengate connection update-spark-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_spark_connection_details, "update-spark-connection")

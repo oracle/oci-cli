@@ -22,7 +22,7 @@ def ratecard_root_group():
     pass
 
 
-@click.command(cli_util.override('ratecard.rate_card_group.command_name', 'rate-card'), cls=CommandGroupWithAlias, help="""Rate Card Summary""")
+@click.command(cli_util.override('ratecard.rate_card_group.command_name', 'rate-card'), cls=CommandGroupWithAlias, help="""Rate card summary.""")
 @cli_util.help_option_group
 def rate_card_group():
     pass
@@ -32,12 +32,12 @@ onesubscription_service_cli.onesubscription_service_group.add_command(ratecard_r
 ratecard_root_group.add_command(rate_card_group)
 
 
-@rate_card_group.command(name=cli_util.override('ratecard.list_rate_cards.command_name', 'list'), help=u"""List API that returns all ratecards for given Subscription Id and Account ID (if provided) and for a particular date range \n[Command Reference](listRateCards)""")
-@cli_util.option('--subscription-id', required=True, help=u"""Line level Subscription Id""")
+@rate_card_group.command(name=cli_util.override('ratecard.list_rate_cards.command_name', 'list'), help=u"""Returns all rate cards for a given subscription ID and account ID (if provided), and for a particular date range. \n[Command Reference](listRateCards)""")
+@cli_util.option('--subscription-id', required=True, help=u"""Line-level subscription ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""This param is used to get the rate card(s) whose effective start date starts on or after a particular date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""This param is used to get the rate card(s) whose effective end date ends on or before a particular date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--part-number', help=u"""This param is used to get the rate card(s) filterd by the partNumber""")
+@cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""Gets the rate cards whose effective start date starts on or after a particular date.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""Gets the rate cards whose effective end date ends on or before a particular date.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--part-number', help=u"""Gets the rate cards filterd by the part number.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")

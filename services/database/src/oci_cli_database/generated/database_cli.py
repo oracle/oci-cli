@@ -242,6 +242,12 @@ def scheduling_window_group():
     pass
 
 
+@click.command(cli_util.override('db.database_snapshot_group.command_name', 'database-snapshot'), cls=CommandGroupWithAlias, help="""Details of the Database Snapshot.""")
+@cli_util.help_option_group
+def database_snapshot_group():
+    pass
+
+
 @click.command(cli_util.override('db.autonomous_container_database_backup_group.command_name', 'autonomous-container-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous AI Database backup.""")
 @cli_util.help_option_group
 def autonomous_container_database_backup_group():
@@ -621,6 +627,7 @@ db_root_group.add_command(gi_home_group)
 db_root_group.add_command(backup_destination_group)
 db_root_group.add_command(maintenance_run_group)
 db_root_group.add_command(scheduling_window_group)
+db_root_group.add_command(database_snapshot_group)
 db_root_group.add_command(autonomous_container_database_backup_group)
 db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_database_dataguard_association_group)
@@ -14564,8 +14571,8 @@ def create_data_guard_association_aws_encryption_key_details(ctx, from_json, wai
 
 
 @database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. The default is `NONE`.""")
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "DATAGUARD", "DB_SNAPSHOT", "DB_CLONE"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. Use `DB_SNAPSHOT` for creating a new database by cloning from snapshot. Use `DB_CLONE` for creating a new database by cloning from another database. The default is `NONE`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -14777,6 +14784,76 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
+@database_group.command(name=cli_util.override('db.create_database_create_clone_database_from_database.command_name', 'create-database-create-clone-database-from-database'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
+
+This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
+@cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CloneDatabaseDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CloneDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def create_database_create_clone_database_from_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+
+    kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbHomeId'] = db_home_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_version is not None:
+        _details['dbVersion'] = db_version
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if kms_key_version_id is not None:
+        _details['kmsKeyVersionId'] = kms_key_version_id
+
+    _details['source'] = 'DB_CLONE'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_database(
+        create_new_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_database.command_name', 'create-database-create-database-from-database'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
@@ -14817,6 +14894,76 @@ def create_database_create_database_from_database(ctx, from_json, wait_for_state
         _details['kmsKeyVersionId'] = kms_key_version_id
 
     _details['source'] = 'DATABASE'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_database(
+        create_new_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.create_database_create_database_from_snapshot.command_name', 'create-database-create-database-from-snapshot'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
+
+This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
+@cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseFromSnapshotDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromSnapshotDetails'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def create_database_create_database_from_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
+
+    kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbHomeId'] = db_home_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_version is not None:
+        _details['dbVersion'] = db_version
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if kms_key_version_id is not None:
+        _details['kmsKeyVersionId'] = kms_key_version_id
+
+    _details['source'] = 'DB_SNAPSHOT'
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_database(
@@ -14907,6 +15054,67 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_snapshot_group.command(name=cli_util.override('db.create_database_snapshot.command_name', 'create'), help=u"""Creates a Database Snapshot \n[Command Reference](createDatabaseSnapshot)""")
+@cli_util.option('--name', required=True, help=u"""The user-friendly name for the Database Snapshot. The name should be unique.""")
+@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Exadata Database.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def create_database_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, database_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['databaseId'] = database_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_database_snapshot(
+        create_database_snapshot_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_snapshot') and callable(getattr(client, 'get_database_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -16561,6 +16769,7 @@ def create_external_pluggable_database(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--gi-image-id', required=True, help=u"""The grid infrastructure home image [OCID]""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--display-name', help=u"""The user-provided name for the Grid Infrastructure Home. The name does not need to be unique and gets dynamically generated if null.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help=u"""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -16573,7 +16782,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'GiHome'})
 @cli_util.wrap_exceptions
-def create_gi_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gi_image_id, db_system_id, display_name, freeform_tags, defined_tags):
+def create_gi_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gi_image_id, db_system_id, display_name, is_older_version_acknowledged, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -16584,6 +16793,9 @@ def create_gi_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_older_version_acknowledged is not None:
+        _details['isOlderVersionAcknowledged'] = is_older_version_acknowledged
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -18783,6 +18995,63 @@ def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_database(
         database_id=database_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_snapshot_group.command(name=cli_util.override('db.delete_database_snapshot.command_name', 'delete'), help=u"""Deletes the specified Exadata Database Snapshot. \n[Command Reference](deleteDatabaseSnapshot)""")
+@cli_util.option('--database-snapshot-id', required=True, help=u"""The Exadata Database Snapshot [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_snapshot_id, if_match):
+
+    if isinstance(database_snapshot_id, six.string_types) and len(database_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_database_snapshot(
+        database_snapshot_id=database_snapshot_id,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -23399,6 +23668,28 @@ def get_database(ctx, from_json, database_id):
     cli_util.render_response(result, ctx)
 
 
+@database_snapshot_group.command(name=cli_util.override('db.get_database_snapshot.command_name', 'get'), help=u"""Gets information about the specified Exadata Database Snapshot. \n[Command Reference](getDatabaseSnapshot)""")
+@cli_util.option('--database-snapshot-id', required=True, help=u"""The Exadata Database Snapshot [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def get_database_snapshot(ctx, from_json, database_snapshot_id):
+
+    if isinstance(database_snapshot_id, six.string_types) and len(database_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_database_snapshot(
+        database_snapshot_id=database_snapshot_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_software_image_group.command(name=cli_util.override('db.get_database_software_image.command_name', 'get'), help=u"""Gets information about the specified database software image. \n[Command Reference](getDatabaseSoftwareImage)""")
 @cli_util.option('--database-software-image-id', required=True, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -24989,6 +25280,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeDetails'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, disk_redundancy, license_model, maintenance_window_details, opc_dry_run):
+
     kwargs = {}
     if opc_dry_run is not None:
         kwargs['opc_dry_run'] = opc_dry_run
@@ -25213,6 +25505,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeForStandbyDbSystem'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_launch_standby_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, hostname, primary_db_system_id, db_home, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, storage_volume_performance_mode, sparse_diskgroup, ssh_public_keys, domain, cpu_core_count, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, kms_key_id, kms_key_version_id, node_count, freeform_tags, defined_tags, security_attributes, private_ip, private_ip_v6, cluster_placement_group_id, subscription_id, data_collection_options, compute_model, compute_count, is_older_version_acknowledged, license_model, opc_dry_run):
+
     kwargs = {}
     if opc_dry_run is not None:
         kwargs['opc_dry_run'] = opc_dry_run
@@ -28241,6 +28534,71 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
     else:
         result = client.list_data_guard_associations(
             database_id=database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@database_snapshot_group.command(name=cli_util.override('db.list_database_snapshots.command_name', 'list'), help=u"""Gets a list of the Exadata Database Snapshots in the specified compartment. \n[Command Reference](listDatabaseSnapshots)""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given. The match is not case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""A filter to return only Exadata Database Snapshots that match the given lifecycle state exactly.""")
+@cli_util.option('--database-id', help=u"""A filter to return only Exadata Database Snapshots that match the given Database Id.""")
+@cli_util.option('--cluster-id', help=u"""A filter to return only Exadata Database Snapshots that match the given VM cluster.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSnapshotCollection'})
+@cli_util.wrap_exceptions
+def list_database_snapshots(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, name, sort_order, lifecycle_state, database_id, cluster_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if cluster_id is not None:
+        kwargs['cluster_id'] = cluster_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_snapshots,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_snapshots,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_database_snapshots(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -38397,6 +38755,76 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_snapshot_group.command(name=cli_util.override('db.update_database_snapshot.command_name', 'update'), help=u"""Updates a Database Snapshot \n[Command Reference](updateDatabaseSnapshot)""")
+@cli_util.option('--database-snapshot-id', required=True, help=u"""The Exadata Database Snapshot [OCID].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def update_database_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_snapshot_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(database_snapshot_id, six.string_types) and len(database_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-snapshot-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_database_snapshot(
+        database_snapshot_id=database_snapshot_id,
+        update_database_snapshot_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database_snapshot') and callable(getattr(client, 'get_database_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

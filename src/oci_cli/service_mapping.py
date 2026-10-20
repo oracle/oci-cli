@@ -408,6 +408,11 @@ service_mapping = {
         "Generative AI Service Inference",
         "Others"
     ],
+    "generative-ai-sandbox": [
+        "generative_ai_sandbox",
+        "GenAI Sandbox",
+        "Others"
+    ],
     "goldengate": [
         "golden_gate",
         "GoldenGate",
@@ -706,6 +711,11 @@ service_mapping = {
     "psql": [
         "psql",
         "PGSQL Control Plane",
+        "Others"
+    ],
+    "pss": [
+        "pss",
+        "Public Safety and Security",
         "Others"
     ],
     "queue": [

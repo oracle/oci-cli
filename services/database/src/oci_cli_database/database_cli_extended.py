@@ -4673,3 +4673,40 @@ cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.d
 
 # Remove db-system-os-patch-history-entry-collection from oci db
 database_cli.db_root_group.commands.pop(database_cli.db_system_os_patch_history_entry_collection_group.name)
+
+
+# oci db database-snapshot create -> oci db database-snapshot create-snapshot
+cli_util.rename_command(database_cli, database_cli.database_snapshot_group, database_cli.create_database_snapshot, "create-snapshot")
+
+
+# oci db database-snapshot delete -> oci db database-snapshot delete-snapshot
+cli_util.rename_command(database_cli, database_cli.database_snapshot_group, database_cli.delete_database_snapshot, "delete-snapshot")
+
+
+# oci db database-snapshot get -> oci db database-snapshot get-snapshot
+cli_util.rename_command(database_cli, database_cli.database_snapshot_group, database_cli.get_database_snapshot, "get-snapshot")
+
+
+# oci db database-snapshot list -> oci db database-snapshot list-snapshots
+cli_util.rename_command(database_cli, database_cli.database_snapshot_group, database_cli.list_database_snapshots, "list-snapshots")
+
+
+# oci db database-snapshot update -> oci db database-snapshot update-snapshot
+cli_util.rename_command(database_cli, database_cli.database_snapshot_group, database_cli.update_database_snapshot, "update-snapshot")
+
+
+# oci db database create-database-create-clone-database-from-database -> oci db database create-clone-db-from-db
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.create_database_create_clone_database_from_database, "create-clone-db-from-db")
+
+
+# oci db database create-database-create-database-from-snapshot -> oci db database create-db-from-snapshot
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.create_database_create_database_from_snapshot, "create-db-from-snapshot")
+
+
+# Move commands under 'oci db database-snapshot' -> 'oci db database'
+database_cli.db_root_group.commands.pop(database_cli.database_snapshot_group.name)
+database_cli.database_group.add_command(database_cli.create_database_snapshot)
+database_cli.database_group.add_command(database_cli.delete_database_snapshot)
+database_cli.database_group.add_command(database_cli.get_database_snapshot)
+database_cli.database_group.add_command(database_cli.list_database_snapshots)
+database_cli.database_group.add_command(database_cli.update_database_snapshot)

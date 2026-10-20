@@ -22,13 +22,13 @@ def computed_usage_root_group():
     pass
 
 
-@click.command(cli_util.override('computed_usage.aggregated_computed_usage_summary_group.command_name', 'aggregated-computed-usage-summary'), cls=CommandGroupWithAlias, help="""Subscribed Service Contract details""")
+@click.command(cli_util.override('computed_usage.aggregated_computed_usage_summary_group.command_name', 'aggregated-computed-usage-summary'), cls=CommandGroupWithAlias, help="""Subscribed service contract details.""")
 @cli_util.help_option_group
 def aggregated_computed_usage_summary_group():
     pass
 
 
-@click.command(cli_util.override('computed_usage.computed_usage_group.command_name', 'computed-usage'), cls=CommandGroupWithAlias, help="""Computed Usage Summary object""")
+@click.command(cli_util.override('computed_usage.computed_usage_group.command_name', 'computed-usage'), cls=CommandGroupWithAlias, help="""Computed usage summary object.""")
 @cli_util.help_option_group
 def computed_usage_group():
     pass
@@ -39,10 +39,10 @@ computed_usage_root_group.add_command(aggregated_computed_usage_summary_group)
 computed_usage_root_group.add_command(computed_usage_group)
 
 
-@computed_usage_group.command(name=cli_util.override('computed_usage.get_computed_usage.command_name', 'get'), help=u"""This is an API which returns Computed Usage corresponding to the id passed \n[Command Reference](getComputedUsage)""")
-@cli_util.option('--computed-usage-id', required=True, help=u"""The Computed Usage Id""")
+@computed_usage_group.command(name=cli_util.override('computed_usage.get_computed_usage.command_name', 'get'), help=u"""Returns computed usage corresponding to the passed ID. \n[Command Reference](getComputedUsage)""")
+@cli_util.option('--computed-usage-id', required=True, help=u"""The computed usage ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs to return only the information (fields) required by the client. This parameter is used to control what fields to return.""")
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. This parameter controls which fields to return.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'onesubscription', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -66,14 +66,14 @@ def get_computed_usage(ctx, from_json, computed_usage_id, compartment_id, fields
     cli_util.render_response(result, ctx)
 
 
-@aggregated_computed_usage_summary_group.command(name=cli_util.override('computed_usage.list_aggregated_computed_usages.command_name', 'list-aggregated-computed-usages'), help=u"""This is a collection API which returns a list of aggregated computed usage details (there can be multiple Parent Products under a given SubID each of which is represented under Subscription Service Line # in SPM). \n[Command Reference](listAggregatedComputedUsages)""")
+@aggregated_computed_usage_summary_group.command(name=cli_util.override('computed_usage.list_aggregated_computed_usages.command_name', 'list-aggregated-computed-usages'), help=u"""Collection API that returns a list of aggregated computed usage details (there can be multiple parent products under a given SubID, each of which is represented under the subscription service line # in SPM). \n[Command Reference](listAggregatedComputedUsages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription Id is an identifier associated to the service used for filter the Computed Usage in SPM.""")
-@cli_util.option('--time-from', required=True, type=custom_types.CLI_DATETIME, help=u"""Initial date to filter Computed Usage data in SPM. In the case of non aggregated data the time period between of fromDate and toDate , expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Final date to filter Computed Usage data in SPM, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--parent-product', help=u"""Product part number for subscribed service line, called parent product.""")
-@cli_util.option('--grouping', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "NONE"]), help=u"""Grouping criteria to use for aggregate the computed Usage, either hourly (`HOURLY`), daily (`DAILY`), monthly(`MONTHLY`) or none (`NONE`) to not follow a grouping criteria by date.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number aggregatedComputedUsages of items to return within the Subscription \"List\" call, this counts the overall count across all items Example: `500`""")
+@cli_util.option('--subscription-id', required=True, help=u"""Subscription ID is an identifier associated with the service, used for filtering the computed usage in SPM.""")
+@cli_util.option('--time-from', required=True, type=custom_types.CLI_DATETIME, help=u"""Initial date to filter computed usage data in SPM. For non-aggregated data, the time period between fromDate and toDate, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Final date to filter computed usage data in SPM, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--parent-product', help=u"""Product part number for the subscribed service line, referred to as the parent product.""")
+@cli_util.option('--grouping', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "NONE"]), help=u"""Grouping criteria to use for aggregating the computed usage, whether hourly (`HOURLY`), daily (`DAILY`), monthly (`MONTHLY`), or none (`NONE`), so as not to follow a grouping criteria by date.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of aggregatedComputedUsages items to return within the Subscription \"List\" call, this counts the overall count across all items. Example: `500`""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -132,13 +132,13 @@ def list_aggregated_computed_usages(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@computed_usage_group.command(name=cli_util.override('computed_usage.list_computed_usages.command_name', 'list'), help=u"""This is a collection API which returns a list of Computed Usages for given filters. \n[Command Reference](listComputedUsages)""")
+@computed_usage_group.command(name=cli_util.override('computed_usage.list_computed_usages.command_name', 'list'), help=u"""Collection API that returns a list of computed usages for the given filters. \n[Command Reference](listComputedUsages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Subscription Id is an identifier associated to the service used for filter the Computed Usage in SPM.""")
-@cli_util.option('--time-from', required=True, type=custom_types.CLI_DATETIME, help=u"""Initial date to filter Computed Usage data in SPM. In the case of non aggregated data the time period between of fromDate and toDate , expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Final date to filter Computed Usage data in SPM, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--parent-product', help=u"""Product part number for subscribed service line, called parent product.""")
-@cli_util.option('--computed-product', help=u"""Product part number for Computed Usage .""")
+@cli_util.option('--subscription-id', required=True, help=u"""Subscription ID is an identifier associated with the service, used for filtering the computed usage in SPM.""")
+@cli_util.option('--time-from', required=True, type=custom_types.CLI_DATETIME, help=u"""Initial date to filter computed usage data in SPM. For non-aggregated data, the time period between fromDate and toDate, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Final date to filter computed usage data in SPM, expressed in RFC 3339 timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--parent-product', help=u"""Product part number for the subscribed service line, called the parent product.""")
+@cli_util.option('--computed-product', help=u"""Product part number for the computed usage.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")

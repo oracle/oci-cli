@@ -44,4 +44,5 @@ SDK_client_map = {
     "psql.update_configuration": "oci.psql.PostgresqlClient.update_configuration",
     "psql.update_db_system": "oci.psql.PostgresqlClient.update_db_system",
     "psql.update_db_system_db_instance": "oci.psql.PostgresqlClient.update_db_system_db_instance",
+    "psql.upgrade_db_system": "oci.psql.PostgresqlClient.upgrade_db_system",
 }
