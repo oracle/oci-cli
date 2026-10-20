@@ -22,7 +22,7 @@ def commitment_root_group():
     pass
 
 
-@click.command(cli_util.override('commitment.commitment_group.command_name', 'commitment'), cls=CommandGroupWithAlias, help="""Subscribed Service commitment summary""")
+@click.command(cli_util.override('commitment.commitment_group.command_name', 'commitment'), cls=CommandGroupWithAlias, help="""Subscribed service commitment summary.""")
 @cli_util.help_option_group
 def commitment_group():
     pass
@@ -32,8 +32,8 @@ onesubscription_service_cli.onesubscription_service_group.add_command(commitment
 commitment_root_group.add_command(commitment_group)
 
 
-@commitment_group.command(name=cli_util.override('commitment.get_commitment.command_name', 'get'), help=u"""This API returns the commitment details corresponding to the id provided \n[Command Reference](getCommitment)""")
-@cli_util.option('--commitment-id', required=True, help=u"""The Commitment Id""")
+@commitment_group.command(name=cli_util.override('commitment.get_commitment.command_name', 'get'), help=u"""Returns the commitment details corresponding to the provided ID. \n[Command Reference](getCommitment)""")
+@cli_util.option('--commitment-id', required=True, help=u"""The commitment ID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -54,8 +54,8 @@ def get_commitment(ctx, from_json, commitment_id):
     cli_util.render_response(result, ctx)
 
 
-@commitment_group.command(name=cli_util.override('commitment.list_commitments.command_name', 'list'), help=u"""This list API returns all commitments for a particular Subscribed Service \n[Command Reference](listCommitments)""")
-@cli_util.option('--subscribed-service-id', required=True, help=u"""This param is used to get the commitments for a particular subscribed service""")
+@commitment_group.command(name=cli_util.override('commitment.list_commitments.command_name', 'list'), help=u"""Returns all commitments for a particular subscribed service. \n[Command Reference](listCommitments)""")
+@cli_util.option('--subscribed-service-id', required=True, help=u"""Obtains the commitments for a particular subscribed service.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 

@@ -22,13 +22,13 @@ def invoice_summary_root_group():
     pass
 
 
-@click.command(cli_util.override('invoice_summary.invoiceline_computed_usage_group.command_name', 'invoiceline-computed-usage'), cls=CommandGroupWithAlias, help="""Computed Usage Summary object""")
+@click.command(cli_util.override('invoice_summary.invoiceline_computed_usage_group.command_name', 'invoiceline-computed-usage'), cls=CommandGroupWithAlias, help="""Computed usage summary object.""")
 @cli_util.help_option_group
 def invoiceline_computed_usage_group():
     pass
 
 
-@click.command(cli_util.override('invoice_summary.invoice_group.command_name', 'invoice'), cls=CommandGroupWithAlias, help="""Invoice details""")
+@click.command(cli_util.override('invoice_summary.invoice_group.command_name', 'invoice'), cls=CommandGroupWithAlias, help="""Invoice details.""")
 @cli_util.help_option_group
 def invoice_group():
     pass
@@ -39,16 +39,16 @@ invoice_summary_root_group.add_command(invoiceline_computed_usage_group)
 invoice_summary_root_group.add_command(invoice_group)
 
 
-@invoiceline_computed_usage_group.command(name=cli_util.override('invoice_summary.list_invoiceline_computed_usages.command_name', 'list'), help=u"""This is a collection API which returns a list of Invoiced Computed Usages for given Invoiceline id. \n[Command Reference](listInvoicelineComputedUsages)""")
+@invoiceline_computed_usage_group.command(name=cli_util.override('invoice_summary.list_invoiceline_computed_usages.command_name', 'list'), help=u"""Collection API that returns a list of invoiced computed usages for the given invoice line ID. \n[Command Reference](listInvoicelineComputedUsages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--invoice-line-id', required=True, help=u"""Invoice Line Identifier - Primary Key SPM""")
+@cli_util.option('--invoice-line-id', required=True, help=u"""Invoice line identifier - Primary Key SPM (Subscription Plan Management).""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending ('ASC') or descending ('DESC').""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "meteredOnDate"]), help=u"""The field to sort by Invoiced Computed Usages. You can provide one sort order (`sortOrder`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "meteredOnDate"]), help=u"""The field to sort by invoiced computed usages. You can provide one sort order (`sortOrder`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous \"List\" call.""")
-@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs to return only the information (fields) required by the client. This parameter is used to control what fields to return.""")
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. This parameter controls which fields to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'onesubscription', 'class': 'list[string]'}})
@@ -102,18 +102,18 @@ def list_invoiceline_computed_usages(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@invoice_group.command(name=cli_util.override('invoice_summary.list_invoices.command_name', 'list'), help=u"""This is a collection API which returns a list of Invoices for given filters. \n[Command Reference](listInvoices)""")
+@invoice_group.command(name=cli_util.override('invoice_summary.list_invoices.command_name', 'list'), help=u"""Collection API that returns a list of invoices according to the given filters. \n[Command Reference](listInvoices)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--ar-customer-transaction-id', required=True, help=u"""AR Unique identifier for an invoice .""")
-@cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""Initial date to filter Invoice data in SPM.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""Final date to filter Invoice data in SPM.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--ar-customer-transaction-id', required=True, help=u"""Accounts receivable unique identifier for an invoice.""")
+@cli_util.option('--time-from', type=custom_types.CLI_DATETIME, help=u"""Initial date to filter invoice data in SPM (Subscription Plan Management).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-to', type=custom_types.CLI_DATETIME, help=u"""Final date to filter invoice data in SPM (Subscription Plan Management).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending ('ASC') or descending ('DESC').""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ORDERNUMBER", "TIMEINVOICING"]), help=u"""The field to sort by. You can provide one sort order ('sortOrder').""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")
 @cli_util.option('--page', help=u"""The value of the 'opc-next-page' response header from the previous \"List\" call.""")
-@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs to return only the information (fields) required by the client. This parameter is used to control what fields to return.""")
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. This parameter controls which fields to return.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'onesubscription', 'class': 'list[string]'}})

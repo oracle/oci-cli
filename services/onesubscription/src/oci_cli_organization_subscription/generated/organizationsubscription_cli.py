@@ -22,7 +22,7 @@ def organization_subscription_root_group():
     pass
 
 
-@click.command(cli_util.override('organization_subscription.organization_subscription_group.command_name', 'organization-subscription'), cls=CommandGroupWithAlias, help="""Subscription summary""")
+@click.command(cli_util.override('organization_subscription.organization_subscription_group.command_name', 'organization-subscription'), cls=CommandGroupWithAlias, help="""Subscription summary.""")
 @cli_util.help_option_group
 def organization_subscription_group():
     pass
@@ -32,7 +32,7 @@ onesubscription_service_cli.onesubscription_service_group.add_command(organizati
 organization_subscription_root_group.add_command(organization_subscription_group)
 
 
-@organization_subscription_group.command(name=cli_util.override('organization_subscription.list_organization_subscriptions.command_name', 'list'), help=u"""API that returns data for the list of subscription ids returned from Organizations API \n[Command Reference](listOrganizationSubscriptions)""")
+@organization_subscription_group.command(name=cli_util.override('organization_subscription.list_organization_subscriptions.command_name', 'list'), help=u"""Returns data for the list of subscription IDs returned from the Organizations API. \n[Command Reference](listOrganizationSubscriptions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 

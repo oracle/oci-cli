@@ -6,6 +6,159 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.95.1 - 2026-10-20
+-------------------
+Added
+~~~~~
+* OneSubscription
+
+  * Support for Subscription Details and Usage Ledger operations
+
+    * ``oci onesubscription subscription subscription-details get``
+    * ``oci onesubscription subscription usage-ledger-summary list-usage-ledgers``
+
+* PostgreSQL Service
+
+  * Support for upgrading the major version of a PostgreSQL Database System
+
+    * ``oci psql db-system upgrade``
+
+* Generative AI
+
+  * Support for the ``OAI_H100_X4`` Dedicated AI Cluster unit shape
+
+    * ``oci generative-ai dedicated-ai-cluster create --unit-shape``
+
+  * Support for the ``AUDIO_TEXT_TO_TEXT``, ``AUDIO_TRANSLATION``, and ``VIDEO_TEXT_TO_TEXT`` Model capabilities
+
+    * ``oci generative-ai imported-model create-from-objectstorage --capabilities``
+    * ``oci generative-ai imported-model create-from-huggingface --capabilities``
+    * ``oci generative-ai imported-model-collection list-imported-models --capability``
+    * ``oci generative-ai model-collection list-models --capability``
+    * ``oci generative-ai model-discovery-collection list-model-discovery --capability``
+
+* OpenSearch Service
+
+  * Support for configuring remote reindex trust and master-user authentication
+
+    * ``oci opensearch cluster create --remote-reindex-trust-config --security-master-user-auth-details``
+    * ``oci opensearch cluster update --remote-reindex-trust-config --security-master-user-auth-details``
+
+* Generative AI Service Management
+
+  * Support for expiring a Vector Store Connector with its Vector Store
+
+    * ``oci generative-ai vector-store-connector create --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-oci-object-storage-configuration --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-schedule-cron-config --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector create-vector-store-connector-schedule-interval-config --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector update --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-oci-object-storage-configuration --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-schedule-cron-config --should-expire-connector-with-vector-store``
+    * ``oci generative-ai vector-store-connector update-vector-store-connector-schedule-interval-config --should-expire-connector-with-vector-store``
+
+  * Support for managing Sandbox Warm Pools
+
+    * ``oci generative-ai sandbox-warm-pool create``
+    * ``oci generative-ai sandbox-warm-pool delete``
+    * ``oci generative-ai sandbox-warm-pool get``
+    * ``oci generative-ai sandbox-warm-pool update``
+    * ``oci generative-ai sandbox-warm-pool-collection list-sandbox-warm-pools``
+
+  * Support for configuring a Sandbox for a Generative AI Project
+
+    * ``oci generative-ai generative-ai-project create --sandbox-config``
+    * ``oci generative-ai generative-ai-project update --sandbox-config``
+
+  * Support for bring-your-own-reservations for Dedicated AI Clusters
+
+    * ``oci generative-ai allocatable-gpu-collection list-dedicated-ai-clusters-allocatable-gpus``
+    * ``oci generative-ai dedicated-ai-cluster create --capacity-reservation-id``
+    * ``oci generative-ai dedicated-ai-cluster-collection list-dedicated-ai-clusters --capacity-reservation-id``
+
+  * Support for configuring public access path patterns for Hosted Applications
+
+    * ``oci generative-ai hosted-application create --public-access-path-patterns``
+    * ``oci generative-ai hosted-application update --public-access-path-patterns``
+
+* Generative AI Sandbox Service
+
+  * Support for Sandbox lifecycle management, command execution, file operations, and Sandbox Snapshots
+
+    * ``oci generative-ai-sandbox``
+
+* Public Safety and Security
+
+  * Support for Instance lifecycle and Work Request operations
+
+    * ``oci pss instance``
+    * ``oci pss work-request``
+    * ``oci pss work-request-error``
+    * ``oci pss work-request-log-entry``
+
+* GoldenGate
+
+  * Support for AI Provider, Databricks Engine, Oracle AI Data Platform Engine, Spark, and AI Model Connections
+
+    * ``oci goldengate connection create-connection-create-ai-provider-connection-details``
+    * ``oci goldengate connection update-connection-update-ai-provider-connection-details``
+    * ``oci goldengate connection create-connection-create-databricks-engine-connection-details``
+    * ``oci goldengate connection update-connection-update-databricks-engine-connection-details``
+    * ``oci goldengate connection create-connection-create-oracle-ai-data-platform-engine-connection-details``
+    * ``oci goldengate connection update-connection-update-oracle-ai-data-platform-engine-connection-details``
+    * ``oci goldengate connection create-connection-create-spark-connection-details``
+    * ``oci goldengate connection update-connection-update-spark-connection-details``
+    * ``oci goldengate connection create-connection-create-ai-model-connection-details``
+    * ``oci goldengate connection update-connection-update-ai-model-connection-details``
+
+* Product Catalog
+
+  * Support for Product lifecycle, admin, and internal operations in the OCI Product Catalog service
+
+    * ``oci oci-product-catalog product``
+    * ``oci oci-product-catalog product-admin``
+    * ``oci oci-product-catalog product-internal``
+
+* Compute Service
+
+  * Support for attaching a Non-Volatile Memory Express (NVMe) Volume
+
+    * ``oci compute volume-attachment attach-volume-attach-nvme-volume-details``
+
+  * Support for ``nvme`` as a Volume Attachment type
+
+    * ``oci compute volume-attachment attach --type``
+    * ``oci compute instance launch --launch-volume-attachments``
+
+* Compute Management Service
+
+  * Support for ``nvme`` as a Volume Attachment type in Instance Configuration operations
+
+    * ``oci compute-management instance-configuration``
+    * ``oci compute-management instance``
+
+* Database Service
+
+  * Support for managing Database Snapshots
+
+    * ``oci db database-snapshot create``
+    * ``oci db database-snapshot delete``
+    * ``oci db database-snapshot get``
+    * ``oci db database-snapshot list``
+    * ``oci db database-snapshot update``
+
+  * Support for creating a Database from a Snapshot
+
+    * ``oci db database create-database-create-database-from-snapshot``
+
+  * Support for creating a clone Database from another Database
+
+    * ``oci db database create-database-create-clone-database-from-database``
+
+  * Support for ``DB_SNAPSHOT`` and ``DB_CLONE`` source values for Database creation
+
+    * ``oci db database create --source``
+
 3.95.0 - 2026-10-13
 -------------------
 Added

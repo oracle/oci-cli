@@ -22,7 +22,7 @@ def subscribed_service_root_group():
     pass
 
 
-@click.command(cli_util.override('subscribed_service.subscribed_service_group.command_name', 'subscribed-service'), cls=CommandGroupWithAlias, help="""Subscribed service contract details""")
+@click.command(cli_util.override('subscribed_service.subscribed_service_group.command_name', 'subscribed-service'), cls=CommandGroupWithAlias, help="""Subscribed service contract details.""")
 @cli_util.help_option_group
 def subscribed_service_group():
     pass
@@ -32,9 +32,9 @@ onesubscription_service_cli.onesubscription_service_group.add_command(subscribed
 subscribed_service_root_group.add_command(subscribed_service_group)
 
 
-@subscribed_service_group.command(name=cli_util.override('subscribed_service.get_subscribed_service.command_name', 'get'), help=u"""This API returns the subscribed service details corresponding to the id provided \n[Command Reference](getSubscribedService)""")
-@cli_util.option('--subscribed-service-id', required=True, help=u"""The Subscribed Service Id""")
-@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter used to control what fields to return should be a query string parameter called \"fields\" of type array, and usecollectionFormat""")
+@subscribed_service_group.command(name=cli_util.override('subscribed_service.get_subscribed_service.command_name', 'get'), help=u"""Returns the subscribed service details corresponding to the provided ID. \n[Command Reference](getSubscribedService)""")
+@cli_util.option('--subscribed-service-id', required=True, help=u"""The subscribed service ID.""")
+@cli_util.option('--fields', multiple=True, help=u"""Partial response refers to an optimization technique offered by the RESTful web APIs, to return only the information (fields) required by the client. In this mechanism, the client sends the required field names as the query parameters for an API to the server, and the server trims down the default response content by removing the fields that are not required by the client. The parameter used to control which fields to return should be a query string parameter called \"fields\", of an array type, and use collectionFormat.""")
 @json_skeleton_utils.get_cli_json_input_option({'fields': {'module': 'onesubscription', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -57,11 +57,11 @@ def get_subscribed_service(ctx, from_json, subscribed_service_id, fields):
     cli_util.render_response(result, ctx)
 
 
-@subscribed_service_group.command(name=cli_util.override('subscribed_service.list_subscribed_services.command_name', 'list'), help=u"""This list API returns all subscribed services for given Subscription ID \n[Command Reference](listSubscribedServices)""")
+@subscribed_service_group.command(name=cli_util.override('subscribed_service.list_subscribed_services.command_name', 'list'), help=u"""Returns all subscribed services for a given Subscription ID. \n[Command Reference](listSubscribedServices)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the root compartment.""")
-@cli_util.option('--subscription-id', required=True, help=u"""Line level Subscription Id""")
-@cli_util.option('--order-line-id', type=click.INT, help=u"""Order Line identifier at subscribed service level . This identifier is originated in Order Management module. Default is null.""")
-@cli_util.option('--status', help=u"""This param is used to filter subscribed services based on its status""")
+@cli_util.option('--subscription-id', required=True, help=u"""Line level subscription ID.""")
+@cli_util.option('--order-line-id', type=click.INT, help=u"""Order line identifier at subscribed service level. This identifier originates from the order management module. Default is null.""")
+@cli_util.option('--status', help=u"""This parameter filters subscribed services based on its status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. Default: (`50`)
 
 Example: '500'""")
