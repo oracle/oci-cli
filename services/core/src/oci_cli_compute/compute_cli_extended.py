@@ -22,7 +22,7 @@ from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
-INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = "(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"  # noqa: W605
+INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX = r"(instance-console\.[a-z0-9-]+\.(oraclecloud|oracleiaas)\.com)"
 DEFAULT_LOCAL_VNC_PORT = 5900
 DEFAULT_SSH_PROXY_PORT = 5905
 
