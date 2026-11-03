@@ -30,9 +30,10 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.189.0',
+    'oci==2.190.0',
     'arrow>=1.0.0,<2.0.0',
-    'certifi>=2025.1.31,<2026.0.0',
+    'certifi>=2025.1.31; python_version < "3.7"',
+    'certifi>=2026.10.19; python_version >= "3.7"',
     'click>=8.0.4,<=8.1.2; python_version < "3.11"',
     'click>=8.3.3,<=8.4.2; python_version >= "3.11"',
     'importlib-metadata; python_version < "3.8"',

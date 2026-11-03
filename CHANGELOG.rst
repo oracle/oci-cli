@@ -6,6 +6,77 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.96.0 - 2026-11-03
+===================
+
+Added
+~~~~~
+
+* Support for the listingId field to identify which listing within a SaaS private offer or subscription generated the reported usage in the SELF Service
+
+  * ``oci self partner-integeration create-subscription-usage-record-details submit-subscription-usage-records``
+
+* Support for top-level, pull-through cache, and multi-region container repository settings in the Container Registry service
+
+  * ``oci artifacts container repository create --repository-type --is-top-level --upstream-url --upstream-username --upstream-secret-id --multi-region-peers``
+  * ``oci artifacts container repository update --upstream-username --upstream-secret-id``
+  * ``oci artifacts container repository list --repository-type --is-top-level``
+
+* Generative AI Sandbox Service
+
+  * Support for creating a sandbox resource from a snapshot
+
+    * ``oci generative-ai-sandbox sandbox create-from-snapshot``
+
+  * Support for listing sandbox resources with optional filtering and pagination
+
+    * ``oci generative-ai-sandbox sandbox list``
+
+  * Support for getting captured output for a sandbox command starting from the requested event sequence
+
+    * ``oci generative-ai-sandbox sandbox-command get-output``
+
+  * Support for listing sandbox commands for a sandbox
+
+    * ``oci generative-ai-sandbox sandbox-command list``
+
+  * Support for running a command in a sandbox and (or only) stream command events
+
+    * ``oci generative-ai-sandbox sandbox-command run-and-stream``
+    * ``oci generative-ai-sandbox sandbox-command stream``
+
+  * Support for listing sandbox snapshot resources with optional filtering and pagination.
+
+    * ``oci generative-ai-sandbox sandbox-snapshot list`
+
+  * Support for a new optional parameter ``--local-file`` to specify the name of the file that will receive the response data after reading a file from a sandbox
+
+    * ``oci generative-ai-sandbox sandbox-file read --local-file``
+
+* Support for the ``PARTIALLY_SUCCEEDED`` work request state when using ``--wait-for-state`` with asynchronous
+  operations in the Data Science service
+
+Changed
+~~~~~~~
+
+* [BREAKING] ``ListingId`` is a new required column in the CSV file for ``--submit-subscription-usage-batch-details`` to submit the UTF-8 CSV usage file for marketplace offers in the SELF Service
+
+  * ``oci self partner-integeration create-subscription-usage-record-details submit-subscription-usage-batch --submit-subscription-usage-batch-details``
+
+* Generative AI Sandbox Service
+
+  * ``--file`` is now an optional parameter for streaming command events for an existing sandbox command, for reading a file from a sandbox and writing a file in a sandbox
+
+    * ``oci generative-ai-sandbox sandbox-command-event stream --file``
+    * ``oci generative-ai-sandbox sandbox-file read --file``
+    * ``oci generative-ai-sandbox sandbox-file write --file``
+
+* [BREAKING] The Model Artifact Signature update operation in the Data Science service now waits for Model Artifact
+  Signature lifecycle states instead of work request states. Supported ``--wait-for-state`` values are ``ACTIVE``,
+  ``CREATING``, ``DELETED``, and ``FAILED``
+
+    * ``oci data-science model-artifact-signature update --wait-for-state``
+
 3.95.1 - 2026-10-20
 -------------------
 Added

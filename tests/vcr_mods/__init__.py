@@ -59,10 +59,10 @@ def get_object_storage_work_pool_vcr_patches():
     """
     try:
         from tests import test_config_container
-        from oci_cli_object_storage.object_storage_transfer_manager import work_pool as os_work_pool
+        from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager import work_pool as os_work_pool
     except ImportError as exc:
         missing_module = getattr(exc, 'name', '')
-        if missing_module and missing_module.startswith('oci_cli_object_storage'):
+        if missing_module and missing_module.startswith('services.object_storage'):
             return ()
         logger.exception("Unable to import Object Storage work pool for VCR patching.")
         raise
