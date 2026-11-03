@@ -30,6 +30,24 @@ from oci_cli import custom_types
 import json
 
 
+def _normalize_service_type(service_type):
+    if service_type == "TCP":
+        return "TCP_SERVICE"
+    if service_type == "UDP":
+        return "UDP_SERVICE"
+    return service_type
+
+
+def _invoke_service_type_specific_command(ctx, service_type, tcp_command, udp_command, **kwargs):
+    service_type = _normalize_service_type(service_type)
+    if service_type == "TCP_SERVICE":
+        ctx.invoke(tcp_command, **kwargs)
+    elif service_type == "UDP_SERVICE":
+        ctx.invoke(udp_command, **kwargs)
+    else:
+        raise ValueError("Unknown service type: {}".format(service_type))
+
+
 @cli_util.copy_params_from_generated_command(
     networkfirewall_cli.bulk_upload_applications,
     params_to_exclude=['bulk_upload_applications_details']
@@ -634,13 +652,19 @@ def create_service_extended(ctx, **kwargs):
     if not (service_details.get('name') is None):
         kwargs['name'] = service_details['name']
     if not (service_details.get('type') is None):
-        if service_details.get('type') != service_type:
+        service_details_type = _normalize_service_type(service_details.get('type'))
+        if service_type is None:
+            service_type = service_details_type
+        elif service_details_type != _normalize_service_type(service_type):
             raise ValueError("type from service-details doesn't match with type provided as parameter")
 
-    if service_type == "TCP":
-        ctx.invoke(networkfirewall_cli.create_service_create_tcp_service_details, **kwargs)
-    else:
-        ctx.invoke(networkfirewall_cli.create_service_create_udp_service_details, **kwargs)
+    _invoke_service_type_specific_command(
+        ctx,
+        service_type,
+        networkfirewall_cli.create_service_create_tcp_service_details,
+        networkfirewall_cli.create_service_create_udp_service_details,
+        **kwargs
+    )
 
 
 @cli_util.copy_params_from_generated_command(
@@ -684,13 +708,17 @@ def update_service_extended(ctx, **kwargs):
     if not (service_details.get('portRanges') is None):
         kwargs['port_ranges'] = service_details['portRanges']
     if not (service_details.get('type') is None):
-        if service_details.get('type') != service_type:
+        service_details_type = _normalize_service_type(service_details.get('type'))
+        if service_details_type != _normalize_service_type(service_type):
             raise ValueError("type from service-details doesn't match with type provided as parameter")
 
-    if service_type == "TCP":
-        ctx.invoke(networkfirewall_cli.update_service_update_tcp_service_details, **kwargs)
-    else:
-        ctx.invoke(networkfirewall_cli.update_service_update_udp_service_details, **kwargs)
+    _invoke_service_type_specific_command(
+        ctx,
+        service_type,
+        networkfirewall_cli.update_service_update_tcp_service_details,
+        networkfirewall_cli.update_service_update_udp_service_details,
+        **kwargs
+    )
 
 
 @cli_util.copy_params_from_generated_command(

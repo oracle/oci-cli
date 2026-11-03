@@ -48,8 +48,9 @@ from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_
     DeleteUploadTask, DeleteReplicationPolicyTask, DeletePreAuthenticatedRequestTask, DeleteObjectTask
 
 
-NAMESPACE_HOST_LABEL_PATTERN = re.compile(r'\A[A-Za-z0-9_.-]+\Z')
-NAMESPACE_VALIDATION_ERROR = 'must contain only letters, digits, underscores, hyphens, and periods'
+# Forward slashes are now allowed to support nested Object Storage namespaces used by ZFSSA.
+NAMESPACE_HOST_LABEL_PATTERN = re.compile(r'\A[/A-Za-z0-9_.-]+\Z')
+NAMESPACE_VALIDATION_ERROR = 'must contain only letters, digits, underscores, hyphens, forward slashes and periods'
 WRAPPED_NAMESPACE_PARAM_IDS = set()
 
 

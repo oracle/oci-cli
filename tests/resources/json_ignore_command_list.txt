@@ -620,3 +620,6 @@ iot, flow-runtime, update-flows
 fn, function, create, archive-function, direct-archive, fn-update-runtime-config
 fn, function, create, archive-function, direct-archive, manual-runtime-config
 fn, function, update, archive-function
+artifacts, container, repository, list
+generative-ai-sandbox, sandbox-file, read
+generative-ai-sandbox, sandbox-file, write

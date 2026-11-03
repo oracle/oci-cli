@@ -5,7 +5,8 @@
 appdirs==1.4.3
 aiohttp<3.13.0
 arrow>=1.0.0,<2.0.0
-certifi>=2025.1.31,<2026.0.0
+certifi>=2025.1.31; python_version < '3.7'
+certifi>=2026.10.19; python_version >= '3.7'
 cffi>=1.9.1,<=2.0.0
 click>=8.0.4,<=8.1.2; python_version < '3.11'
 click>=8.3.3,<=8.4.2; python_version >= '3.11'
@@ -20,7 +21,7 @@ jmespath>=0.10.0,<=1.0.1
 importlib-metadata; python_version < '3.8'
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.189.0
+oci==2.190.0
 packaging==20.2; python_version < '3.7'
 packaging>=21.0,<25.0; python_version >= '3.7' and python_version < '3.9'
 packaging>=22.0,<25.0; python_version >= '3.9'
@@ -67,5 +68,5 @@ setuptools==70.0.0; python_version == '3.8'
 setuptools==68.0.0; python_version == '3.7'
 setuptools==59.6.0; python_version == '3.6'
 # this is required because of python 3.6 requests dependency version bound
-urllib3==2.7.0; python_version >= '3.10'
+urllib3>=2.7.0; python_version >= '3.10'
 urllib3==1.26.20; python_version < '3.10'

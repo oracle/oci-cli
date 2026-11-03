@@ -187,21 +187,24 @@ def vcr_path_matcher(r1, r2):
 
     def find_object_storage_object_marker(segments):
         for index, segment in enumerate(segments):
-            if segment != 'o':
+            if segment not in ('o', 'p'):
                 continue
             if index >= 4 and segments[index - 4] == 'n' and segments[index - 2] == 'b':
                 return index
         return None
 
-    def normalize_object_storage_object_name(segments):
-        # Keep route segment boundaries intact. Only Object Storage object names can
-        # contain `/` as data, so `%2F` normalization is limited to the tail after `/o/`.
+    def normalize_object_storage_object_name(path):
+        # Preserve slashes inside object names and PAR IDs before splitting the route.
+        # Strict SDK encoding treats the tail after `/o/` or `/p/` as one parameter.
+        segments = (path or '').split('/')
         object_marker_index = find_object_storage_object_marker(segments)
         if object_marker_index is None or object_marker_index == len(segments) - 1:
-            return segments
+            return split_path(path)
 
         object_name = _fully_unquote('/'.join(segments[object_marker_index + 1:]))
-        return segments[:object_marker_index + 1] + [object_name]
+        if not object_name:
+            return split_path(path)
+        return [seg for seg in segments[:object_marker_index + 1] if seg] + [object_name]
 
     path_ignore_strings = [
         'ocid1.compartment',
@@ -210,8 +213,8 @@ def vcr_path_matcher(r1, r2):
         'ocid1.tagnamespace'
     ]
 
-    r1_path = normalize_object_storage_object_name(split_path(r1.path))
-    r2_path = normalize_object_storage_object_name(split_path(r2.path))
+    r1_path = normalize_object_storage_object_name(r1.path)
+    r2_path = normalize_object_storage_object_name(r2.path)
 
     if len(r1_path) != len(r2_path):
         return False

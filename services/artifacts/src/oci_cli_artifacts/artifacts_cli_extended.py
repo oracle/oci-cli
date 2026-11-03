@@ -433,7 +433,7 @@ def list_generic_artifacts_extended(ctx, from_json, all_pages, page_size, compar
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerRepositoryCollection'})
 @cli_util.wrap_exceptions
-def list_container_repositories_extended(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, repository_id, display_name, is_public, lifecycle_state, limit, page, sort_by, sort_order):
+def list_container_repositories_extended(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, repository_id, display_name, repository_type, is_top_level, is_public, lifecycle_state, limit, page, sort_by, sort_order):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
@@ -444,6 +444,10 @@ def list_container_repositories_extended(ctx, from_json, all_pages, page_size, c
         kwargs['repository_id'] = repository_id
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if repository_type is not None:
+        kwargs['repository_type'] = repository_type
+    if is_top_level is not None:
+        kwargs['is_top_level'] = is_top_level
     if is_public is not None:
         kwargs['is_public'] = is_public
     if lifecycle_state is not None:

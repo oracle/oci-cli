@@ -237,7 +237,19 @@ def create_container_image_signature(ctx, from_json, wait_for_state, max_wait_se
 @container_repository_group.command(name=cli_util.override('artifacts.create_container_repository.command_name', 'create'), help=u"""Create a new empty container repository. Avoid entering confidential information. \n[Command Reference](createContainerRepository)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the resource.""")
 @cli_util.option('--display-name', required=True, help=u"""The container repository name.""")
-@cli_util.option('--is-immutable', type=click.BOOL, help=u"""Whether the repository is immutable. Images cannot be overwritten in an immutable repository.""")
+@cli_util.option('--repository-type', help=u"""The type of container repository. This determines the repository behavior and required settings.""")
+@cli_util.option('--is-top-level', type=click.BOOL, help=u"""Whether the repository is top-level. A top-level repository reserves its name in namespace as a prefix and allows images to be hosted under child paths of that prefix.""")
+@cli_util.option('--upstream-url', help=u"""The upstream registry URL for a pull-through cache repository. Required when repositoryType is PULL_THROUGH. The value must include the registry endpoint and repository path, and must not include a tag or digest.
+
+If isTopLevel is false, the value must be an exact upstream image full path. Example: `iad.ocir.io/<upstreamNamespace>/library/ubuntu`
+
+If isTopLevel is true, the value must be an upstream repository path prefix, allowing OCIR to pull multiple repositories under that prefix. Example: `iad.ocir.io/<upstreamNamespace>/library` or `iad.ocir.io/<upstreamNamespace>`""")
+@cli_util.option('--upstream-username', help=u"""The upstream registry username for a pull-through cache repository. Required when repositoryType is PULL_THROUGH.""")
+@cli_util.option('--upstream-secret-id', help=u"""The [OCID] of the OCI Vault secret that contains the upstream registry password as base64 encoded string for a pull-through cache repository. Required when repositoryType is PULL_THROUGH.
+
+Example: `ocid1.vaultsecret.oc1..exampleuniqueID`""")
+@cli_util.option('--multi-region-peers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of peer regions that define the multi-region group. Peer regions must be specified using canonical region names (for example, `us-phoenix-1`). The peer set must match a supported multi-region endpoint group and MUST include the local OCIR region where the repository is created. Required when repositoryType is MULTI_REGION.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-immutable', type=click.BOOL, help=u"""Whether the repository is immutable. Images cannot be overwritten in an immutable repository. Currently, setting this flag is not supported yet and is set to false by default.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""Whether the repository is public. A public repository allows unauthenticated access.""")
 @cli_util.option('--readme', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -249,12 +261,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state AVAILABLE --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'multi-region-peers': {'module': 'artifacts', 'class': 'list[string]'}, 'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'artifacts', 'class': 'ContainerRepository'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'multi-region-peers': {'module': 'artifacts', 'class': 'list[string]'}, 'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'artifacts', 'class': 'ContainerRepository'})
 @cli_util.wrap_exceptions
-def create_container_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, is_immutable, is_public, readme, freeform_tags, defined_tags):
+def create_container_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, repository_type, is_top_level, upstream_url, upstream_username, upstream_secret_id, multi_region_peers, is_immutable, is_public, readme, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -262,6 +274,24 @@ def create_container_repository(ctx, from_json, wait_for_state, max_wait_seconds
     _details = {}
     _details['compartmentId'] = compartment_id
     _details['displayName'] = display_name
+
+    if repository_type is not None:
+        _details['repositoryType'] = repository_type
+
+    if is_top_level is not None:
+        _details['isTopLevel'] = is_top_level
+
+    if upstream_url is not None:
+        _details['upstreamUrl'] = upstream_url
+
+    if upstream_username is not None:
+        _details['upstreamUsername'] = upstream_username
+
+    if upstream_secret_id is not None:
+        _details['upstreamSecretId'] = upstream_secret_id
+
+    if multi_region_peers is not None:
+        _details['multiRegionPeers'] = cli_util.parse_json_parameter("multi_region_peers", multi_region_peers)
 
     if is_immutable is not None:
         _details['isImmutable'] = is_immutable
@@ -1193,6 +1223,8 @@ def list_container_images(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are inspected depending on the the setting of `accessLevel`. Default is false. Can only be set to true when calling the API on the tenancy (root compartment).""")
 @cli_util.option('--repository-id', help=u"""A filter to return container images only for the specified container repository OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--repository-type', help=u"""A filter to return only resources that match the given repository type exactly.""")
+@cli_util.option('--is-top-level', type=click.BOOL, help=u"""A filter to return resources that match the isTopLevel value.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""A filter to return resources that match the isPublic value.""")
 @cli_util.option('--lifecycle-state', help=u"""A filter to return only resources that match the given lifecycle state name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1210,7 +1242,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerRepositoryCollection'})
 @cli_util.wrap_exceptions
-def list_container_repositories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, repository_id, display_name, is_public, lifecycle_state, limit, page, sort_by, sort_order):
+def list_container_repositories(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, repository_id, display_name, repository_type, is_top_level, is_public, lifecycle_state, limit, page, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1222,6 +1254,10 @@ def list_container_repositories(ctx, from_json, all_pages, page_size, compartmen
         kwargs['repository_id'] = repository_id
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if repository_type is not None:
+        kwargs['repository_type'] = repository_type
+    if is_top_level is not None:
+        kwargs['is_top_level'] = is_top_level
     if is_public is not None:
         kwargs['is_public'] = is_public
     if lifecycle_state is not None:
@@ -1738,6 +1774,8 @@ def update_container_image_signature(ctx, from_json, force, wait_for_state, max_
 Example: `ocid1.containerrepo.oc1..exampleuniqueID`""")
 @cli_util.option('--is-immutable', type=click.BOOL, help=u"""Whether the repository is immutable. Images cannot be overwritten in an immutable repository.""")
 @cli_util.option('--is-public', type=click.BOOL, help=u"""Whether the repository is public. A public repository allows unauthenticated access.""")
+@cli_util.option('--upstream-username', help=u"""The upstream registry username for a pull-through cache repository.""")
+@cli_util.option('--upstream-secret-id', help=u"""The [OCID] of the OCI Vault secret that contains the upstream registry password as base64 encoded string for a pull-through cache repository""")
 @cli_util.option('--readme', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -1755,7 +1793,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'readme': {'module': 'artifacts', 'class': 'ContainerRepositoryReadme'}, 'freeform-tags': {'module': 'artifacts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'artifacts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'artifacts', 'class': 'ContainerRepository'})
 @cli_util.wrap_exceptions
-def update_container_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, is_immutable, is_public, readme, freeform_tags, defined_tags, if_match):
+def update_container_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, is_immutable, is_public, upstream_username, upstream_secret_id, readme, freeform_tags, defined_tags, if_match):
 
     if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
@@ -1776,6 +1814,12 @@ def update_container_repository(ctx, from_json, force, wait_for_state, max_wait_
 
     if is_public is not None:
         _details['isPublic'] = is_public
+
+    if upstream_username is not None:
+        _details['upstreamUsername'] = upstream_username
+
+    if upstream_secret_id is not None:
+        _details['upstreamSecretId'] = upstream_secret_id
 
     if readme is not None:
         _details['readme'] = cli_util.parse_json_parameter("readme", readme)
