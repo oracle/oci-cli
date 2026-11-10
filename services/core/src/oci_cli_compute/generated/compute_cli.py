@@ -11719,7 +11719,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 @instance_maintenance_event_group.command(name=cli_util.override('compute.list_instance_maintenance_events.command_name', 'list'), help=u"""Gets a list of all the maintenance events for the given compartment. \n[Command Reference](listInstanceMaintenanceEvents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "STARTED", "PROCESSING", "SUCCEEDED", "FAILED", "CANCELED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "QUEUED", "STARTED", "PROCESSING", "SUCCEEDED", "FAILED", "CANCELED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
 @cli_util.option('--correlation-token', help=u"""A filter to only return resources that have a matching correlationToken.""")
 @cli_util.option('--instance-action', help=u"""A filter to only return resources that match the given instance action.""")
 @cli_util.option('--time-window-start-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Starting range to return the maintenances which are not completed (date-time is in [RFC3339] format).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

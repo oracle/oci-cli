@@ -623,3 +623,8 @@ fn, function, update, archive-function
 artifacts, container, repository, list
 generative-ai-sandbox, sandbox-file, read
 generative-ai-sandbox, sandbox-file, write
+compute-management, instance-pool, create
+compute-management, instance-pool, update
+data-science, job-run, create-job-run-managed-compute-cluster-job-infrastructure-configuration-details
+data-science, job, update-job-managed-compute-cluster-job-infrastructure-configuration-details
+data-science, job, create-job-managed-compute-cluster-job-infrastructure-configuration-details

@@ -561,7 +561,7 @@ def create_instance_configuration_create_instance_configuration_from_instance_de
 
 @instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Creates an instance pool.
 
-To determine whether capacity is available for a specific shape before you create an instance pool, use the [CreateComputeCapacityReport] operation. \n[Command Reference](createInstancePool)""")
+To determine whether capacity is available for a specific shape before you create an instance pool, use the [CreateComputeCapacityReport] operation. You can optionally include `overridePolicy` to define availability domain-scoped launch overrides for future launches. Existing pool members are not modified. \n[Command Reference](createInstancePool)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance pool.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The [OCID] of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
@@ -578,18 +578,19 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--load-balancers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The load balancers to attach to the instance pool.
 
 This option is a JSON list with items of type AttachLoadBalancerDetails.  For documentation on AttachLoadBalancerDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/AttachLoadBalancerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--override-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
 @cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state RUNNING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management):
+def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management):
 
     kwargs = {}
 
@@ -610,6 +611,9 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if load_balancers is not None:
         _details['loadBalancers'] = cli_util.parse_json_parameter("load_balancers", load_balancers)
+
+    if override_policy is not None:
+        _details['overridePolicy'] = cli_util.parse_json_parameter("override_policy", override_policy)
 
     if instance_display_name_formatter is not None:
         _details['instanceDisplayNameFormatter'] = instance_display_name_formatter
@@ -1901,7 +1905,9 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
 
 @instance_pool_group.command(name=cli_util.override('compute_management.update_instance_pool.command_name', 'update'), help=u"""Update the specified instance pool.
 
-The OCID of the instance pool remains the same. \n[Command Reference](updateInstancePool)""")
+The OCID of the instance pool remains the same.
+
+If `overridePolicy` is omitted, the stored policy remains unchanged. Provide a non-null `overridePolicy` to replace the stored policy as a whole. Provide `null` to clear the stored policy for future launches. \n[Command Reference](updateInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1919,6 +1925,7 @@ This option is a JSON list with items of type UpdateInstancePoolPlacementConfigu
 @cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.
 
 To determine whether capacity is available for a specific shape before you resize an instance pool, use the [CreateComputeCapacityReport] operation.""")
+@cli_util.option('--override-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
 @cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1927,18 +1934,18 @@ To determine whether capacity is available for a specific shape before you resiz
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state RUNNING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, if_match):
+def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, if_match):
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or placement_configurations or lifecycle_management:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations and lifecycle-management will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or placement_configurations or override_policy or lifecycle_management:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations and override-policy and lifecycle-management will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1964,6 +1971,9 @@ def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if size is not None:
         _details['size'] = size
+
+    if override_policy is not None:
+        _details['overridePolicy'] = cli_util.parse_json_parameter("override_policy", override_policy)
 
     if instance_display_name_formatter is not None:
         _details['instanceDisplayNameFormatter'] = instance_display_name_formatter

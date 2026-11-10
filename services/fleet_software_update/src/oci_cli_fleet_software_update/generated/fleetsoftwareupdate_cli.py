@@ -4779,6 +4779,7 @@ def update_fsu_cycle_update_upgrade_fsu_cycle(ctx, from_json, force, wait_for_st
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--goal-version-details-is-older-version-acknowledged', type=click.BOOL, help=u"""Indicates whether the customer acknowledged the risk of selecting an older eligible software version for this Exadata Fleet Update Cycle. This value is used for downstream Database service APIs that requires older-version acknowledgement.""")
 @cli_util.option('--goal-version-details-home-policy', type=custom_types.CliCaseInsensitiveChoice(["CREATE_NEW", "USE_EXISTING"]), help=u"""Goal home policy to use when Staging the Goal Version during patching. CREATE_NEW: Create a new DBHome (for Database Collections) for the specified image or version. USE_EXISTING: All database targets in the same VMCluster or CloudVmCluster will be moved to a shared database home.   If an existing home for the selected image or version is not found in the VM Cluster for a target database, then a new home will be created.   If more than one existing home for the selected image is found, then the home with the least number of databases will be used.   If multiple homes have the least number of databases, then a home will be selected at random.""")
 @cli_util.option('--goal-version-details-new-home-prefix', help=u"""Prefix name used for new DB home resources created as part of the Stage Action. Format: <specified_prefix>_<timestamp> If not specified, a default OCI DB home resource will be generated for the new DB home resources created.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4790,7 +4791,7 @@ def update_fsu_cycle_update_upgrade_fsu_cycle(ctx, from_json, force, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'goal-version-details-components': {'module': 'fleet_software_update', 'class': 'list[GoalSoftwareComponentDetails]'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_components, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
+def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_components, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_is_older_version_acknowledged, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
@@ -4822,6 +4823,9 @@ def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if goal_version_details_is_older_version_acknowledged is not None:
+        _details['goalVersionDetails']['isOlderVersionAcknowledged'] = goal_version_details_is_older_version_acknowledged
 
     if goal_version_details_home_policy is not None:
         _details['goalVersionDetails']['homePolicy'] = goal_version_details_home_policy
@@ -4876,6 +4880,7 @@ def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force,
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--goal-version-details-is-older-version-acknowledged', type=click.BOOL, help=u"""Indicates whether the customer acknowledged the risk of selecting an older eligible software version for this Exadata Fleet Update Cycle. This value is used for downstream Database service APIs that requires older-version acknowledgement.""")
 @cli_util.option('--goal-version-details-home-policy', type=custom_types.CliCaseInsensitiveChoice(["CREATE_NEW", "USE_EXISTING"]), help=u"""Goal home policy to use when Staging the Goal Version during patching. CREATE_NEW: Create a new DBHome (for Database Collections) for the specified image or version. USE_EXISTING: All database targets in the same VMCluster or CloudVmCluster will be moved to a shared database home.   If an existing home for the selected image or version is not found in the VM Cluster for a target database, then a new home will be created.   If more than one existing home for the selected image is found, then the home with the least number of databases will be used.   If multiple homes have the least number of databases, then a home will be selected at random.""")
 @cli_util.option('--goal-version-details-new-home-prefix', help=u"""Prefix name used for new DB home resources created as part of the Stage Action. Format: <specified_prefix>_<timestamp> If not specified, a default OCI DB home resource will be generated for the new DB home resources created.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4887,7 +4892,7 @@ def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_version, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
+def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_version, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_is_older_version_acknowledged, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
@@ -4919,6 +4924,9 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if goal_version_details_is_older_version_acknowledged is not None:
+        _details['goalVersionDetails']['isOlderVersionAcknowledged'] = goal_version_details_is_older_version_acknowledged
 
     if goal_version_details_home_policy is not None:
         _details['goalVersionDetails']['homePolicy'] = goal_version_details_home_policy
@@ -4973,6 +4981,7 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--goal-version-details-is-older-version-acknowledged', type=click.BOOL, help=u"""Indicates whether the customer acknowledged the risk of selecting an older eligible software version for this Exadata Fleet Update Cycle. This value is used for downstream Database service APIs that requires older-version acknowledgement.""")
 @cli_util.option('--goal-version-details-home-policy', type=custom_types.CliCaseInsensitiveChoice(["CREATE_NEW", "USE_EXISTING"]), help=u"""Goal home policy to use when Staging the Goal Version during patching. CREATE_NEW: Create a new DBHome (for Database Collections) for the specified image or version. USE_EXISTING: All database targets in the same VMCluster or CloudVmCluster will be moved to a shared database home.   If an existing home for the selected image or version is not found in the VM Cluster for a target database, then a new home will be created.   If more than one existing home for the selected image is found, then the home with the least number of databases will be used.   If multiple homes have the least number of databases, then a home will be selected at random.""")
 @cli_util.option('--goal-version-details-new-home-prefix', help=u"""Prefix name used for new DB home resources created as part of the Stage Action. Format: <specified_prefix>_<timestamp> If not specified, a default OCI DB home resource will be generated for the new DB home resources created.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4984,7 +4993,7 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_software_image_id, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
+def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_software_image_id, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_is_older_version_acknowledged, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
@@ -5016,6 +5025,9 @@ def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if goal_version_details_is_older_version_acknowledged is not None:
+        _details['goalVersionDetails']['isOlderVersionAcknowledged'] = goal_version_details_is_older_version_acknowledged
 
     if goal_version_details_home_policy is not None:
         _details['goalVersionDetails']['homePolicy'] = goal_version_details_home_policy

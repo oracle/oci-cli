@@ -6,6 +6,47 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.96.1 - 2026-11-10
+===================
+
+Added
+~~~~~
+
+* Support for a new optional parameter to acknowledge an older eligible Software Version when updating an Exadata Fleet Update Cycle in the Exadata Fleet Update service
+
+  * ``oci fleet-software-update fsu-cycle update-fsu-cycle-exadb-stack-fsu-goal-version-details --goal-version-details-is-older-version-acknowledged``
+  * ``oci fleet-software-update fsu-cycle update-image-id-target --goal-version-details-is-older-version-acknowledged``
+  * ``oci fleet-software-update fsu-cycle update-version-target --goal-version-details-is-older-version-acknowledged``
+
+* Support for a new optional Launch Override Policy parameter when creating or updating an Instance Pool in the Compute Management service
+
+  * ``oci compute-management instance-pool create --override-policy``
+  * ``oci compute-management instance-pool update --override-policy``
+
+* Support for the ``QUEUED`` Lifecycle State when listing Instance Maintenance Events in the Compute service
+
+  * ``oci compute instance-maintenance-event list --lifecycle-state QUEUED``
+
+* Data Science service
+
+  * Support for new optional Job Run retention parameters
+
+    * ``oci data-science job create --job-run-retention-period-in-days``
+    * ``oci data-science job create-job-managed-compute-cluster-job-infrastructure-configuration-details --job-run-retention-period-in-days``
+    * ``oci data-science job-run create --job-run-retention-period-in-days-override``
+    * ``oci data-science job-run create-job-run-managed-compute-cluster-job-infrastructure-configuration-details --job-run-retention-period-in-days-override``
+
+  * Support for new optional Pipeline Run retention parameters
+
+    * ``oci data-science pipeline create --pipeline-run-retention-period-in-days``
+    * ``oci data-science pipeline-run create --pipeline-run-retention-period-in-days-override``
+
+  * Support for new optional custom and default Network Configuration parameters on Managed Compute Cluster Jobs
+
+    * ``oci data-science job create-job-managed-compute-cluster-job-infrastructure-configuration-details --job-infrastructure-configuration-details-network-configuration``
+    * ``oci data-science job update-job-managed-compute-cluster-job-infrastructure-configuration-details --job-infrastructure-configuration-details-network-configuration``
+    * ``oci data-science job-run create-job-run-managed-compute-cluster-job-infrastructure-configuration-details --job-infrastructure-configuration-override-details-network-configuration``
+
 3.96.0 - 2026-11-03
 ===================
 

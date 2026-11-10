@@ -1597,6 +1597,7 @@ def create_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1615,7 +1616,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_configuration_details, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
+def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1629,6 +1630,9 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -1690,6 +1694,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1707,7 +1712,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_empty_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
+def create_job_empty_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_run_retention_period_in_days, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1722,6 +1727,9 @@ def create_job_empty_job_configuration_details(ctx, from_json, wait_for_state, m
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_infrastructure_configuration_details is not None:
         _details['jobInfrastructureConfigurationDetails'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details", job_infrastructure_configuration_details)
@@ -1782,6 +1790,7 @@ def create_job_empty_job_configuration_details(ctx, from_json, wait_for_state, m
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1803,7 +1812,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}, 'job-configuration-details-startup-probe-details': {'module': 'data_science', 'class': 'JobProbeDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_configuration_details_environment_variables, job_configuration_details_command_line_arguments, job_configuration_details_maximum_runtime_in_minutes, job_configuration_details_startup_probe_details):
+def create_job_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_run_retention_period_in_days, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_configuration_details_environment_variables, job_configuration_details_command_line_arguments, job_configuration_details_maximum_runtime_in_minutes, job_configuration_details_startup_probe_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1818,6 +1827,9 @@ def create_job_default_job_configuration_details(ctx, from_json, wait_for_state,
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_infrastructure_configuration_details is not None:
         _details['jobInfrastructureConfigurationDetails'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details", job_infrastructure_configuration_details)
@@ -1892,6 +1904,7 @@ def create_job_default_job_configuration_details(ctx, from_json, wait_for_state,
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1911,7 +1924,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-capacity-reservation-ids': {'module': 'data_science', 'class': 'list[string]'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_multi_node_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_ids, job_infrastructure_configuration_details_job_shape_config_details):
+def create_job_multi_node_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_ids, job_infrastructure_configuration_details_job_shape_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1928,6 +1941,9 @@ def create_job_multi_node_job_infrastructure_configuration_details(ctx, from_jso
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -1994,6 +2010,7 @@ def create_job_multi_node_job_infrastructure_configuration_details(ctx, from_jso
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2011,7 +2028,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_empty_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
+def create_job_empty_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2026,6 +2043,9 @@ def create_job_empty_job_infrastructure_configuration_details(ctx, from_json, wa
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2088,6 +2108,7 @@ def create_job_empty_job_infrastructure_configuration_details(ctx, from_json, wa
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2107,7 +2128,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_id, job_infrastructure_configuration_details_job_shape_config_details):
+def create_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_id, job_infrastructure_configuration_details_job_shape_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2124,6 +2145,9 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2192,6 +2216,7 @@ def create_job_managed_egress_standalone_job_infrastructure_configuration_detail
 @cli_util.option('--job-infrastructure-configuration-details-resource-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2201,15 +2226,16 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.option('--job-node-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-infrastructure-configuration-details-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags):
+def create_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_network_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2226,6 +2252,9 @@ def create_job_managed_compute_cluster_job_infrastructure_configuration_details(
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2247,6 +2276,9 @@ def create_job_managed_compute_cluster_job_infrastructure_configuration_details(
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_infrastructure_configuration_details_network_configuration is not None:
+        _details['jobInfrastructureConfigurationDetails']['networkConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_network_configuration", job_infrastructure_configuration_details_network_configuration)
 
     _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
 
@@ -2289,6 +2321,7 @@ def create_job_managed_compute_cluster_job_infrastructure_configuration_details(
 @cli_util.option('--job-infrastructure-configuration-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2308,7 +2341,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_id, job_infrastructure_configuration_details_job_shape_config_details):
+def create_job_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_infrastructure_configuration_details_capacity_reservation_id, job_infrastructure_configuration_details_job_shape_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2326,6 +2359,9 @@ def create_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2393,6 +2429,7 @@ def create_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 @cli_util.option('--job-environment-configuration-details-image', required=True, help=u"""The full path to the Oracle Container Repository (OCIR) registry, image, and tag in a canonical format. Acceptable format: `<region>.ocir.io/<registry>/<image>:<tag>` `<region>.ocir.io/<registry>/<image>:<tag>@digest`""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2414,7 +2451,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'job-node-configuration-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-environment-configuration-details-cmd': {'module': 'data_science', 'class': 'list[string]'}, 'job-environment-configuration-details-entrypoint': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_environment_configuration_details_image, display_name, description, job_configuration_details, job_infrastructure_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_environment_configuration_details_cmd, job_environment_configuration_details_entrypoint, job_environment_configuration_details_image_digest, job_environment_configuration_details_image_signature_id):
+def create_job_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_environment_configuration_details_image, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_infrastructure_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, job_node_configuration_details, freeform_tags, defined_tags, job_environment_configuration_details_cmd, job_environment_configuration_details_entrypoint, job_environment_configuration_details_image_digest, job_environment_configuration_details_image_signature_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2430,6 +2467,9 @@ def create_job_ocir_container_job_environment_configuration_details(ctx, from_js
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2502,6 +2542,7 @@ def create_job_ocir_container_job_environment_configuration_details(ctx, from_js
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--job-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for job runs.""")
 @cli_util.option('--job-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2525,7 +2566,7 @@ This option is a JSON list with items of type JobNodeGroupConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-environment-configuration-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-node-configuration-details-job-network-configuration': {'module': 'data_science', 'class': 'JobNetworkConfiguration'}, 'job-node-configuration-details-job-node-group-configuration-details-list': {'module': 'data_science', 'class': 'list[JobNodeGroupConfigurationDetails]'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job_multi_node_job_node_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_configuration_details, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, job_node_configuration_details_startup_order, job_node_configuration_details_maximum_runtime_in_minutes, job_node_configuration_details_job_network_configuration, job_node_configuration_details_job_node_group_configuration_details_list):
+def create_job_multi_node_job_node_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, display_name, description, job_run_retention_period_in_days, job_configuration_details, job_infrastructure_configuration_details, job_environment_configuration_details, job_log_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, job_node_configuration_details_startup_order, job_node_configuration_details_maximum_runtime_in_minutes, job_node_configuration_details_job_network_configuration, job_node_configuration_details_job_node_group_configuration_details_list):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2540,6 +2581,9 @@ def create_job_multi_node_job_node_configuration_details(ctx, from_json, wait_fo
 
     if description is not None:
         _details['description'] = description
+
+    if job_run_retention_period_in_days is not None:
+        _details['jobRunRetentionPeriodInDays'] = job_run_retention_period_in_days
 
     if job_configuration_details is not None:
         _details['jobConfigurationDetails'] = cli_util.parse_json_parameter("job_configuration_details", job_configuration_details)
@@ -2646,6 +2690,7 @@ def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, co
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2665,7 +2710,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
+def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -2679,6 +2724,9 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -2740,6 +2788,7 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2758,7 +2807,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_empty_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
+def create_job_run_empty_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_run_retention_period_in_days_override, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -2773,6 +2822,9 @@ def create_job_run_empty_job_configuration_details(ctx, from_json, wait_for_stat
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_log_configuration_override_details is not None:
         _details['jobLogConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_log_configuration_override_details", job_log_configuration_override_details)
@@ -2833,6 +2885,7 @@ def create_job_run_empty_job_configuration_details(ctx, from_json, wait_for_stat
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2855,7 +2908,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}, 'job-configuration-override-details-startup-probe-details': {'module': 'data_science', 'class': 'JobProbeDetails'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_configuration_override_details_environment_variables, job_configuration_override_details_command_line_arguments, job_configuration_override_details_maximum_runtime_in_minutes, job_configuration_override_details_startup_probe_details):
+def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_run_retention_period_in_days_override, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_configuration_override_details_environment_variables, job_configuration_override_details_command_line_arguments, job_configuration_override_details_maximum_runtime_in_minutes, job_configuration_override_details_startup_probe_details):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -2870,6 +2923,9 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_log_configuration_override_details is not None:
         _details['jobLogConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_log_configuration_override_details", job_log_configuration_override_details)
@@ -2943,6 +2999,7 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-environment-configuration-override-details-image', required=True, help=u"""The full path to the Oracle Container Repository (OCIR) registry, image, and tag in a canonical format. Acceptable format: `<region>.ocir.io/<registry>/<image>:<tag>` `<region>.ocir.io/<registry>/<image>:<tag>@digest`""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-infrastructure-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2965,7 +3022,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-environment-configuration-override-details-cmd': {'module': 'data_science', 'class': 'list[string]'}, 'job-environment-configuration-override-details-entrypoint': {'module': 'data_science', 'class': 'list[string]'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_environment_configuration_override_details_image, display_name, job_configuration_override_details, job_log_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_environment_configuration_override_details_cmd, job_environment_configuration_override_details_entrypoint, job_environment_configuration_override_details_image_digest, job_environment_configuration_override_details_image_signature_id):
+def create_job_run_ocir_container_job_environment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_environment_configuration_override_details_image, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_infrastructure_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_environment_configuration_override_details_cmd, job_environment_configuration_override_details_entrypoint, job_environment_configuration_override_details_image_digest, job_environment_configuration_override_details_image_signature_id):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -2981,6 +3038,9 @@ def create_job_run_ocir_container_job_environment_configuration_details(ctx, fro
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3055,6 +3115,7 @@ def create_job_run_ocir_container_job_environment_configuration_details(ctx, fro
 @cli_util.option('--job-infrastructure-configuration-override-details-shape-name', required=True, help=u"""The name that corresponds to the JobShapeSummary to use for the job node""")
 @cli_util.option('--job-infrastructure-configuration-override-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3075,7 +3136,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-capacity-reservation-ids': {'module': 'data_science', 'class': 'list[string]'}, 'job-infrastructure-configuration-override-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_multi_node_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_ids, job_infrastructure_configuration_override_details_job_shape_config_details):
+def create_job_run_multi_node_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_ids, job_infrastructure_configuration_override_details_job_shape_config_details):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3092,6 +3153,9 @@ def create_job_run_multi_node_job_infrastructure_configuration_details(ctx, from
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3158,6 +3222,7 @@ def create_job_run_multi_node_job_infrastructure_configuration_details(ctx, from
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3176,7 +3241,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_empty_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
+def create_job_run_empty_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3191,6 +3256,9 @@ def create_job_run_empty_job_infrastructure_configuration_details(ctx, from_json
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3253,6 +3321,7 @@ def create_job_run_empty_job_infrastructure_configuration_details(ctx, from_json
 @cli_util.option('--job-infrastructure-configuration-override-details-shape-name', required=True, help=u"""The shape used to launch the job run instances.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3273,7 +3342,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_id, job_infrastructure_configuration_override_details_job_shape_config_details):
+def create_job_run_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_id, job_infrastructure_configuration_override_details_job_shape_config_details):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3290,6 +3359,9 @@ def create_job_run_managed_egress_standalone_job_infrastructure_configuration_de
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3358,6 +3430,7 @@ def create_job_run_managed_egress_standalone_job_infrastructure_configuration_de
 @cli_util.option('--job-infrastructure-configuration-override-details-compute-target-id', required=True, help=u"""The [OCID] of the compute target.""")
 @cli_util.option('--job-infrastructure-configuration-override-details-resource-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3368,15 +3441,16 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
+@cli_util.option('--job-infrastructure-configuration-override-details-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "DELETED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state NEEDS_ATTENTION would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-override-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-override-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_compute_target_id, job_infrastructure_configuration_override_details_resource_configuration, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url):
+def create_job_run_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_compute_target_id, job_infrastructure_configuration_override_details_resource_configuration, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_network_configuration):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3393,6 +3467,9 @@ def create_job_run_managed_compute_cluster_job_infrastructure_configuration_deta
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3414,6 +3491,9 @@ def create_job_run_managed_compute_cluster_job_infrastructure_configuration_deta
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_infrastructure_configuration_override_details_network_configuration is not None:
+        _details['jobInfrastructureConfigurationOverrideDetails']['networkConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_override_details_network_configuration", job_infrastructure_configuration_override_details_network_configuration)
 
     _details['jobInfrastructureConfigurationOverrideDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
 
@@ -3456,6 +3536,7 @@ def create_job_run_managed_compute_cluster_job_infrastructure_configuration_deta
 @cli_util.option('--job-infrastructure-configuration-override-details-subnet-id', required=True, help=u"""The subnet to create a secondary vnic in to attach to the instance running the job""")
 @cli_util.option('--job-infrastructure-configuration-override-details-block-storage-size-in-gbs', required=True, type=click.INT, help=u"""The size of the block storage volume to attach to the instance running the job""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3476,7 +3557,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-node-configuration-override-details': {'module': 'data_science', 'class': 'JobNodeConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-override-details-job-shape-config-details': {'module': 'data_science', 'class': 'JobShapeConfigDetails'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_subnet_id, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_id, job_infrastructure_configuration_override_details_job_shape_config_details):
+def create_job_run_standalone_job_infrastructure_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, job_infrastructure_configuration_override_details_shape_name, job_infrastructure_configuration_override_details_subnet_id, job_infrastructure_configuration_override_details_block_storage_size_in_gbs, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_node_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_infrastructure_configuration_override_details_capacity_reservation_id, job_infrastructure_configuration_override_details_job_shape_config_details):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3494,6 +3575,9 @@ def create_job_run_standalone_job_infrastructure_configuration_details(ctx, from
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -3560,6 +3644,7 @@ def create_job_run_standalone_job_infrastructure_configuration_details(ctx, from
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--job-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for job run.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-environment-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3584,7 +3669,7 @@ This option is a JSON list with items of type JobNodeGroupConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-configuration-override-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'job-log-configuration-override-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'job-environment-configuration-override-details': {'module': 'data_science', 'class': 'JobEnvironmentConfigurationDetails'}, 'job-infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'job-storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-node-configuration-override-details-job-network-configuration': {'module': 'data_science', 'class': 'JobNetworkConfiguration'}, 'job-node-configuration-override-details-job-node-group-configuration-details-list': {'module': 'data_science', 'class': 'list[JobNodeGroupConfigurationDetails]'}}, output_type={'module': 'data_science', 'class': 'JobRun'})
 @cli_util.wrap_exceptions
-def create_job_run_multi_node_job_node_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_node_configuration_override_details_startup_order, job_node_configuration_override_details_maximum_runtime_in_minutes, job_node_configuration_override_details_job_network_configuration, job_node_configuration_override_details_job_node_group_configuration_details_list):
+def create_job_run_multi_node_job_node_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, job_id, display_name, job_run_retention_period_in_days_override, job_configuration_override_details, job_log_configuration_override_details, job_environment_configuration_override_details, job_infrastructure_configuration_override_details, job_storage_mount_configuration_override_details_list, freeform_tags, defined_tags, opc_parent_rpt_url, job_node_configuration_override_details_startup_order, job_node_configuration_override_details_maximum_runtime_in_minutes, job_node_configuration_override_details_job_network_configuration, job_node_configuration_override_details_job_node_group_configuration_details_list):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -3599,6 +3684,9 @@ def create_job_run_multi_node_job_node_configuration_details(ctx, from_json, wai
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if job_run_retention_period_in_days_override is not None:
+        _details['jobRunRetentionPeriodInDaysOverride'] = job_run_retention_period_in_days_override
 
     if job_configuration_override_details is not None:
         _details['jobConfigurationOverrideDetails'] = cli_util.parse_json_parameter("job_configuration_override_details", job_configuration_override_details)
@@ -5123,6 +5211,7 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the pipeline.""")
+@cli_util.option('--pipeline-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for pipeline runs.""")
 @cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5140,7 +5229,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'parameters': {'module': 'data_science', 'class': 'dict(str, string)'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, configuration_details, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, parameters, freeform_tags, defined_tags):
+def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, pipeline_run_retention_period_in_days, configuration_details, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, parameters, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5155,6 +5244,9 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if description is not None:
         _details['description'] = description
+
+    if pipeline_run_retention_period_in_days is not None:
+        _details['pipelineRunRetentionPeriodInDays'] = pipeline_run_retention_period_in_days
 
     if configuration_details is not None:
         _details['configurationDetails'] = cli_util.parse_json_parameter("configuration_details", configuration_details)
@@ -5214,6 +5306,7 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--step-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of step details for each step.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--description', help=u"""A short description of the pipeline.""")
+@cli_util.option('--pipeline-run-retention-period-in-days', type=click.INT, help=u"""Retention period in days for pipeline runs.""")
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount details to mount to the instance running the pipeline step.
@@ -5233,7 +5326,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'parameters': {'module': 'data_science', 'class': 'dict(str, string)'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, parameters, freeform_tags, defined_tags, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, pipeline_run_retention_period_in_days, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, parameters, freeform_tags, defined_tags, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5249,6 +5342,9 @@ def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_
 
     if description is not None:
         _details['description'] = description
+
+    if pipeline_run_retention_period_in_days is not None:
+        _details['pipelineRunRetentionPeriodInDays'] = pipeline_run_retention_period_in_days
 
     if log_configuration_details is not None:
         _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
@@ -5315,6 +5411,7 @@ def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
 @cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--pipeline-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for pipeline run.""")
 @cli_util.option('--configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5337,7 +5434,7 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-override-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'parameters-override': {'module': 'data_science', 'class': 'dict(str, string)'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
 @cli_util.wrap_exceptions
-def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, configuration_override_details, log_configuration_override_details, infrastructure_configuration_override_details, storage_mount_configuration_override_details_list, parameters_override, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url):
+def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, pipeline_run_retention_period_in_days_override, configuration_override_details, log_configuration_override_details, infrastructure_configuration_override_details, storage_mount_configuration_override_details_list, parameters_override, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -5353,6 +5450,9 @@ def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if pipeline_run_retention_period_in_days_override is not None:
+        _details['pipelineRunRetentionPeriodInDaysOverride'] = pipeline_run_retention_period_in_days_override
 
     if configuration_override_details is not None:
         _details['configurationOverrideDetails'] = cli_util.parse_json_parameter("configuration_override_details", configuration_override_details)
@@ -5417,6 +5517,7 @@ def create_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline for which pipeline run is created.""")
 @cli_util.option('--project-id', help=u"""The [OCID] of the project to associate the pipeline run with.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--pipeline-run-retention-period-in-days-override', type=click.INT, help=u"""Retention period in days for pipeline run.""")
 @cli_util.option('--log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-mount-configuration-override-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount override details to mount to the instance running the pipeline step.
@@ -5441,7 +5542,7 @@ This option is a JSON list with items of type PipelineStepOverrideDetails.  For 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-override-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-override-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-override-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'parameters-override': {'module': 'data_science', 'class': 'dict(str, string)'}, 'step-override-details': {'module': 'data_science', 'class': 'list[PipelineStepOverrideDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-override-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'PipelineRun'})
 @cli_util.wrap_exceptions
-def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, log_configuration_override_details, infrastructure_configuration_override_details, storage_mount_configuration_override_details_list, parameters_override, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url, configuration_override_details_maximum_runtime_in_minutes, configuration_override_details_environment_variables, configuration_override_details_command_line_arguments):
+def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, pipeline_id, project_id, display_name, pipeline_run_retention_period_in_days_override, log_configuration_override_details, infrastructure_configuration_override_details, storage_mount_configuration_override_details_list, parameters_override, step_override_details, freeform_tags, defined_tags, system_tags, opc_parent_rpt_url, configuration_override_details_maximum_runtime_in_minutes, configuration_override_details_environment_variables, configuration_override_details_command_line_arguments):
 
     kwargs = {}
     if opc_parent_rpt_url is not None:
@@ -5458,6 +5559,9 @@ def create_pipeline_run_pipeline_default_configuration_details(ctx, from_json, w
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if pipeline_run_retention_period_in_days_override is not None:
+        _details['pipelineRunRetentionPeriodInDaysOverride'] = pipeline_run_retention_period_in_days_override
 
     if log_configuration_override_details is not None:
         _details['logConfigurationOverrideDetails'] = cli_util.parse_json_parameter("log_configuration_override_details", log_configuration_override_details)
@@ -11950,16 +12054,17 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--job-infrastructure-configuration-details-network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state CREATING --wait-for-state DELETED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}})
+@json_skeleton_utils.get_cli_json_input_option({'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'job-infrastructure-configuration-details-resource-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobResourceConfiguration'}, 'job-infrastructure-configuration-details-network-configuration': {'module': 'data_science', 'class': 'ManagedComputeClusterJobNetworkConfiguration'}}, output_type={'module': 'data_science', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def update_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match):
+def update_job_managed_compute_cluster_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_compute_target_id, job_infrastructure_configuration_details_resource_configuration, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_network_configuration):
 
     if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
@@ -11992,6 +12097,9 @@ def update_job_managed_compute_cluster_job_infrastructure_configuration_details(
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_infrastructure_configuration_details_network_configuration is not None:
+        _details['jobInfrastructureConfigurationDetails']['networkConfiguration'] = cli_util.parse_json_parameter("job_infrastructure_configuration_details_network_configuration", job_infrastructure_configuration_details_network_configuration)
 
     _details['jobInfrastructureConfigurationDetails']['jobInfrastructureType'] = 'MANAGED_COMPUTE_CLUSTER'
 
