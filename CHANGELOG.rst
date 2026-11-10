@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-3.96.1 - 2026-11-10
+3.96.2 - 2026-11-10
 ===================
 
 Added
