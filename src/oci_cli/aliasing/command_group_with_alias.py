@@ -4,10 +4,19 @@
 
 import click
 import sys
-from oci_cli import dynamic_loader, cli_root
+from oci_cli import dynamic_loader, cli_root, click_help_formatter
 
 
-class CommandGroupWithAlias(click.Group):
+class CommandGroupWithAlias(click_help_formatter.OciGroup):
+    """OCI help-aware group that also resolves command aliases.
+
+    Groups created through this class inherit OCI help formatting without
+    implicitly inheriting alias resolution. Alias-aware groups are declared
+    explicitly with ``cls=CommandGroupWithAlias``.
+    """
+
+    group_class = click_help_formatter.OciGroup
+
     def get_command(self, ctx, cmd_name):
         command_chain = self.get_command_chain(ctx)
 

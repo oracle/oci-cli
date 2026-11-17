@@ -259,15 +259,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the KMS key used to encrypt the encryption keys associated with this file system.""")
 @cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group in which the Lustre file system exists.""")
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tiering-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}, 'tiering-configuration': {'module': 'lustre_file_storage', 'class': 'TieringConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}}, output_type={'module': 'lustre_file_storage', 'class': 'LustreFileSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}, 'tiering-configuration': {'module': 'lustre_file_storage', 'class': 'TieringConfigurationDetails'}}, output_type={'module': 'lustre_file_storage', 'class': 'LustreFileSystem'})
 @cli_util.wrap_exceptions
-def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, file_system_name, capacity_in_gbs, subnet_id, performance_tier, root_squash_configuration, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, cluster_placement_group_id, maintenance_window):
+def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, file_system_name, capacity_in_gbs, subnet_id, performance_tier, root_squash_configuration, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, cluster_placement_group_id, maintenance_window, tiering_configuration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -304,6 +305,9 @@ def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if tiering_configuration is not None:
+        _details['tieringConfiguration'] = cli_util.parse_json_parameter("tiering_configuration", tiering_configuration)
 
     client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
     result = client.create_lustre_file_system(
@@ -1314,23 +1318,24 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--capacity-in-gbs', type=click.INT, help=u"""Capacity of the Lustre file system in GB. You can increase capacity only in multiples of 5 TB.""")
 @cli_util.option('--root-squash-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tiering-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}, 'tiering-configuration': {'module': 'lustre_file_storage', 'class': 'TieringConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'lustre_file_storage', 'class': 'list[string]'}, 'root-squash-configuration': {'module': 'lustre_file_storage', 'class': 'RootSquashConfiguration'}, 'maintenance-window': {'module': 'lustre_file_storage', 'class': 'MaintenanceWindow'}, 'tiering-configuration': {'module': 'lustre_file_storage', 'class': 'TieringConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, maintenance_window, if_match):
+def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, maintenance_window, tiering_configuration, if_match):
 
     if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or nsg_ids or root_squash_configuration or maintenance_window:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and root-squash-configuration and maintenance-window will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or nsg_ids or root_squash_configuration or maintenance_window or tiering_configuration:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and root-squash-configuration and maintenance-window and tiering-configuration will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1366,6 +1371,9 @@ def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_se
 
     if maintenance_window is not None:
         _details['maintenanceWindow'] = cli_util.parse_json_parameter("maintenance_window", maintenance_window)
+
+    if tiering_configuration is not None:
+        _details['tieringConfiguration'] = cli_util.parse_json_parameter("tiering_configuration", tiering_configuration)
 
     client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
     result = client.update_lustre_file_system(

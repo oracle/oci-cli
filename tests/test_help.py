@@ -5,11 +5,28 @@
 from . import util
 import oci_cli
 from conftest import runner
+import os
 import pytest
 
 
+SPLIT_HELP_TEST = os.environ.get("OCI_CLI_SPLIT_HELP_TEST") == "1"
+
+
+def pytest_generate_tests(metafunc):
+    if SPLIT_HELP_TEST and "commands_list" in metafunc.fixturenames:
+        commands_list = util.filter_commands_list(metafunc.config.getoption("service"))
+        metafunc.parametrize(
+            "commands_list",
+            [[command] for command in commands_list],
+            ids=lambda command: " ".join(command[0]),
+            indirect=True
+        )
+
+
 @pytest.fixture(scope='function')
-def commands_list(service):
+def commands_list(request, service):
+    if hasattr(request, "param"):
+        return request.param
     commands_list = util.filter_commands_list(service)
     return commands_list
 
