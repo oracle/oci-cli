@@ -49,7 +49,7 @@ requires = [
     'PyYAML>=5.4,<=6.0.2',
     'prompt-toolkit>=3.0.38,<=3.0.43; python_version > "3.6"',
     'prompt-toolkit==3.0.29; python_version == "3.6"',
-    'setuptools>=78.1.1,<84; python_version >= "3.12"' # distutils is deprecated from 3.12, however setuptools still provides it
+    'setuptools>=78.1.1; python_version >= "3.12"' # distutils is deprecated from 3.12, however setuptools still provides it
 ]
 
 extras = {
