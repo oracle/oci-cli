@@ -3,8 +3,9 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
-from oci_cli.cli_root import cli
+from oci_cli.cli_root import cli, load_default_values
 from oci_cli import cli_constants
+from oci_cli import cli_profile_util
 from oci_cli import cli_setup
 from oci_cli import cli_setup_bootstrap
 from oci_cli import cli_util
@@ -15,6 +16,7 @@ import configparser
 import json
 import oci
 import os
+from oci.config import DEFAULT_PROFILE
 from oci._vendor import requests
 import six
 from shutil import copy, make_archive, rmtree
@@ -53,9 +55,91 @@ def validate_profile_name(profile_name):
         )
 
 
+def get_oci_cli_profile_env_var_error(ctx, profile_name):
+    try:
+        validate_profile_name(profile_name)
+    except click.UsageError as error:
+        return error.message
+
+    try:
+        config, expanded_config_file = cli_profile_util.load_config(ctx.obj['config_file'])
+    except cli_profile_util.ProfileConfigError as error:
+        return str(error)
+
+    if not cli_profile_util.profile_exists(config, profile_name):
+        return "Profile '{}' not found in config file {}".format(
+            profile_name,
+            expanded_config_file
+        )
+
+    return None
+
+
+def ignore_oci_cli_profile_for_session_authentication(ctx):
+    ctx.obj['profile'] = get_default_profile_when_env_profile_is_ignored(ctx)
+    load_default_values(ctx, ctx.obj['cli_rc_file'], ctx.obj['profile'])
+
+
+def get_active_oci_cli_profile_env_var(ctx):
+    env_profile = os.environ.get(cli_constants.OCI_CLI_PROFILE_ENV_VAR)
+    if env_profile and env_profile == ctx.obj['profile']:
+        return env_profile
+    return None
+
+
+def warn_oci_cli_profile_ignored(env_profile, env_profile_error):
+    click.echo(
+        "WARNING: Cannot use profile '{}' from {} for session authentication: {}. Continuing with the default session authentication flow.".format(
+            env_profile,
+            cli_constants.OCI_CLI_PROFILE_ENV_VAR,
+            env_profile_error
+        ),
+        file=sys.stderr
+    )
+
+
+def prompt_to_use_oci_cli_profile(ctx, profile_name):
+    env_profile = get_active_oci_cli_profile_env_var(ctx)
+
+    if profile_name:
+        validate_profile_name(profile_name)
+        if not env_profile:
+            return profile_name
+        if get_oci_cli_profile_env_var_error(ctx, env_profile):
+            ignore_oci_cli_profile_for_session_authentication(ctx)
+        return profile_name
+
+    if not env_profile:
+        return profile_name
+
+    env_profile_error = get_oci_cli_profile_env_var_error(ctx, env_profile)
+    use_env_profile = click.confirm(
+        "{} is set to '{}'. Do you want to use this profile for the new session?".format(
+            cli_constants.OCI_CLI_PROFILE_ENV_VAR,
+            env_profile
+        ),
+        default=True
+    )
+
+    if use_env_profile and not env_profile_error:
+        return env_profile
+
+    if env_profile_error:
+        ignore_oci_cli_profile_for_session_authentication(ctx)
+        if use_env_profile:
+            warn_oci_cli_profile_ignored(env_profile, env_profile_error)
+
+    return profile_name
+
+
+def get_default_profile_when_env_profile_is_ignored(ctx):
+    return ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_DEFAULT_PROFILE_KEY, DEFAULT_PROFILE)
+
+
 @cli.group('session', help="""Session commands for CLI""")
 @cli_util.help_option_group
-def session_group():
+@click.pass_context
+def session_group(ctx):
     pass
 
 
@@ -84,9 +168,7 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
     if region is None:
         region = cli_setup.prompt_for_region()
 
-    # Validate profile name
-    if profile_name:
-        validate_profile_name(profile_name)
+    profile_name = prompt_to_use_oci_cli_profile(ctx, profile_name)
 
     persist_only_public_key = False
 

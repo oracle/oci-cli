@@ -714,8 +714,8 @@ def build_client(spec_name, service_name, ctx):
             dynamic_loader.load_service_dir(spec_name)
         client_class = CLIENT_MAP[spec_name][service_name]
 
-        # The constructors for these clients need an endpoint
-        if service_name in SERVICES_REQUIRING_ENDPOINTS:
+        # Pass explicit endpoints during initialization so the SDK does not format full URLs as domains.
+        if ctx.obj.get('endpoint') or service_name in SERVICES_REQUIRING_ENDPOINTS:
             kwargs['service_endpoint'] = ctx.obj.get('endpoint')
 
         # SDK uses 'client_level_realm_specific_endpoint_template_enabled' in their base_client as the realm-specific endpoint flag
@@ -1148,8 +1148,8 @@ def wrap_exceptions(func):
             cli_metrics.Metrics.update_metric("NUM_CONN_FAILURES", ctx.obj['debug'])
             if ctx.obj["debug"]:
                 raise
-            message = "The connection to endpoint timed out"
-            troubleshooting_tips = "It looks like a connection timeout, please check your network setting or contact your network administrator."
+            message = "The request timed out. The request may have reached the service and the operation may have completed. Verify the resource state before retrying."
+            troubleshooting_tips = "It looks like a connection timeout. Verify the resource state before retrying, then check your network setting or contact your network administrator."
             raise cli_exceptions.ClientException(exception.__class__.__name__, message=message,
                                                  troubleshooting_tips=troubleshooting_tips)
         except oci.exceptions.RequestException as exception:
@@ -1157,14 +1157,14 @@ def wrap_exceptions(func):
             if ctx.obj["debug"]:
                 raise
             request_endpoint = get_request_endpoint_from_exception_string(str(exception))
-            message = "The connection to endpoint timed out."
-            troubleshooting_tips = ""
+            message = "The request timed out. The request may have reached the service and the operation may have completed. Verify the resource state before retrying."
+            troubleshooting_tips = "Verify the resource state before retrying."
             if request_endpoint:
                 curl_endpoint_split = request_endpoint.split(" ")
                 if len(curl_endpoint_split) == 3:
                     curl_endpoint = curl_endpoint_split[2]
-                    message = f"The connection to endpoint timed out while trying to reach {curl_endpoint}"
-                    troubleshooting_tips = f"Try running curl {curl_endpoint}. If the curl doesn't work, check your network setting or contact your network administrator."
+                    message = f"The request timed out while trying to reach {curl_endpoint}. The request may have reached the service and the operation may have completed. Verify the resource state before retrying."
+                    troubleshooting_tips = f"Try running curl {curl_endpoint}. If the curl doesn't work, check your network setting or contact your network administrator. If it does work, verify the resource state before retrying."
 
             temp = traceback.format_exc()
             if "SSL: CERTIFICATE_VERIFY_FAILED" in temp:
@@ -1919,11 +1919,16 @@ def update_command_names_to_spec_names(command_names_to_spec_names, link_replace
     # Maps oci <command> to the spec which those commands are sourced from. We'll use this so that we get the spec-specific links to
     # resolve, otherwise we can mismatch links. For example, both core and LBaaS reference ListShapes but these are different
     # operations
+    link_replacements = {
+        spec_name: dict(link_text_and_uri_items)
+        for spec_name, link_text_and_uri_items in six.iteritems(link_replacements)
+    }
+
     if not generate_all:
         service_dir_list = ['.']
     else:
         if os.path.isdir('services'):
-            service_dir_list = [os.path.join('services', dir) for dir in os.listdir('services')]
+            service_dir_list = [os.path.join('services', dir) for dir in sorted(os.listdir('services'))]
         else:
             service_dir_list = ['.']
 
@@ -1933,14 +1938,17 @@ def update_command_names_to_spec_names(command_names_to_spec_names, link_replace
         path_to_json = os.path.join(service_dir, 'docs', 'doc-gen')
         if not os.path.isdir(path_to_json):
             os.mkdir(path_to_json)
-        for doc_json in [doc_json for doc_json in os.listdir(path_to_json) if doc_json.endswith('_doc.json')]:
+        for doc_json in sorted([doc_json for doc_json in os.listdir(path_to_json) if doc_json.endswith('_doc.json')]):
             with open(os.path.join(path_to_json, doc_json), 'r') as doc_json_file:
                 json_from_file = json.loads(doc_json_file.read())
                 rootCommandToSpecName = json_from_file['rootCommandToSpecName']
                 command_names_to_spec_names = dict(
                     list(command_names_to_spec_names.items()) + list(rootCommandToSpecName.items()))
                 specToLinkTextAndUriItems = json_from_file['specToLinkTextAndUriItems']
-                link_replacements = dict(list(link_replacements.items()) + list(specToLinkTextAndUriItems.items()))
+                for spec_name, link_text_and_uri_items in six.iteritems(specToLinkTextAndUriItems):
+                    if spec_name not in link_replacements:
+                        link_replacements[spec_name] = {}
+                    link_replacements[spec_name].update(link_text_and_uri_items)
 
     command_names_to_spec_names.update(update_list_of_command_names_to_spec_names)
     return command_names_to_spec_names, link_replacements

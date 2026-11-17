@@ -284,8 +284,8 @@ def get_datastore(ctx, from_json, datastore_id):
     cli_util.render_response(result, ctx)
 
 
-@datastore_group.command(name=cli_util.override('datastore.list_datastores.command_name', 'list'), help=u"""List the Datastores in the specified compartment. The list can be filtered by compartment, datastore id, display name and lifecycle state. \n[Command Reference](listDatastores)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@datastore_group.command(name=cli_util.override('datastore.list_datastores.command_name', 'list'), help=u"""List the Datastores in the specified compartment. The list can be filtered by compartment, datastore id, display name and lifecycle state. Either compartmentId or datastoreId must be provided. \n[Command Reference](listDatastores)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment as optional parameter.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the SDDC Cluster.""")
 @cli_util.option('--datastore-id', help=u"""The [OCID] of the Datastore.""")
@@ -309,6 +309,8 @@ def list_datastores(ctx, from_json, all_pages, page_size, compartment_id, displa
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if cluster_id is not None:
@@ -333,7 +335,6 @@ def list_datastores(ctx, from_json, all_pages, page_size, compartment_id, displa
 
         result = cli_util.list_call_get_all_results(
             client.list_datastores,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -341,12 +342,10 @@ def list_datastores(ctx, from_json, all_pages, page_size, compartment_id, displa
             client.list_datastores,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_datastores(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

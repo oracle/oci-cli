@@ -526,8 +526,8 @@ def get_datastore_cluster(ctx, from_json, datastore_cluster_id):
     cli_util.render_response(result, ctx)
 
 
-@datastore_cluster_group.command(name=cli_util.override('datastore_cluster.list_datastore_clusters.command_name', 'list'), help=u"""List the Datastore Clusters in the specified compartment. The list can be filtered by compartment, Datastore Cluster, Display name and Lifecycle state \n[Command Reference](listDatastoreClusters)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@datastore_cluster_group.command(name=cli_util.override('datastore_cluster.list_datastore_clusters.command_name', 'list'), help=u"""List the Datastore Clusters in the specified compartment. The list can be filtered by compartment, Datastore Cluster, Display name and Lifecycle state. Either compartmentId or datastoreClusterId must be provided. \n[Command Reference](listDatastoreClusters)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment as optional parameter.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--datastore-cluster-id', help=u"""The [OCID] of the Datastore Cluster.""")
 @cli_util.option('--cluster-id', help=u"""The [OCID] of the SDDC Cluster.""")
@@ -551,6 +551,8 @@ def list_datastore_clusters(ctx, from_json, all_pages, page_size, compartment_id
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if datastore_cluster_id is not None:
@@ -575,7 +577,6 @@ def list_datastore_clusters(ctx, from_json, all_pages, page_size, compartment_id
 
         result = cli_util.list_call_get_all_results(
             client.list_datastore_clusters,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -583,12 +584,10 @@ def list_datastore_clusters(ctx, from_json, all_pages, page_size, compartment_id
             client.list_datastore_clusters,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_datastore_clusters(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)

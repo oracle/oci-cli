@@ -349,6 +349,36 @@ def list_clusters(ctx, from_json, all_pages, page_size, sddc_id, display_name, l
     cli_util.render_response(result, ctx)
 
 
+@cluster_group.command(name=cli_util.override('cluster.retrieve_cluster_operation_status.command_name', 'retrieve-cluster-operation-status'), help=u"""Retrieves status of the operation performed on the Cluster. For each type of operation, only status of the latest operation is returned. \n[Command Reference](retrieveClusterOperationStatus)""")
+@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
+@cli_util.option('--operation-name', required=True, help=u"""The name of operation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ResourceOperation'})
+@cli_util.wrap_exceptions
+def retrieve_cluster_operation_status(ctx, from_json, cluster_id, operation_name, if_match):
+
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    if isinstance(operation_name, six.string_types) and len(operation_name.strip()) == 0:
+        raise click.UsageError('Parameter --operation-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'cluster', ctx)
+    result = client.retrieve_cluster_operation_status(
+        cluster_id=cluster_id,
+        operation_name=operation_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cluster_group.command(name=cli_util.override('cluster.update_cluster.command_name', 'update'), help=u"""Updates the specified Cluster.
 
 **Important:** Updating a Cluster affects only certain attributes in the `Cluster` object and does not affect the VMware environment currently running in the Cluster. \n[Command Reference](updateCluster)""")

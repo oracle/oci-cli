@@ -3414,6 +3414,30 @@ Example: `example_backend_set`""")
 @cli_util.option('--url-path', help=u"""The path against which to run the health check.
 
 Example: `/healthcheck`""")
+@cli_util.option('--is-dynamic-backend-weight-enabled', type=click.BOOL, help=u"""You can enable dynamic backend weights for HTTP health checks.
+
+When enabled, the load balancer reads the `X-Dynamic-Backend-Weight` header from each backend's HTTP health check response. The load balancer uses that value as the backend's effective weight when distributing traffic.
+
+A valid header value is an integer from `0` through `100`.
+
+If the backend response does not include this header, or includes an invalid value, the load balancer uses `defaultWeight`.
+
+Update semantics: * omitted: preserve existing value. * false: disable dynamic backend weight. * true: enable dynamic backend weight.
+
+For TCP health checks, this field is accepted and stored, but it has no runtime effect.""")
+@cli_util.option('--default-weight', type=click.INT, help=u"""You can configure this fallback backend weight when dynamic backend weights are enabled and the backend's HTTP health check response does not include a valid `X-Dynamic-Backend-Weight` header value.
+
+This value must be an integer from `1` through `100`.
+
+Update semantics: * provided: replace the existing value. * omitted or null: preserve the existing configured value.
+
+If dynamic backend weights are enabled and no existing `defaultWeight` is present, the service uses `1`.
+
+Setting or updating `defaultWeight` does not enable dynamic backend weights. To enable dynamic backend weights, set `isDynamicBackendWeightEnabled` to `true`. If your request includes `defaultWeight`, you must also set `isDynamicBackendWeightEnabled` to `true`; otherwise, the request is rejected.
+
+For TCP health checks, this field is accepted and stored, but it has no runtime effect.
+
+Example: `1`""")
 @cli_util.option('--is-force-plain-text', type=click.BOOL, help=u"""Specifies if health checks should always be done using plain text instead of depending on whether or not the associated backend set is using SSL.
 
 If \"true\", health checks will be done using plain text even if the associated backend set is configured to use SSL.
@@ -3436,7 +3460,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, is_force_plain_text, if_match):
+def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protocol, port, return_code, retries, timeout_in_millis, interval_in_millis, response_body_regex, load_balancer_id, backend_set_name, url_path, is_dynamic_backend_weight_enabled, default_weight, is_force_plain_text, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3460,6 +3484,12 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if url_path is not None:
         _details['urlPath'] = url_path
+
+    if is_dynamic_backend_weight_enabled is not None:
+        _details['isDynamicBackendWeightEnabled'] = is_dynamic_backend_weight_enabled
+
+    if default_weight is not None:
+        _details['defaultWeight'] = default_weight
 
     if is_force_plain_text is not None:
         _details['isForcePlainText'] = is_force_plain_text

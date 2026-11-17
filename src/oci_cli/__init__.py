@@ -34,6 +34,7 @@ from oci_cli import file_filters  # noqa: F401,E402
 from oci_cli import final_command_processor  # noqa: F401,E402
 from oci_cli import cli_setup  # noqa: F401,E402
 from oci_cli import cli_session  # noqa: F401,E402
+from oci_cli import cli_profile  # noqa: F401,E402
 from oci_cli import cli_setup_bootstrap  # noqa: F401,E402
 from oci_cli import cli_util  # noqa: F401,E402
 from oci_cli import cli_exceptions  # noqa: F401,E402

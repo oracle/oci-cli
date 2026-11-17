@@ -552,7 +552,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
     cli_metrics.Metrics.update_metric("NUM_INVOCATIONS", ctx.obj['debug'])
     ctx.obj['start_time'] = start
 
-    if not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
+    if not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt) and ctx.invoked_subcommand != 'profile':
         check_key_for_security(auth, config_file, profile)
 
     # Support inititialization for a subcommand.

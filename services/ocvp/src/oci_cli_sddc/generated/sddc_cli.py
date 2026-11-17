@@ -725,6 +725,36 @@ def retrieve_password(ctx, from_json, sddc_id, type, if_match):
     cli_util.render_response(result, ctx)
 
 
+@sddc_group.command(name=cli_util.override('sddc.retrieve_sddc_operation_status.command_name', 'retrieve-sddc-operation-status'), help=u"""Retrieves status of the operation performed on the SDDC. For each type of operation, only status of the latest operation is returned. \n[Command Reference](retrieveSddcOperationStatus)""")
+@cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--operation-name', required=True, help=u"""The name of operation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ResourceOperation'})
+@cli_util.wrap_exceptions
+def retrieve_sddc_operation_status(ctx, from_json, sddc_id, operation_name, if_match):
+
+    if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
+        raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
+
+    if isinstance(operation_name, six.string_types) and len(operation_name.strip()) == 0:
+        raise click.UsageError('Parameter --operation-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'sddc', ctx)
+    result = client.retrieve_sddc_operation_status(
+        sddc_id=sddc_id,
+        operation_name=operation_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sddc_group.command(name=cli_util.override('sddc.retrieve_vmware_binaries.command_name', 'retrieve-vmware-binaries'), help=u"""Retrieve the list of available VMware binaries for the SDDC. \n[Command Reference](retrieveVmwareBinaries)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

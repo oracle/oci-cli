@@ -39,9 +39,16 @@ def esxi_host_summary_group():
     pass
 
 
+@click.command(cli_util.override('esxi_host.esxihost_group.command_name', 'esxihost'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def esxihost_group():
+    pass
+
+
 ocvs_service_cli.ocvs_service_group.add_command(esxi_host_root_group)
 esxi_host_root_group.add_command(esxi_host_group)
 esxi_host_root_group.add_command(esxi_host_summary_group)
+esxi_host_root_group.add_command(esxihost_group)
 
 
 @esxi_host_group.command(name=cli_util.override('esxi_host.create_esxi_host.command_name', 'create'), help=u"""Adds another ESXi host to an existing SDDC. The attributes of the specified `Sddc` determine the VMware software and other configuration settings used by the ESXi host.
@@ -249,6 +256,7 @@ def get_esxi_host(ctx, from_json, esxi_host_id):
 
 @esxi_host_group.command(name=cli_util.override('esxi_host.inplace_upgrade.command_name', 'inplace-upgrade'), help=u"""In-place upgrade a ESXi host. \n[Command Reference](inplaceUpgrade)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
+@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--initial-fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""Initial Fault Domain Host distribution mode for the ESXi host.""")
 @cli_util.option('--vcf-byol-allocation-id', help=u"""The [OCID] of the Byol Allocation for VCF (VMware Cloud Foundation) deployment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -260,7 +268,7 @@ def get_esxi_host(ctx, from_json, esxi_host_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def inplace_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, initial_fault_domain_host_distribution, vcf_byol_allocation_id, if_match):
+def inplace_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, capacity_reservation_id, initial_fault_domain_host_distribution, vcf_byol_allocation_id, if_match):
 
     if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
         raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
@@ -271,6 +279,9 @@ def inplace_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if initial_fault_domain_host_distribution is not None:
         _details['initialFaultDomainHostDistribution'] = initial_fault_domain_host_distribution
@@ -395,6 +406,7 @@ def list_esxi_hosts(ctx, from_json, all_pages, page_size, sddc_id, cluster_id, c
 @esxi_host_group.command(name=cli_util.override('esxi_host.replace_host.command_name', 'replace-host'), help=u"""Replace a faulty ESXi host whose underlying bare metal is broken \n[Command Reference](replaceHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi host. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
+@cli_util.option('--capacity-reservation-id', help=u"""The [OCID] of the Capacity Reservation.""")
 @cli_util.option('--initial-fault-domain-host-distribution', type=custom_types.CliCaseInsensitiveChoice(["EVENLY_DISTRIBUTED", "UNEVENLY_DISTRIBUTED"]), help=u"""Initial Fault Domain Host distribution mode for the ESXi host.""")
 @cli_util.option('--vcf-byol-allocation-id', help=u"""The [OCID] of the Byol Allocation for VCF (VMware Cloud Foundation) deployment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -406,7 +418,7 @@ def list_esxi_hosts(ctx, from_json, all_pages, page_size, sddc_id, cluster_id, c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def replace_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, esxi_software_version, initial_fault_domain_host_distribution, vcf_byol_allocation_id, if_match):
+def replace_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, esxi_software_version, capacity_reservation_id, initial_fault_domain_host_distribution, vcf_byol_allocation_id, if_match):
 
     if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
         raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
@@ -420,6 +432,9 @@ def replace_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if esxi_software_version is not None:
         _details['esxiSoftwareVersion'] = esxi_software_version
+
+    if capacity_reservation_id is not None:
+        _details['capacityReservationId'] = capacity_reservation_id
 
     if initial_fault_domain_host_distribution is not None:
         _details['initialFaultDomainHostDistribution'] = initial_fault_domain_host_distribution
@@ -460,6 +475,36 @@ def replace_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@esxihost_group.command(name=cli_util.override('esxi_host.retrieve_esxi_host_operation_status.command_name', 'retrieve-esxi-host-operation-status'), help=u"""Retrieves status of the operation performed on the ESXi host. For each type of operation, only status of the latest operation is returned. \n[Command Reference](retrieveEsxiHostOperationStatus)""")
+@cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
+@cli_util.option('--operation-name', required=True, help=u"""The name of operation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'ResourceOperation'})
+@cli_util.wrap_exceptions
+def retrieve_esxi_host_operation_status(ctx, from_json, esxi_host_id, operation_name, if_match):
+
+    if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
+
+    if isinstance(operation_name, six.string_types) and len(operation_name.strip()) == 0:
+        raise click.UsageError('Parameter --operation-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ocvp', 'esxi_host', ctx)
+    result = client.retrieve_esxi_host_operation_status(
+        esxi_host_id=esxi_host_id,
+        operation_name=operation_name,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -529,6 +574,8 @@ Avoid entering confidential information.""")
 @cli_util.option('--billing-donor-host-id', help=u"""The [OCID] of the deleted ESXi Host with leftover billing cycle.
 
 **Note:** This option also requires the `nextCommitment` parameter to be populated with a value other than `HOUR`. Otherwise, any update request fails with the error \u201CNext SKU can\u2019t be NULL or Hourly.\u201D""")
+@cli_util.option('--vmware-software-version', help=u"""The version of VMware software that Oracle Cloud VMware Solution installed on the ESXi host. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions]. **Note:** This API will not perform VMware software version upgrade. Make sure the version provided is the actual version installed on the ESXi host.""")
+@cli_util.option('--esxi-software-version', help=u"""The version of ESXi software that Oracle Cloud VMware Solution installed on the ESXi host. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions]. **Note:** This API will not perform ESXi software version upgrade. Make sure the version provided is the actual version installed on the ESXi host.""")
 @cli_util.option('--vcf-byol-allocation-id', help=u"""The [OCID] of the Byol Allocation for VCF (VMware Cloud Foundation) deployment.""")
 @cli_util.option('--is-vsan-byol-enabled', type=click.BOOL, help=u"""Indicates whether this host embedded VMware vSAN with BYOL Allocation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -547,7 +594,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'EsxiHost'})
 @cli_util.wrap_exceptions
-def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, next_commitment, billing_donor_host_id, vcf_byol_allocation_id, is_vsan_byol_enabled, freeform_tags, defined_tags, if_match):
+def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, esxi_host_id, display_name, next_commitment, billing_donor_host_id, vmware_software_version, esxi_software_version, vcf_byol_allocation_id, is_vsan_byol_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(esxi_host_id, six.string_types) and len(esxi_host_id.strip()) == 0:
         raise click.UsageError('Parameter --esxi-host-id cannot be whitespace or empty string')
@@ -571,6 +618,12 @@ def update_esxi_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if billing_donor_host_id is not None:
         _details['billingDonorHostId'] = billing_donor_host_id
+
+    if vmware_software_version is not None:
+        _details['vmwareSoftwareVersion'] = vmware_software_version
+
+    if esxi_software_version is not None:
+        _details['esxiSoftwareVersion'] = esxi_software_version
 
     if vcf_byol_allocation_id is not None:
         _details['vcfByolAllocationId'] = vcf_byol_allocation_id

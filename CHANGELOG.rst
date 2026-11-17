@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.96.3 - 2026-11-17
+===================
+
+Added
+~~~~~
+
+* Support for new optional parameter ``--ssl-inspection-configuration`` in Database service
+
+* Support for new optional parameters ``--is-dynamic-backend-weight-enabled`` and ``--default-weight`` in the Load Balancer service.
+
+  * ``oci lb health-checker update --is-dynamic-backend-weight-enabled``
+  * ``oci lb health-checker update --default-weight``
+
+* Support for new optional parameter ``--tiering-configuration`` for object tiering in the Lustre File service
+
+  * ``oci lfs lustre-file-system create --tiering-configuration``
+  * ``oci lfs lustre-file-system update --tiering-configuration``
+
+* Oracle Cloud VMware Solution service
+
+  * Support for new command
+
+    * ``oci ocvs sddc retrieve-sddc-operation-status``
+
+  * Support for new optional parameter ``--capacity-reservation-id``
+
+    * ``oci ocvs esxi-host replace-host --capacity-reservation-id``
+    * ``oci ocvs esxi-host inplace-upgrade --capacity-reservation-id``
+
+  * Support for new optional parameter ``--vmware-software-version``
+
+    * ``oci ocvs esxi-host update --vmware-software-version``
+
+  * Support for new optional parameter ``--esxi-software-version``
+
+    * ``oci ocvs esxi-host update --esxi-software-version``
+
+  * ``--compartment-id | -c`` is now an optional parameter for ``oci ocvs datastore list`` and ``oci ocvs datastore-cluster list``
+
+
 3.96.2 - 2026-11-10
 ===================
 
