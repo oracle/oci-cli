@@ -302,7 +302,7 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id, lifetime, cidr_prefix_length):
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id, lifetime, cidr_prefix_length, hostname):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
@@ -352,6 +352,9 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
         assign_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:
         assign_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if hostname is not None:
+        assign_ip_request_body['hostname'] = hostname
 
     if ipv6_subnet_cidr is not None:
         assign_ip_request_body['ipv6SubnetCidr'] = ipv6_subnet_cidr
