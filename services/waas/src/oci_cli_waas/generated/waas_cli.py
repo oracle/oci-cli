@@ -3347,7 +3347,7 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
-@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), multiple=True, help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
 
 - **TLS_V1_1:** corresponds to TLS 1.1 specification.
 
@@ -3491,7 +3491,7 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
-@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), multiple=True, help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
 
 - **TLS_V1_1:** corresponds to TLS 1.1 specification.
 
@@ -3634,7 +3634,7 @@ def update_policy_config_round_robin_load_balancing_method(ctx, from_json, force
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
-@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), multiple=True, help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
 
 - **TLS_V1_1:** corresponds to TLS 1.1 specification.
 
@@ -3789,7 +3789,7 @@ def update_policy_config_sticky_cookie_load_balancing_method(ctx, from_json, for
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
-@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), multiple=True, help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
 
 - **TLS_V1_1:** corresponds to TLS 1.1 specification.
 
@@ -4003,7 +4003,7 @@ Use `GET /waasPolicies/{waasPolicyId}/wafRecommendations` to view WAF recommenda
 
 **Note:** Only origin responses with a Content-Type matching a value in `mediaTypes` will be inspected.""")
 @cli_util.option('--max-response-size-in-ki-b', type=click.INT, help=u"""The maximum response size to be fully inspected, in binary kilobytes (KiB). Anything over this limit will be partially inspected. If unspecified, defaults to `1024`.""")
-@cli_util.option('--allowed-http-methods', type=custom_types.CliCaseInsensitiveChoice(["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "PATCH", "PROPFIND"]), help=u"""The list of allowed HTTP methods. If unspecified, default to `[OPTIONS, GET, HEAD, POST]`. This setting only applies if a corresponding protection rule is enabled, such as the \"Restrict HTTP Request Methods\" rule (key: 911100).""")
+@cli_util.option('--allowed-http-methods', type=custom_types.CliCaseInsensitiveChoice(["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "PATCH", "PROPFIND"]), multiple=True, help=u"""The list of allowed HTTP methods. If unspecified, default to `[OPTIONS, GET, HEAD, POST]`. This setting only applies if a corresponding protection rule is enabled, such as the \"Restrict HTTP Request Methods\" rule (key: 911100).""")
 @cli_util.option('--media-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of media types to allow for inspection, if `isResponseInspected` is enabled. Only responses with MIME types in this list will be inspected. If unspecified, defaults to `[\"text/html\", \"text/plain\", \"text/xml\"]`.
 
     Supported MIME types include:

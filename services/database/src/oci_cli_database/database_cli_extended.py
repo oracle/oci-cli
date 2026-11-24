@@ -1416,6 +1416,7 @@ def create_database_from_another_database(ctx, wait_for_state, max_wait_seconds,
 @cli_util.option('--patch-id', required=False, help="""The OCID of the patch.""")
 @cli_util.option('--one-off-patches', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""The list of one-off patches.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-software-image-id', required=False, help="""The OCID of the database software image.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @click.pass_context
 @json_skeleton_utils.get_cli_json_input_option({'one-off-patches': {'module': 'database', 'class': 'list[string]'}})
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'one-off-patches': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'Database'})
@@ -1450,6 +1451,9 @@ def patch_database(ctx, **kwargs):
         patch_details.action = kwargs['patch_action']
         patch_details.patch_id = kwargs['patch_id']
         update_db_home_details.db_version = patch_details
+
+    if kwargs['is_older_version_acknowledged'] is not None and update_db_home_details.db_version is not None:
+        update_db_home_details.db_version.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     client.update_db_home(db_home_id, update_db_home_details)
 
@@ -1638,6 +1642,7 @@ def db_node_forcereset(ctx, **kwargs):
 @cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
 @cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
 @cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -1653,10 +1658,12 @@ def update_db_system_extended(ctx, **kwargs):
     elif patch_id and not patch_action:
         raise click.UsageError('--patch-action is required if --patch-id is specified')
     elif patch_id and patch_action:
-        kwargs['version_parameterconflict'] = {
-            "action": patch_action,
-            "patchId": patch_id
-        }
+        patch_details = oci.database.models.PatchDetails()
+        patch_details.action = kwargs['patch_action']
+        patch_details.patch_id = kwargs['patch_id']
+        if kwargs['is_older_version_acknowledged'] is not None:
+            patch_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
+        kwargs['version_parameterconflict'] = patch_details
 
     data_collection_options = {}
     if 'is_diagnostics_events_enabled' in kwargs and kwargs['is_diagnostics_events_enabled'] is not None:
@@ -1678,6 +1685,7 @@ def update_db_system_extended(ctx, **kwargs):
     del kwargs['is_diagnostics_events_enabled']
     del kwargs['is_health_monitoring_enabled']
     del kwargs['is_incident_logs_enabled']
+    del kwargs['is_older_version_acknowledged']
 
     ctx.invoke(database_cli.update_db_system, **kwargs)
 
@@ -1686,6 +1694,7 @@ def update_db_system_extended(ctx, **kwargs):
 @cli_util.option('--db-system-id', required=True, help="""The OCID of the DB System.""")
 @cli_util.option('--patch-action', required=True, type=custom_types.CliCaseInsensitiveChoice(["APPLY", "PRECHECK"]), help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
+@cli_util.option('--is-older-version-acknowledged', type=click.BOOL, help="""If true, the caller acknowledges selecting or applying an older DB, Grid Infrastructure, or operating system software version that is outside the latest default version window.""")
 @click.pass_context
 @cli_util.help_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1697,6 +1706,9 @@ def patch_db_system(ctx, **kwargs):
     patch_details = oci.database.models.PatchDetails()
     patch_details.action = kwargs['patch_action']
     patch_details.patch_id = kwargs['patch_id']
+
+    if kwargs['is_older_version_acknowledged'] is not None:
+        patch_details.is_older_version_acknowledged = kwargs['is_older_version_acknowledged']
 
     update_db_system_details = oci.database.models.UpdateDbSystemDetails()
     update_db_system_details.version = patch_details

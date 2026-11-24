@@ -4786,7 +4786,7 @@ def create_or_update_git_ref_create_or_update_git_tag_details(ctx, from_json, wa
 @protected_branch_group.command(name=cli_util.override('devops.create_or_update_protected_branch.command_name', 'create-or-update'), help=u"""Creates a restriction on a branch that prevents certain actions on it. \n[Command Reference](createOrUpdateProtectedBranch)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--branch-name', required=True, help=u"""The branchName can either be exact branch name or branch pattern.""")
-@cli_util.option('--protection-levels', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "PULL_REQUEST_MERGE_ONLY"]), help=u"""Level of protection to add on a branch.""")
+@cli_util.option('--protection-levels', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "PULL_REQUEST_MERGE_ONLY"]), multiple=True, help=u"""Level of protection to add on a branch.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10223,7 +10223,7 @@ def schedule_cascading_project_deletion(ctx, from_json, wait_for_state, max_wait
 
 @repository_metric_aggregation_group.command(name=cli_util.override('devops.summarize_project_repository_analytics.command_name', 'summarize-project-repository-analytics'), help=u"""Retrieves repository analytics for a given project. \n[Command Reference](summarizeProjectRepositoryAnalytics)""")
 @cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
-@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), multiple=True, help=u"""The name of the metric to be filtered.""")
 @cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--author-email', help=u"""Email address of the author.""")
 @cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")
@@ -10275,7 +10275,7 @@ def summarize_project_repository_analytics(ctx, from_json, project_id, repositor
 
 @repository_metric_aggregation_group.command(name=cli_util.override('devops.summarize_repository_analytics.command_name', 'summarize-repository-analytics'), help=u"""Retrieves repository analytics for a given repository. \n[Command Reference](summarizeRepositoryAnalytics)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
-@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), multiple=True, help=u"""The name of the metric to be filtered.""")
 @cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--author-email', help=u"""Email address of the author.""")
 @cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")

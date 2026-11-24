@@ -22,7 +22,11 @@ documentation for the [Networking],
 [Compute], and
 [Block Volume] services.
 The required permissions are documented in the
-[Details for the Core Services] article."""), short_help=cli_util.override('virtual_network.virtual_network_root_group.short_help', """Core Services API"""))
+[Details for the Core Services] article.
+
+The Core Services API provides both IPv4-only and dual-stack (IPv4 and IPv6) endpoints. By default, OCI-published SDKs and the CLI use IPv4-only endpoints.
+Use a dual-stack endpoint to connect over IPv6 while retaining IPv4 compatibility.
+Dual-stack endpoints use the following format: https://{service}.{region}.ds.oci.{secondLevelDomain}."""), short_help=cli_util.override('virtual_network.virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -5255,7 +5259,7 @@ Example: `10 Gbps`""")
 @cli_util.option('--cross-connect-mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Create a `CrossConnectMapping` for each cross-connect or cross-connect group this virtual circuit will run on.
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
+@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), multiple=True, help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to `ENABLED` (the default) to activate the BGP session of the virtual circuit, set to `DISABLED` to deactivate the virtual circuit.""")
 @cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to `true` to enable BFD for IPv4 BGP peering, or set to `false` to disable BFD. If this is not set, the default is `false`.""")
 @cli_util.option('--is-transport-mode', type=click.BOOL, help=u"""Set to `true` for the virtual circuit to carry only encrypted traffic, or set to `false` for the virtual circuit to carry unencrypted traffic. If this is not set, the default is `false`.""")
@@ -10390,7 +10394,7 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--address-type-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of IP address types used.
 
 This option is a JSON list with items of type AddressType.  For documentation on AddressType please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/AddressType.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resource-type-list', type=custom_types.CliCaseInsensitiveChoice(["Resource"]), help=u"""List of VCN resource types.""")
+@cli_util.option('--resource-type-list', type=custom_types.CliCaseInsensitiveChoice(["Resource"]), multiple=True, help=u"""List of VCN resource types.""")
 @cli_util.option('--search-keyword', help=u"""Filters the results for the specified string.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "UTILIZATION", "DNS_HOSTNAME", "REGION"]), help=u"""Provide the sort order (`sortOrder`) to sort the fields such as TIMECREATED in descending or descending order, and DISPLAYNAME in case sensitive.
 
@@ -15965,7 +15969,7 @@ To change the list of public IP prefixes for a public virtual circuit, use [Bulk
 The customer and provider can update different properties in the mapping depending on the situation. See the description of the [CrossConnectMapping].
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
+@cli_util.option('--routing-policy', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_SERVICE_NETWORK", "REGIONAL", "MARKET_LEVEL", "GLOBAL"]), multiple=True, help=u"""The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: `ORACLE_SERVICE_NETWORK`, `REGIONAL`, `MARKET_LEVEL`, and `GLOBAL`. See [Route Filtering] for details. By default, routing information is shared for all routes in the same market.""")
 @cli_util.option('--bgp-admin-state', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Set to `ENABLED` (the default) to activate the BGP session of the virtual circuit, set to `DISABLED` to deactivate the virtual circuit.""")
 @cli_util.option('--is-bfd-enabled', type=click.BOOL, help=u"""Set to `true` to enable BFD for IPv4 BGP peering, or set to `false` to disable BFD. If this is not set, the default is `false`.""")
 @cli_util.option('--is-transport-mode', type=click.BOOL, help=u"""Set to `true` for the virtual circuit to carry only encrypted traffic, or set to `false` for the virtual circuit to carry unencrypted traffic. If this is not set, the default is `false`.""")

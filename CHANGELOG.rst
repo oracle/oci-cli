@@ -6,6 +6,136 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.97.0 - 2026-11-24
+===================
+
+Added
+~~~~~
+
+* Batch Service
+
+  * Support for Compute capacity reservations in service-managed fleets in the Batch service
+
+    * ``oci batch batch-context create --fleets``
+    * ``oci batch batch-context create-oci-logging-configuration --fleets``
+
+* Compute Management Service
+
+  * Support for starting, getting, listing, and canceling instance pool refreshes
+
+    * ``oci compute-management instance-pool-refresh cancel``
+    * ``oci compute-management instance-pool-refresh get``
+    * ``oci compute-management instance-pool-refresh refresh-instance-pool``
+    * ``oci compute-management instance-pool-refresh-collection list-instance-pool-refreshes``
+
+  * Support for an instance maintenance policy, including launch-before-terminating refresh settings, when creating or updating an instance pool
+
+    * ``oci compute-management instance-pool create --instance-maintenance-policy``
+    * ``oci compute-management instance-pool update --instance-maintenance-policy``
+
+* Compute Service
+
+  * Support for the QUEUED value of --lifecycle-state when listing instance maintenance events
+
+    * ``oci compute instance-maintenance-event list --lifecycle-state QUEUED``
+
+  * Support for Non-Volatile Memory Express (NVMe) volume attachments
+
+    * ``oci compute volume-attachment attach-volume-attach-nvme-volume-details``
+
+  * Support for the nvme and service_determined values of --type
+
+    * ``oci compute volume-attachment attach --type nvme``
+    * ``oci compute volume-attachment attach --type service_determined``
+
+  * Support for NVMe volume attachments with type nvme when launching an instance
+
+    * ``oci compute instance launch --launch-volume-attachments``
+
+* Support for AZURE_BLOB (Azure Blob Storage) and GCS (Google Cloud Storage) as accepted --data-transfer-medium-details types in the Database Migration service
+
+  * ``oci database-migration migration create-oracle-migration --data-transfer-medium-details AZURE_BLOB``
+  * ``oci database-migration migration create-oracle-migration --data-transfer-medium-details GCS``
+  * ``oci database-migration migration update-oracle-migration --data-transfer-medium-details AZURE_BLOB``
+  * ``oci database-migration migration update-oracle-migration --data-transfer-medium-details GCS``
+
+* GoldenGate Service
+
+  * Support for Oracle AI Data Catalog Storage connections
+
+    * ``oci goldengate connection create-connection-create-oracle-ai-data-catalog-storage-connection-details``
+    * ``oci goldengate connection update-connection-update-oracle-ai-data-catalog-storage-connection-details``
+
+  * Support for the AI_DATA_CATALOG value of --deployment-type and --assignable-deployment-type
+
+    * ``oci goldengate deployment create --deployment-type AI_DATA_CATALOG``
+    * ``oci goldengate deployment list --deployment-type AI_DATA_CATALOG``
+    * ``oci goldengate deployment-type-collection list-deployment-types --deployment-type AI_DATA_CATALOG``
+    * ``oci goldengate deployment-version list --deployment-type AI_DATA_CATALOG``
+    * ``oci goldengate connection list --assignable-deployment-type AI_DATA_CATALOG``
+
+  * Support for the ORACLE_AI_DATA_CATALOG_STORAGE value of --connection-type, --connection-type-not-equal-to, --technology-type, and --supported-connection-type
+
+    * ``oci goldengate connection create --connection-type ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection update --connection-type ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection list --connection-type ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection-assignment list --connection-type ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection list --connection-type-not-equal-to ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection-assignment list --connection-type-not-equal-to ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate connection list --technology-type ORACLE_AI_DATA_CATALOG_STORAGE``
+    * ``oci goldengate deployment list --supported-connection-type ORACLE_AI_DATA_CATALOG_STORAGE``
+
+* Database Service
+
+  * Support for configuring Thales, Oracle Key Vault, OCI Vault, and Oracle managed key management systems on Autonomous VM Clusters
+
+    * ``oci db autonomous-vm-cluster change-avm-key-management-system``
+    * ``oci db autonomous-vm-cluster change-avm-key-management-system-thales-key-management-system-details``
+    * ``oci db autonomous-vm-cluster change-avm-key-management-system-oracle-key-vault-key-management-system-details``
+    * ``oci db autonomous-vm-cluster change-avm-key-management-system-oci-vault-key-management-system-details``
+    * ``oci db autonomous-vm-cluster change-avm-key-management-system-oracle-managed-key-management-system-details``
+
+  * Support for configuring Thales, Oracle Key Vault, OCI Vault, and Oracle managed key management systems on Cloud Autonomous VM Clusters
+
+    * ``oci db cloud-autonomous-vm-cluster change-cavm-key-management-system``
+    * ``oci db cloud-autonomous-vm-cluster change-cavm-key-management-system-thales-key-management-system-details``
+    * ``oci db cloud-autonomous-vm-cluster change-cavm-key-management-system-oracle-key-vault-key-management-system-details``
+    * ``oci db cloud-autonomous-vm-cluster change-cavm-key-management-system-oci-vault-key-management-system-details``
+    * ``oci db cloud-autonomous-vm-cluster change-cavm-key-management-system-oracle-managed-key-management-system-details``
+
+  * Support for creating and updating Thales key stores
+
+    * ``oci db key-store create-key-store-key-store-type-from-thales-details``
+    * ``oci db key-store update-key-store-key-store-type-from-thales-details``
+
+  * Support for the new optional --kms-type parameter, accepting ORACLE_KEY_VAULT and THALES for Autonomous VM Clusters and OCI_VAULT, ORACLE_KEY_VAULT, and THALES for Cloud Autonomous VM Clusters
+
+    * ``oci db autonomous-vm-cluster list --kms-type ORACLE_KEY_VAULT``
+    * ``oci db autonomous-vm-cluster list --kms-type THALES``
+    * ``oci db cloud-autonomous-vm-cluster list --kms-type OCI_VAULT``
+    * ``oci db cloud-autonomous-vm-cluster list --kms-type ORACLE_KEY_VAULT``
+    * ``oci db cloud-autonomous-vm-cluster list --kms-type THALES``
+
+  * Support for the new optional --key-store-type parameter with accepted values ORACLE_KEY_VAULT and THALES
+
+    * ``oci db key-store list --key-store-type ORACLE_KEY_VAULT``
+    * ``oci db key-store list --key-store-type THALES``
+
+  * Support for the new optional --is-older-version-acknowledged parameter accepting boolean values
+
+    * ``oci db database patch --is-older-version-acknowledged parameter``
+    * ``oci db system update --is-older-version-acknowledged parameter``
+    * ``oci db system patch --is-older-version-acknowledged parameter``
+
+Changed
+~~~~~~~
+
+* [BREAKING] Removed the --migration-settings parameter from Oracle migration clone, create, and update commands in the Database Migration service
+
+  * ``oci database-migration migration clone-oracle-migration --migration-settings``
+  * ``oci database-migration migration create-oracle-migration --migration-settings``
+  * ``oci database-migration migration update-oracle-migration --migration-settings``
+
 3.96.3 - 2026-11-17
 ===================
 

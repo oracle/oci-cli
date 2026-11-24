@@ -63,8 +63,8 @@ dif_root_group.add_command(stack_collection_group)
 
 @stack_group.command(name=cli_util.override('dif.add_service.command_name', 'add'), help=u"""Add new service or update existing service. \n[Command Reference](addService)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be added for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be added for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), multiple=True, help=u"""List of templates to be added for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), multiple=True, help=u"""List of services to be added for the stack.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services to be added.
 
 This option is a JSON list with items of type AdbDetail.  For documentation on AdbDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/stack/20250830/datatypes/AdbDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -262,8 +262,8 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @stack_group.command(name=cli_util.override('dif.create_stack.command_name', 'create'), help=u"""Creates a Stack. \n[Command Reference](createStack)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Should be unique per compartment. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the Stack in.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), multiple=True, help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), multiple=True, help=u"""List of services to be onboarded for the stack.""")
 @cli_util.option('--notification-email', help=u"""email id to which the stack notifications would be sent.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services.
 
@@ -440,8 +440,8 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @stack_group.command(name=cli_util.override('dif.deploy_artifacts.command_name', 'deploy-artifacts'), help=u"""DeployArtifacts \n[Command Reference](deployArtifacts)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
-@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be onboarded for the stack.""")
-@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be onboarded for the stack.""")
+@cli_util.option('--stack-templates', required=True, type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), multiple=True, help=u"""List of templates to be onboarded for the stack.""")
+@cli_util.option('--services', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), multiple=True, help=u"""List of services to be onboarded for the stack.""")
 @cli_util.option('--subnet-id', help=u"""Subnet id for the Private Endpoint creation for artifact deployment.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB artifact details if adb is included in the services.
 
@@ -820,8 +820,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @stack_group.command(name=cli_util.override('dif.update_stack.command_name', 'update'), help=u"""Updates a Stack. \n[Command Reference](updateStack)""")
 @cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the Stack.""")
 @cli_util.option('--notification-email', help=u"""email id to which the stack notifications would be sent.""")
-@cli_util.option('--stack-templates', type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), help=u"""List of templates to be updated for the stack.""")
-@cli_util.option('--services', type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), help=u"""List of services to be updated for the stack.""")
+@cli_util.option('--stack-templates', type=custom_types.CliCaseInsensitiveChoice(["DATALAKE", "DATAPIPELINE", "AISERVICES", "DATATRANSFORMATION", "DEVOPSTOOLKIT"]), multiple=True, help=u"""List of templates to be updated for the stack.""")
+@cli_util.option('--services', type=custom_types.CliCaseInsensitiveChoice(["ADB", "GGCS", "OBJECTSTORAGE", "GENAI", "DATAFLOW", "AIDATAPLATFORM", "OMK", "OKE"]), multiple=True, help=u"""List of services to be updated for the stack.""")
 @cli_util.option('--adb', type=custom_types.CLI_COMPLEX_TYPE, help=u"""ADB details if adb is included in the services to be updated.
 
 This option is a JSON list with items of type AdbUpdateDetail.  For documentation on AdbUpdateDetail please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/stack/20250830/datatypes/AdbUpdateDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

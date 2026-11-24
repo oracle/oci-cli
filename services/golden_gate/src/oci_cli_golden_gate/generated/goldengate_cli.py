@@ -1613,7 +1613,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection.command_name', 'create'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
-@cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type.""")
+@cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -2741,6 +2741,147 @@ def create_connection_create_oracle_ai_data_platform_engine_connection_details(c
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     _details['connectionType'] = 'ORACLE_AI_DATA_PLATFORM_ENGINE'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('goldengate.create_connection_create_oracle_ai_data_catalog_storage_connection_details.command_name', 'create-connection-create-oracle-ai-data-catalog-storage-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--technology-type', required=True, help=u"""The Oracle AI Data Catalog Storage technology type.""")
+@cli_util.option('--warehouse-name', required=True, help=u"""The name of the warehouse configured in the Oracle AI Data Catalog deployment. This value corresponds to the target bucket or container name.""")
+@cli_util.option('--warehouse-storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.oracle.com/en-us/iaas/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-id', help=u"""References the OCI Vault that contains the customer-managed encryption key identified by `keyId`.
+
+Deprecated: This field is deprecated for GoldenGate connections. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes encrypted with `vaultId` and `keyId`. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+This field is applicable only when `doesUseSecretIds` is set to `false`. If `vaultId` is provided, `keyId` must also be provided.""")
+@cli_util.option('--key-id', help=u"""References the OCI Vault key in the OCI Vault identified by `vaultId`.
+
+Deprecated: This field is deprecated for GoldenGate connections. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes encrypted with `vaultId` and `keyId`. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+The GoldenGate service uses this key to encrypt sensitive information (for example, `password`) that is provided in plain-text connection attributes through the API. This field is applicable only when `doesUseSecretIds` is set to `false`. If both `vaultId` and `keyId` are provided, the GoldenGate service uses the specified customer-managed key to encrypt the sensitive data. If neither `vaultId` nor `keyId` is provided, the GoldenGate service uses Oracle-managed encryption keys.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected. SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets.
+
+Deprecated: SHARED_SERVICE_ENDPOINT is deprecated. Use another supported routingMethod value, or update existing connections to use a supported routing method. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.
+
+Deprecated: This field is deprecated. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+When set to `true`, all sensitive information must be provided as OCI Vault secrets using the corresponding `*SecretId` attributes of the connection (for example, `passwordSecretId`). Plain-text sensitive attributes (for example, `password`) must not be used. This ensures that sensitive information remains stored and managed in the customer's OCI Vault rather than by the GoldenGate service.
+
+When set to false, sensitive information must be provided in the corresponding plain-text attributes (for example, `password`) rather than in secret OCID attributes. In this mode, the sensitive information is stored by the GoldenGate service. If `vaultId` and `keyId` are not specified, the GoldenGate service uses Oracle-managed encryption keys to encrypt the stored data.
+
+If `vaultId` and `keyId` are provided, the specified customer-managed key is used.""")
+@cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'warehouse-storage': {'module': 'golden_gate', 'class': 'CreateWarehouseStorageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'warehouse-storage': {'module': 'golden_gate', 'class': 'CreateWarehouseStorageDetails'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_oracle_ai_data_catalog_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, warehouse_name, warehouse_storage, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, subscription_id, cluster_placement_group_id, security_attributes):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['technologyType'] = technology_type
+    _details['warehouseName'] = warehouse_name
+    _details['warehouseStorage'] = cli_util.parse_json_parameter("warehouse_storage", warehouse_storage)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if vault_id is not None:
+        _details['vaultId'] = vault_id
+
+    if key_id is not None:
+        _details['keyId'] = key_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if routing_method is not None:
+        _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if subscription_id is not None:
+        _details['subscriptionId'] = subscription_id
+
+    if cluster_placement_group_id is not None:
+        _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    _details['connectionType'] = 'ORACLE_AI_DATA_CATALOG_STORAGE'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.create_connection(
@@ -7705,7 +7846,7 @@ Validation: - Must reference a public subnet. - Must be a regional subnet. - Mus
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT", "AI_DATA_CATALOG"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
 @cli_util.option('--cluster-placement-group-id', help=u"""The OCID(/Content/General/Concepts/identifiers.htm) of the cluster placement group for the resource. Only applicable for multicloud subscriptions. The cluster placement group id must be provided when a multicloud subscription id is provided. Otherwise the cluster placement group must not be provided.""")
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -9237,8 +9378,8 @@ def list_certificates(ctx, from_json, all_pages, page_size, deployment_id, lifec
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
 @cli_util.option('--connection-id', help=u"""The [OCID] of the connection.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types.""")
-@cli_util.option('--connection-type-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types to exclude.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types.""")
+@cli_util.option('--connection-type-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types to exclude.""")
 @cli_util.option('--name', help=u"""The name of the connection in the assignment (aliasName).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING"]), help=u"""A filter to return only connection assignments having the 'lifecycleState' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -9308,11 +9449,11 @@ def list_connection_assignments(ctx, from_json, all_pages, page_size, compartmen
 @connection_group.command(name=cli_util.override('goldengate.list_connections.command_name', 'list'), help=u"""Lists the Connections in the compartment. \n[Command Reference](listConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "OCI_STREAMING_WITH_APACHE_KAFKA", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_EXASCALE", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_EXADATA_EXASCALE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_EXASCALE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "ORACLE_REST_DATA_SERVICES", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_ICEBERG", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DATABRICKS_ENGINE", "DB2_I", "DB2_ZOS", "ELASTICSEARCH", "EDB_POSTGRES_ADVANCED_SERVER", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_MANAGED_SERVICE_FOR_APACHE_KAFKA", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_EVENTSTREAM", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "APACHE_SPARK", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE", "YUGABYTE_DB", "OCI_GENERATIVE_AI", "GEMINI", "OPEN_AI", "VOYAGE_AI", "AI_MODEL"]), multiple=True, help=u"""The array of technology types.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types.""")
-@cli_util.option('--connection-type-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types to exclude.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types.""")
+@cli_util.option('--connection-type-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), multiple=True, help=u"""The array of connection types to exclude.""")
 @cli_util.option('--assigned-deployment-id', help=u"""The OCID of the deployment which for the connection must be assigned.""")
 @cli_util.option('--assignable-deployment-id', help=u"""Filters for compatible connections which can be, but currently not assigned to the deployment specified by its id.""")
-@cli_util.option('--assignable-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT"]), help=u"""Filters for connections which can be assigned to the latest version of the specified deployment type.""")
+@cli_util.option('--assignable-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT", "AI_DATA_CATALOG"]), help=u"""Filters for connections which can be assigned to the latest version of the specified deployment type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only connections having the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -9625,7 +9766,7 @@ def list_deployment_peers(ctx, from_json, all_pages, page_size, deployment_id, l
 
 @deployment_type_collection_group.command(name=cli_util.override('goldengate.list_deployment_types.command_name', 'list-deployment-types'), help=u"""Returns an array of DeploymentTypeDescriptor \n[Command Reference](listDeploymentTypes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT", "AI_DATA_CATALOG"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--ogg-version', help=u"""Allows to query by a specific GoldenGate version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -9752,7 +9893,7 @@ def list_deployment_upgrades(ctx, from_json, all_pages, page_size, compartment_i
 @deployment_version_collection_group.command(name=cli_util.override('goldengate.list_deployment_versions.command_name', 'list-deployment-versions'), help=u"""Returns the list of available deployment versions. \n[Command Reference](listDeploymentVersions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT", "AI_DATA_CATALOG"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -9871,12 +10012,12 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 
 @deployment_group.command(name=cli_util.override('goldengate.list_deployments.command_name', 'list'), help=u"""Lists the Deployments in a compartment. \n[Command Reference](listDeployments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type which the deployment must support.""")
+@cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type which the deployment must support.""")
 @cli_util.option('--assigned-connection-id', help=u"""The OCID of the connection which for the deployment must be assigned.""")
 @cli_util.option('--assignable-connection-id', help=u"""Return the deployments to which the specified connectionId may be assigned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only the deployments having the 'lifecycleState' given.""")
 @cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["RECOVERING", "STARTING", "STOPPING", "MOVING", "UPGRADING", "RESTORING", "BACKUP_IN_PROGRESS", "ROLLBACK_IN_PROGRESS"]), help=u"""A filter to return only the resources that match the 'lifecycleSubState' given.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT"]), help=u"""A filter that returns only the resources matching the specified 'deploymentType'.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS", "VERIDATA_SERVER", "VERIDATA_AGENT", "AI_DATA_CATALOG"]), help=u"""A filter that returns only the resources matching the specified 'deploymentType'.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--fqdn', help=u"""A filter to return only the resources that match the 'fqdn' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -12368,7 +12509,7 @@ def test_pipeline_connection_default_test_pipeline_connection_details(ctx, from_
 
 @connection_group.command(name=cli_util.override('goldengate.update_connection.command_name', 'update'), help=u"""Updates the Connection. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_AI_DATA_PLATFORM", "ORACLE_AI_DATA_CATALOG_STORAGE", "ORACLE_AI_DATA_PLATFORM_ENGINE", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "DATABRICKS_ENGINE", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "SPARK", "ICEBERG", "AI_PROVIDER", "AI_MODEL"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', help=u"""An object's Display Name.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -15111,6 +15252,151 @@ def update_connection_update_snowflake_connection_details(ctx, from_json, force,
         _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     _details['connectionType'] = 'SNOWFLAKE'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('goldengate.update_connection_update_oracle_ai_data_catalog_storage_connection_details.command_name', 'update-connection-update-oracle-ai-data-catalog-storage-connection-details'), help=u"""Updates the Connection. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--display-name', help=u"""An object's Display Name.""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-id', help=u"""References the OCI Vault that contains the customer-managed encryption key identified by `keyId`.
+
+Deprecated: This field is deprecated for GoldenGate connections. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes encrypted with `vaultId` and `keyId`. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+This field is applicable only when `doesUseSecretIds` is set to `false`. If `vaultId` is provided, `keyId` must also be provided.""")
+@cli_util.option('--key-id', help=u"""References the OCI Vault key in the OCI Vault identified by `vaultId`.
+
+Deprecated: This field is deprecated for GoldenGate connections. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes encrypted with `vaultId` and `keyId`. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+The GoldenGate service uses this key to encrypt sensitive information (for example, `password`) that is provided in plain-text connection attributes through the API. This field is applicable only when `doesUseSecretIds` is set to `false`. If both `vaultId` and `keyId` are provided, the GoldenGate service uses the specified customer-managed key to encrypt the sensitive data. If neither `vaultId` nor `keyId` is provided, the GoldenGate service uses Oracle-managed encryption keys.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected. SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets.
+
+Deprecated: SHARED_SERVICE_ENDPOINT is deprecated. Use another supported routingMethod value, or update existing connections to use a supported routing method. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.
+
+Deprecated: This field is deprecated. Sensitive attributes should be provided using the corresponding Secret OCID attributes of the connection (for example, `passwordSecretId`) instead of plain-text attributes. This change follows the GoldenGate \"Plain Text Fields in Connections\" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate
+
+When set to `true`, all sensitive information must be provided as OCI Vault secrets using the corresponding `*SecretId` attributes of the connection (for example, `passwordSecretId`). Plain-text sensitive attributes (for example, `password`) must not be used. This ensures that sensitive information remains stored and managed in the customer's OCI Vault rather than by the GoldenGate service.
+
+When set to false, sensitive information must be provided in the corresponding plain-text attributes (for example, `password`) rather than in secret OCID attributes. In this mode, the sensitive information is stored by the GoldenGate service. If `vaultId` and `keyId` are not specified, the GoldenGate service uses Oracle-managed encryption keys to encrypt the stored data.
+
+If `vaultId` and `keyId` are provided, the specified customer-managed key is used.""")
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--warehouse-name', help=u"""The name of the warehouse configured in the Oracle AI Data Catalog deployment. This value corresponds to the target bucket or container name.""")
+@cli_util.option('--warehouse-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state CANCELED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'warehouse-storage': {'module': 'golden_gate', 'class': 'UpdateWarehouseStorageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'security-attributes': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'warehouse-storage': {'module': 'golden_gate', 'class': 'UpdateWarehouseStorageDetails'}})
+@cli_util.wrap_exceptions
+def update_connection_update_oracle_ai_data_catalog_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, security_attributes, warehouse_name, warehouse_storage, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or nsg_ids or security_attributes or warehouse_storage:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and security-attributes and warehouse-storage will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if vault_id is not None:
+        _details['vaultId'] = vault_id
+
+    if key_id is not None:
+        _details['keyId'] = key_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if routing_method is not None:
+        _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if warehouse_name is not None:
+        _details['warehouseName'] = warehouse_name
+
+    if warehouse_storage is not None:
+        _details['warehouseStorage'] = cli_util.parse_json_parameter("warehouse_storage", warehouse_storage)
+
+    _details['connectionType'] = 'ORACLE_AI_DATA_CATALOG_STORAGE'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.update_connection(

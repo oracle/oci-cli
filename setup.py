@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.192.0',
+    'oci==2.193.0',
     'arrow>=1.0.0,<2.0.0',
     'certifi>=2025.1.31; python_version < "3.7"',
     'certifi>=2026.10.19; python_version >= "3.7"',
@@ -46,10 +46,10 @@ requires = [
     'terminaltables==3.1.10',
     'pyOpenSSL>=17.5.0,<22.0.0; python_version <= "3.7"',
     'pyOpenSSL>=26.2.0,<27.0.0; python_version >= "3.8"',
-    'PyYAML>=5.4,<=6.0.2',
+    'PyYAML>=5.4,<=6.0.3',
     'prompt-toolkit>=3.0.38,<=3.0.43; python_version > "3.6"',
     'prompt-toolkit==3.0.29; python_version == "3.6"',
-    'setuptools>=78.1.1,<84; python_version >= "3.12"' # distutils is deprecated from 3.12, however setuptools still provides it
+    'setuptools>=78.1.1; python_version >= "3.12"' # distutils is deprecated from 3.12, however setuptools still provides it
 ]
 
 extras = {

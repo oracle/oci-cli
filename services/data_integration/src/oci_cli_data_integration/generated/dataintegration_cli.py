@@ -7848,7 +7848,7 @@ def create_schedule_daily_frequency_details(ctx, from_json, workspace_id, applic
 @cli_util.option('--registry-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
+@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), multiple=True, help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
 @json_skeleton_utils.get_cli_json_input_option({'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
 @cli_util.help_option
 @click.pass_context
@@ -19375,7 +19375,7 @@ def update_schedule_daily_frequency_details(ctx, from_json, force, workspace_id,
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the `etag` from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value. When 'if-match' is provided and its value does not exactly match the 'etag' of the resource on the server, the request fails with the 412 response code.""")
 @cli_util.option('--frequency-details-frequency', type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "WEEKLY", "CUSTOM"]), help=u"""the frequency of the schedule.""")
 @cli_util.option('--frequency-details-time', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
+@cli_util.option('--frequency-details-days', type=custom_types.CliCaseInsensitiveChoice(["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]), multiple=True, help=u"""A list of days of the week to be scheduled. i.e. execute on Monday and Thursday.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'parent-ref': {'module': 'data_integration', 'class': 'ParentReference'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'frequency-details-time': {'module': 'data_integration', 'class': 'Time'}})
 @cli_util.help_option

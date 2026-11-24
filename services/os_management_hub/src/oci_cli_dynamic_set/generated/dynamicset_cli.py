@@ -727,7 +727,7 @@ def update_dynamic_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 @dynamic_set_group.command(name=cli_util.override('dynamic_set.update_packages_on_dynamic_set.command_name', 'update-packages'), help=u"""Updates all installed software packages on managed instances in the dynamic set. \n[Command Reference](updatePackagesOnDynamicSet)""")
 @cli_util.option('--dynamic-set-id', required=True, help=u"""The [OCID] of the dynamic set. This filter returns resources associated with this dynamic set.""")
-@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), help=u"""The types of updates to be applied.""")
+@cli_util.option('--update-types', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "OTHER", "KSPLICE_KERNEL", "KSPLICE_USERSPACE", "ALL"]), multiple=True, help=u"""The types of updates to be applied.""")
 @cli_util.option('--managed-instances', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of managed instance OCIDs to be attached/detached.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

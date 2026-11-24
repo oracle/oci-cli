@@ -82,7 +82,7 @@ def generate_playlist(ctx, from_json, file, stream_packaging_config_id, media_as
 
 
 @stream_distribution_channel_group.command(name=cli_util.override('media_stream.generate_session_token.command_name', 'generate-session-token'), help=u"""Generate a new streaming session token. This API call is made using the MediaStreamsClient, which requires the endpoint to be set with the value of the distribution channel domain name (for example, https://example_channel.dc.mediaservices.example_region.oci.oraclecloud.com) to generate a session token or playlist for a media asset registered in this distribution channel. \n[Command Reference](generateSessionToken)""")
-@cli_util.option('--scopes', required=True, type=custom_types.CliCaseInsensitiveChoice(["PLAYLIST", "EDGE"]), help=u"""Array of scopes the token can act upon.""")
+@cli_util.option('--scopes', required=True, type=custom_types.CliCaseInsensitiveChoice(["PLAYLIST", "EDGE"]), multiple=True, help=u"""Array of scopes the token can act upon.""")
 @cli_util.option('--packaging-config-id', required=True, help=u"""The packaging config resource identifier used to limit the scope of the token.""")
 @cli_util.option('--time-expires', type=custom_types.CLI_DATETIME, help=u"""Token expiry time. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--asset-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of asset resource IDs used to limit the scope of the token.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

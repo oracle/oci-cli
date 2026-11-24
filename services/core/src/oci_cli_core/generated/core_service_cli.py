@@ -14,7 +14,11 @@ documentation for the [Networking],
 [Compute], and
 [Block Volume] services.
 The required permissions are documented in the
-[Details for the Core Services] article."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
+[Details for the Core Services] article.
+
+The Core Services API provides both IPv4-only and dual-stack (IPv4 and IPv6) endpoints. By default, OCI-published SDKs and the CLI use IPv4-only endpoints.
+Use a dual-stack endpoint to connect over IPv6 while retaining IPv4 compatibility.
+Dual-stack endpoints use the following format: https://{service}.{region}.ds.oci.{secondLevelDomain}."""), short_help=cli_util.override('virtual_network.core_service_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def core_service_group():
     pass
