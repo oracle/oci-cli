@@ -3,12 +3,42 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import unittest
+from types import SimpleNamespace
+from unittest.mock import patch
+
+from click.testing import CliRunner
+from oci_cli.cli_root import cli
 from tests import util
 
 
 class TestNetwork(unittest.TestCase):
     def setUp(self):
         pass
+
+    @patch('oci_cli.cli_util.render_response')
+    @patch('oci_cli.cli_util.build_client')
+    def test_assign_ipv6_hostname(self, build_client, render_response):
+        client = build_client.return_value
+        client.get_vnic.return_value.data.subnet_id = 'subnet'
+        args = ['network', 'vnic', 'assign-ipv6', '--vnic-id', 'vnic']
+        for options, extra_fields in [([], {}), (['--hostname', 'worker'], {'hostname': 'worker'})]:
+            with self.subTest(options=options):
+                result = CliRunner().invoke(cli, args + options)
+                self.assertEqual(result.exit_code, 0, result.exception)
+                client.create_ipv6.assert_called_with(dict(vnicId='vnic', subnetId='subnet', **extra_fields))
+
+    @patch('oci_cli.cli_util.render_response')
+    @patch('oci_cli.cli_util.build_client')
+    def test_reassign_ipv6_hostname(self, build_client, render_response):
+        client = build_client.return_value
+        client.get_vnic.return_value.data.subnet_id = 'subnet'
+        client.list_ipv6s.return_value.data = [SimpleNamespace(id='address', vnic_id='old-vnic')]
+        args = ['network', 'vnic', 'assign-ipv6', '--vnic-id', 'vnic', '--ip-address', '2001:db8::1',
+                '--unassign-if-already-assigned', '--hostname', 'worker']
+        result = CliRunner().invoke(cli, args)
+        self.assertEqual(result.exit_code, 0, result.exception)
+        client.update_ipv6.assert_called_once_with('address', {'vnicId': 'vnic', 'hostname': 'worker'})
+        client.create_ipv6.assert_not_called()
 
     def nsg_wrong_param_name(self, operation):
         result = util.invoke_command(['network', 'nsg'] + operation + ['--network-security-group-id'])
