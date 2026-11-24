@@ -1065,3 +1065,11 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 # oci goldengate connection update-connection-update-spark-connection-details -> oci goldengate connection update-spark-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_spark_connection_details, "update-spark-connection")
+
+
+# oci goldengate connection create-connection-create-oracle-ai-data-catalog-storage-connection-details -> oci goldengate connection create-oracle-ai-data-catalog-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_oracle_ai_data_catalog_storage_connection_details, "create-oracle-ai-data-catalog-storage-connection")
+
+
+# oci goldengate connection update-connection-update-oracle-ai-data-catalog-storage-connection-details -> oci goldengate connection update-oracle-ai-data-catalog-storage-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_oracle_ai_data_catalog_storage_connection_details, "update-oracle-ai-data-catalog-storage-connection")

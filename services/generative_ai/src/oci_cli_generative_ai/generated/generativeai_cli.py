@@ -1862,7 +1862,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1953,7 +1953,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2051,7 +2051,7 @@ The header contains an opc-work-request-id, which is the id for the WorkRequest 
 @cli_util.option('--description', help=u"""An optional description of the imported model.""")
 @cli_util.option('--vendor', help=u"""The provider of the imported model.""")
 @cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
-@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK", "TEXT_TO_IMAGE", "IMAGE_TEXT_TO_IMAGE", "IMAGE_TEXT_TO_VIDEO", "IMAGE_TO_IMAGE", "REALTIME", "AUDIO_TO_AUDIO", "AUDIO_TO_TEXT", "TEXT_TO_AUDIO", "TEXT_TO_VIDEO", "AUDIO_TEXT_TO_TEXT", "AUDIO_TRANSLATION", "VIDEO_TEXT_TO_TEXT"]), multiple=True, help=u"""Specifies the intended use or supported capabilities of the imported model.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

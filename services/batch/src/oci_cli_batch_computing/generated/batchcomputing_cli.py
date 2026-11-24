@@ -699,7 +699,7 @@ def create_batch_context_oci_logging_configuration(ctx, from_json, wait_for_stat
 @batch_job_group.command(name=cli_util.override('batch.create_batch_job.command_name', 'create'), help=u"""Creates a batch job. \n[Command Reference](createBatchJob)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--batch-job-pool-id', required=True, help=u"""The [OCID] of the parent batch job pool.""")
-@cli_util.option('--tasks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tasks to be executed within this job. Maximum number of tasks a job can have in total, across all nested levels, is 1000.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tasks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tasks to be executed within this job.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. If not specified or provided as null or empty string, it will be generated as \"<resourceType><timeCreated>\", where timeCreated corresponds with the resource creation time in ISO 8601 basic format, i.e. omitting separating punctuation, at second-level precision and no UTC offset. Example: batchjob20250914115623.""")
 @cli_util.option('--description', help=u"""An optional description that provides additional context next to the displayName.""")
 @cli_util.option('--environment-variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An environment variables to use for the job's tasks (can be overridden by task's environment variables).

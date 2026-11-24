@@ -22,7 +22,11 @@ documentation for the [Networking],
 [Compute], and
 [Block Volume] services.
 The required permissions are documented in the
-[Details for the Core Services] article."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
+[Details for the Core Services] article.
+
+The Core Services API provides both IPv4-only and dual-stack (IPv4 and IPv6) endpoints. By default, OCI-published SDKs and the CLI use IPv4-only endpoints.
+Use a dual-stack endpoint to connect over IPv6 while retaining IPv4 compatibility.
+Dual-stack endpoints use the following format: https://{service}.{region}.ds.oci.{secondLevelDomain}."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_management_root_group():
     pass
@@ -48,6 +52,12 @@ def instance_group():
     pass
 
 
+@click.command(cli_util.override('compute_management.instance_pool_refresh_collection_group.command_name', 'instance-pool-refresh-collection'), cls=CommandGroupWithAlias, help="""A collection of instance pool refresh summaries.""")
+@cli_util.help_option_group
+def instance_pool_refresh_collection_group():
+    pass
+
+
 @click.command(cli_util.override('compute_management.instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances. An instance configuration is a template that defines the settings to use when creating Compute instances or GPU Memory Clusters. For more information about instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_configuration_group():
@@ -61,6 +71,12 @@ Use cluster networks with instance pools when you want predictable capacity for 
 If you want to manage instances in the RDMA network independently of each other or use different types of instances in the network group, use compute clusters instead. For details, see [ComputeCluster].""")
 @cli_util.help_option_group
 def cluster_network_group():
+    pass
+
+
+@click.command(cli_util.override('compute_management.instance_pool_refresh_group.command_name', 'instance-pool-refresh'), cls=CommandGroupWithAlias, help="""An instance pool refresh is an asynchronous operation that replaces eligible instances in an instance pool with instances launched from the pool's target instance configuration.""")
+@cli_util.help_option_group
+def instance_pool_refresh_group():
     pass
 
 
@@ -79,8 +95,10 @@ def instance_pool_instance_group():
 core_service_cli.core_service_group.add_command(compute_management_root_group)
 compute_management_root_group.add_command(instance_pool_group)
 compute_management_root_group.add_command(instance_group)
+compute_management_root_group.add_command(instance_pool_refresh_collection_group)
 compute_management_root_group.add_command(instance_configuration_group)
 compute_management_root_group.add_command(cluster_network_group)
+compute_management_root_group.add_command(instance_pool_refresh_group)
 compute_management_root_group.add_command(instance_pool_load_balancer_attachment_group)
 compute_management_root_group.add_command(instance_pool_instance_group)
 
@@ -197,6 +215,78 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_refresh_group.command(name=cli_util.override('compute_management.cancel_instance_pool_refresh.command_name', 'cancel'), help=u"""Cancels the specified instance pool refresh. Cancellation stops new batch planning and new launch submissions. Submitted launch and terminate operations continue until they settle. \n[Command Reference](cancelInstancePoolRefresh)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--refresh-id', required=True, help=u"""The [OCID] of the instance pool refresh.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUCCEEDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_instance_pool_refresh(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, refresh_id, if_match):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    if isinstance(refresh_id, six.string_types) and len(refresh_id.strip()) == 0:
+        raise click.UsageError('Parameter --refresh-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.cancel_instance_pool_refresh(
+        instance_pool_id=instance_pool_id,
+        refresh_id=refresh_id,
+        cancel_instance_pool_refresh_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -582,15 +672,16 @@ This option is a JSON list with items of type AttachLoadBalancerDetails.  For do
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
 @cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-maintenance-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state RUNNING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}, 'instance-maintenance-policy': {'module': 'core', 'class': 'InstancePoolMaintenancePolicyDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}, 'instance-maintenance-policy': {'module': 'core', 'class': 'InstancePoolMaintenancePolicyDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management):
+def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, instance_maintenance_policy):
 
     kwargs = {}
 
@@ -623,6 +714,9 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if lifecycle_management is not None:
         _details['lifecycleManagement'] = cli_util.parse_json_parameter("lifecycle_management", lifecycle_management)
+
+    if instance_maintenance_policy is not None:
+        _details['instanceMaintenancePolicy'] = cli_util.parse_json_parameter("instance_maintenance_policy", instance_maintenance_policy)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_pool(
@@ -921,6 +1015,33 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
     result = client.get_instance_pool_load_balancer_attachment(
         instance_pool_id=instance_pool_id,
         instance_pool_load_balancer_attachment_id=instance_pool_load_balancer_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_refresh_group.command(name=cli_util.override('compute_management.get_instance_pool_refresh.command_name', 'get'), help=u"""Gets the specified instance pool refresh. \n[Command Reference](getInstancePoolRefresh)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--refresh-id', required=True, help=u"""The [OCID] of the instance pool refresh.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolRefresh'})
+@cli_util.wrap_exceptions
+def get_instance_pool_refresh(ctx, from_json, instance_pool_id, refresh_id):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    if isinstance(refresh_id, six.string_types) and len(refresh_id.strip()) == 0:
+        raise click.UsageError('Parameter --refresh-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.get_instance_pool_refresh(
+        instance_pool_id=instance_pool_id,
+        refresh_id=refresh_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1304,6 +1425,74 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
+@instance_pool_refresh_collection_group.command(name=cli_util.override('compute_management.list_instance_pool_refreshes.command_name', 'list-instance-pool-refreshes'), help=u"""Lists the instance pool refreshes for the specified instance pool. \n[Command Reference](listInstancePoolRefreshes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "CANCELING", "CANCELED"]), help=u"""A filter to only return refreshes that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolRefreshCollection'})
+@cli_util.wrap_exceptions
+def list_instance_pool_refreshes(ctx, from_json, all_pages, page_size, compartment_id, instance_pool_id, limit, page, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_instance_pool_refreshes,
+            compartment_id=compartment_id,
+            instance_pool_id=instance_pool_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_instance_pool_refreshes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            instance_pool_id=instance_pool_id,
+            **kwargs
+        )
+    else:
+        result = client.list_instance_pool_refreshes(
+            compartment_id=compartment_id,
+            instance_pool_id=instance_pool_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @instance_pool_group.command(name=cli_util.override('compute_management.list_instance_pools.command_name', 'list'), help=u"""Lists the instance pools in the specified compartment. \n[Command Reference](listInstancePools)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1364,6 +1553,41 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_refresh_group.command(name=cli_util.override('compute_management.refresh_instance_pool.command_name', 'refresh-instance-pool'), help=u"""Starts an instance refresh for the specified instance pool. \n[Command Reference](refreshInstancePool)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--max-healthy-percent', required=True, type=click.INT, help=u"""The maximum percentage of healthy instances that can be in the pool during the refresh. The service uses this value to calculate launch-before-terminate surge capacity.""")
+@cli_util.option('--warmup-seconds', required=True, type=click.INT, help=u"""The number of seconds to wait after replacement instances are running and startup lifecycle actions are complete before terminating old instances in the batch.""")
+@cli_util.option('--is-full-refresh', required=True, type=click.BOOL, help=u"""Whether to refresh all eligible instances that existed when the refresh started, even if they were launched from the target instance configuration.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolRefresh'})
+@cli_util.wrap_exceptions
+def refresh_instance_pool(ctx, from_json, instance_pool_id, max_healthy_percent, warmup_seconds, is_full_refresh, if_match):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['maxHealthyPercent'] = max_healthy_percent
+    _details['warmupSeconds'] = warmup_seconds
+    _details['isFullRefresh'] = is_full_refresh
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.refresh_instance_pool(
+        instance_pool_id=instance_pool_id,
+        refresh_instance_pool_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1929,23 +2153,24 @@ To determine whether capacity is available for a specific shape before you resiz
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
 @cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-maintenance-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state PROVISIONING --wait-for-state RUNNING would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}, 'instance-maintenance-policy': {'module': 'core', 'class': 'InstancePoolMaintenancePolicyDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'override-policy': {'module': 'core', 'class': 'InstancePoolLaunchOverridePolicy'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}, 'instance-maintenance-policy': {'module': 'core', 'class': 'InstancePoolMaintenancePolicyDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, if_match):
+def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, override_policy, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, instance_maintenance_policy, if_match):
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or placement_configurations or override_policy or lifecycle_management:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations and override-policy and lifecycle-management will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or placement_configurations or override_policy or lifecycle_management or instance_maintenance_policy:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations and override-policy and lifecycle-management and instance-maintenance-policy will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1983,6 +2208,9 @@ def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if lifecycle_management is not None:
         _details['lifecycleManagement'] = cli_util.parse_json_parameter("lifecycle_management", lifecycle_management)
+
+    if instance_maintenance_policy is not None:
+        _details['instanceMaintenancePolicy'] = cli_util.parse_json_parameter("instance_maintenance_policy", instance_maintenance_policy)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_instance_pool(

@@ -5286,7 +5286,7 @@ def create_referential_relation(ctx, from_json, wait_for_state, max_wait_seconds
 @registration_policy_group.command(name=cli_util.override('data_safe.create_registration_policy.command_name', 'create'), help=u"""Creates a new OptIn/Registration Policy \n[Command Reference](createRegistrationPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the registration policy will be created.""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the resource used in the registration policy.""")
-@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), multiple=True, help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
 @cli_util.option('--display-name', help=u"""The display name of the registration policy.""")
 @cli_util.option('--description', help=u"""A description of the registration policy.""")
 @cli_util.option('--can-override-features', type=click.BOOL, help=u"""Indicates whether features will be overridden for all targets.""")
@@ -23627,7 +23627,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 
 @target_database_group.command(name=cli_util.override('data_safe.manage_privileges.command_name', 'manage-privileges'), help=u"""Updates the Data Safe target database Privileges. \n[Command Reference](managePrivileges)""")
 @cli_util.option('--target-database-id', required=True, help=u"""The OCID of the Data Safe target database.""")
-@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--features', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), multiple=True, help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state ACCEPTED --wait-for-state SUSPENDED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -28306,7 +28306,7 @@ def update_processing_chain_object(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--display-name', help=u"""The display name of the registration policy.""")
 @cli_util.option('--description', help=u"""A description of the registration policy.""")
 @cli_util.option('--can-override-features', type=click.BOOL, help=u"""Indicates whether features will be overridden for all targets.""")
-@cli_util.option('--features', type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
+@cli_util.option('--features', type=custom_types.CliCaseInsensitiveChoice(["ASSESSMENT", "AUDIT_COLLECTION", "AUDIT_SETTING", "DATA_DISCOVERY", "MASKING", "SQL_FIREWALL", "ALL"]), multiple=True, help=u"""The Data Safe features granted to the databases registering under the registration policy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
