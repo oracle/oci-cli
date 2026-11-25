@@ -731,6 +731,18 @@ def _merge_kubeconfig_yaml(dst_yaml, src_yaml, merge_key):
                 # It is either an update or repeat of an existing record so we need to update the existing record with
                 # new one
                 match = True
+                # we preserve some fields from the config cause the user might have set them for better dex
+                # this is a simple approach, if the list grows too big, consider another;
+                # like whitelisting on our side and only copying those
+                preserved_fields = {
+                    'contexts': ('context', ['namespace']),
+                    'clusters': ('cluster', ['proxy-url'])
+                }.get(merge_key)
+                if preserved_fields:
+                    section, fields = preserved_fields
+                    for field in fields:
+                        if field in j[section]:
+                            i[section][field] = j[section][field]
                 dst_yaml[merge_key][idx] = i
         if not match:
             # It is a new record so we need to add it to the list
