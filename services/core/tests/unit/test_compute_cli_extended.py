@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
+import re
 import unittest
 from oci_cli import cli_util
 from services.core.src.oci_cli_compute import compute_cli_extended
@@ -142,3 +143,16 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'image', 'export', 'to-object-uri', '--export-format'])
         assert 'Error: Option \'--export-format\' requires' in result.output
+
+    def test_instance_console_connection_string_regex(self):
+        regex = compute_cli_extended.INSTANCE_CONSOLE_CONNECTION_STRING_INTERMEDIATE_HOST_REGEX
+        m1 = re.search(regex, "ssh -N -p 443 -o ProxyCommand='ssh -W %h:%p instance-console.us-ashburn-1.oraclecloud.com'")
+        assert m1 is not None
+        assert m1.group(0) == "instance-console.us-ashburn-1.oraclecloud.com"
+
+        m2 = re.search(regex, "instance-console.us-phoenix-1.oracleiaas.com")
+        assert m2 is not None
+        assert m2.group(0) == "instance-console.us-phoenix-1.oracleiaas.com"
+
+        m3 = re.search(regex, "invalid-host.example.com")
+        assert m3 is None
